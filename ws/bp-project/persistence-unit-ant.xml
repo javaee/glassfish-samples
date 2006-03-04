@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 2005-2006 Sun Microsystems, Inc.  All rights reserved.  You may not modify, use, reproduce, or distribute this software except in compliance with the terms of the License at: 
+ http://developer.sun.com/berkeley_license.html
+ $Id$ -->
+
+
+<!-- persistence-unit-ant.xml: contains targets for projects that produce 
+     persistence-unit modules. This file is not meant to be included in a 
+     project directly. 
+     This file should only be included if this project is defining 
+     is.persistence-unit.module property.
+     @Author: Inderjeet Singh -->
+
+<project name="persistence-unit-ant" default="dummy-default">
+
+  <target name="-pre-clean">
+  </target>
+
+  <target name="package-persistence-unit" if="is.persistence-unit.module"
+    description="packages the archive">
+    <fail unless="pu.build.dir" message="The property pu.build.dir must be set before invoking this target. Otherwise there is no destination to copy persistence.xml to."/>
+    <!-- copy in the persistence.xml descriptor -->
+    <!-- copy file="${src.conf}/persistence.xml" todir="${pu.build.dir}/META-INF/" failonerror="false" /-->
+    <mkdir dir="${pu.build.dir}/WEB-INF/classes/META-INF"/>
+    <!-- copy file="${src.conf}/persistence.xml" todir="${pu.build.dir}/WEB-INF/" failonerror="false" / -->
+    <copy file="${src.conf}/persistence.xml" todir="${pu.build.dir}/WEB-INF/classes/META-INF" failonerror="false" />
+  </target>
+
+  <target name="dummy-default"/>
+
+</project>

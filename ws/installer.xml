@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<!-- $Id$ -->
+
+<project name="installer" default="create-installer" basedir="..">
+
+  <!-- include user specific build properties -->
+  <property file="${user.home}/build.properties"/>
+  <property file="installer.properties"/>
+
+  <!-- The directory that contains the final distribution -->
+  <property name="build.dir" value="build"/>
+
+  <!-- The directory from where to get the libraries that the installer needs -->
+  <property name="poormans-installer.home" value="."/>
+
+  <taskdef name="installerBuilder" classname="org.jvnet.poormans_installer.builder.BuilderTask">
+    <classpath>
+      <fileset dir="${poormans-installer.home}" includes="*.jar"/>
+    </classpath>
+  </taskdef>
+
+  <target name="create-installer">
+    <mkdir dir="dist/classes"/>
+    <echo message="Creating an installer..."/>
+    <installerBuilder
+      licenseFile="../../../www/LICENSE.txt"
+      zipFile="${release.zipfile}"
+      classFile="dist/classes/bpcatalog.class"/>
+    <jar jarfile="dist/${release.fullname}-installer.jar" basedir="dist/classes" manifest="setup/manifest.mf"/>
+  </target>
+</project>
