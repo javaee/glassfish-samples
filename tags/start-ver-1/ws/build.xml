@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="glassfish-samples" default="default" basedir=".">
+    <description>Builds, tests, and packages the project glassfish-samples.</description>
+
+    <property file="installer.properties"/>
+
+    <property name="tmpdist" value="dist"/>
+
+    <path id="samples-list">
+        <!--filelist dir="JAVA_EE_5/duke-stateful-ear" files="build.xml"/-->
+        <!--filelist dir="JAVA_EE_5/hello-stateless-ejb" files="build.xml"/-->
+        <filelist dir="JAVA_EE_5/unmarshal-read-jaxb" files="build.xml"/>
+    </path>
+
+    <macrodef name="iterate">
+        <attribute name="target"/>
+        <sequential>
+            <subant target="@{target}" failonerror="false">
+                <buildpath refid="samples-list"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="all" depends="clean-all,clean"
+        description="iterates thru all the sample applications to compile, package and run">
+        <iterate target="all"/>
+    </target>
+
+    <target name="clean-all"
+        description="iterates and cleans generated artifacts from all sample applications">
+        <iterate target="clean"/>
+    </target>
+
+    <target name="clean"
+        description="cleans workspace by removing temporary directories like dist">
+        <delete dir="${tmpdist}"/>
+    </target>
+
+    <target name="package" depends="all"
+        description="packages the samples into a single zip">
+        <mkdir dir="${tmpdist}"/>
+        <zip destfile="${release.zipfile}">
+            <zipfileset dir="." 
+                prefix="${release.fullname}" 
+                includes="index.html, bp-project/**, JAVA_EE_5/**"
+                excludes="JAVA_EE_5/hello-stateless-ejb/**,JAVA_EE_5/duke-stateful-ear/**"/>
+        </zip>
+    </target>
+
+
+</project>
