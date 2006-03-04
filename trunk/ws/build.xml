@@ -8,9 +8,9 @@
     <property name="tmpdist" value="dist"/>
 
     <path id="samples-list">
-        <!--filelist dir="JAVA_EE_5/duke-stateful-ear" files="build.xml"/-->
-        <!--filelist dir="JAVA_EE_5/hello-stateless-ejb" files="build.xml"/-->
-        <filelist dir="JAVA_EE_5/unmarshal-read-jaxb" files="build.xml"/>
+        <!--filelist dir="java-ee-5/duke-stateful-ear" files="build.xml"/-->
+        <!--filelist dir="java-ee-5/hello-stateless-ejb" files="build.xml"/-->
+        <filelist dir="java-ee-5/unmarshal-read-jaxb" files="build.xml"/>
     </path>
 
     <macrodef name="iterate">
@@ -43,8 +43,8 @@
         <zip destfile="${release.zipfile}">
             <zipfileset dir="." 
                 prefix="${release.fullname}" 
-                includes="index.html, bp-project/**, JAVA_EE_5/**"
-                excludes="JAVA_EE_5/hello-stateless-ejb/**,JAVA_EE_5/duke-stateful-ear/**"/>
+                includes="index.html, bp-project/**, java-ee-5/**"
+                excludes="java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
         </zip>
     </target>
 
