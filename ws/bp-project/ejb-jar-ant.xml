@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 2005-2006 Sun Microsystems, Inc.  All rights reserved.  You may not modify, use, reproduce, or distribute this software except in compliance with the terms of the License at: 
+ http://developer.sun.com/berkeley_license.html
+ $Id$ -->
+
+
+<!-- ejb-jar-ant.xml: contains targets for projects that produce 
+     ejb-jar modules. This file is not meant to be included in a 
+     project directly. 
+     This file should only be included if this project is defining 
+     is.ejb-jar.module property.
+     @Author: Inderjeet Singh -->
+
+<project name="ejb-jar-ant" default="dummy-default">
+
+  <property name="app.module" value="${build.dir}/${module.name}.jar"/>
+  <property name="jar.build.dir" value="${build.dir}/jar"/>
+
+  <target name="package" depends="-post-compile"
+    description="packages the archive">
+    <mkdir dir="${jar.build.dir}"/>
+
+    <!-- Copy in the compiled Classes -->
+    <copy todir="${jar.build.dir}">
+      <fileset dir="${build.classes.dir}"/>
+    </copy>
+
+    <antcall target="package-persistence-unit">
+      <param name="pu.build.dir" value="${jar.build.dir}"/>
+    </antcall>
+
+    <delete file="${app.module}"/>
+    <jar jarfile="${app.module}" basedir="${jar.build.dir}"/>
+    <delete dir="${jar.build.dir}"/>
+  </target>
+
+  <target name="dummy-default"/>
+
+</project>
