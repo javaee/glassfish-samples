@@ -3,14 +3,9 @@
 <project name="glassfish-samples" default="default" basedir=".">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
-    <property file="installer.properties"/>
-
-    <property name="tmpdist" value="dist"/>
-
     <path id="samples-list">
-        <!--filelist dir="java-ee-5/duke-stateful-ear" files="build.xml"/-->
-        <!--filelist dir="java-ee-5/hello-stateless-ejb" files="build.xml"/-->
-        <filelist dir="java-ee-5/unmarshal-read-jaxb" files="build.xml"/>
+        <filelist dir="java-ee-5/simple-jaxb" files="build.xml"/>
+        <filelist dir="java-ee-5/hello-jaxws" files="build.xml"/>
     </path>
 
     <macrodef name="iterate">
@@ -22,31 +17,15 @@
         </sequential>
     </macrodef>
 
-    <target name="all" depends="clean-all,clean"
+    <target name="all" depends="clean"
         description="iterates thru all the sample applications to compile, package and run">
         <iterate target="all"/>
     </target>
 
-    <target name="clean-all"
-        description="iterates and cleans generated artifacts from all sample applications">
-        <iterate target="clean"/>
-    </target>
-
     <target name="clean"
         description="cleans workspace by removing temporary directories like dist">
+        <iterate target="clean"/>
         <delete dir="${tmpdist}"/>
     </target>
-
-    <target name="package" depends="all"
-        description="packages the samples into a single zip">
-        <mkdir dir="${tmpdist}"/>
-        <zip destfile="${release.zipfile}">
-            <zipfileset dir="." 
-                prefix="${release.fullname}" 
-                includes="index.html, bp-project/**, java-ee-5/**"
-                excludes="java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
-        </zip>
-    </target>
-
 
 </project>
