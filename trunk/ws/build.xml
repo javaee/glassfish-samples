@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="glassfish-samples" default="default" basedir=".">
+<project name="glassfish-samples" default="all" basedir=".">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
     <path id="samples-list">
@@ -25,7 +25,6 @@
     <target name="clean"
         description="cleans workspace by removing temporary directories like dist">
         <iterate target="clean"/>
-        <delete dir="${tmpdist}"/>
     </target>
 
 </project>

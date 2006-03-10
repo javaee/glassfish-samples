@@ -16,7 +16,13 @@
             <zipfileset dir="." 
                 prefix="${release.fullname}" 
                 includes="bp-project/**, build.xml, docs/**, index.html, java-ee-5/**"
-                excludes="java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
+                excludes="bp-project/build.properties,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
         </zip>
     </target>
+
+    <target name="clean"
+        description="cleans workspace by removing temporary directories like dist">
+        <delete dir="${tmpdist}"/>
+    </target>
+
 </project>
