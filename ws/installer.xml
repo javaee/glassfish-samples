@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="glassfish-samples" default="default" basedir=".">
+<project name="glassfish-samples" default="package" basedir=".">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
     <import file="build.xml"/>
