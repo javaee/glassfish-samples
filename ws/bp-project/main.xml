@@ -11,6 +11,7 @@
      @Author: Inderjeet Singh -->
 <project name="main" default="dummy-default">
 
+  <property file="build.properties"/>
   <property value="1.5" name="default.javac.source"/>
   <property value="1.5" name="default.javac.target"/>
 
