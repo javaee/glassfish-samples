@@ -16,14 +16,14 @@
      @Author Inderjeet Singh  -->
 <project name="common-properties" default="dummy-default">
 
-  <!-- include user specific build properties -->
-  <property file="${user.home}/build.properties"/>
+  <!-- include common properties -->
+  <property file="${ant.file.common-properties}/../build.properties"/>
 
-  <!-- include user specific build properties -->
-  <property file="build.properties"/>
-  
   <!-- include netbeans properties -->
   <property file="nbproject/project.properties"/>
+
+  <!-- include user specific build properties -->
+  <property file="${user.home}/build.properties"/>
 
   <!-- include common properties -->
   <property file="${ant.file.common-properties}/../common.properties"/>
