@@ -324,7 +324,7 @@
    <echo message="Application Deployed at: ${app.url}"/>
   </target>
 
-  <target name="client-stubs">
+  <target name="client-jar">
     <exec executable="${asadmin}" failonerror="${failonerror}">
         <arg line=" get-client-stubs "/>
         <arg line=" --user ${javaee.server.username}" />
@@ -332,11 +332,11 @@
         <arg line=" --host ${javaee.server.name}" />
         <arg line=" --port ${javaee.adminserver.port}" />
         <arg line=" --appname ${module.name}"/>
-        <arg line="${client.stubs.dir}" />
+        <arg line="${client.jar.dir}" />
     </exec>
     <copy
-        file="./client-stubs/${module.name}Client.jar"
-        tofile="client-stubs/appClient.jar"
+        file="./client-jar/${module.name}Client.jar"
+        tofile="client-jar/appClient.jar"
         failonerror="false">
     </copy>
   </target>
