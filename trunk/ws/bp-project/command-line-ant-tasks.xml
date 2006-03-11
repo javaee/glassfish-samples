@@ -47,7 +47,7 @@
     description="removes the generated directories like build and dist">
     <delete dir="${build.dir}" />
     <delete dir="${dist.dir}" />
-    <delete dir="${client.stubs.dir}" />
+    <delete dir="${client.jar.dir}" />
   </target>
 
  <available property="has-java-sources" file="${src.dir}"/>

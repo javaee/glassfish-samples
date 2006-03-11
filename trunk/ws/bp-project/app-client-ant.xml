@@ -18,15 +18,15 @@
   <property name="app-client.build.dir" value="${build.dir}/app-client"/>
 
   <dirname property="antfile.dir" file="${ant.file}"/>
-  <available property="client.stubs.in.acc.dir" file="${client.stubs.dir}" type="dir"/>
+  <available property="client.jar.in.acc.dir" file="${client.jar.dir}" type="dir"/>
 
-  <condition property="app.client.jar" value="${antfile.dir}/${client.stubs.dir}/${ac.jar}">
-    <isset property="client.stubs.in.acc.dir"/>
+  <condition property="app.client.jar" value="${antfile.dir}/${client.jar.dir}/${ac.jar}">
+    <isset property="client.jar.in.acc.dir"/>
   </condition>
 
-  <condition property="app.client.jar" value="${antfile.dir}/../${client.stubs.dir}/${ac.jar}">
+  <condition property="app.client.jar" value="${antfile.dir}/../${client.jar.dir}/${ac.jar}">
     <not>
-        <isset property="client.stubs.in.acc.dir"/>
+        <isset property="client.jar.in.acc.dir"/>
     </not>
   </condition>
 
