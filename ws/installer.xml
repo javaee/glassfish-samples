@@ -9,7 +9,7 @@
 
     <property name="tmpdist" value="dist"/>
 
-    <target name="package" depends="all"
+    <target name="package-zip" depends="all"
         description="packages the samples into a single zip">
         <mkdir dir="${tmpdist}"/>
         <zip destfile="${release.zipfile}">
@@ -18,6 +18,20 @@
                 includes="bp-project/**, build.xml, docs/**, index.html, java-ee-5/**"
                 excludes="bp-project/build.properties,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
         </zip>
+    </target>
+
+    <target name="package" depends="all"
+        description="packages the samples into a single jar">
+        <mkdir dir="${tmpdist}"/>
+        <jar destfile="${release.jarfile}">
+            <zipfileset dir="." 
+                prefix="${release.fullname}" 
+                includes="bp-project/**, build.xml, docs/**, index.html, java-ee-5/**"
+                excludes="bp-project/build.properties,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
+            <manifest>
+	        <attribute name="Built-By" value="${user.name}"/>
+            </manifest>
+        </jar>
     </target>
 
     <target name="clean"
