@@ -13,7 +13,9 @@
 <project name="war-ant" default="dummy-default">
 
   <property name="app.module" value="${build.dir}/${module.name}.war"/>
-  <property name="src.web" value="${home.dir}/web"/>
+  <property name="web.docbase.dir" value="${home.dir}/web"/>
+  <!-- src.web is deprecated, use web.docbase.dir instead -->
+  <property name="src.web" value="${web.docbase.dir}"/>
   <property name="war.build.dir" value="${build.dir}/war"/>
   <property name="build.web.dir" value="${build.dir}/web"/>
 

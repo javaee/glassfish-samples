@@ -62,9 +62,7 @@
      <include name="**/build/classes"/>
    </dirset>
    <pathelement location="${build.classes.dir}"/>
-   <pathelement location="${extra.classpath}"/>
-   <pathelement location="${extra1.classpath}"/>
-   <pathelement location="${extra2.classpath}"/>
+   <pathelement path="${extra.classpath}"/>
    <path refid="javaee.classpath" />
  </path>
 
