@@ -356,5 +356,8 @@
       AS_ADMIN_PASSWORD. 
     </fail>    
   </target>
+
+  <!-- Dummy placeholder targets. They can be overridden by application build file -->
+  <target name="-pre-deploy"/>
   
 </project>
