@@ -128,7 +128,6 @@
   <target name="init"/>
   <target name="-pre-compile"/>
   <target name="-post-compile"/>
-  <target name="-pre-deploy"/>
   <target name="-pre-setup"/>
 
   <target name="default" depends="compile,package,bpp-copy-dist"
