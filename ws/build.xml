@@ -5,6 +5,8 @@
 
     <path id="samples-list">
         <filelist dir="java-ee-5/simple-jaxb" files="build.xml"/>
+        <filelist dir="java-ee-5/servlet-stateless-ear" files="build.xml"/>
+        <filelist dir="java-ee-5/interceptor-stateless-ear" files="build.xml"/>
         <filelist dir="java-ee-5/hello-jaxws" files="build.xml"/>
     </path>
 
