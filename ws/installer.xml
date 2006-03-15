@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="glassfish-samples" default="package" basedir=".">
+<project name="glassfish-samples" default="package-zip" basedir=".">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
     <import file="build.xml"/>
@@ -12,15 +12,18 @@
     <target name="package-zip" depends="all"
         description="packages the samples into a single zip">
         <mkdir dir="${tmpdist}"/>
+        <copy file="docs/sdk_samples_index.html" tofile="${tmpdist}/index.html"/>
         <zip destfile="${release.zipfile}">
+            <zipfileset dir="${tmpdist}" 
+                includes="index.html"/>
             <zipfileset dir="." 
                 prefix="${release.fullname}" 
                 includes="bp-project/**, build.xml, docs/**, index.html, java-ee-5/**"
-                excludes="bp-project/build.properties,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
+                excludes="bp-project/build.properties,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,docs/sdk_samples_index.html,java-ee-5/hello-stateless-ejb/**,java-ee-5/duke-stateful-ear/**"/>
         </zip>
     </target>
 
-    <target name="package" depends="all"
+    <target name="package-jar" depends="all"
         description="packages the samples into a single jar">
         <mkdir dir="${tmpdist}"/>
         <jar destfile="${release.jarfile}">
