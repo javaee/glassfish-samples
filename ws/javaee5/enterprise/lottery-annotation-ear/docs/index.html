@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <title>The [application name] Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>The Java EE 5 Annotation Sample Application</h1>
+<div style="text-align: justify;">This is a very simple example
+intended to demonstrate Annotation
+facility introduced in Java EE 5.<br>
+Emphasis here is to demonstrate Annotations by keeping the sample as
+simple as possible.<br>
+Its a lottery application where in user selects the Lottery to play and
+the application generates the<br>
+quick pick number for him.<br>
+</div>
+<br>
+<div style="text-align: justify;">This sample consist of the following
+components/artifacts:<br>
+&nbsp;&nbsp;&nbsp; index file(<font face="verdana, arial, helvetica"
+ size="2"><code>index.html</code></font>)<br>
+&nbsp;&nbsp;&nbsp; Servlet(<font face="verdana, arial, helvetica"
+ size="2"><code>PlayLotteryServlet</code></font>)<br>
+&nbsp;&nbsp;&nbsp; Stateless Session Beans(<font
+ face="verdana, arial, helvetica" size="2"><code>Dice</code></font> and
+<font face="verdana, arial, helvetica" size="2"><code>Date</code></font>)<br>
+&nbsp;&nbsp;&nbsp; Stateful Session Bean(<font
+ face="verdana, arial, helvetica" size="2"><code>Lottery</code></font>)<br>
+&nbsp;&nbsp;&nbsp; JSP(<font face="verdana, arial, helvetica" size="2"><code>LotteryView</code></font>)<br>
+</div>
+<br>
+<br>
+Index file, <font face="verdana, arial, helvetica" size="2"><code>index.html</code></font><span
+ style="font-style: italic;"></span> is an
+entry point to the application. Index page collects
+the user input and then invokes the <font
+ face="verdana, arial, helvetica" size="2"><code>PlayLotteryServlet</code></font><span
+ style="font-style: italic;"></span>
+Servlet.<br>
+<font face="verdana, arial, helvetica" size="2"><code>PlayLotteryServlet</code></font><span
+ style="font-style: italic;"></span> essentially
+generates the required data(Lottery Number, Lottery Date); set these
+date values in the request object and <br>
+dispatches the JSP, <font face="verdana, arial, helvetica" size="2"><code>LotteryView</code></font><span
+ style="font-style: italic;"></span>
+for output. <font face="verdana, arial, helvetica" size="2"><code>PlayLotteryServlet</code></font><span
+ style="font-style: italic;"></span>
+obtains the Lottery Date using the Stateless Session Bean, <font
+ face="verdana, arial, helvetica" size="2"><code>Date</code></font><span
+ style="font-style: italic;"></span>. It uses Stateful&nbsp; <br>
+Session Bean, <font face="verdana, arial, helvetica" size="2"><code>Lottery</code></font><span
+ style="font-style: italic;"></span>, to
+form the Lottery Number from the individual digits obtained from the
+Stateless Session Bean, <font face="verdana, arial, helvetica" size="2"><code>Dice</code></font><span
+ style="font-style: italic;"></span>.<br>
+<div style="text-align: justify;"></div>
+<br>
+<br>
+<br>
+<span style="font-weight: bold;">Stateless Session Bean (</span><span
+ style="font-weight: bold;">Dice)</span><br>
+This is a very simple EJB 3.0 Stateless Session Bean with a Remote
+business interface.<br>
+<br>
+<b>Business Interface<br>
+</b>The Stateless Session bean has a Remote business interface
+with a
+single business method.<br>
+<blockquote>import javax.ejb.Remote;<br>
+  <br>
+  <span style="font-weight: bold;">@Remote</span><br>
+public interface Dice {<br>
+&nbsp;&nbsp;&nbsp; public int play();<br>
+}<br>
+  <br>
+Unlike prior versions of EJB, the Remote interface is <b>not</b>
+required to extend <font face="verdana, arial, helvetica" size="2"><code>java.rmi.Remote</code></font>
+and its business methods are <b>not</b>
+required to throw<br>
+  <font face="verdana, arial, helvetica" size="2"><code>java.rmi.RemoteException</code></font>.
+The business interface is designated as a remote business interface via
+the <font face="verdana, arial, helvetica" size="2"><code>@javax.ejb.Remote</code></font>
+annotation.<br>
+</blockquote>
+<b>Stateless Session Bean Class<br>
+</b>Here's the bean implementation :<br>
+<blockquote> import java.util.Random;<br>
+import javax.ejb.Stateless;<br>
+  <br>
+  <span style="font-weight: bold;">@Stateless</span><br>
+public class DiceBean implements Dice {<br>
+&nbsp;&nbsp;&nbsp; public int play() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Random random = new Random();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return random.nextInt(10);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+}<br>
+  <br>
+A Stateless Session Bean, written the EJB 3.0 way, is just a plain java
+file with a class-level annotation <font
+ face="verdana, arial, helvetica" size="2"> <code>@Stateless</code>.
+It does not have a home <br>
+interface, anymore. </font><font face="verdana, arial, helvetica"
+ size="2">No Deployment
+Descriptor entries are needed to define the Bean. </font>JNDI name for
+the bean
+will
+default to the class<br>
+name&nbsp; of its business interface.</blockquote>
+<br>
+<br>
+<br>
+<span style="font-weight: bold;">Stateless Session Bean (</span><span
+ style="font-weight: bold;">Date)</span><br>
+This is a very simple EJB 3.0 Stateless Session Bean with a Local
+business interface.<br>
+<br>
+<b>Business Interface<br>
+</b>The Stateless Session bean has a Local business interface
+with a
+single business method.<br>
+<blockquote> <br>
+public interface Date {<br>
+&nbsp;&nbsp;&nbsp; public String today();<br>
+}<br>
+</blockquote>
+<b>Stateless Session Bean Class<br>
+</b>Here's the bean implementation :<br>
+<br>
+<div style="margin-left: 40px;">import java.util.Calendar;<br>
+import javax.ejb.Stateless;<br>
+</div>
+<br>
+<div style="margin-left: 40px;"><span style="font-weight: bold;">@Stateless</span><br>
+public class DateBean implements Date {<br>
+&nbsp;&nbsp;&nbsp; public String today() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StringBuffer date = new
+StringBuffer();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calendar calendar =
+Calendar.getInstance();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+date.append(calendar.get(Calendar.MONTH)+1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; date.append("/");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+date.append(calendar.get(Calendar.DAY_OF_MONTH));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; date.append("/");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+date.append(calendar.get(Calendar.YEAR));<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return date.toString();<br>
+&nbsp;&nbsp;&nbsp; }<br>
+}<br>
+</div>
+<blockquote><br>
+  <br>
+</blockquote>
+<span style="font-weight: bold;">Stateful Session Bean (</span><span
+ style="font-weight: bold;">Lottery)</span><br>
+This is a very simple EJB 3.0 Stateful Session Bean with a Remote
+business interface.<br>
+<br>
+<b>Business Interface<br>
+</b>The Stateful Session bean has a Remote business interface
+with multiple business method.<br>
+<blockquote>import javax.ejb.Remote;<br>
+  <br>
+  <font face="verdana, arial, helvetica" size="2"><code></code></font><span
+ style="font-weight: bold;">@Remote</span><br>
+public interface Lottery {<br>
+&nbsp;&nbsp;&nbsp; public String getName();<br>
+&nbsp;&nbsp;&nbsp; public String getNumber();<br>
+&nbsp;&nbsp;&nbsp; public String getDate();<br>
+  <br>
+&nbsp;&nbsp;&nbsp; public void select(int number);<br>
+&nbsp;&nbsp;&nbsp; public void setName(String name);<br>
+}<br>
+  <br>
+Unlike prior versions of EJB, the Remote interface is <b>not</b>
+required to extend <font face="verdana, arial, helvetica" size="2"><code>java.rmi.Remote</code></font>
+and its business methods are <b>not</b>
+required to throw<br>
+  <font face="verdana, arial, helvetica" size="2"><code>java.rmi.RemoteException</code></font>.
+The business interface is designated as a remote business interface via
+the <font face="verdana, arial, helvetica" size="2"><code>@javax.ejb.Remote</code></font>
+annotation.<br>
+</blockquote>
+<b>Stateful Session Bean Class<br>
+</b>Here's the bean implementation :<br>
+<br>
+<div style="margin-left: 40px;">import javax.ejb.Stateful;<br>
+import javax.ejb.EJB;<br>
+<br>
+<span style="font-weight: bold;">@Stateful</span><br>
+public class LotteryBean implements Lottery {<br>
+&nbsp;&nbsp;&nbsp; public String getName() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public String getNumber() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return number;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public String getDate() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return date.today();<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void select(int number) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if( (number &gt; -1)
+&amp;&amp; (number &lt; 10) ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+this.number = this.number + SPACE +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+java.lang.Integer.toString(number);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setName(String name) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.name = name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; //Dependency injection to get an instance of the
+Date EJB.<br>
+&nbsp;&nbsp;&nbsp; <span style="font-weight: bold;">@EJB(name="Date")</span><br>
+&nbsp;&nbsp;&nbsp; private Date date;<br>
+<br>
+&nbsp;&nbsp;&nbsp; private String name = "Super Lotto";<br>
+&nbsp;&nbsp;&nbsp; private String number = "";<br>
+&nbsp;&nbsp;&nbsp; private static final String SPACE = " ";<br>
+}<br>
+</div>
+<br>
+<div style="margin-left: 40px; text-align: justify;">A Stateful Session
+Bean, written the
+EJB 3.0 way, is just a plain java file with a class-level annotation <font
+ face="verdana, arial, helvetica" size="2"> <code>@Stateful</code>. It
+does not have a home<br>
+interface, anymore. No Deployment Descriptor entries are needed to
+define the Bean. </font>JNDI
+name for the bean
+will
+default to the class<br>
+name of its business interface. <font face="verdana, arial, helvetica"
+ size="2"><code>@EJB</code></font><font face="verdana, arial, helvetica"
+ size="2"> is used to get hold of the
+local bean </font><font face="verdana, arial, helvetica" size="2"><code>Date</code></font><font
+ face="verdana, arial, helvetica" size="2">, eliminating the
+error-prone string based jndi-lookup.<br>
+</font></div>
+<div style="text-align: justify;"><br>
+<br>
+</div>
+<br>
+<span style="font-weight: bold;"></span><br>
+<span style="font-weight: bold;">Servlet (</span><span
+ style="font-weight: bold;">PlayLotteryServlet)</span><br>
+This is a very simple Servlet that access EJB using JAVA EE 5/Servlet
+2.5 feature. Only the relevant code snippet is depicted below.<br>
+<br>
+public class PlayLotteryServlet extends HttpServlet {<br>
+<br>
+<div style="margin-left: 40px;">protected void
+processRequest(HttpServletRequest request, HttpServletResponse response)<br>
+</div>
+<div style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; throws
+ServletException, IOException {<br>
+<br>
+</div>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+<br>
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+ResourceBundle rb = ResourceBundle.getBundle("LocalStrings",
+Locale.getDefault()); &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InitialContext initContext&nbsp; =
+new InitialContext();<br>
+<br>
+&nbsp; &nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+ style="font-weight: bold;"> lottery = </span><br
+ style="font-weight: bold;">
+<span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(Lottery)
+initContext.lookup("enterprise.lottery_annotation_ejb_stateful.Lottery");</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="font-weight: bold;">dice =</span><br
+ style="font-weight: bold;">
+<span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(Dice)
+initContext.lookup("enterprise.lottery_annotation_ejb_stateless.Dice");</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}<br>
+<br>
+&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp; <br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; Bean's business interface
+class name is used for its lookup. No need to assign explicit JNDI name
+for the bean.<br>
+<br>
+<br>
+<br>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+</p>
+<p>Following are the instructions for building, deploying, and running
+this sample application. <br>
+<br>
+</p>
+<ol>
+  <li> Setup your build environment and Configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>install_dir</i>/samples/lottery-annotation-ear</code></li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, Deploy and Run the sample application using the target <code></code><code>all</code><code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant all</code>
+  </p>
+  <li>It is possible to do the above separately by issuing separate
+commands as given below.</li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> runs the application. It launches the browser with the
+correct url.<br>
+  </p>
+  <li>You can run the java client using the target <code></code><code>run-client</code>.
+    <br>
+  </li>
+</ol>
+<div style="margin-left: 40px;"><code><span style="font-style: italic;">app_dir&gt;
+</span>ant run-client</code><br>
+</div>
+<div style="margin-left: 40px;"><br>
+<code>run-client</code> target invokes the <a
+ href="../lottery-annotation-client/docs/index.html">java client code</a>
+under <code><i>app_dir/</i></code><code>lottery-annotation-client</code>
+directory.</div>
+<br>
+<ol start="7" style="list-style-type: decimal;">
+  <li>Use the target <code>clean </code>to undeploy the sample
+application and to
+remove the temporary directories like <code>build </code>and <code>dist</code>.</li>
+</ol>
+<div style="margin-left: 40px;"><code><span style="font-style: italic;">app_dir&gt;
+</span>ant
+clean</code></div>
+<p style="margin-left: 40px;"> </p>
+<ol>
+</ol>
+<h2><br>
+</h2>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to <a
+ href="../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+&nbsp;
+<p><!--- Do not modify the rest of the document --></p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
