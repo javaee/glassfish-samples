@@ -295,11 +295,12 @@
   <!-- The deployment process is stop the build if there is an error
        in the deployment process. To change this behavior define the
        property failonerror to be false. -->
+  <property name="run.uri" value="${module.name}"/>
   <target name="deploy" depends="tools,-pre-deploy"
     description="deploys the application">
     <fail unless="app.module" message="app.module must be set before invoking this target. Otherwise there is no application to deploy."/>
     <fail unless="module.name" message="app.name must be set before invoking this target. Otherwise there is no application to deploy."/>
-    <condition property="app.url" value="http://${javaee.server.name}:${javaee.server.port}/${module.name}">
+    <condition property="app.url" value="http://${javaee.server.name}:${javaee.server.port}/${run.uri}">
       <not>
         <isset property="app.endpointuri"/>
       </not>
