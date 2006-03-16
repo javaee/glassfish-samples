@@ -33,7 +33,7 @@ There are three components which contribute to the smooth working of
 sample applications. These components are Build Infrastructure,
 Application Server, and the Sample Application. By following <a
  href="./UserREADME.html">common build instructions</a> it can be made
-sure that the Build Infrastruture and
+sure that the Build Infrastructure and
 Application Server are setup properly. To troubleshoot the sample
 application, following procedure may be followed:<br>
 <br>
@@ -42,7 +42,7 @@ application, following procedure may be followed:<br>
 if ant all causes an exception then try to run the constituent ant
 targets like compile, package, deploy, and run separately.</li>
   <li>Refer to the exception in detail and try to fix it.</li>
-  <li>Refer to server.log for clues/messages.</li>
+  <li>Refer to application server's server.log for clues/messages.</li>
   <li>Try alternative ways of doing the same thing. For ex. if
 deployment fails then try deploying thru GUI or CLI. </li>
   <li>Before retrying, run the clean target to undeploy and to remove
@@ -51,10 +51,9 @@ the generated directories.</li>
 certain non-dynamic configuration changes.</li>
   <li>Make sure the user id and password or the credentials are valid.<br>
   </li>
-  <li>If the application uses JDB resources, make sure that the
+  <li>If the application uses JDBC resources, make sure that the
 database server is up and running and the resources are setup properly.
 Same is true for JMS resources. </li>
-  <li>Use samples forum.</li>
 </ol>
 <br>
 Please note that the above list is by no means exhaustive as it is
