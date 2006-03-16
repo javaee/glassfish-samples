@@ -6,6 +6,7 @@
     <path id="samples-list">
         <filelist dir="enterprise/servlet-stateless-ear" files="build.xml"/>
         <filelist dir="enterprise/interceptor-stateless-ear" files="build.xml"/>
+        <filelist dir="enterprise/lottery-annotation-ear" files="build.xml"/>
         <filelist dir="webservices/simple-jaxb" files="build.xml"/>
         <filelist dir="webservices/hello-jaxws" files="build.xml"/>
     </path>
