@@ -40,7 +40,7 @@
         <antcall target="default"/>
     </target>
 
-    <target name="-pre-clean" depends="undeploy">
+    <target name="-pre-clean">
         <iterate target="clean"/>
     </target>
 
