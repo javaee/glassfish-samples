@@ -23,14 +23,13 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="interceptor-stateless-ear" default="ear" basedir=".">
+<project name="interceptor-stateless-ear" default="all" basedir=".">
 
     <property name="is.ear.module" value="true" />
 
     <path id="ear-components">
         <filelist dir="./interceptor-stateless-ejb" files="build.xml" />
         <filelist dir="./interceptor-stateless-appclient" files="build.xml" />
-        <filelist dir="./test" files="build.xml" />
     </path>
 
     <import file="../../../bp-project/main.xml" />
