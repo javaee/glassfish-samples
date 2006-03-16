@@ -108,8 +108,11 @@
   </target>
   
   <!-- This target launches a browser for the specified URL -->
-  <target name="launch" depends="getBrowser" description="launches the application in a browser">
-    <fail unless="module.name" message="The property module.name must be set before invoking this target. Otherwise there is no application to launch."/>
+  <target name="launch" depends="getBrowser" description="launches the
+  application in a browser">
+
+    <!-- Default the value of run.uri to be module.name -->
+    <property name="run.uri" value="${module.name}"/>
     <condition property="extra-args" value="url.dll,FileProtocolHandler">
       <os family="windows"/>
     </condition>
@@ -118,9 +121,9 @@
         <os family="windows"/>
       </not>
     </condition>
-    <echo>Launching ${module.name}.</echo>
+    <echo>Launching ${run.uri}.</echo>
     <exec executable="${default.browser}" spawn="true">
-      <arg line ="${extra-args} http://${javaee.server.name}:${javaee.server.port}/${module.name}" />
+      <arg line ="${extra-args} http://${javaee.server.name}:${javaee.server.port}/${run.uri}" />
     </exec>
   </target>
 
