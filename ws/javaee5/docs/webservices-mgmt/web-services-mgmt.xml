@@ -24,7 +24,6 @@
 -->
 
 <project name="hello-jaxws" default="all" basedir=".">
-    <!-- include user specific build properties -->
 
     <import file="../../../bp-project/web-services-management.xml"/>
     
