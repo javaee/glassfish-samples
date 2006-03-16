@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>docs.sun.com: Sun Java System Application Server Platform
+Edition 9 Administration Guide</title>
+  <link rel="shortcut icon"
+ href="http://docsview.sfbay/app/css/favicon.ico">
+  <link rel="stylesheet"
+ href="http://docsview.sfbay/app/css/css/default.css">
+</head>
+<body bgcolor="#ffffff">
+<br>
+<h1 class="sol">Monitoring Web Services</h1>
+<p>One can track operational statistics for web services, and can
+display
+messages sent and received by web services.</p>
+<p>To enable monitoring for a web service, use the ant task <span
+ style="font-style: italic;">enable-monitoring</span></p>
+<p>Withing the ant task, set the monitoring level:</p>
+<a name=""></a>
+<ul>
+  <li>
+    <p>LOW: Monitors response time, throughput, total number of
+requests,
+faults, and monitoring of number of requests per second, average
+response time, and
+throughput attributes for the web service.</p>
+  </li>
+  <li>
+    <p>HIGH: In addition to the metrics monitored at LOW level, also
+monitors
+SOAP request and response messages.</p>
+  </li>
+  <li>
+    <p>OFF: Disables monitoring.</p>
+  </li>
+</ul>
+<p>You can also configure web service monitoring with the <a
+ href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmte?a=view">configure-webservice-management(1)</a>
+command.</p>
+<a name="gbsda"></a>
+<h2 class="sol">Viewing Web Service Statistics</h2>
+<p>Application Server 9.0 provides capabilities to track the
+operational statistics of a web service.</p>
+<p>View monitoring statistics using the ant task <span
+ style="font-style: italic;">'get-stats'</span> in the jax-ws sample.
+The statistics available are:</p>
+<a name=""></a>
+<ul>
+  <li>
+    <p>Response time in milliseconds on any successful or unsuccessful
+operation
+(maximum, minimum, and average).</p>
+    <hr><b>Note &#8211; </b>
+    <p>Response time is the time the sever took to process the web
+service request,
+not including any network transmission time.</p>
+    <hr>
+  </li>
+  <li>
+    <p>Throughput</p>
+  </li>
+  <li>
+    <p>Total number of requests</p>
+  </li>
+  <li>
+    <p>Total number of faults, including URI of the endpoint where the
+fault
+originated</p>
+  </li>
+</ul>
+<a name="gbsdf"></a><br>
+<a name="gbbiz"></a>
+<h1 class="sol">Transforming Messages with XSLT Filters</h1>
+<p>You can apply XSLT transformation rules to a web service end point.
+This enables
+fine-grained control of web service requests and responses. You can
+apply multiple
+XSLT rules to a web service end point method, and you can configure the
+order in which
+you apply the transformations.</p>
+<p>You can apply <font color="#c00000"><b>transformation rule</b></font>
+to a SOAP request or response.</p>
+<p>Before revising an application to apply transformation rules,
+evaluate the pros
+and cons of doing so: Applying XSLT can lengthen processing time for a
+web service.
+In other cases, XSLT makes sense, for example if a web service is
+exposed to partners
+with different XML data exchange formats or different security
+requirements. In such
+cases, transformation rules can act as a proxy for the web service and
+be advantageous.</p>
+<p>To add a <font color="#c00000"><b>transformation rule</b></font> to
+apply to a web service operation use the ant task <span
+ style="font-style: italic;">'add-transformation-rule'</span> </p>
+<p>If you add multiple transformation rules for a web service endpoint,
+the transformation
+rules are applied in the order in which they are added. </p>
+<p>To remove a <font color="#c00000"><b>transformation rule</b></font>,
+use the ant task <span style="font-style: italic;">'delete-transformation-rule'</span>.
+This removes the <font color="#c00000"><b>transformation
+rule</b></font> from the list and removes the corresponding XSLT file.<br>
+</p>
+<p>To list the <font color="#c00000"><b>transformation rules</b></font>,
+use the ant task 'list-transformation-rules'.<br>
+</p>
+<p>Additionally, you can create, delete, and list transformation rules
+with the
+following <kbd>asadmin</kbd> commands:</p>
+<a name=""></a>
+<ul>
+  <li>
+    <p><a
+ href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmug?a=view">create-transformation-rule(1)</a></p>
+  </li>
+  <li>
+    <p><a
+ href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmvi?a=view">delete-transformation-rule(1)</a></p>
+  </li>
+  <li>
+    <p><a
+ href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hn1m?a=view">list-transformation-rules(1)</a></p>
+  </li>
+</ul>
+<br>
+</body>
+</html>
