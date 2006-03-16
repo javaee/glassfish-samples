@@ -1,39 +1,48 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
 <head>
-  <title>docs.sun.com: Sun Java System Application Server Platform
-Edition 9 Administration Guide</title>
-  <link rel="shortcut icon"
- href="http://docsview.sfbay/app/css/favicon.ico">
-  <link rel="stylesheet"
- href="http://docsview.sfbay/app/css/css/default.css">
+  <title>Monitoring Web Services</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
 </head>
-<body bgcolor="#ffffff">
-<br>
-<h1 class="sol">Monitoring Web Services</h1>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ link="#594fbf" vlink="#1005fb" alink="#333366" marginwidth="10">
+<table width="100%" border="0" cellspacing="4" cellpadding="2">
+  <tbody>
+    <tr>
+      <td valign="top" align="right" bgcolor="#587993"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Monitoring Web Services</h1>
 <p>One can track operational statistics for web services, and can
 display
 messages sent and received by web services.</p>
 <p>To enable monitoring for a web service, use the ant task <span
  style="font-style: italic;">enable-monitoring</span></p>
 <p>Withing the ant task, set the monitoring level:</p>
-<a name=""></a>
 <ul>
-  <li>
-    <p>LOW: Monitors response time, throughput, total number of
+  <li> LOW: Monitors response time, throughput, total number of
 requests,
 faults, and monitoring of number of requests per second, average
 response time, and
-throughput attributes for the web service.</p>
-  </li>
-  <li>
-    <p>HIGH: In addition to the metrics monitored at LOW level, also
+throughput attributes for the web service. </li>
+  <li> HIGH: In addition to the metrics monitored at LOW level, also
 monitors
-SOAP request and response messages.</p>
-  </li>
-  <li>
-    <p>OFF: Disables monitoring.</p>
-  </li>
+SOAP request and response messages. </li>
+  <li> OFF: Disables monitoring. </li>
 </ul>
 <p>You can also configure web service monitoring with the <a
  href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmte?a=view">configure-webservice-management(1)</a>
@@ -45,33 +54,21 @@ operational statistics of a web service.</p>
 <p>View monitoring statistics using the ant task <span
  style="font-style: italic;">'get-stats'</span> in the jax-ws sample.
 The statistics available are:</p>
-<a name=""></a>
 <ul>
-  <li>
-    <p>Response time in milliseconds on any successful or unsuccessful
+  <li> Response time in milliseconds on any successful or unsuccessful
 operation
-(maximum, minimum, and average).</p>
-    <hr><b>Note &#8211; </b>
-    <p>Response time is the time the sever took to process the web
+(maximum, minimum, and average).
+    <hr><b>Note &#8211; </b> Response time is the time the sever took to
+process the web
 service request,
-not including any network transmission time.</p>
-    <hr>
-  </li>
-  <li>
-    <p>Throughput</p>
-  </li>
-  <li>
-    <p>Total number of requests</p>
-  </li>
-  <li>
-    <p>Total number of faults, including URI of the endpoint where the
-fault
-originated</p>
-  </li>
+not including any network transmission time.
+    <hr> </li>
+  <li> Throughput </li>
+  <li> Total number of requests </li>
+  <li> Total number of faults, including URI of the endpoint where the
+fault originated </li>
 </ul>
-<a name="gbsdf"></a><br>
-<a name="gbbiz"></a>
-<h1 class="sol">Transforming Messages with XSLT Filters</h1>
+<h2>Transforming Messages with XSLT Filters</h2>
 <p>You can apply XSLT transformation rules to a web service end point.
 This enables
 fine-grained control of web service requests and responses. You can
@@ -108,21 +105,54 @@ use the ant task 'list-transformation-rules'.<br>
 <p>Additionally, you can create, delete, and list transformation rules
 with the
 following <kbd>asadmin</kbd> commands:</p>
-<a name=""></a>
 <ul>
-  <li>
-    <p><a
- href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmug?a=view">create-transformation-rule(1)</a></p>
+  <li> <a
+ href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmug?a=view">create-transformation-rule(1)</a>
   </li>
-  <li>
-    <p><a
- href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmvi?a=view">delete-transformation-rule(1)</a></p>
+  <li> <a
+ href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmvi?a=view">delete-transformation-rule(1)</a>
   </li>
-  <li>
-    <p><a
- href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hn1m?a=view">list-transformation-rules(1)</a></p>
+  <li> <a
+ href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hn1m?a=view">list-transformation-rules(1)</a>
   </li>
 </ul>
-<br>
+<h2>Support for Web Services Monitoring</h2>
+<p>
+The samples build infrastructure provides the following ant targets to
+perform the above mentioned monitoring services.&nbsp; </p>
+<ul>
+  <li> enable-monitoring </li>
+  <li> get-monitoring-stats </li>
+  <li> add-request-transformation-rule </li>
+  <li> delete-request-transformation-rule </li>
+  <li> list-request-transformation-rules </li>
+</ul>
+<h2>Web Services Monitoring Example</h2>
+<p>
+This example is based on the sample application <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>.
+Make sure that the <code>hello-jaxws</code> sample builds and runs
+before working on this example.
+</p>
+<ul>
+  <li> copy <a href="./webservices-mgmt/web-services-mgmt.xml">web-services-mgmt.xml</a>
+and <a href="./webservices-mgmt/req.xsl">req.xsl</a> to <code>webservices/hello-jaxws</code>
+directory </li>
+  <li> cd to <code>webservices/hello-jaxws</code> directory </li>
+  <li> <code>ant -f web-services-mgmt.xml set-monitoring-level</code>
+to set the monitoring level to HIGH </li>
+  <li> <code>ant -f web-services-mgmt.xml get-stats</code> to view the
+monitoring statistics </li>
+  <li> <code>ant -f web-services-mgmt.xml add-transformation-rule</code>
+to add a transformation rule </li>
+  <li> <code>ant -f web-services-mgmt.xml list-transformation-rules</code>
+to list transformation rules </li>
+</ul>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
 </body>
 </html>
