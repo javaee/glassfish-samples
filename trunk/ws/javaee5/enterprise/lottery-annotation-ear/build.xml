@@ -23,7 +23,7 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="lottery-annotation-ear" default="ear" basedir=".">
+<project name="lottery-annotation-ear" default="all" basedir=".">
 
   <property name="is.ear.module" value="true"/>
   <path id="ear-components">
