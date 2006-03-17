@@ -143,14 +143,4 @@
   </target>
   <target name="run" depends="default,deploy,launch" description="builds, packages and runs the application"/>
 
-<target name="msr">
-                <echo message="junit.home is ${junit.home}"/>
-                <property name="cpath" refid="classpath"/>
-                <echo message="classpath ${cpath}"/>
-                <property name="extra.classpath" value="${junit.home}/junit-4.0.jar"/>
-                <echo message="extra.classpath value is ${extra.classpath}"/>
-                <property name="cpath" refid="classpath"/>
-                <echo message="classpath ${cpath}"/>
-        </target>
-
 </project>
