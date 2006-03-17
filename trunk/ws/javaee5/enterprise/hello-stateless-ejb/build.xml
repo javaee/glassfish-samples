@@ -23,14 +23,14 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="hello-stateless-ejb" default="default" basedir=".">
+<project name="hello-stateless-ejb" default="all" basedir=".">
 
     <property name="is.ejb-jar.module" value="true"/>
     <property name="javadoc.packagenames" value="enterprise.hello_stateless_ejb"/>
 
     <import file="../../../bp-project/main.xml"/>
 
-    <target name="all" depends="default,deploy">
+    <target name="all" depends="default,deploy,run">
         <subant target="default">
             <fileset dir="hello-stateless-client" includes="build.xml"/>
         </subant>
