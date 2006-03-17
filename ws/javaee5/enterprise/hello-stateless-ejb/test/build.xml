@@ -25,7 +25,8 @@
 
 <project name="hello-stateless-ejb-test" default="runtest" basedir=".">
 
-    <import file="../../../../bp-project/main.xml"/>
+
+    <import file="../../../../bp-project/test.xml"/>
 
     <target name="runtest" depends="compile">
 	<echo message="Running the sample application..." />

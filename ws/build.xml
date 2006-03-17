@@ -39,4 +39,25 @@
         <delete dir="${tmpdist}"/>
     </target>
 
+    <path id="samples-test-list">
+        <filelist dir="javaee5/enterprise/hello-stateless-ejb/test" files="build.xml"/>
+    </path>
+
+    <macrodef name="iterate-tests">
+        <attribute name="target"/>
+        <sequential>
+            <subant target="@{target}" failonerror="false">
+                <buildpath refid="samples-test-list"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="runtest" depends="clean">
+	<tstamp/>
+	<property name="results.file" value="${DSTAMP}_${TSTAMP}_test_results.txt"/>
+	<record name="${results.file}" action="start" loglevel="info"/>
+	<iterate-tests target="runtest"/>
+	<record name="${results.file}" action="stop"/>
+    </target>
+
 </project>
