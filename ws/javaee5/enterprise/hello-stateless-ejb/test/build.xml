@@ -25,10 +25,6 @@
 
 <project name="hello-stateless-ejb-test" default="runtest" basedir=".">
 
-    <property name="junit.home" 
-	value="/home/sreeni/IAS/SAMPLES/WS/glassfish-samples/ws/junit4.0"/>
-    <property name="extra.classpath" value="${junit.home}/junit-4.0.jar"/>
-
     <import file="../../../../bp-project/main.xml"/>
 
     <target name="runtest" depends="compile">
