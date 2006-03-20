@@ -112,15 +112,18 @@ common build instructions.</a></li>
 directory: <code><i>install_dir</i>/samples/ws/java-ee5\servlet-stateless-ear</code></li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-  <li>Build, Deploy the sample application using the target all<code></code></li>
+  <li>Build, Deploy and run the sample application using the target all<code></code></li>
   <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
 all</p>
   <li>The sample can be run by pointing your browser to the following
-URL: <a href="http://localhost:8080/servlet-stateless-war/servlet">http://localhost:8080/servlet-stateless-war/servlet</a></li>
-  <li>Use the target clean to undeploy the sample application and to
+URL: <a href="http://localhost:8080/servlet-stateless-war/servlet">http://localhost:8080/servlet-stateless-war/servlet</a>
+Or by calling ant run target<br>
+  </li>
+  <li>Use the targets "undeploy"&nbsp; and "clean"to undeploy the
+sample application and to
 remove the temporary directories like build and dist.
     <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-clean</code> </p>
+undeploy clean</code> </p>
   </li>
 </ol>
 <h2>Troubleshooting</h2>
