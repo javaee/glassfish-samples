@@ -40,10 +40,8 @@ public class Servlet2Stateless
 
         try {
 
-            out
-                    .println("<HTML> <HEAD> <TITLE> JMS Servlet Output </TITLE> </HEAD> <BODY BGCOLOR=white>");
-            out
-                    .println("<CENTER> <FONT size=+1> Servlet2Stateless:: Please enter your name </FONT> </CENTER> <p> ");
+            out.println("<HTML> <HEAD> <TITLE> Servlet Output </TITLE> </HEAD> <BODY BGCOLOR=white>");
+            out.println("<CENTER> <FONT size=+1> Servlet2Stateless:: Please enter your name </FONT> </CENTER> <p> ");
             out.println("<form method=\"POST\">");
             out.println("<TABLE>");
             out.println("<tr><td>Name: </td>");
