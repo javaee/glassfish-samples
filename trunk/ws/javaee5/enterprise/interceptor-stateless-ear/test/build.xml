@@ -23,17 +23,17 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="interceptor-stateless-ear-test" default="runtest" basedir=".">
+<project name="interceptor-stateless-ejb-test" default="runtest" basedir=".">
 
-    <import file="../../../../bp-project/main.xml" />
-    <import file="../../../../bp-project/app-client-ant.xml" />
 
-    <dirname property="antfile.dir" file="${ant.file}" />
+    <import file="../../../../bp-project/test.xml"/>
 
-    <target name="runtest">
-        <subant target="run-app-client">
-            <fileset dir="../interceptor-stateless-appclient" includes="build.xml" />
-        </subant>
+    <target name="runtest" depends="compile">
+	<echo message="Running the sample application..." />
+	<java classname="org.junit.runner.JUnitCore" fork="on">
+		<arg value="enterprise.interceptor_stateless_ejb_test.InterceptorStatelessEjbTest"/>
+		<classpath refid="classpath"/>
+	</java>
     </target>
 
 </project>
