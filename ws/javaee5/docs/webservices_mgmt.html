@@ -15,11 +15,11 @@
   </style>
 </head>
 <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
- link="#594fbf" vlink="#1005fb" alink="#333366" marginwidth="10">
-<table width="100%" border="0" cellspacing="4" cellpadding="2">
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td valign="top" align="right" bgcolor="#587993"> <font
+      <td align="right" bgcolor="#587993" valign="top"> <font
  color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
       </td>
     </tr>
@@ -31,7 +31,9 @@
 display
 messages sent and received by web services.</p>
 <p>To enable monitoring for a web service, use the ant task <span
- style="font-style: italic;">enable-monitoring</span></p>
+ style="font-style: italic;">enable-monitoring</span> in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample<span style="font-style: italic;"></span></p>
 <p>Within the ant task, set the monitoring level:</p>
 <ul>
   <li> LOW: Monitors response time, throughput, total number of
@@ -45,14 +47,16 @@ SOAP request and response messages. </li>
   <li> OFF: Disables monitoring. </li>
 </ul>
 <p>You can also configure web service monitoring with the <a
- href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmte?a=view">configure-webservice-management(1)</a>
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hmte?a=view">configure-webservice-management(1)</a>
 command.</p>
 <a name="gbsda"></a>
 <h2 class="sol">Viewing Web Service Statistics</h2>
 <p>Application Server 9.0 provides capabilities to track the
 operational statistics of a web service.</p>
 <p>View monitoring statistics using the ant task <span
- style="font-style: italic;">'get-stats'</span> in the jax-ws sample.
+ style="font-style: italic;">'get-stats'</span> in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample.
 The statistics available are:</p>
 <ul>
   <li> Response time in milliseconds on any successful or unsuccessful
@@ -90,30 +94,36 @@ cases, transformation rules can act as a proxy for the web service and
 be advantageous.</p>
 <p>To add a <font color="#c00000"><b>transformation rule</b></font> to
 apply to a web service operation use the ant task <span
- style="font-style: italic;">'add-transformation-rule'</span> </p>
+ style="font-style: italic;">'add-transformation-rule'</span> in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample </p>
 <p>If you add multiple transformation rules for a web service endpoint,
 the transformation
 rules are applied in the order in which they are added. </p>
 <p>To remove a <font color="#c00000"><b>transformation rule</b></font>,
-use the ant task <span style="font-style: italic;">'delete-transformation-rule'</span>.
+use the ant task <span style="font-style: italic;">'delete-transformation-rule'</span>
+in the <a href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample.
 This removes the <font color="#c00000"><b>transformation
 rule</b></font> from the list and removes the corresponding XSLT file.<br>
 </p>
 <p>To list the <font color="#c00000"><b>transformation rules</b></font>,
-use the ant task 'list-transformation-rules'.<br>
+use the ant task 'list-transformation-rules' in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample.<br>
 </p>
 <p>Additionally, you can create, delete, and list transformation rules
 with the
 following <kbd>asadmin</kbd> commands:</p>
 <ul>
   <li> <a
- href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmug?a=view">create-transformation-rule(1)</a>
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hmug?a=view">create-transformation-rule(1)</a>
   </li>
   <li> <a
- href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hmvi?a=view">delete-transformation-rule(1)</a>
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hmvi?a=view">delete-transformation-rule(1)</a>
   </li>
   <li> <a
- href="http://docsview.sfbay/app/docs/doc/819-3662/6n5s9hn1m?a=view">list-transformation-rules(1)</a>
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hn1m?a=view">list-transformation-rules(1)</a>
   </li>
 </ul>
 <h2>Support for Web Services Monitoring</h2>
@@ -139,13 +149,16 @@ before working on this example.
 and <a href="./webservices-mgmt/req.xsl">req.xsl</a> to <code>webservices/hello-jaxws</code>
 directory </li>
   <li> cd to <code>webservices/hello-jaxws</code> directory </li>
-  <li> <code>ant -f web-services-mgmt.xml set-monitoring-level</code>
+  <li> <code>ant -f web-services-mgmt.xml enable-monitoring</code>
 to set the monitoring level to HIGH </li>
   <li> <code>ant -f web-services-mgmt.xml get-stats</code> to view the
 monitoring statistics </li>
   <li> <code>ant -f web-services-mgmt.xml add-transformation-rule</code>
 to add a transformation rule </li>
-  <li> <code>ant -f web-services-mgmt.xml list-transformation-rules</code>
+  <li> <code>ant -f web-services-mgmt.xml delete-transformation-rule</code>
+to delete a transformation rule<code></code><br>
+  </li>
+  <li><code>ant -f web-services-mgmt.xml list-transformation-rules</code>
 to list transformation rules </li>
 </ul>
 <!--- Do not modify the rest of the document -->
