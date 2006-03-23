@@ -3,6 +3,8 @@
 <project name="glassfish-samples" default="package-zip" basedir=".">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
+    <import file="bp-project/main.xml"/>
+
     <property file="samples.properties"/>
 
     <property name="tmpdist" value="dist"/>
@@ -54,10 +56,23 @@
 
     <target name="runtest" depends="clean">
 	<tstamp/>
-	<property name="results.file" value="${DSTAMP}_${TSTAMP}_test_results.txt"/>
+	<property name="results.file" value="${tmpdist}/${DSTAMP}_${TSTAMP}_test_results.txt"/>
 	<record name="${results.file}" action="start" loglevel="info"/>
 	<iterate-tests target="runtest"/>
 	<record name="${results.file}" action="stop"/>
+    </target>
+
+    <target name="all" depends="clean">
+	<antcall target="start-domain"/>
+	<echo message="Build and run every sample"/>
+	<subant target="all">
+	    <fileset dir="." includes="*/build.xml"/>
+	</subant>
+	<echo message="Unit testing"/>
+	<antcall target="runtest"/>
+	<echo message="Packaging jar for staging"/>
+	<antcall target="package-jar"/>
+	<antcall target="stop-domain"/>
     </target>
 
 </project>

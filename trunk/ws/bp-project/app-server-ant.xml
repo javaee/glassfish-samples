@@ -63,6 +63,26 @@
    </exec>
   </target>
 
+  <target name="start-domain" depends="tools"
+    description="starts application server default domain">
+    <echo message="Starting default domain for ${javaee.home}"/>
+    <exec executable="${asadmin}" failonerror="true">
+        <arg line=" start-domain"/>
+   </exec>
+   <waitfor>
+        <http url="http://${javaee.server.name}:${javaee.server.port}"/>
+   </waitfor>
+  </target>
+
+  <target name="stop-domain" depends="tools"
+    description="stops application server default domain">
+    <echo message="Stopping default domain for ${javaee.home}"/>
+    <exec executable="${asadmin}" failonerror="true">
+        <arg line=" stop-domain"/>
+   </exec>
+  </target>
+
+
   <target name="keygen_common" depends="tools"
     description="create file-realm user">
     <echo message="Generating key for user ${app.user} in server."/>
@@ -76,6 +96,7 @@
         <arg line=" ${app.user}"/>
    </exec>
   </target>
+
 
   <target name="keydel_common" depends="tools"
     description="delete file-realm user">
