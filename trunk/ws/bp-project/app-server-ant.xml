@@ -83,7 +83,7 @@
   </target>
 
 
-  <target name="keygen_common" depends="tools"
+  <target name="keygen-common" depends="tools"
     description="create file-realm user">
     <echo message="Generating key for user ${app.user} in server."/>
     <exec executable="${asadmin}">
@@ -98,7 +98,7 @@
   </target>
 
 
-  <target name="keydel_common" depends="tools"
+  <target name="keydel-common" depends="tools"
     description="delete file-realm user">
     <echo message="Deleting key for user ${app.user} in server."/>
     <exec executable="${asadmin}">
