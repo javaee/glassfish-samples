@@ -7,17 +7,24 @@
 
     <property file="samples.properties"/>
 
-    <property name="tmpdist" value="dist"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="test.results.dir" value="test-results"/>
 
-    <target name="init" depends="clean">
+    <target name="init-dist">
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
     </target>
 
-    <target name="package-zip" depends="init"
+    <target name="init-test">
+        <delete dir="${test.results.dir}"/>
+        <mkdir dir="${test.results.dir}"/>
+    </target>
+
+    <target name="package-zip" depends="init-dist"
         description="packages the samples into a single zip">
-        <mkdir dir="${tmpdist}"/>
-        <copy file="javaee5/docs/sdk_samples_index.html" tofile="${tmpdist}/index.html"/>
+        <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
         <zip destfile="${release.zipfile}">
-            <zipfileset dir="${tmpdist}" 
+            <zipfileset dir="${dist.dir}" 
                 includes="index.html"/>
             <zipfileset dir="." 
                 includes="bp-project/**, javaee5/**"
@@ -25,9 +32,9 @@
         </zip>
     </target>
 
-    <target name="package-jar" depends="init"
+    <target name="package-jar" depends="init-dist"
         description="packages the samples into a single jar">
-        <mkdir dir="${tmpdist}"/>
+        <mkdir dir="${dist.dir}"/>
         <jar destfile="${release.jarfile}">
             <zipfileset dir="." 
                 prefix="${release.fullname}" 
@@ -38,7 +45,7 @@
 
     <target name="clean"
         description="cleans workspace by removing temporary directories like dist">
-        <delete dir="${tmpdist}"/>
+        <delete dir="${dist.dir}"/>
     </target>
 
     <path id="samples-test-list">
@@ -54,15 +61,15 @@
         </sequential>
     </macrodef>
 
-    <target name="runtest" depends="clean">
+    <target name="runtest" depends="init-test">
 	<tstamp/>
-	<property name="results.file" value="${tmpdist}/${DSTAMP}_${TSTAMP}_test_results.txt"/>
+	<property name="results.file" value="${test.results.dir}/${DSTAMP}_${TSTAMP}_test_results.txt"/>
 	<record name="${results.file}" action="start" loglevel="info"/>
 	<iterate-tests target="runtest"/>
 	<record name="${results.file}" action="stop"/>
     </target>
 
-    <target name="all" depends="clean">
+    <target name="all">
 	<antcall target="start-domain"/>
 	<echo message="Build and run every sample"/>
 	<subant target="all">
