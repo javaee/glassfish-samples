@@ -28,8 +28,8 @@
 
     <import file="../../../../bp-project/test.xml"/>
 
-    <target name="runtest">
-	<echo message="Running the sample application..." />
+    <target name="runtest" depends="compile">
+	<echo message="Testing ${module.name} ..."/>
 	<java classname="org.junit.runner.JUnitCore" fork="on">
 		<arg value="enterprise.servlet_stateless_ejb_test.ServletStatelessEjbTest"/>
 		<classpath refid="classpath"/>
