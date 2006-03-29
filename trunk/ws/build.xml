@@ -64,7 +64,8 @@
 
     <target name="runtest" depends="init-test">
 	<tstamp/>
-	<property name="results.file" value="${test.results.dir}/${DSTAMP}_${TSTAMP}_test_results.txt"/>
+	<!--property name="results.file" value="${test.results.dir}/${DSTAMP}_${TSTAMP}_test_results.txt"/-->
+	<property name="results.file" value="${test.results.dir}/test_results.txt"/>
 	<record name="${results.file}" action="start" loglevel="info"/>
 	<iterate-tests target="runtest"/>
 	<record name="${results.file}" action="stop"/>
