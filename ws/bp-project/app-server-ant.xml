@@ -63,6 +63,19 @@
    </exec>
   </target>
 
+  <target name="bpp-run-secure-app-client" depends="tools">
+    <echo message="running application client container."/>
+    <exec executable="${appclient}">
+        <arg line=" -client ${app-client.jar}"/>
+	<arg line="-name ${app-client.name}"/>
+	<arg line="-textauth"/>
+	<arg line="-user ${file.realm.user.id}"/>
+	<arg line="-password ${file.realm.user.password}"/>
+	<arg line="-xml ${javaee.domaindir}/config/sun-acc.xml"/>
+	<arg line="${appclient.application.args}"/>
+   </exec>
+  </target>
+
   <target name="start-domain" depends="tools"
     description="starts application server default domain">
     <echo message="Starting default domain for ${javaee.home}"/>
