@@ -41,6 +41,11 @@
     </target>
 
     <target name="run">
+	<echo message="The sample can be run by pointing your browser to the following URL:"/>
+	<echo message="http://localhost:8080/servlet-stateless-war/servlet"/>
+    </target>
+
+    <target name="run-org">
         <ant dir="test" target="runtest">
         </ant>
     </target>
