@@ -28,6 +28,7 @@
 
     <property file="../../../bp-project/build.properties"/>
     <property file="${user.home}/build.properties"/>
+    <property file="../../../bp-project/app-server.properties"/>
     <property name="autodeploydir" value="${javaee.domaindir}/autodeploy"/>
     <property name="classesdir" value="./build"/>
 

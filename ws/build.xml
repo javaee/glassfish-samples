@@ -28,9 +28,12 @@
                 includes="index.html"/>
             <zipfileset dir="." 
                 includes="bp-project/**, javaee5/**"
-                excludes="bp-project/build.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**"/>
+                excludes="bp-project/build.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,**/test"/>
         </zip>
     </target>
+
+    
+    
 
     <target name="package-jar" depends="init-dist"
         description="packages the samples into a single jar">
@@ -38,8 +41,8 @@
         <jar destfile="${release.jarfile}">
             <zipfileset dir="." 
                 prefix="${release.fullname}" 
-                includes="bp-project/**, build.xml, docs/**, index.html, javaee5/**"
-                excludes="bp-project/build.properties,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,javaee5/hello-stateless-ejb/**,javaee5/duke-stateful-ear/**"/>
+                includes="bp-project/**, docs/**, index.html, javaee5/**"
+                excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
         </jar>
     </target>
 
@@ -52,6 +55,7 @@
     <path id="samples-test-list">
         <filelist dir="javaee5/enterprise/interceptor-stateless-ear/test" files="build.xml"/>
         <filelist dir="javaee5/enterprise/servlet-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/webservices/simple-jaxb/test" files="build.xml"/>
     </path>
 
     <macrodef name="iterate-tests">
@@ -80,6 +84,9 @@
 	</subant>
 	<echo message="Unit testing"/>
 	<antcall target="runtest"/>
+	<subant target="clean">
+	    <fileset dir="." includes="*/build.xml"/>
+	</subant>
 	<echo message="Packaging jar for staging"/>
 	<antcall target="package-jar"/>
 	<antcall target="stop-domain"/>
