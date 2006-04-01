@@ -46,6 +46,7 @@
     <target name="clean"
         description="cleans workspace by removing temporary directories like dist">
         <delete dir="${dist.dir}"/>
+        <delete dir="${test.results.dir}"/>
     </target>
 
     <path id="samples-test-list">
