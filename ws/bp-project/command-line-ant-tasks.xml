@@ -57,7 +57,7 @@
 
  <dirname property="antfile.dir" file="${ant.file}"/>
  <path id="classpath">
-   <fileset dir="${javaee.home}" includes="lib/javaee.jar, lib/appserv-rt.jar"/>
+   <fileset dir="${javaee.home}" includes="lib/javaee.jar, lib/appserv-rt.jar, lib/appserv-ws.jar"/>
    <dirset dir="${antfile.dir}/..">
      <include name="**/build/classes"/>
    </dirset>
