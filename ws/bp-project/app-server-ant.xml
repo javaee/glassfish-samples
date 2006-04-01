@@ -186,7 +186,7 @@
  </target>
 
   <target name="create-jms-resource"  depends="tools"
-    description="creates jms resource">
+    description="creates jms destination resource">
      <exec executable="${asadmin}">
         <arg line="create-jms-resource"/>
         <arg line=" --user ${javaee.server.username}" />
@@ -210,6 +210,35 @@
         <arg line=" --port ${javaee.adminserver.port}" />
         <arg line=" --restype ${jms.restype}" />
         <arg line=" --enabled=true" />
+        <arg line=" ${jms.resource.name}" />
+    </exec>
+  </target>
+
+  <target name="create-jms-connection-factory"  depends="tools"
+    description="creates jms connection factory">
+     <exec executable="${asadmin}">
+        <arg line="create-jms-resource"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --restype ${jms.restype}" />
+        <arg line=" --enabled=true" />
+        <arg line=" ${jms.resource.name}" />
+    </exec>
+  </target>
+
+  <target name="create-jms-connection-factory-prop"  depends="tools"
+    description="creates jms connection factory that allows you to set a property on the connection">
+     <exec executable="${asadmin}">
+        <arg line="create-jms-resource"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --restype ${jms.restype}" />
+        <arg line=" --enabled=true" />
+        <arg line=" --property ${jms.resource.property}" />
         <arg line=" ${jms.resource.name}" />
     </exec>
   </target>

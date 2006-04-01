@@ -14,17 +14,22 @@
 
 <project name="persistence-unit-ant" default="dummy-default">
 
-  <target name="-pre-clean">
+  <target name="-pre-clean"/>
+
+  <target name="package-persistence-unit"
+    if="is.persistence-unit.module"
+    depends="bpp-package-persistence-unit-war,bpp-package-persistence-unit-ejb-jar"
+    description="packages the archive">
   </target>
 
-  <target name="package-persistence-unit" if="is.persistence-unit.module"
-    description="packages the archive">
-    <fail unless="pu.build.dir" message="The property pu.build.dir must be set before invoking this target. Otherwise there is no destination to copy persistence.xml to."/>
-    <!-- copy in the persistence.xml descriptor -->
-    <!-- copy file="${src.conf}/persistence.xml" todir="${pu.build.dir}/META-INF/" failonerror="false" /-->
-    <mkdir dir="${pu.build.dir}/WEB-INF/classes/META-INF"/>
-    <!-- copy file="${src.conf}/persistence.xml" todir="${pu.build.dir}/WEB-INF/" failonerror="false" / -->
-    <copy file="${src.conf}/persistence.xml" todir="${pu.build.dir}/WEB-INF/classes/META-INF" failonerror="false" />
+  <target name="bpp-package-persistence-unit-war" if="is.war.module">
+    <mkdir dir="${war.build.dir}/WEB-INF/classes/META-INF"/>
+    <copy file="${src.conf}/persistence.xml" todir="${pu.build.dir}/WEB-INF/" failonerror="false" />
+    <copy file="${src.conf}/persistence.xml" todir="${war.build.dir}/WEB-INF/classes/META-INF" failonerror="false" />
+  </target>
+
+  <target name="bpp-package-persistence-unit-ejb-jar" if="is.ejb-jar.module">
+    <copy file="${src.conf}/persistence.xml" todir="${jar.build.dir}/META-INF/" failonerror="false" />
   </target>
 
   <target name="dummy-default"/>
