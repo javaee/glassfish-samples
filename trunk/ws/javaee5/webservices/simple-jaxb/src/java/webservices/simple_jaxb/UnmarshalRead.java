@@ -81,6 +81,7 @@ public class UnmarshalRead {
     public static void displayAddress( USAddress address ) {
         // display the address
         System.out.println( "\t" + address.getName() );
+	name = address.getName();
         System.out.println( "\t" + address.getStreet() ); 
         System.out.println( "\t" + address.getCity() +
                             ", " + address.getState() + 
@@ -101,4 +102,13 @@ public class UnmarshalRead {
                                 "\"" ); 
         }
     }
+
+    public static String getName() {
+	if (name == null) {
+		main(null);
+	}
+	return name;
+    }
+   
+    private static String name;
 }
