@@ -32,6 +32,8 @@
 
 	<echo message="Running the sample application..." />
 	<java classname="org.junit.runner.JUnitCore" fork="on">
+            <jvmarg value="-Dorg.omg.CORBA.ORBInitialHost=${javaee.server.name}"/>
+            <jvmarg value="-Dorg.omg.CORBA.ORBInitialPort=${javaee.orb.port}"/>
             <jvmarg value="-Djava.security.auth.login.config=${javaee.home}/lib/appclient/appclientlogin.conf"/>
 	    <arg value="enterprise.security_stateless_ear.SecurityStatelessEarTest"/>
 		<classpath>
