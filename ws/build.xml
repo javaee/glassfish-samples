@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="glassfish-samples" default="package-zip" basedir=".">
+<project name="glassfish-samples" default="all" basedir=".">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
     <import file="bp-project/main.xml"/>
@@ -20,30 +20,31 @@
         <mkdir dir="${test.results.dir}"/>
     </target>
 
-    <target name="package-zip" depends="init-dist"
-        description="packages the samples into a single zip">
-        <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
-        <zip destfile="${release.zipfile}">
-            <zipfileset dir="${dist.dir}" 
-                includes="index.html"/>
-            <zipfileset dir="." 
-                includes="bp-project/**, javaee5/**"
-                excludes="bp-project/build.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,**/test"/>
-        </zip>
-    </target>
-
-    
-    
-
-    <target name="package-jar" depends="init-dist"
+    <target name="package-sdk" depends="init-dist"
         description="packages the samples into a single jar">
         <mkdir dir="${dist.dir}"/>
-        <jar destfile="${release.jarfile}">
+        <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <zip destfile="${dist.dir}/${release.sdk}.jar">
+            <zipfileset dir="${dist.dir}" 
+                prefix="${release.sdk}" 
+                includes="index.html"/>
             <zipfileset dir="." 
-                prefix="${release.fullname}" 
+                prefix="${release.sdk}" 
                 includes="bp-project/**, docs/**, index.html, javaee5/**"
                 excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
-        </jar>
+        </zip>
+        <delete file="${dist.dir}/index.html"/>
+    </target>
+
+
+    <target name="package-pe"
+        description="packages the samples into a single jar">
+        <zip destfile="${dist.dir}/${release.pe}.jar">
+            <zipfileset dir="." 
+                prefix="${release.pe}" 
+                includes="bp-project/**, docs/**, index.html, javaee5/**"
+                excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
+        </zip>
     </target>
 
     <target name="clean"
@@ -88,7 +89,8 @@
 	    <fileset dir="." includes="*/build.xml"/>
 	</subant>
 	<echo message="Packaging jar for staging"/>
-	<antcall target="package-jar"/>
+	<antcall target="package-sdk"/>
+	<antcall target="package-pe"/>
 	<antcall target="stop-domain"/>
     </target>
 
