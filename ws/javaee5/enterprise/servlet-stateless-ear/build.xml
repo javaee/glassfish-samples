@@ -40,10 +40,17 @@
         <antcall target="run" />
     </target>
 
-    <target name="run">
-	<echo message="The sample can be run by pointing your browser to the following URL:"/>
-	<echo message="http://localhost:8080/servlet-stateless-war/servlet"/>
+
+    <!-- This target launches a browser for the specified URL -->
+    <target name="launch" depends="getBrowser" description="launches the application in a browser">
+        <fail unless="module.name" message="The property module.name must be set before invoking this target. Otherwise there is no application to launch."/>
+        <echo>Launching ${module.name}.</echo>
+        <exec executable="${default.browser}" spawn="true">
+            <arg line ="http://${javaee.server.name}:${javaee.server.port}/${run.uri}" />
+        </exec>
     </target>
+
+
 
     <target name="run-org">
         <ant dir="test" target="runtest">
