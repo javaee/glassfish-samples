@@ -25,13 +25,13 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../docs/list.html">Samples Index</a></p>
 <h1>The EJB 3.0 Security Stateless Session Bean Sample Application</h1>
-This is a very simple security EJB 3.0 Stateless Session Bean with a Remote
-business interface.<br>
-<br>
+This is a simple security sample of EJB 3.0 Stateless Session Bean with a Remote
+business interface.<br> This example uses annotations to specify authorization for
+the given EJB.
+<p>
 <b>Business Interface</b>
 <blockquote>The Stateless Session bean has a Remote business interface
-with a
-single business method.<br>
+with four business methods, two for positive test cases, two for negative test cases.<br>
   <br>
 import javax.ejb.Remote;<br>
   <br>
@@ -116,8 +116,20 @@ directory: <code><i>install_dir</i>/samples/ws/javaee5/enterprise/security-state
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
   <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
-all </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant all </p>
+  One will expect the following output:
+  <code>
+  <br>bpp-run-secure-app-client:
+  <br>[echo] running application client container.
+  <br>[exec] SlessEJB.helloRolesAllowed(): Hello World
+  <br>[exec] Expected Exception for sless.helloRolesAllowed2()
+  <br>[exec] SlessEJB.helloPermitAll(): Hello World
+  <br>[exec] Expected Exception for sless.helloDenyAll()
+  </code>
+  <p>
+  Note that the following exception would be seen in <code>$javaee.domaindir/logs/server.log</code> for negative tests: helloRolesAllowed2() and helloDenyAll().
+  <p>
+  <code>javax.ejb.AccessLocalException: Client not authorized for this invocation.</code>
   <li>It is possible to do the above separately by issuing separate
 commands as given below.</li>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant ear</code> compiles and packages the application </p>
