@@ -98,16 +98,34 @@
 
   <target name="keygen-common" depends="tools"
     description="create file-realm user">
+
     <echo message="Generating key for user ${app.user} in server."/>
+
+    <!-- generate temporary password file -->
+    <property name="user.password.file" value="asadminuserpassword.txt"/>
+    <delete file="${user.password.file}" failonerror="false"/>
+    <loadproperties srcFile="${javaee.server.passwordfile}"/>
+
+    <condition property="app.password" value="${app.user}">
+        <not>
+            <isset property="app.password"/>
+        </not>
+    </condition>
+
+    <!-- do not format the following echo which is intentional -->
+    <echo file="${user.password.file}" append="false">AS_ADMIN_USERPASSWORD=${app.password}
+AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
+
     <exec executable="${asadmin}">
         <arg line=" create-file-user"/>
         <arg line=" --user ${javaee.server.username}" />
-        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --passwordfile ${user.password.file}" />
         <arg line=" --host ${javaee.server.name}" />
         <arg line=" --port ${javaee.adminserver.port}" />
         <arg line=" --groups ${app.groups}"/>
         <arg line=" ${app.user}"/>
    </exec>
+   <delete file="${user.password.file}" failonerror="false"/>
   </target>
 
 
