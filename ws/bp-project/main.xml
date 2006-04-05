@@ -15,25 +15,7 @@
   <property value="1.5" name="default.javac.source"/>
   <property value="1.5" name="default.javac.target"/>
 
-  <condition property="from-netbeans">
-    <isset property="netbeans.home"/>
-  </condition>
-
-  <condition property="from-command-line">
-    <not>
-      <isset property="netbeans.home"/>
-    </not>
-  </condition>
-
-  <condition property="common-ant-tasks-file" value="${ant.file}/../nbproject/build-impl.xml">
-    <isset property="from-netbeans"/>
-  </condition>
-  
-  <condition property="common-ant-tasks-file" value="${ant.file.main}/../command-line-ant-tasks.xml">
-    <isset property="from-command-line"/>
-  </condition>
-
-  <import file="${common-ant-tasks-file}"/>
+  <import file="${ant.file.main}/../command-line-ant-tasks.xml"/>
 
   <target name="dummy-default"/>
 </project>
