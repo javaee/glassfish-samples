@@ -44,6 +44,7 @@
     <target name="create-file-user">
         <antcall target="keygen-common">
             <param name="app.user" value="javaee"/>
+            <param name="app.password" value="javaee"/>
             <param name="app.groups" value="javaee"/>
         </antcall>
     </target>
