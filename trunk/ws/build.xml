@@ -24,12 +24,10 @@
         description="packages the samples into a single jar">
         <mkdir dir="${dist.dir}"/>
         <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
-        <zip destfile="${dist.dir}/${release.sdk}.jar">
+        <zip destfile="${dist.dir}/${release.dirname}.jar">
             <zipfileset dir="${dist.dir}" 
-                prefix="${release.sdk}" 
                 includes="index.html"/>
             <zipfileset dir="." 
-                prefix="${release.sdk}" 
                 includes="bp-project/**, docs/**, index.html, javaee5/**"
                 excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
         </zip>
@@ -41,7 +39,6 @@
         description="packages the samples into a single jar">
         <zip destfile="${dist.dir}/${release.pe}.jar">
             <zipfileset dir="." 
-                prefix="${release.pe}" 
                 includes="bp-project/**, docs/**, index.html, javaee5/**"
                 excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
         </zip>
