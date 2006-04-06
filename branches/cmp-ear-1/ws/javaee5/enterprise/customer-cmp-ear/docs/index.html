@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <title>The Java Persistence Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>The Java Persistence Sample Application</h1>
+This sample demonstrates the use of Java Persistence APIs based on the
+new Java Persistence specification. It interacts with a relational
+database to store and display information about customer subscriptions
+to periodicals. The sample is built and deployed as an EAR file. It
+consists of two modules:<br>
+<br>
+<b>Web Module</b>
+<blockquote>The web module consists of the jsp files which contains the
+presentation logic for the sample.</blockquote>
+<br>
+<b>EJB Module</b>
+<blockquote>The ejb module consists of a Statless Session bean, the
+persistence unit and some supporting classes. The jsp files in the web
+module look up the session bean and invoke it's business methods. The
+Session bean uses resource injection to get access to an EntityManager
+and uses it for supporting persistence related operations in its
+business methods.
+</blockquote>
+<b>Deployment Descriptor</b>
+<blockquote> No deployment descriptors are present in the ejb-module.
+&nbsp;<br>
+There is a deployment descriptor in the web-module which references the
+Stateless Session Bean.
+</blockquote>
+<br>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+</p>
+<p>Following are the instructions for building, deploying, and running
+this sample application. <br>
+<br>
+</p>
+<ol>
+  <li> Setup your build environment and Configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>install_dir</i>/samples/ws/java-ee5/enterprise/customer-cmp-ear</code></li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Setup the database
+    <p><span style="font-style: italic;">app_dir&gt; </span><code>ant
+setup </code></p>
+    <p>Above target does<code> start-db, create-db,
+create-txnal-jdbc-resource and create-ntxnal-jdbc-resource<br>
+    </code></p>
+  </li>
+  <li>Setup database, Build, Deploy and Run the sample application
+using the target all<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
+all </p>
+  <li>It is possible to do the above separately by issuing separate
+commands as given below.</li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> runs the sample from a browser using the URL given below<br>
+  </p>
+  <p><code><span style="font-style: italic;">http://[deployment-host]:8080/customer/index.html<br>
+  <br>
+  </span> </code></p>
+  <li>Unsetup the database
+    <p><span style="font-style: italic;">app_dir&gt; </span><code>ant
+unsetup </code></p>
+Above target does<code> delete-txnal-jdbc-resource and
+delete-ntxnal-jdbc-resource, stop-db<br>
+    </code></li>
+  <li>Use the target clean to
+remove the temporary directories like build and dist
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+  </li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to <a
+ href="../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+&nbsp;
+<p><!--- Do not modify the rest of the document --></p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
