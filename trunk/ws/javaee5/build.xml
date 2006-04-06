@@ -9,6 +9,7 @@
         <filelist dir="enterprise/lottery-annotation-ear" files="build.xml"/>
         <filelist dir="enterprise/servlet-stateless-ear" files="build.xml"/>
         <filelist dir="enterprise/interceptor-stateless-ear" files="build.xml"/>
+        <filelist dir="enterprise/security-stateless-ear" files="build.xml"/>
     </path>
 
     <macrodef name="iterate">
