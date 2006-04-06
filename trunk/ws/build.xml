@@ -35,15 +35,6 @@
     </target>
 
 
-    <target name="package-pe"
-        description="packages the samples into a single jar">
-        <zip destfile="${dist.dir}/${release.pe}.jar">
-            <zipfileset dir="." 
-                includes="bp-project/**, docs/**, index.html, javaee5/**"
-                excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
-        </zip>
-    </target>
-
     <target name="clean"
         description="cleans workspace by removing temporary directories like dist">
         <delete dir="${dist.dir}"/>
@@ -53,6 +44,7 @@
     <path id="samples-test-list">
         <filelist dir="javaee5/enterprise/interceptor-stateless-ear/test" files="build.xml"/>
         <filelist dir="javaee5/enterprise/servlet-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/security-stateless-ear/test" files="build.xml"/>
         <filelist dir="javaee5/webservices/simple-jaxb/test" files="build.xml"/>
     </path>
 
@@ -87,7 +79,6 @@
 	</subant>
 	<echo message="Packaging jar for staging"/>
 	<antcall target="package-sdk"/>
-	<antcall target="package-pe"/>
 	<antcall target="stop-domain"/>
     </target>
 
