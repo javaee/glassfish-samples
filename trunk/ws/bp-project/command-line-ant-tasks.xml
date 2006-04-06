@@ -111,6 +111,16 @@
   <target name="launch" depends="getBrowser" description="launches the
   application in a browser">
 
+    <echo>
+ Trying to launch the browser with the url
+ http://${javaee.server.name}:${javaee.server.port}/${run.uri}
+
+ If the above does not work, you may open a browser and copy and paste the above URL.
+
+ For non-windows and non-mac machines, make sure that you have specified 
+ valid browser for the property default.browser in bp-project/build.properties
+    </echo>
+
     <!-- Default the value of run.uri to be module.name -->
     <property name="run.uri" value="${module.name}"/>
     <condition property="extra-args" value="url.dll,FileProtocolHandler">
