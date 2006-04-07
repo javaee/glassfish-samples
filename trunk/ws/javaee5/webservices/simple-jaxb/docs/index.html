@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en"><head><title>The [application name] Sample Application</title>
-  
+<html lang="en">
+<head>
+  <title>The [application name] Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -11,13 +12,15 @@
   li {padding-bottom: 8px}
   p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
   p.copy {text-align: center}
-  </style></head>
-
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
@@ -25,31 +28,25 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../docs/list.html">Samples Index</a></p>
 <h1>JAXB 2.0 Unmarshal &amp; Read Sample Application</h1>
-
 <p>
-This sample application demonstrates how to unmarshal an instance document
+This sample application demonstrates how to unmarshal an instance
+document
 into a Java content tree and access data contained within it.
 </p>
 <p>
-This sample first complies the "purhcase order" schema by using JAXB's schema compiler XJC, to generate Java classes that represent the schema:
+This sample first complies the "purhcase order" schema by using JAXB's
+schema compiler XJC, to generate Java classes that represent the
+schema:
+</p>
 <pre><xmp>
-<xjc schema="po.xsd" package="primer.po" destdir="gen-src">
-  <produces dir="gen-src/primer.po" includes="**/*.java" />
-</xjc>
+&lt;xjc schema="po.xsd" package="primer.po" destdir="gen-src"&gt;
+  &lt;produces dir="gen-src/primer.po" includes="**/*.java" /&gt;
+&lt;/xjc&gt;
 </xmp></pre>
 <p>
 Then the following code is used to read an XML file into a Java object:
-
-<pre>
-// create an Unmarshaller
-Unmarshaller u = jc.createUnmarshaller();
-
-// unmarshal a po instance document into a tree of Java content
-// objects composed of classes from the primer.po package.
-JAXBElement&lt;?> poElement = (JAXBElement&lt;?>)u.unmarshal( new File( "po.xml" ) );
-PurchaseOrderType po = (PurchaseOrderType)poElement.getValue();
-</pre>
-
+</p>
+<pre>// create an Unmarshaller<br>Unmarshaller u = jc.createUnmarshaller();<br><br>// unmarshal a po instance document into a tree of Java content<br>// objects composed of classes from the primer.po package.<br>JAXBElement&lt;?&gt; poElement = (JAXBElement&lt;?&gt;)u.unmarshal( new File( "po.xml" ) );<br>PurchaseOrderType po = (PurchaseOrderType)poElement.getValue();<br></pre>
 <h2>Building and Running the Application</h2>
 <p>
 </p>
@@ -59,11 +56,11 @@ this sample application. <br>
 </p>
 <ol>
   <li> Setup your build environment and Configure the application
-server with which the build system has to work by following the 
-<a href="../../../docs/UserREADME.html">
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
-directory: <code><i>install_dir</i>/samples/simple-jaxb</code>.</li>
+directory: <code><i>samples_install_dir</i>/javaee5/webservices/simple-jaxb</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
   <li>Build and run the sample application using the target all<code></code></li>
@@ -77,21 +74,24 @@ compile</code> compiles and packages the application </p>
 run</code> runs the program </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 javadoc</code> to generate javadoc for the generated Java source code </p>
-  <li>Use the target clean to remove the temporary directories like build and dist.
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+  <li>Use the target clean to remove the temporary directories like
+build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 clean</code> </p>
-</li></ol>
-
+  </li>
+</ol>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to 
-<a href="../../../docs/UserTroubleShooting.html">
+<p>If you have problems when running the application, refer to <a
+ href="../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
-&nbsp;<p>
-<!--- Do not modify the rest of the document -->
-</p><hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright © 2006 <a href="http://sun.com/">Sun
+&nbsp;
+<p><!--- Do not modify the rest of the document -->
+</p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
-</body></html>
+</body>
+</html>
