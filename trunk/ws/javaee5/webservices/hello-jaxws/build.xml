@@ -37,7 +37,14 @@
         <pathelement location="${classesdir}"/>
     </path>
     
-    <target name="all" depends="run-client"/>
+    <target name="all" depends="test"/>
+
+	<target name="test" > <!--depends="run-client"-->
+        <javac srcdir="./test/src/java" destdir="${classesdir}">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
 
     <target name="init">
         <condition property="windows">
@@ -50,6 +57,7 @@
 
     <target name="compile-deploy-service" depends="init">
         <mkdir dir="${classesdir}"/>
+        <echo message="${javaee.home}"/>
         <javac 
             srcdir="./src" 
             includes="endpoint/**"
