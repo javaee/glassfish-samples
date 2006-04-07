@@ -24,6 +24,7 @@
         description="packages the samples into a single jar">
         <mkdir dir="${dist.dir}"/>
         <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
         <zip destfile="${dist.dir}/${release.dirname}.jar">
             <zipfileset dir="${dist.dir}" 
                 includes="index.html"/>

@@ -45,4 +45,8 @@
         </subant>
     </target>
 
+    <target name="msr">
+	<echo message="netbeans.home = ${netbeans.home}"/>
+    </target>
+
 </project>
