@@ -425,15 +425,13 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     
   <target name="check" description="verify the build setup which is common for all modules">
     <fail unless="javaee.home">
-      Property javaee.home not specified.  Please
-      copy 'bp-project/build.properties.sample' to 'bp-project/build.properties'
-      and specify the javaee.home property in 'bp-project/build.properties'.
+      Property javaee.home not specified.  
+      Please specify the javaee.home property in 'bp-project/build.properties'.
     </fail>
     
     <fail unless="javaee.server.passwordfile">
       Property javaee.server.passwordfile not specified. Please
-      copy 'bp-project/build.properties.sample' to 'bp-project/build.properties'
-      and specify the javaee.server.passwordfile property in 'bp-project/build.properties'. 
+      specify the javaee.server.passwordfile property in 'bp-project/build.properties'. 
       You will also need to ensure that the passwordfile is present and contains
       AS_ADMIN_PASSWORD. 
     </fail>    
