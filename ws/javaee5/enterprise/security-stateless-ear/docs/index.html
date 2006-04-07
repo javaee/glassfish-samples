@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en"><head><title>The [application name] Sample Application</title>
-  
+<html lang="en">
+<head>
+  <title>The [application name] Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -11,13 +12,15 @@
   li {padding-bottom: 8px}
   p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
   p.copy {text-align: center}
-  </style></head>
-
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
@@ -25,13 +28,16 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../docs/list.html">Samples Index</a></p>
 <h1>The EJB 3.0 Security Stateless Session Bean Sample Application</h1>
-This is a simple security sample of EJB 3.0 Stateless Session Bean with a Remote
-business interface.<br> This example uses annotations to specify authorization for
+This is a simple security sample of EJB 3.0 Stateless Session Bean with
+a Remote
+business interface.<br>
+This example uses annotations to specify authorization for
 the given EJB.
-<p>
-<b>Business Interface</b>
+<p><b>Business Interface</b>
+</p>
 <blockquote>The Stateless Session bean has a Remote business interface
-with four business methods, two for positive test cases, two for negative test cases.<br>
+with four business methods, two for positive test cases, two for
+negative test cases.<br>
   <br>
 import javax.ejb.Remote;<br>
   <br>
@@ -60,41 +66,50 @@ public class SlessEJB implements Sless {<br>
   <br>
 &nbsp;&nbsp;&nbsp;@RolesAllowed("javaee")<br>
 &nbsp;&nbsp;&nbsp; public String helloRolesAllowed() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return "SlessEJB.helloRolesAllowed(): Hello World";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+"SlessEJB.helloRolesAllowed(): Hello World";<br>
 &nbsp;&nbsp;&nbsp; }<br>
   <br>
 &nbsp;&nbsp;&nbsp;@RolesAllowed("noauthuser")<br>
 &nbsp;&nbsp;&nbsp; public String helloRolesAllowed2() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return "SlessEJB.helloRolesAllowed2(): Hello World";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+"SlessEJB.helloRolesAllowed2(): Hello World";<br>
 &nbsp;&nbsp;&nbsp; }<br>
   <br>
 &nbsp;&nbsp;&nbsp;@PermitAll<br>
 &nbsp;&nbsp;&nbsp; public String helloPermitAll() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return "SlessEJB.helloPermitAll(): Hello World";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+"SlessEJB.helloPermitAll(): Hello World";<br>
 &nbsp;&nbsp;&nbsp; }<br>
   <br>
 &nbsp;&nbsp;&nbsp;@DenyAll<br>
 &nbsp;&nbsp;&nbsp; public String helloDenyAll() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return "SlessEJB.helloDenyAll(): Hello World";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+"SlessEJB.helloDenyAll(): Hello World";<br>
 &nbsp;&nbsp;&nbsp; }<br>
   <br>
 }<br>
   <br>
 @javax.ejb.Stateless is a component-defining annotation that designates
 this class as the bean class for a Stateless Session Bean. &nbsp; <br>
-@javax.annotation.security.DenyAll is a an annotation indicating that the given  method is not accessible by everyone.<br>
-@javax.annotation.security.PermitAll is an annotation indicating that the given method or all business methods of the given class is/are accessbile by everyone.<br>
-@javax.annotation.security.RolesAllowed is an annotation indicating that the given method is only accessible for given list of roles.<br>
+@javax.annotation.security.DenyAll is a an annotation indicating that
+the given method is not accessible by everyone.<br>
+@javax.annotation.security.PermitAll is an annotation indicating that
+the given method or all business methods of the given class is/are
+accessbile by everyone.<br>
+@javax.annotation.security.RolesAllowed is an annotation indicating
+that the given method is only accessible for given list of roles.<br>
   <br>
 </blockquote>
 <b>Deployment Descriptor</b>
-<blockquote> The good news is that standard deployment descriptor is no longer
+<blockquote> The good news is that standard deployment descriptor is no
+longer
 required!!! &nbsp;The two java files above are sufficient to completely
 describe this stateless session bean. &nbsp;<br>
 </blockquote>
-
 <b>SUN App Server Specific Deployment Configuration</b>
-<blockquote> One only need security-role-mapping in sun-application.xml.
+<blockquote> One only need security-role-mapping in
+sun-application.xml.
 The JNDI name for the Remote Stateless Session bean will
 default to the class name of its Remote business interface &nbsp;.<br>
 </blockquote>
@@ -108,49 +123,62 @@ this sample application. <br>
 </p>
 <ol>
   <li> Setup your build environment and Configure the application
-server with which the build system has to work by following the 
-<a href="../../../docs/UserREADME.html">
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
-directory: <code><i>install_dir</i>/samples/ws/javaee5/enterprise/security-stateless-ear</code>.</li>
+directory: <code><i>samples_install_dir</i>/javaee5/enterprise/security-stateless-ear</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
   <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant all </p>
-  One will expect the following output:
-  <code>
-  <br>bpp-run-secure-app-client:
-  <br>[echo] running application client container.
-  <br>[exec] SlessEJB.helloRolesAllowed(): Hello World
-  <br>[exec] Expected Exception for sless.helloRolesAllowed2()
-  <br>[exec] SlessEJB.helloPermitAll(): Hello World
-  <br>[exec] Expected Exception for sless.helloDenyAll()
-  </code>
-  <p>
-  Note that the following exception would be seen in <code>$javaee.domaindir/logs/server.log</code> for negative tests: helloRolesAllowed2() and helloDenyAll().
-  <p>
-  <code>javax.ejb.AccessLocalException: Client not authorized for this invocation.</code>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
+all </p>
+One will expect the following output: <code> <br>
+bpp-run-secure-app-client: <br>
+[echo] running application client container. <br>
+[exec] SlessEJB.helloRolesAllowed(): Hello World <br>
+[exec] Expected Exception for sless.helloRolesAllowed2() <br>
+[exec] SlessEJB.helloPermitAll(): Hello World <br>
+[exec] Expected Exception for sless.helloDenyAll() </code>
+  <p> Note that the following exception would be seen in <code>$javaee.domaindir/logs/server.log</code>
+for negative tests: helloRolesAllowed2() and helloDenyAll(). </p>
+  <p> <code>javax.ejb.AccessLocalException: Client not authorized for
+this invocation.</code> </p>
   <li>It is possible to do the above separately by issuing separate
 commands as given below.</li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant ear</code> compiles and packages the application </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant deploy client-jar</code> deploys it to application server </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant create-file-user</code> creates a file realm user <i>javaee</i></p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant run</code> runs the test java client </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant delete-file-user</code> deletes a file realm user <i>javaee</i></p>
-  <li>Use the target clean to undeploy the sample application and to remove the temporary directories like build and dist.
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant clean undeploy</code> </p>
-</li></ol>
-
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant ear</code>
+compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy </code>deploys it to application server </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+create-file-user</code> creates a file realm user <i>javaee</i></p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant run</code>
+runs the test java client </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+delete-file-user</code> deletes a file realm user <i>javaee</i></p>
+  <li>Use the target clean to remove the temporary directories like
+build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean<br>
+    </code></p>
+  </li>
+  <li>Use the target undeploy to undeploy the application.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+undeploy</code> </p>
+  </li>
+</ol>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to 
-<a href="../../../docs/UserTroubleShooting.html">
+<p>If you have problems when running the application, refer to <a
+ href="../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
-&nbsp;<p>
-<!--- Do not modify the rest of the document -->
-</p><hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright © 2006 <a href="http://sun.com/">Sun
+&nbsp;
+<p><!--- Do not modify the rest of the document -->
+</p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
-</body></html>
+</body>
+</html>
