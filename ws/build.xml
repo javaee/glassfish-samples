@@ -30,7 +30,7 @@
                 includes="index.html"/>
             <zipfileset dir="." 
                 includes="bp-project/**, docs/**, index.html, javaee5/**"
-                excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,docs/sdk_samples_index.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
+                excludes="build.xml, bp-project/build.properties,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,docs/sdk_samples_index.html,javaee5/LICENSE,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
         </zip>
         <delete file="${dist.dir}/index.html"/>
     </target>
