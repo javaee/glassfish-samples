@@ -23,14 +23,13 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="hello-stateless-ejb-test" default="runtest" basedir=".">
+<project name="hello-jaxws-test" default="runtest" basedir=".">
     <property name="classesdir" value="../build"/>
     <property file="${user.home}/build.properties"/>
 
     <path id="classpath">
         <pathelement location="${javaee.home}/lib/j2ee.jar"/>
         <pathelement location="${classesdir}"/>
-        <pathelement location="${junit.home}/junit-4.0.jar"/>
     </path>
 
 	<target name="compile">
@@ -41,10 +40,10 @@
 
 
     <target name="runtest" depends="compile">
-	<echo message="Running the unit test" />
-	<echo message="${junit.home}/junit-4.0.jar" />
-	<java classname="org.junit.runner.JUnitCore" fork="on">
-		<arg value="test.Hello_jaxws_test"/>
+	<echo message="Running the unit test for hello-jaxws" />
+	<java classname="test.hello_jaxws_test" fork="on">
+		<arg value="${javaee.home}"/>
+		<arg value="${classesdir}"/>
 		<classpath refid="classpath"/>
 	</java>
     </target>
