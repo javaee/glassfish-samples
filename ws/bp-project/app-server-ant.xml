@@ -49,7 +49,7 @@
     <pathelement location="${javaee.home}/bin"/>
   </path>
 
-  <!-- Construct path to be used for Derby database -->
+  <!-- Construct path to be used for Java DB -->
   <path id="db.classpath">
     <fileset dir="${db.root}/lib">
       <include name="*.jar"/>

@@ -26,7 +26,7 @@
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<h1>Using Derby database with Sample applications</h1>
+<h1>Using Java DB with Sample applications</h1>
 <br>
 The main intent of this sample is to show the usage of database
 resources. This example shows how to start database server, stop
@@ -42,7 +42,7 @@ permission.<br>
 <br>
 The resources needed for the project including jdbc resources are
 usually defined in setup directory of the project. The <a
- href="./derby-setup/build.xml">build.xml</a> within setup directory
+ href="./javadb-setup/build.xml">build.xml</a> within setup directory
 will
 have the necessary targets for manipulating database. Usually, the
 resources using setup/build.xml are setup before the main application
@@ -55,11 +55,11 @@ is run. <br>
 &gt; ant start-db </li>
   <li>Stop database server<br>
 &gt;ant stop-db </li>
-  <li>Create database using <a href="./derby-setup/sql/create.sql">create
+  <li>Create database using <a href="./javadb-setup/sql/create.sql">create
 sql script</a><br>
 &gt;ant create-db<br>
   </li>
-  <li>Delete database using <a href="./derby-setup/sql/delete.sql">delete
+  <li>Delete database using <a href="./javadb-setup/sql/delete.sql">delete
 sql script</a><br>
 &gt;ant delete-db<br>
   </li>
