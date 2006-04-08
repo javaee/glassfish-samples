@@ -32,7 +32,11 @@
         <pathelement location="${classesdir}"/>
     </path>
 
-	<target name="compile">
+	<target name="runtime">
+		<ant dir=".." inheritAll="false" target="run-client"/>
+	</target>
+	
+	<target name="compile" depends="runtime">
         <javac srcdir="./src/java" destdir="${classesdir}">
             <classpath refid="classpath"/>
         </javac>
@@ -46,6 +50,7 @@
 		<arg value="${classesdir}"/>
 		<classpath refid="classpath"/>
 	</java>
+	<ant dir=".." inheritAll="false" target="restore"/>
     </target>
 
 </project>
