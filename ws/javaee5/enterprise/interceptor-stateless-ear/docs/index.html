@@ -77,7 +77,7 @@ have been done in the business method itself, but we use the EJB 3.0
 interceptor facility to do the parameter validation checks.<br>
   <br>
 Interceptors are used to interpose on business method invocations and
-lifecycle events that occur on an enterprise bean instance. An
+life cycle events that occur on an enterprise bean instance. An
 interceptor class is just like any other java class. It need not extend
 any special class nor does it need to implement any well known
 interface. An interceptor class defines (exactly) one business method
@@ -207,7 +207,7 @@ method.<br>
 next interceptor method in the chain to be invoked or, when called from
 the last AroundInvoke interceptor method, the bean's business method.
 Interceptor methods must always call InvocationContext.proceed() or no
-subsequent interceptor methods or bean business method or lifecycle
+subsequent interceptor methods or bean business method or life cycle
 callback methods will be invoked.<span style="font-weight: bold;"></span><br>
 <br>
 &nbsp;&nbsp;&nbsp; In our sample, the interceptor methods use the
@@ -230,7 +230,7 @@ describe this stateless session bean. &nbsp;<br>
 <b>SUN App Server Specific Deployment Configuration</b>
 <blockquote> There is no need to define any SUN App Server-specific
 deployment
-descrpitors (e.g. sun-ejb-jar.xml, sun-application-client.xml) for this
+descriptors (e.g. sun-ejb-jar.xml, sun-application-client.xml) for this
 example. &nbsp; The JNDI name for the Remote Stateless Session bean
 will
 default to:
