@@ -37,13 +37,9 @@
         <pathelement location="${classesdir}"/>
     </path>
     
-    <target name="all" depends="test"/>
-
-	<target name="test" > <!--depends="run-client"-->
-        <javac srcdir="./test/src/java" destdir="${classesdir}">
-            <classpath refid="classpath"/>
-        </javac>
-    </target>
+    <target name="all" depends="run-client">
+		<antcall target="restore"/>
+	</target>
 
 
     <target name="init">
@@ -114,5 +110,12 @@
 			<arg value="client.Client"/>    
 		</exec>    
     </target>
+
+	<target name="restore">
+		<delete>
+		<fileset dir="${autodeploydir}/endpoint" includes="Hello*.*"/>
+		</delete>
+	</target>
+
 
 </project>
