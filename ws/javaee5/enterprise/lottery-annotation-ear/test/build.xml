@@ -23,22 +23,21 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="lottery-annotation-ear" default="all" basedir=".">
+<project name="lottery-annoation-ear-test" default="runtest" basedir=".">
 
-  <property name="is.ear.module" value="true"/>
-  <path id="ear-components">
-    <filelist dir="./lottery-annotation-ejb" files="build.xml"/>
-    <filelist dir="./lottery-annotation-web" files="build.xml"/>
-    <filelist dir="./lottery-annotation-client" files="build.xml"/>
-  </path>
-  <import file="../../../bp-project/main.xml"/>
 
-  <target name="all" depends="ear,deploy,run"/>
+    <import file="../../../../bp-project/test.xml"/>
 
-  <target name="run-client">
-    <subant target="run">
-      <fileset dir="lottery-annotation-client" includes="build.xml"/>
-    </subant>
-  </target>
+    <target name="runtest" depends="compile">
+	<echo message="Running Tests..." />
+	<java classname="org.junit.runner.JUnitCore" fork="on">
+		<arg value="enterprise.lottery_annotation_ejb_stateless_test.DiceTest"/>
+		<classpath refid="classpath"/>
+	</java>
+	<java classname="org.junit.runner.JUnitCore" fork="on">
+		<arg value="enterprise.lottery_annotation_ejb_stateful_test.LotteryTest"/>
+		<classpath refid="classpath"/>
+	</java>
+    </target>
 
 </project>
