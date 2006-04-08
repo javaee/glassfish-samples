@@ -1,41 +1,83 @@
 /*
- * Hello_jaxws_test.java
+ * hello_jaxws_test.java
  *
+ * Created on April 8, 2006, 11:39 AM
+ *
+ * To change this template, choose Tools | Template Manager
+ * and open the template in the editor.
  */
 
 package test;
 
-import javax.xml.ws.WebServiceRef;
-import endpoint.HelloService;
-import endpoint.Hello;
-import org.junit.*;
-import junit.framework.TestCase;
+import java.io.*;
+import java.io.File;
+import org.junit.Test;
 
-public class Hello_jaxws_test extends TestCase
+/**
+ *
+ * @author bnevins
+ * Note that it is not useful to use JUnit for this test because we are calling
+ * appclient to run the client class.
+ */
+public class hello_jaxws_test
 {
-    @WebServiceRef(wsdlLocation="http://localhost:8080/Hello/HelloService?WSDL")
-    static HelloService service;
-    
-    
-    @Test public void doHello()
+    public static void main(String[] args)
     {
+        if(args.length != 2)
+        {
+            System.out.println("USAGE: hello_jaxws_test <javaee.home> <dir with client.Client>");
+            System.exit(1);
+        }
+        
+        String os = System.getProperty("os.name");
+        boolean windows = os.indexOf("Windows") >= 0;
+        String appclient = args[0] + "/bin/appclient";
+        
+        if(windows)
+            appclient += ".bat";
         try
         {
-            Hello port = service.getHelloPort();
-            String ret = port.getHello(System.getProperty("user.name"));
-            System.out.println("Hello result = " + ret);
+            ProcessBuilder pb = new ProcessBuilder(appclient, "client.Client");
+            pb.directory(new File(args[1]));
+            Process p = pb.start();
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            String want = "Hello result = Hello " + System.getProperty("user.name") + "!";
+            String got = br.readLine();
+
+            System.out.println("Expected: [" + want + "]");
+            System.out.println("Got: [" + got + "]");
+            
+            if(want.equals(got))
+            {
+                System.out.println("TEST SUCCEEDED");
+                System.exit(0);
+            }
+            else
+            {
+                System.out.println("TEST FAILED:");
+                System.exit(1);
+            }
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
-		Assert.assertTrue(true);
     }
-
-	@Before protected void setUp()
-	{
-		me = new Hello_jaxws_test();
-	}
-
-	private Hello_jaxws_test me;
 }
+/**
+ *
+ * <target name="run-client" depends="compile-client,run-client-windows,run-client-unix"/>
+
+    <target name="run-client-windows" if="windows">
+		<exec executable="${javaee.home}/bin/appclient.bat" dir="${classesdir}">
+			<arg value="client.Client"/>    
+		</exec>    
+    </target>
+
+    <target name="run-client-unix" if="unix"> 
+		<exec executable="${javaee.home}/bin/appclient" dir="${classesdir}" failifexecutionfails="false">
+			<arg value="client.Client"/>    
+		</exec>    
+    </target>
+ **/
