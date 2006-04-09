@@ -406,7 +406,7 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
    <echo message="Application Deployed at: ${app.url}"/>
   </target>
 
-  <target name="client-jar">
+  <target name="client-jar" depends="tools">
     <exec executable="${asadmin}" failonerror="${failonerror}">
         <arg line=" get-client-stubs "/>
         <arg line=" --user ${javaee.server.username}" />
