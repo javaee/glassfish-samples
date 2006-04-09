@@ -29,7 +29,7 @@
     <import file="../../../../bp-project/test.xml"/>
 
     <target name="runtest" depends="compile">
-	<echo message="Running Tests..." />
+	<echo message="Testing ${module.name} ..." />
 	<java classname="org.junit.runner.JUnitCore" fork="on">
 		<arg value="enterprise.lottery_annotation_ejb_stateless_test.DiceTest"/>
 		<classpath refid="classpath"/>
