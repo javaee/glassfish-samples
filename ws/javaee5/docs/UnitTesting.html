@@ -29,7 +29,8 @@
 <h1>Unit Testing for Sample Applications</h1>
 <p>
 Each sample application needs one or more test cases so that the sample
-applications go through regular testing to notice any regressions and for
+applications go through regular testing to notice any regressions and
+for
 the purposes of promoting the samples bundle. Refer to the test
 directory of representative sample <a
  href="../enterprise/hello-stateless-ejb/test">hello-stateless-ejb</a>
@@ -41,10 +42,9 @@ for an example.<br>
   <li>Create a <code>test</code> directory for the sample.</li>
   <li>Download and install junit4.</li>
   <li>Update the <code>junit.home</code> property in <a
- href="../../bp-project/test.xml">bp-project/test.xml</a>
+ href="../../bp-project/test.properties">bp-project/test.properties</a>
 with the junit4 install location.
-    <p><code> &lt;property
-name="junit.home" value="/home/junit4.0"&gt;</code> </p>
+    <p><code> junit.home=/home/junit4.0</code> </p>
   </li>
   <li> Create <a
  href="../enterprise/hello-stateless-ejb/test/build.xml">build.xml</a>
