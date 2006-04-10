@@ -23,16 +23,18 @@
     <target name="package-sdk" depends="init-dist"
         description="packages the samples into a single jar">
         <mkdir dir="${dist.dir}"/>
+	<antcall target="check-out-legal"/>
         <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
         <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
         <zip destfile="${dist.dir}/${release.dirname}.jar">
             <zipfileset dir="${dist.dir}" 
-                includes="index.html"/>
+                includes="index.html,javaee5/**"/>
             <zipfileset dir="." 
                 includes="bp-project/**, docs/**, index.html, javaee5/**"
                 excludes="build.xml,bp-project/test.xml,docs/DeveloperREADME.html, docs/DeveloperTroubleShooting.html, docs/sample_doc_template.html,docs/sdk_samples_index.html,javaee5/LICENSE,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
         </zip>
         <delete file="${dist.dir}/index.html"/>
+        <delete dir="${dist.dir}/javaee5"/>
     </target>
 
 
@@ -67,6 +69,19 @@
 	<record name="${results.file}" action="start" loglevel="info"/>
 	<iterate-tests target="runtest"/>
 	<record name="${results.file}" action="stop"/>
+    </target>
+
+    <target name="check-out-legal">
+        <exec dir="${dist.dir}" executable="cvs">
+            <arg line="co samples/javaee5/legal"/>
+        </exec>
+	<move todir="${dist.dir}/javaee5/legal">
+	    <fileset dir="${dist.dir}/samples/javaee5/legal">
+                <include name="**/*.txt"/>
+                <include name="**/*.pdf"/>
+	    </fileset>
+	</move>
+        <delete dir="${dist.dir}/samples"/>
     </target>
 
     <target name="all">
