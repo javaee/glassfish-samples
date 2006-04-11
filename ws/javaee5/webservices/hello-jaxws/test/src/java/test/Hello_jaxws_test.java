@@ -11,7 +11,6 @@ package test;
 
 import java.io.*;
 import java.io.File;
-import org.junit.Test;
 
 /**
  *
@@ -19,7 +18,7 @@ import org.junit.Test;
  * Note that it is not useful to use JUnit for this test because we are calling
  * appclient to run the client class.
  */
-public class hello_jaxws_test
+public class Hello_jaxws_test
 {
     public static void main(String[] args)
     {
