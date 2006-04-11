@@ -368,6 +368,7 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
         <arg line="undeploy"/>
         <arg line=" --user ${javaee.server.username}" />
         <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
         <arg line=" ${module.name} " />
     </exec> 
   </target>
