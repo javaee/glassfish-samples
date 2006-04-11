@@ -45,7 +45,7 @@
 
     <target name="runtest" depends="compile">
 	<echo message="Running the unit test for hello-jaxws" />
-	<java classname="test.hello_jaxws_test" fork="on">
+	<java classname="test.Hello_jaxws_test" fork="on">
 		<arg value="${javaee.home}"/>
 		<arg value="${classesdir}"/>
 		<classpath refid="classpath"/>
