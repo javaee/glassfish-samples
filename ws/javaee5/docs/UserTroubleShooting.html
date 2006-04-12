@@ -26,38 +26,37 @@
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<h1>Troubleshooting Sample Applications<br>
-</h1>
+<h1>Troubleshooting Sample Applications</h1>
 <br>
 There are three components which contribute to the smooth working of
-sample applications. These components are Build Infrastructure,
-Application Server, and the Sample Application. By following <a
- href="./UserREADME.html">common build instructions</a> it can be made
-sure that the Build Infrastructure and
-Application Server are setup properly. To troubleshoot the sample
-application, following procedure may be followed:<br>
-<br>
+sample applications. These components are the build infrastructure,
+Application Server, and the sample application. Follow the <a
+ href="UserREADME.html">common build instructions</a> to set up the  
+the build infrastructure and Application Server. To troubleshoot a sample
+application, follow this procedure:
+
 <ol>
-  <li>Use the fine grained ant targets to isolate the problem. For ex.
-if ant all causes an exception then try to run the constituent ant
+  <li>Use the fine-grained Ant targets to isolate the problem. For example, 
+if Ant all causes an exception then try to run the constituent Ant
 targets like compile, package, deploy, and run separately.</li>
   <li>Refer to the exception in detail and try to fix it.</li>
-  <li>Refer to application server's server.log for clues/messages.</li>
-  <li>Try alternative ways of doing the same thing. For ex. if
-deployment fails then try deploying through GUI or CLI. </li>
+  <li>Refer to application server's <code>server.log</code> file for clues
+or messages.</li>
+  <li>Try alternative ways of doing the same thing. For example, if
+deployment fails then try deploying through the Admin Console or CLI. </li>
   <li>Before retrying, run the clean target to undeploy and to remove
 the generated directories.</li>
   <li>Restart the application server which might be needed to apply
 certain non dynamic configuration changes.</li>
-  <li>Make sure the user id and password or the credentials are valid.<br>
+  <li>Make sure the user ID and password or the credentials are valid.<br>
   </li>
   <li>If the application uses JDBC resources, make sure that the
 database server is up and running and the resources are setup properly.
-Same is true for JMS resources. </li>
+Likewise, if the application usees JMS resources, make sure the MQ server is
+running and the JMS resources are configured properly. </li>
 </ol>
-<br>
-Please note that the above list is by no means exhaustive as it is
-evolving.
+<p>
+The above list is by no means exhaustive, as it is evolving.
 <br>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-  <title>The [application name] Sample Application</title>
+  <title>The Interceptor-Stateless Session Bean Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -207,13 +207,13 @@ InvocationContext.proceed()
 
 <h3>Deployment Descriptor</h3>
 <p> The good news is the deployment descriptor is no longer
-required!!!  The two java files above are sufficient to completely
+required!  The two Java files above are sufficient to completely
 describe this stateless session bean.
 </p>
 
 <h3>Sun-Specific Deployment Configuration</h3>
 <p>You do not need to define any Sun-Specific deployment
-descriptors (e.g. sun-ejb-jar.xml, sun-application-client.xml) for this
+descriptors (for example <code>sun-ejb-jar.xml</code> and <code>sun-application-client.xml</code>) for this
 example.   The JNDI name for the Remote Stateless Session bean will default to:
 enterprise.interceptor_stateless_ejb.StatelessSession#enterprise.interceptor_stateless_ejb.StatelessSession
 </p>
@@ -232,23 +232,26 @@ common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>samples_install_dir</i>/javaee5/enterprise/interceptor-stateless-ear</code></li>
   <li>Change directory to <code><i>app_dir.</i></code></li>
-  <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
-all </p>
-  <li>It is possible to do the above separately by issuing separate
-commands as given below.</li>
+
+  <li>Build, Deploy and Run the sample application using the target "all":
+  <p><code><i>app_dir&gt; </i></code>ant all </p>
+</li>
+
+  <li>You can accomplish the same thing by issuing separate Ant commands:
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 default</code> compiles and packages the application </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 deploy</code> deploys it to application server </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run</code> runs the test application client </p>
+</li>
   <li>Use the target clean  to
 remove the temporary directories like build and dist.
     <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 clean</code> </p>
   </li>
 </ol>
+
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer to <a
  href="../../../docs/UserTroubleShooting.html">
