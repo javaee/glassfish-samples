@@ -27,89 +27,115 @@
         </table>
         <!---- Don't modify anything above this line, except for the title tag -------->
         <p><a href="../../../docs/list.html">Samples Index</a></p>
-        <h1><h1>The Java Persistence Sample Application</h1>
-        This sample demonstrates the use of Java Persistence APIs based on the new Java Persistence specification. 
-        It interacts with a relational database to store and display information about customer subscriptions to periodicals. 
-        The sample is built and deployed as an EAR file. It consists of two modules:<br>
-        <br>
-        <b>Web Module</b>
-        <blockquote>The web module consists of jsp files which contain the presentation logic for the sample. The starting point of the application is index.html, from here you can navigate to different features, such as creating a customer, searching for a customer, searching for an address, creating more subscriptions and editing a customer profile. On each of these pages you will find a [HOME] link, which will take you back to the index.html main page.</blockquote>
-        <br>
-        <b>EJB Module</b>
-        <blockquote>The ejb module consists of a Stateless Session Bean, the persistence unit and some supporting classes. 
-            The CustomerSession Stateless Session Bean is looked up by the jsp files and based on the client inputs, appropriate business methods are invoked on it. 
-            The CustomerSession Stateless Session Bean uses resource injection to get access to an EntityManager. It uses the entity manager for all persistence related operations, such as inserts, updates and lookups. 
-            The entity classes are Address, Customer and Subscription. These are plain old java objects (POJOs) with meta-data annotations, which describes their database mappings, associations with other entities and fetch strategy.
-            The persistence classes are archived in customer-cmp-ejb.jar along with a persistence.xml, which defines the EntityManager provider class and the database connection information for the persistence unit. 
-        </blockquote>
-        <BR>
-        <b>Application archive</b>
-        <blockquote> 
-            The web-module and ejb-module are archived in customer-cmp-ear.ear.
-        </blockquote>
-        <br>
-
-        If you are familiar with EJB 2.1 persistence, you will notice a lot of changes in this example based on the new Java Persistence specification. Although, the same functionality as EJB 2.1 is achieved in this sample, you will notice the sample is much simpler than it's corresponding EJB 2.1 version. Firstly, there are no complex and arcane deployment descriptors; all meta-data information is specified by annotations and you do not have to implement any EJBLocalObject or EJBObject interfaces. Secondly, you can rely a great deal on defaults, so you code for the exceptional cases. This will significantly reduce your turnaround time for implementations. Thirdly, and probably most importantly this allows you to switch your persistence implementation to any vendor which supports the Java Persistence specification.
-        <br>
-        <br>
-        <h2>Building, Deploying, and Running the Application</h2>
+        <h1>The Java Persistence Sample Application</h1>
         <p>
-        </p>
-        <p>Following are the instructions for building, deploying, and running
-            this sample application. <br>
-            <br>
-        </p>
-        <ol>
-            <li> Setup your build environment and Configure the application
+This sample demonstrates the use of Java Persistence APIs based on the new Java Persistence specification.
+It interacts with a relational database to store and display information about customer subscriptions to periodicals.
+</p>
+<p>If you are familiar with EJB 2.1 persistence, you will notice a lot of changes in this
+        example based on the new Java Persistence specification. Although this application
+        provides the same functionality as a corresponding EJB 2.1 implementation, it is much simpler:
+        <ul>
+        <li>There are no complex and arcane deployment descriptors.
+        All metadata information is specified by annotations and you do not have to implement any
+        EJBLocalObject or EJBObject interfaces.
+        <li>You can rely a great deal on defaults,
+        so you code for the exceptional cases. This significantly reduces  turnaround time
+        for implementations.
+        <li>Most importantly, you can switch your
+        persistence implementation to any vendor that supports the Java Persistence specification.
+        </ul>
+</p>
+
+<h2>Application Structure</h2>
+<p>
+The application is built and deployed as an EAR file. It consists of two modules: the web module and
+the EJB module.
+
+<h3>Web Module</h3>
+<p>
+The web module consists of JSP files that contain the presentation logic for the sample.
+The starting point of the application is the main<code>index.html</code> page,
+from which you can navigate to different
+pages to perform tasks such as creating a customer, searching for a customer, searching for an address,
+creating more subscriptions, and editing a customer profile. Each of these pages has
+a [HOME] link, that returns you to the main page.
+</p>
+
+<h3>EJB Module</h3>
+<p>
+The EJB module consists of a stateless session bean, the persistence unit and some supporting classes.
+The JSP files look up the CustomerSession stateless session bean and, based on the client inputs,
+invoke its business methods.
+<p>
+The CustomerSession stateless session bean uses resource injection to get access to an EntityManager.
+It uses the entity manager for all persistence related operations, such as inserts, updates and lookups.
+The entity classes are Address, Customer and Subscription. These are plain old Java objects (POJOs) with
+metadata annotations that describe their database mappings, associations with other entities, and fetch
+strategy.
+<p>
+The persistence classes are archived in <code>customer-cmp-ejb.jar</code> along with a
+<code>persistence.xml</code>, that defines
+the EntityManager provider class and the database connection information for the persistence unit.
+</p>
+
+<h2>Application archive</h2>
+<p>
+The web-module and ejb-module are archived in <code>customer-cmp-ear.ear</code>.
+</p>
+
+<h2>Building, Deploying, and Running the Application</h2>
+
+<p>Follow these steps to build, deploy, and run the application.</p>
+
+<ol>
+            <li> Set up your build environment and Configure the application
             server with which the build system has to work by following the <a
             href="../../../docs/UserREADME.html">
             common build instructions.</a></li>
+            
             <li><code><i>app_dir</i></code> is the sample application base
             directory: <code><i>install_dir</i>/samples/ws/java-ee5/enterprise/customer-cmp-ear</code></li>
-            <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
-            </i></code></li>
-            <li>Setup the database
-                <p><span style="font-style: italic;">app_dir&gt; </span><code>ant
-                setup </code></p>
+            <li>Change directory to <code><i>app_dir.</i></code></li>
+            
+            <li>Set up the database:
+                <p><code><i>app_dir&gt; </i>ant setup </code></p>
                 <p>Above target does<code> start-db, create-db,
-                    create-txnal-jdbc-resource and create-ntxnal-jdbc-resource<br>
-                </code></p>
+                    create-txnal-jdbc-resource and create-ntxnal-jdbc-resource</code></p>
             </li>
-            <li>Setup database, Build, Deploy and Run the sample application
-            using the target all<code></code></li>
-            <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
-            all </p>
-            <li>It is possible to do the above separately by issuing separate
-            commands as given below.</li>
-            <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-            default</code> compiles and packages the application </p>
-            <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-            deploy</code> deploys it to application server </p>
-            <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-                run</code> runs the sample from a browser using the URL given below<br>
-            </p>
-            <p><code><span style="font-style: italic;">http://[deployment-host]:8080/customer/index.html<br>
-                <br>
-            </span> </code></p>
-            <li>Unsetup the database
-            <p><span style="font-style: italic;">app_dir&gt; </span><code>ant
+            
+            <li>Set up database, Build, Deploy and Run the sample application
+            using the target all:
+            <p><code><i>app_dir&gt; </i> ant all</code>
+            </li>
+            
+            <li>It is possible to do the above separately by issuing separate commands:
+            <br><code><i>app_dir&gt; </i>ant default</code> compiles and packages the application
+            <br><code><i>app_dir&gt; </i>ant deploy</code> deploys it to application server
+            <br><code><i>app_dir&gt; </i>ant run</code> runs the sample from a browser using the URL
+            <code>http://[<i>hostname</i>]:8080/customer/index.html</code>
+            </li>
+            
+            <li>Remove the database resources:
+            <p><i>app_dir&gt; </i><code>ant
             unsetup </code></p>
             Above target does<code> delete-txnal-jdbc-resource and
                 delete-ntxnal-jdbc-resource, stop-db<br>
             </code></li>
             <li>Use the target clean to
                 remove the temporary directories like build and dist
-                <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-                clean</code> </p>
+                <p><code><i>app_dir&gt; </i>ant
+                clean</code>
             </li>
         </ol>
+        
         <h2>Troubleshooting</h2>
         <p>If you have problems when running the application, refer to <a
             href="../../../docs/UserTroubleShooting.html">
             troubleshooting document</a>.
         </p>
         &nbsp;
-        <p><!--- Do not modify the rest of the document --></p>
+<!--- Do not modify the rest of the document -->
         <hr noshade="noshade" size="1"><!-- start copyright -->
         <p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
         Microsystems, Inc.</a>
