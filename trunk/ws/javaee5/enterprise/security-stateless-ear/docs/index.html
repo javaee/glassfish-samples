@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-  <title>The [application name] Sample Application</title>
+  <title>The EJB 3.0 Security Stateless Session Bean Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -33,63 +33,63 @@ a Remote
 business interface.<br>
 This example uses annotations to specify authorization for
 the given EJB.
-<p><b>Business Interface</b>
-</p>
-<blockquote>The Stateless Session bean has a Remote business interface
+<h2>Business Interface</h2>
+
+<p>The Stateless Session bean has a Remote business interface
 with four business methods, two for positive test cases, two for
-negative test cases.<br>
-  <br>
-import javax.ejb.Remote;<br>
-  <br>
-@Remote<br>
-public interface Sless {<br>
-  <br>
-&nbsp;&nbsp;&nbsp; public String helloRolesAllowed();<br>
-&nbsp;&nbsp;&nbsp; public String helloRolesAllowed2();<br>
-&nbsp;&nbsp;&nbsp; public String helloPermitAll();<br>
-&nbsp;&nbsp;&nbsp; public String helloDenyAll();<br>
-  <br>
-}<br>
-  <br>
-Note that unlike prior versions of EJB, the Remote interface is <b>not</b>
+negative test cases.
+<pre>
+import javax.ejb.Remote;
+
+@Remote
+public interface Sless {
+
+    public String helloRolesAllowed();
+    public String helloRolesAllowed2();
+    public String helloPermitAll();
+    public String helloDenyAll();
+}
+</pre>
+
+<p>
+Unlike prior versions of EJB, the remote interface is <b>not</b>
 required to extend java.rmi.Remote and its business methods are <b>not</b>
 required to throw java.rmi.RemoteException. <br>
-  <br>
+  <p>
 The business interface is designated as a remote business interface via
-the @javax.ejb.Remote annotation.<br>
-</blockquote>
-<b>Stateless Session Bean Class</b>
-<blockquote> Here's the bean implementation :<br>
-  <br>
-@Stateless<br>
-public class SlessEJB implements Sless {<br>
-  <br>
-&nbsp;&nbsp;&nbsp;@RolesAllowed("javaee")<br>
-&nbsp;&nbsp;&nbsp; public String helloRolesAllowed() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
-"SlessEJB.helloRolesAllowed(): Hello World";<br>
-&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-&nbsp;&nbsp;&nbsp;@RolesAllowed("noauthuser")<br>
-&nbsp;&nbsp;&nbsp; public String helloRolesAllowed2() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
-"SlessEJB.helloRolesAllowed2(): Hello World";<br>
-&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-&nbsp;&nbsp;&nbsp;@PermitAll<br>
-&nbsp;&nbsp;&nbsp; public String helloPermitAll() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
-"SlessEJB.helloPermitAll(): Hello World";<br>
-&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-&nbsp;&nbsp;&nbsp;@DenyAll<br>
-&nbsp;&nbsp;&nbsp; public String helloDenyAll() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
-"SlessEJB.helloDenyAll(): Hello World";<br>
-&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-}<br>
-  <br>
+the @javax.ejb.Remote annotation.
+
+<h2>Stateless Session Bean Class</h2>
+<p> The bean implementation is:
+
+<pre>
+@Stateless
+public class SlessEJB implements Sless {
+
+   @RolesAllowed("javaee")
+    public String helloRolesAllowed() {
+        return "SlessEJB.helloRolesAllowed(): Hello World";
+    }
+
+   @RolesAllowed("noauthuser")
+    public String helloRolesAllowed2() {
+        return "SlessEJB.helloRolesAllowed2(): Hello World";
+    }
+
+   @PermitAll
+    public String helloPermitAll() {
+        return "SlessEJB.helloPermitAll(): Hello World";
+    }
+
+   @DenyAll
+    public String helloDenyAll() {
+        return "SlessEJB.helloDenyAll(): Hello World";
+    }
+
+}
+</pre>
+
+<p>
 @javax.ejb.Stateless is a component-defining annotation that designates
 this class as the bean class for a Stateless Session Bean. &nbsp; <br>
 @javax.annotation.security.DenyAll is a an annotation indicating that
@@ -99,28 +99,23 @@ the given method or all business methods of the given class is/are
 accessbile by everyone.<br>
 @javax.annotation.security.RolesAllowed is an annotation indicating
 that the given method is only accessible for given list of roles.<br>
-  <br>
-</blockquote>
-<b>Deployment Descriptor</b>
-<blockquote> The good news is that standard deployment descriptor is no
-longer
-required!!! &nbsp;The two java files above are sufficient to completely
-describe this stateless session bean. &nbsp;<br>
-</blockquote>
-<b>SUN App Server Specific Deployment Configuration</b>
-<blockquote> One only need security-role-mapping in
-sun-application.xml.
-The JNDI name for the Remote Stateless Session bean will
-default to the class name of its Remote business interface &nbsp;.<br>
-</blockquote>
-<br>
-<h2>Building, Deploying, and Running the Application</h2>
+
+
+<h2>Deployment Descriptor</h2>
+<p> The good news is that standard deployment descriptor is no
+longer required!  The two Java files above are sufficient to completely
+describe this stateless session bean. 
+
+<h3>Sun-Specific Deployment Configuration</h3>
 <p>
-</p>
-<p>Following are the instructions for building, deploying, and running
-this sample application. <br>
-<br>
-</p>
+You only need security-role-mapping in the <code>sun-application.xml</code> file.
+The JNDI name for the Remote Stateless Session bean will
+default to the class name of its Remote business interface &nbsp;.
+
+<h2>Building, Deploying, and Running the Application</h2>
+
+<p>Follow these instructions to build, deploy, and run
+this sample application. s
 <ol>
   <li> Setup your build environment and Configure the application
 server with which the build system has to work by following the <a
