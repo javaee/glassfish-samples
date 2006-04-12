@@ -26,49 +26,46 @@
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<h1>Common Build Instructions for Sample Applications.<br>
-</h1>
-<br>
-The sample applications use Java BluePrints Build system
-which is a
-collection of build scripts based on ant. These build files are located
-under samples/bp-project directory.<br>
-<br>
-<span style="font-weight: bold;">Here are the steps for using the build
-system:</span><br>
-<br>
+<h1>Common Build Instructions for Sample Applications</h1>
+<p>
+The sample applications use the Java BluePrints build system
+that employs a set of Ant build scripts (XML files) in the 
+<code>samples/bp-project</code> directory.
+</p>
+
+<h3>Procedure</h3>
+<p>
+Follow these steps to build a sample application:
 <ol>
-  <li>Download and install the Java EE 5 SDK bundle along with Java SE
-(jdk).
-Make sure to use the Java SE which is bundled with Java EE 5 SDK since
-this has been tested.
-    <p> </p>
+  <li>Set up the Java Development Kit (JDK) environment provided with Java EE 5 SDK.  Make sure your JAVA_HOME environment variable is set accordingly.
+</li>
+
+  <li>Add JAVA_HOME and JAVA_HOME/bin to your PATH environment variable.    
   </li>
-  <li>Set&nbsp; JAVA_HOME and
-JAVA_HOME\bin in PATH
-    <p> </p>
+
+  <li>Add ANT_HOME and ANT_HOME/bin to your PATH environment variable. 
+ Use the version of Ant provided with the Java EE 5 SDK.    
   </li>
-  <li>Set ANT_HOME and ANT_HOME\bin in PATH. Make sure to use the 'ant'
-which came bundled with Java EE 5 SDK.
-    <p> </p>
+
+  <li>Edit the file <code><i>SDK-root</i>/samples/bp-project/build.properties</code>
+and set the value of <code>javaee.server.passwordfile</code> (see below).
+The installation program automatically sets default values for the other properties.
+The following table describes all the pertinent properties.
   </li>
-  <li>Make the application server specific properties known to <code>ant</code>
-by editing build.properties under samples/bp-project. If the file
-doesn't exist, create a
-new
-one.
-    <p>If the samples are installed as part of Java EE 5 SDK then the
+<br>
+<!-- add application server specific properties. 
+    <p>With the Java EE 5 SDK then the
 installer automatically creates build.properties under
-samples/bp-project and pre populates all the values except
-javaee.server.passwordfile which need to be defined by the user. </p>
-    <p> <br>
+<code>samples/bp-project</code> and pre populates all the values except
+javaee.server.passwordfile which need to be defined by the user. 
+--->
+ 
     <table border="1" cellpadding="5" cellspacing="0" width="80%">
       <tbody>
         <tr>
-          <td align="center" valign="top" width="20%"><code>Property
-Name</code></td>
-          <td align="center" valign="top" width="50%"><code>Description</code></td>
-          <td align="center" valign="top" width="30%"><code>Examples</code></td>
+          <td align="center" valign="top" width="20%"><b>Property Name</b></td>
+          <td align="center" valign="top" width="50%"><b>Description</b></td>
+          <td align="center" valign="top" width="30%"><b>Examples</b></td>
         </tr>
         <tr>
           <td>javaee.home</td>
@@ -120,16 +117,15 @@ while installing the Java EE 5 SDK</td>
           <td valign="top">4848</td>
         </tr>
       </tbody>
-    </table>
-    </p>
-    <p> </p>
+    </table>    
   </li>
+<br>
   <li>Start the application server and make sure it is running.
-    <p> </p>
+    
   </li>
   <li>Follow the sample application specific procedure to build and run
 the sample.
-    <p> </p>
+    
   </li>
   <li>Common build targets are</li>
   <ul>
@@ -146,15 +142,15 @@ application </li>
     <li><span style="font-weight: bold;">clean</span>: undeploys the
 application, removes the generated directories like build and dist</li>
   </ul>
-  <p> </p>
-  <li>For setup of database and usage of jdbc resources, refer to <a
- href="./JavaDB.html">Using Java DB with Sample applications</a>.
-    <p> </p>
+  
+  <li>See <a href="JavaDB.html">Using Java DB with Sample applications</a>
+for information on configuring the built-in Java DB database and
+corresponding JDBC resources.
+    
   </li>
-  <li>For monitoring web services, refer to <a
- href="./webservices_mgmt.html">Documentation and an example on web
-services monitoring</a>.
-    <p> </p>
+  <li>See <a href="webservices_mgmt.html">Monitoring Web Services</a> for
+information on how to monitor web services applications.
+    
   </li>
 </ol>
 <br>
