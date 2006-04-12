@@ -7,7 +7,7 @@
   <property name="db.create.src" value="./sql/create.sql"/>
   <property name="db.delete.src" value="./sql/delete.sql"/>
 
-  <target name="setup" depends="start-db,create-db,create-txnal-jdbc-resource,create-ntxnal-jdbc-resource"/>
+  <target name="setup" depends="create-db,create-txnal-jdbc-resource,create-ntxnal-jdbc-resource"/>
   <target name="unsetup" depends="delete-txnal-jdbc-resource,delete-ntxnal-jdbc-resource,delete-db" />
   
   <target name="create-db" depends="delete-db"
