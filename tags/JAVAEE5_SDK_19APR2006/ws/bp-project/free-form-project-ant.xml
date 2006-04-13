@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 2005-2006 Sun Microsystems, Inc.  All rights reserved.  You may not modify, use, reproduce, or distribute this software except in compliance with the terms of the License at: 
+ http://developer.sun.com/berkeley_license.html
+ $Id$ -->
+
+
+<!-- free-form-project-ant.xml: contains targets for projects that 
+     do not have any set module as the target, but just contain a
+     list of ant tasks. This file is not meant to be included in a 
+     project directly.
+     This file should only be included if this project is defining 
+     is.free-form-project.module property.
+     @Author: Inderjeet Singh -->
+
+<project name="free-form-project-ant" default="dummy-default">
+
+  <target name="-pre-clean">
+  </target>
+
+  <target name="package" depends="-post-compile"
+    description="packages the archive">
+  <!-- Nothing specific yet -->
+  </target>
+
+  <target name="dummy-default"/>
+</project>

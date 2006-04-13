@@ -1,0 +1,41 @@
+# path to your application server installation
+javaee.home=c:/Sun/AppServer
+
+
+# machine name (or the IP address) where the applications will be deployed.
+javaee.server.name=localhost
+
+
+# port number where the app-server is accessed by the users
+javaee.server.port=8080
+
+
+# port number where the admin server of the app-server is available
+javaee.adminserver.port=4848
+
+
+# administrator username of the app-server 
+javaee.server.username=admin
+
+
+# replace /path/to/passwordfile to point to a file that 
+# contains the admin password for your app-server. 
+# The file should contain the password in the following line: 
+#
+# AS_ADMIN_PASSWORD=adminadmin
+#
+# Notice that the password is adminadmin since this is 
+# the default password used by the glassfish app-server installation.
+#
+javaee.server.passwordfile=/path/to/passwordfile
+
+
+# default server instance name
+appserver.instance=server
+
+
+# for platforms other than Windows and MAC
+# Uncomment and set this property to the location of the browser you 
+# choose to launch when an application is deployed.
+# On Windows and Mac OS X the default browser is used.
+#default.browser=/Applications/Firefox.app/Contents/MacOS/firefox-bin
