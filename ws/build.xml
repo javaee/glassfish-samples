@@ -50,7 +50,7 @@
         <filelist dir="javaee5/enterprise/security-stateless-ear/test" files="build.xml"/>
         <filelist dir="javaee5/webservices/simple-jaxb/test" files="build.xml"/>
         <filelist dir="javaee5/enterprise/lottery-annotation-ear/test" files="build.xml"/>
-        <filelist dir="javaee5/webservices/hello-jaxws/test" files="build.xml"/>
+        <!--filelist dir="javaee5/webservices/hello-jaxws/test" files="build.xml"/-->
         <!--filelist dir="javaee5/enterprise/customer-cmp-ear/test" files="build.xml"/-->
     </path>
 
