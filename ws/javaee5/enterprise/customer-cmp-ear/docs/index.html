@@ -98,18 +98,24 @@ The web-module and ejb-module are archived in <code>customer-cmp-ear.ear</code>.
             directory: <code><i>install_dir</i>/samples/ws/javaee5/enterprise/customer-cmp-ear</code></li>
             <li>Change directory to <code><i>app_dir.</i></code></li>
             
-            <li>Set up the database:
-                <p><code><i>app_dir&gt; </i>ant setup </code></p>
-                <p>Above target does<code> start-db, create-db,
-                    create-txnal-jdbc-resource and create-ntxnal-jdbc-resource</code></p>
+            <li>
+                <p>Make sure the JavaDB database is started. If not, refer to 
+                   <a href="../../../docs/UserREADME.html">  common build instructions.</a>
             </li>
-            
-            <li>Set up database, Build, Deploy and Run the sample application
+
+            <li>Create database
+                <p>Change directory to <code><i>app_dir/setup </i></code></p>
+                <p><code><i>app_dir/setup&gt; </i>ant create-db </code></p>
+            </li>
+
+            <li>Set up JDBC resources, Compile, Deploy and Run the sample application
             using the target all:
+                <p>Change directory to <code><i>app_dir </i></code></p>
             <p><code><i>app_dir&gt; </i> ant all</code>
             </li>
             
             <li>It is possible to do the above separately by issuing separate commands:
+            <br><code><i>app_dir&gt; </i>ant setup</code> creates jdbc-resources
             <br><code><i>app_dir&gt; </i>ant default</code> compiles and packages the application
             <br><code><i>app_dir&gt; </i>ant deploy</code> deploys it to application server
             <br><code><i>app_dir&gt; </i>ant run</code> runs the sample from a browser using the URL
@@ -117,11 +123,9 @@ The web-module and ejb-module are archived in <code>customer-cmp-ear.ear</code>.
             </li>
             
             <li>Remove the database resources:
-            <p><i>app_dir&gt; </i><code>ant
-            unsetup </code></p>
-            Above target does<code> delete-txnal-jdbc-resource and
-                delete-ntxnal-jdbc-resource, stop-db<br>
-            </code></li>
+            <p><i>app_dir&gt; </i><code>ant unsetup </code></p> </code>
+            </li>
+
             <li>Use the target clean to
                 remove the temporary directories like build and dist
                 <p><code><i>app_dir&gt; </i>ant

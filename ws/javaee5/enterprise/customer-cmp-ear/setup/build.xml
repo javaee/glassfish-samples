@@ -7,10 +7,10 @@
   <property name="db.create.src" value="./sql/create.sql"/>
   <property name="db.delete.src" value="./sql/delete.sql"/>
 
-  <target name="setup" depends="create-db,create-txnal-jdbc-resource,create-ntxnal-jdbc-resource"/>
-  <target name="unsetup" depends="delete-txnal-jdbc-resource,delete-ntxnal-jdbc-resource,delete-db" />
+  <target name="setup" depends="create-txnal-jdbc-resource,create-ntxnal-jdbc-resource"/>
+  <target name="unsetup" depends="delete-txnal-jdbc-resource,delete-ntxnal-jdbc-resource" />
   
-  <target name="create-db" depends="delete-db"
+  <target name="create-db"
 	description="Create database tables and populate database." >
     <sql driver="${db.driver}"
          encoding="utf-8"
