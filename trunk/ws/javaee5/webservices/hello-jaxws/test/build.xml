@@ -25,6 +25,8 @@
 
 <project name="hello-jaxws-test" default="runtest" basedir=".">
     <property name="classesdir" value="../build"/>
+    <property file="../../../../bp-project/build.properties"/>
+    <property file="../../../../bp-project/app-server.properties"/>
     <property file="${user.home}/build.properties"/>
 
     <path id="classpath">
