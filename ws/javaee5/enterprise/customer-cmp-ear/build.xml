@@ -37,11 +37,7 @@
 
     <import file="../../../bp-project/main.xml" />
 
-    <target name="all" depends="stop-db,del-sample-db,start-db,setup,ear,deploy,client-jar,launch">
-    </target>
-
-    <target name="del-sample-db">
-	<delete dir="${db.home}/${db.sid}"/>
+    <target name="all" depends="setup,ear,deploy,client-jar,launch">
     </target>
 
     <target name="setup">
