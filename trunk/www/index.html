@@ -1,9 +1,37 @@
-<html>
-  <body>
-    <font size="+2">Java EE Samples</font>
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/nonav/tigris_transitional.dtd">
+<html><head>
+  <link rel="SHORTCUT ICON" href="image/glassfish_favicon.gif">
+  <style>
+  	.app H3 {
+  		clear: none;
+  	}
+  	.axial {
+  		display: none;
+  	}
+  	#apphead {
+  		display: none;
+  	}
+  	#subprojects {
+  		display: none;
+  	}
+  </style><title>GlassFish Community</title></head>
+<body>
+<script>
+// kill "description" h3 bar
+ld = document.getElementById("longdescription");
+for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+  if(n.nodeType==1 && n.innerHTML=="Description" ) {
+    n.parentNode.removeChild(n);
+    break;
+  }
+}
+</script>
+
+
+<font size="+2">Samples for the GlassFish project</font>
     <hr/>
     <p>
-    The Java EE Samples project is meant to demonstrate the 
+    The Samples project is meant to demonstrate the 
     <a href="http://java.sun.com/javaee/">Java EE Technolgy</a>
     using 
     <a href="http://java.sun.com/javaee/downloads/">Java EE SDK</a> 
@@ -17,13 +45,15 @@
     a specific Java EE technology.
     </p>
 
-    <b>If you are planning to use Java EE Samples:</b>
+    <b>If you are interested in using sample applications:</b>
     <ul>
         <li>Make sure you have downloaded and installed 
             <a href="http://java.sun.com/javaee/downloads/">Java EE SDK</a> 
             or 
             <a href="https://glassfish.dev.java.net/">GlassFish</a>.
-        <li>Download the Java EE Samples bundle and expand the zip file.
+        <li>Download the 
+	    <a href="http://javaweb.sfbay/java/re/samples/1.0/nightly/bundles/latest">
+	    Java EE Samples bundle</a> and expand the zip file.
         <li>Refer to 
             <a href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/index.html">glassfish-samples/ws/javaee5/index.html</a> for instructions on using sample applications.
     </ul>
