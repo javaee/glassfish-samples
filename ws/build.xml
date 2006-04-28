@@ -20,8 +20,12 @@
         <mkdir dir="${test.results.dir}"/>
     </target>
 
+    <patternset id="sdk.contents"
+        includes="bp-project/**, docs/**, index.html, javaee5/**"
+        excludes="build.xml,bp-project/test.xml,bp-project/test.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/LICENSE,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
+
     <target name="package-sdk" depends="init-dist"
-        description="packages the samples into a single jar">
+        description="packages the samples into a single jar for SDK">
         <mkdir dir="${dist.dir}"/>
 	<antcall target="check-out-legal"/>
         <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
@@ -29,14 +33,22 @@
         <zip destfile="${dist.dir}/${release.dirname}.jar">
             <zipfileset dir="${dist.dir}" 
                 includes="index.html,javaee5/**"/>
-            <zipfileset dir="." 
-                includes="bp-project/**, docs/**, index.html, javaee5/**"
-                excludes="build.xml,bp-project/test.xml,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/LICENSE,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
+            <zipfileset dir="."> 
+                <patternset refid="sdk.contents"/>
+            </zipfileset>
         </zip>
         <delete file="${dist.dir}/index.html"/>
         <delete dir="${dist.dir}/javaee5"/>
     </target>
 
+    <target name="package-installer" depends="init-dist"
+        description="packages the samples into a single jar for installer">
+        <zip destfile="${dist.dir}/${release.dirname}.gf.jar">
+            <zipfileset dir="."> 
+                <patternset refid="sdk.contents"/>
+            </zipfileset>
+        </zip>
+    </target>
 
     <target name="clean"
         description="cleans workspace by removing temporary directories like dist">
@@ -99,6 +111,29 @@
 	<echo message="Packaging jar for staging"/>
 	<antcall target="package-sdk"/>
 	<antcall target="stop-domain"/>
+    </target>
+
+    <!-- build installer -->
+    <taskdef name="installerBuilder" classname="org.jvnet.poormans_installer.builder.BuilderTask">
+        <classpath>
+            <fileset dir="${poormans.installer.home}" includes="*.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="create-installer" depends="package-installer">
+        <!-- generate manifest.mf -->
+        <property name="manifest.file" value="${dist.dir}/manifest.mf"/>
+        <!-- do not format the following echo which is intentional -->
+        <echo file="${manifest.file}" append="false">Main-Class: glassfish_samples_project</echo>
+        <installerBuilder
+            classFile="${dist.dir}/classes/glassfish_samples_project.class"
+            licenseFile="javaee5/LICENSE"
+            zipFile="${dist.dir}/${release.dirname}.gf.jar"/>
+        <jar jarfile="${dist.dir}/${release.dirname}-installer.jar" 
+            basedir="${dist.dir}/classes" manifest ="${manifest.file}"/>
+        <delete file="${dist.dir}/${release.dirname}.gf.jar"/>
+        <delete dir="${dist.dir}/classes"/>
+        <delete file="${manifest.file}"/>
     </target>
 
 </project>
