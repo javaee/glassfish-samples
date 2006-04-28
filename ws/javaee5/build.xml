@@ -32,4 +32,12 @@
         <iterate target="clean"/>
     </target>
 
+    <target name="-pre-setup">
+        <iterate target="-pre-setup"/>
+    </target>
+
+    <target name="-post-unsetup">
+        <iterate target="-post-unsetup"/>
+    </target>
+
 </project>

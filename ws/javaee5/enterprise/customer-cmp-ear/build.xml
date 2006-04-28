@@ -37,7 +37,19 @@
 
     <import file="../../../bp-project/main.xml" />
 
+    <target name="-pre-setup">
+	<subant target="create-db">
+		<fileset dir="setup" includes="build.xml"/>
+	</subant>
+    </target>
+
     <target name="all" depends="setup,ear,deploy,client-jar,launch">
+    </target>
+
+    <target name="-post-unsetup" depends="unsetup">
+	<subant target="delete-db">
+		<fileset dir="setup" includes="build.xml"/>
+	</subant>
     </target>
 
     <target name="setup">
