@@ -28,9 +28,9 @@
     <import file="../../../../bp-project/test.xml"/>
 
     <target name="runtest" depends="compile">
+	<echo message="Testing ${module.name} ..."/>
         <antcall target="create-file-user"/>
 
-	<echo message="Running the sample application..." />
 	<java classname="org.junit.runner.JUnitCore" fork="on">
             <jvmarg value="-Dorg.omg.CORBA.ORBInitialHost=${javaee.server.name}"/>
             <jvmarg value="-Dorg.omg.CORBA.ORBInitialPort=${javaee.orb.port}"/>
