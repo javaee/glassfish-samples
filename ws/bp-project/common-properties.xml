@@ -19,14 +19,32 @@
   <!-- include common properties -->
   <property file="${ant.file.common-properties}/../build.properties"/>
 
-  <!-- include netbeans properties -->
-  <property file="nbproject/project.properties"/>
+  <property file="build.properties"/>
 
   <!-- include user specific build properties -->
   <property file="${user.home}/build.properties"/>
 
+  <!-- include netbeans properties -->
+  <property file="nbproject/project.properties"/>
+  <property file="nbproject/private/private.properties"/>
+  <property file="${deploy.ant.properties.file}" />
+
   <!-- include common properties -->
   <property file="${ant.file.common-properties}/../common.properties"/>
-  
+
+  <!-- Look for a suitable value for javaee.home if it is not already set -->
+  <condition property="javaee.home" value="${sjsas.root}">
+    <and>
+      <not><isset property="javaee.home"/></not>
+      <isset property="sjsas.root"/>
+    </and>
+  </condition>  
+  <condition property="javaee.home" value="${com.sun.aas.InstallRoot}">
+    <and>
+      <not><isset property="javaee.home"/></not>
+      <isset property="com.sun.aas.InstallRoot"/>
+    </and>
+  </condition>  
+
   <target name="dummy-default"/>
 </project>
