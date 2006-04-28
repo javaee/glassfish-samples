@@ -348,19 +348,6 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     </exec>
   </target>
 
-  <target name="reconfig" depends="tools"
-    description="reconfigures the application server">
-     <echo message="Reconfiguring server ${appserver.instance}"/>
-     <exec executable="${asadmin}">
-        <arg line=" reconfig"/>
-        <arg line=" --user ${javaee.server.username}" />
-        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
-        <arg line=" --host ${javaee.server.name}" />
-        <arg line=" --port ${javaee.adminserver.port}" />
-        <arg line=" ${appserver.instance}"/>
-    </exec>      
-  </target>
-  
   <target name="undeploy" depends="tools"
     description="undeploys the application">
     <echo message="Undeploying ${module.name}." />

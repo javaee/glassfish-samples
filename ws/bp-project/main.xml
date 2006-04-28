@@ -11,9 +11,7 @@
      @Author: Inderjeet Singh -->
 <project name="main" default="dummy-default">
 
-  <property file="build.properties"/>
-  <property value="1.5" name="default.javac.source"/>
-  <property value="1.5" name="default.javac.target"/>
+  <import file="${ant.file.main}/../common-properties.xml"/>
 
   <condition property="common-ant-tasks-file" 
 	     value="${ant.file}/../nbproject/build-impl.xml"
