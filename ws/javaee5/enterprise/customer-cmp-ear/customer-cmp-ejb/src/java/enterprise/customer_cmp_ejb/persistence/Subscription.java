@@ -28,7 +28,7 @@ public  class Subscription implements java.io.Serializable{
 
     private String title;
     private String type;
-    private Collection customers;
+    private Collection<Customer> customers;
     
     public Subscription(){
         
@@ -50,18 +50,17 @@ public  class Subscription implements java.io.Serializable{
     }
 
     //access methods for cmr fields
-@ManyToMany(mappedBy="subscriptions", targetEntity=enterprise.customer_cmp_ejb.persistence.Customer.class)
+    @ManyToMany(mappedBy="subscriptions")
     public Collection<Customer> getCustomers(){
         return customers;
     }
-    public void setCustomers(Collection customers){
+    public void setCustomers(Collection<Customer> customers){
         this.customers=customers;
     }
 
     public Subscription (
             String title,
             String type) {
-        //Log.trace("SubscriptionBean.ejbCreate...");
 
         if (type.equals(SubscriptionType.MAGAZINE)) {
             _create(title,SubscriptionType.MAGAZINE);
@@ -92,4 +91,3 @@ public  class Subscription implements java.io.Serializable{
 
 
     
- 
