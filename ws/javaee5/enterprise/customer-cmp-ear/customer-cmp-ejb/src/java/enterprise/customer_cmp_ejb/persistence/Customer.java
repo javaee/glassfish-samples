@@ -35,8 +35,8 @@ public class Customer implements java.io.Serializable{
     private String id;
     private String firstName;
     private String lastName;
-    private Collection addresses;
-    private Collection subscriptions;
+    private Collection<Address> addresses;
+    private Collection<Subscription> subscriptions;
     
     public Customer(){
         
@@ -80,11 +80,11 @@ public class Customer implements java.io.Serializable{
     public Collection<Address> getAddresses(){
         return addresses;
     }
-    public void setAddresses (Collection addresses){
+    public void setAddresses (Collection<Address> addresses){
         this.addresses=addresses;
     }
 
-@ManyToMany(targetEntity=enterprise.customer_cmp_ejb.persistence.Subscription.class, fetch=FetchType.EAGER )
+    @ManyToMany(fetch=FetchType.EAGER )
     @JoinTable(
             name="CUSTOMERBEANSUBSCRIPTIONBEAN",
             joinColumns=@JoinColumn(name="CUSTOMERBEAN_CUSTOMERID96", referencedColumnName="customerid"), 
@@ -93,7 +93,7 @@ public class Customer implements java.io.Serializable{
     public Collection<Subscription> getSubscriptions(){
         return subscriptions;
     }
-    public void setSubscriptions (Collection subscriptions){
+    public void setSubscriptions (Collection<Subscription> subscriptions){
         this.subscriptions=subscriptions;
     }
 
