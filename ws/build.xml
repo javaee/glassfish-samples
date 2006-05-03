@@ -5,6 +5,7 @@
 
     <import file="bp-project/main.xml"/>
 
+    <property file="bp-project/test.properties"/>
     <property file="samples.properties"/>
 
     <property name="dist.dir" value="dist"/>
