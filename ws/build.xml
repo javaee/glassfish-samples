@@ -121,12 +121,14 @@
 	</subant>
 	<echo message="Packaging jar for staging"/>
 	<antcall target="package-sdk"/>
+	<antcall target="create-installer"/>
 	<antcall target="stop-db"/>
 	<antcall target="stop-domain"/>
     </target>
 
     <!-- build installer -->
-    <taskdef name="installerBuilder" classname="org.jvnet.poormans_installer.builder.BuilderTask">
+    <taskdef name="installerBuilder" 
+        classname="com.sun.tools.xjc.installer.builder.BuilderTask">
         <classpath>
             <fileset dir="${poormans.installer.home}" includes="*.jar"/>
         </classpath>
