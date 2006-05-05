@@ -56,9 +56,11 @@
     </target>
 
     <target name="run">
+        <antcall target="create-file-user"/>
         <subant target="run-app-client">
             <fileset dir="security-stateless-appclient" includes="build.xml"/>
         </subant>
+        <antcall target="delete-file-user"/>
     </target>
 
 </project>
