@@ -23,7 +23,7 @@
 
     <patternset id="include.sdk.contents"
         includes="bp-project/**, docs/**, index.html, javaee5/**"
-        excludes="build.xml,bp-project/test.xml,bp-project/test.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
+        excludes="build.xml,bp-project/test.xml,bp-project/build.properties,bp-project/test.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
 
     <patternset id="exclude.installer.license"
         excludes="javaee5/LICENSE"/>
