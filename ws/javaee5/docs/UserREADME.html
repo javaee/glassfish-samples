@@ -33,15 +33,15 @@ that employs a set of Ant build scripts (XML files) in the <code>samples/bp-proj
 directory.
 </p>
 <h3>Procedure</h3>
-<p>In the instructions below, <code><span style="font-style: italic;">&lt;javaeesdk.home&gt;</span></code>
+<p>In the instructions below, <code><span style="font-style: italic;">&lt;javaee.home&gt;</span></code>
 refers to the path where you installed the Java EE 5 SDK (for Windows,
 the default path is <code>c:/Sun/AppServer</code>). Follow these steps
 to build a sample application:
 </p>
 <ol>
-  <li>Add <code><span style="font-style: italic;">&lt;javaeesdk.home&gt;</span>/lib/ant/bin</code>
+  <li>Add <code><span style="font-style: italic;">&lt;javaee.home&gt;</span>/lib/ant/bin</code>
 directory to your PATH environment variable.&nbsp; </li>
-  <li>Edit the file <code><i>&lt;javaeesdk.home&gt;</i>/samples/bp-project/build.properties</code>
+  <li>Edit the file <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties</code>
 and set the value of <code>javaee.server.passwordfile</code> (see
 below). Note that the Java EE 5 SDK installer&nbsp;automatically sets
 default values for other properties.&nbsp;
@@ -116,7 +116,7 @@ while installing the Java EE 5 SDK</td>
   <br>
   <li>Start the application server&nbsp;and the JavaDB
 database. To do so, open a command prompt and change
-directory to <span style="font-style: italic;">&lt;javaeesdk.home&gt;</span>/bin
+directory to <span style="font-style: italic;">&lt;javaee.home&gt;</span>/bin
 and issue the following
 commands:<br>
     <code>asadmin start-domain<br>
