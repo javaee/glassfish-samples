@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="glassfish-samples" default="all" basedir=".">
+    <description>Builds, tests, and packages the project glassfish-samples.</description>
+
+    <path id="samples-list">
+        <filelist dir="webservices/hello-jaxws" files="build.xml"/>
+        <filelist dir="webservices/simple-jaxb" files="build.xml"/>
+        <filelist dir="enterprise/lottery-annotation-ear" files="build.xml"/>
+        <filelist dir="enterprise/servlet-stateless-ear" files="build.xml"/>
+        <filelist dir="enterprise/interceptor-stateless-ear" files="build.xml"/>
+        <filelist dir="enterprise/security-stateless-ear" files="build.xml"/>
+        <filelist dir="enterprise/customer-cmp-ear" files="build.xml"/>
+    </path>
+
+    <macrodef name="iterate">
+        <attribute name="target"/>
+        <sequential>
+            <subant target="@{target}" failonerror="false">
+                <buildpath refid="samples-list"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="all" depends="clean"
+        description="iterates thru all the sample applications to compile, package and run">
+        <iterate target="all"/>
+    </target>
+
+    <target name="clean"
+        description="cleans workspace by removing temporary directories like dist">
+        <iterate target="clean"/>
+    </target>
+
+    <target name="-pre-setup">
+        <iterate target="-pre-setup"/>
+    </target>
+
+    <target name="-post-unsetup">
+        <iterate target="-post-unsetup"/>
+    </target>
+
+</project>
