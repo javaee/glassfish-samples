@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/nonav/tigris_transitional.dtd">
+<html>
+<head>
+  <link rel="SHORTCUT ICON" href="images/glassfish_favicon.gif">
+  <style>
+  	.app H3 {
+  		clear: none;
+  	}
+  	.axial {
+  		display: none;
+  	}
+  	#apphead {
+  		display: none;
+  	}
+  	#subprojects {
+  		display: none;
+  	}
+  </style>
+  <title>GlassFish Community</title>
+</head>
+<body>
+<script>
+// kill "description" h3 bar
+ld = document.getElementById("longdescription");
+for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+  if(n.nodeType==1 && n.innerHTML=="Description" ) {
+    n.parentNode.removeChild(n);
+    break;
+  }
+}
+</script>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td><a href="http://glassfish.dev.java.net"
+ alt="GlassFish Community"><img align="left"
+ src="images/glassfish_logo.gif" valign="top"
+ style="border: 0px solid ;"></a></td>
+      <td>
+      <h1>Inviting contributions for new samples</h1>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<p></p>
+
+This is a great opportunity for the Java EE developers to participate in 
+<a href="https://glassfish-samples.dev.java.net/"> glassfish-samples project </a>
+and contribute to the 
+development of samples
+to show case the new and latest Java EE features. In addition to earning recognition, the sample developers can significantly influence  the Java EE 5 development community and its productivity as Java EE SDK is downloaded by millions of developers around the world. To start with we are looking for sample applications in the following areas and we are open to other relevant areas.
+<p></p>
+
+<h3>Sample Application Areas</h3>
+These areas roughly correspond to new Java EE 5 features for the immediate requirement.
+<ul>
+<li> Java Persistence API - access persistence layer using JSF, access persistence layer using web tier
+<li> EJB 3.0 over-riding of annotations
+<li> Web Services
+<li> AJAX
+<li> Security
+</ul>
+
+Please refer to the 
+<a href="http://java.sun.com/javaee/reference/code/">existing list of sample applications</a> 
+to visualize the missing areas.
+
+<h3>Developing sample applications</h3>
+<ul>
+  <li>Understand the <a
+ href="https://glassfish.dev.java.net/public/GovernancePolicy.html">
+governance policy</a> for information on roles and responsibilities </li>
+  <li>All contributors must sign and return a <a
+ href="https://glassfish.dev.java.net/public/GovernancePolicy.html#SCA_Policy">
+Contributor Agreement</a> </li>
+  <li>Make sure you have downloaded and installed <a
+ href="http://java.sun.com/javaee/downloads/" target="gfsamples">Java
+EE SDK</a> or <a href="https://glassfish.dev.java.net/"
+ target="gfsamples">GlassFish</a> </li>
+  <li>Refer to <a
+ href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/DeveloperREADME.html"
+ target="gfsamples">Sample Applications Development Process</a> for
+checking out samples workspace and developing sample application </li>
+</ul>
+
+<p></p>
+Look forward to your participation in this exciting project.
+
+<p></p>
+If you need more information or if you have any suggestions/comments on the above please send email to 
+<a href="mailto:dev@glassfish-samples.dev.java.net>dev@glassfish-samples.dev.java.net</a>
+
+</body>
+</html>
