@@ -30,7 +30,6 @@
     <path id="ear-components">
         <filelist dir="./security-stateless-ejb" files="build.xml"/>
         <filelist dir="./security-stateless-appclient" files="build.xml"/>
-        <filelist dir="./test" files="build.xml"/>
     </path>
 
     <import file="../../../bp-project/main.xml"/>
