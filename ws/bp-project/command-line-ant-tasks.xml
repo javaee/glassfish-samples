@@ -65,6 +65,7 @@
         <pathelement path="${javac.classpath}"/>
         <pathelement path="${extra.classpath}"/>
         <path refid="javaee.classpath" />
+        <path refid="test.classpath"/>
     </path>
 
     <target name="bpp-actual-compilation" if="has-java-sources">
