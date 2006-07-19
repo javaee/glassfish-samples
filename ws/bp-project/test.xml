@@ -10,9 +10,6 @@
      @Author: Sreenivas Munnangi -->
 <project name="test" default="dummy-default">
     <property file="${ant.file.test}/../test.properties"/>    
-    <path id="test.classpath">
-        <fileset dir="${junit.home}" includes="junit-*.jar"/>
-        <fileset dir="${htmlunit.home}/lib" includes="*.jar"/>
-    </path>
+    <property name="extra.classpath" value="${junit.home}/junit-4.0.jar"/>
     <import file="${ant.file.test}/../main.xml"/>
 </project>
