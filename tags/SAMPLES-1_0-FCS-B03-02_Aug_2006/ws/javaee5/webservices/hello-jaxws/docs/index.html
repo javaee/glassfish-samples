@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en"><head><title>The Hello-JAXWS Sample Application</title>
+  
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style></head>
+
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>The Hello-JAXWS Sample Application</h1>
+This is a very simple JAX Web Service.  This sample demonstrates the lowest possible effort way to:
+<ul>
+<li>Write a Webservice
+<li>Compile and deploy the Webservice
+<li>Write an Appclient that calls the Webservice
+<li>connect and run the Webservice from the Appclient
+</ul>
+<br>
+<h2> Configuration</h2>
+The build script is designed to be easily moved anywhere else and modified.  To keep things as simple as possible it is <i>not</i> dependent on the
+build framework in the Samples hierarchy.
+<p>You do, however, have to setup some variables for Ant.  The easiest way to do this is to add 
+these variables to <your-home>/build.properties (they are populated with sample values)
+<p><code>
+javaee.home=/as9<br>
+javaee.server.name=localhost<br>
+javaee.server.port=8080<br>
+javaee.domaindir=/as9/domains/domain1<br>
+</code>
+<h2>How to use the build script</h2>
+<ul>
+<li>Start the App Server and make sure you have <home>/build.properties setup correctly.
+<li>To do everything, simply run ant with no arguments
+<li><b>ant compile-deploy-service</b> compiles and deploys the Webservice
+<li><b>ant get-artifacts</b> Gets the artifacts from the running Hello Webservice
+<li><b>ant compile-client</b> Compiles the client
+<li><b>ant run-client</b> Runs the Appclient
+</ul>
+<h2>Web Service</h2>
+<code>
+package endpoint;<br>
+<br>
+import javax.jws.WebService;<br>
+<br>
+@WebService<br>
+public class Hello<br>
+{<br>
+    public String getHello(String name)<br>
+    {<br>
+        return "Hello " + name + "!";<br>
+    }<br>
+}<br>
+
+</code>
+<p>
+This is as simple a Webservice as possible.  
+All you need to create the Webservice is one extra line:  <br><b>@WebService</b><br>
+<p>
+
+<h2>Deployment</h2>
+Here we use the simplest possible deployment technique.  The Webservice is not even packaged.  
+You just compile the Webservice class directly into the autodeploy directory:
+<p><code>
+javac -cp ${javaee.home}/lib/javaee.jar -d ${javaee.domaindir}/autodeploy endpoint/Hello.java
+</code>
+<p>
+You can verify the Webservice is active by entering this in a browser (example server host and port):
+<p><code>
+http://localhost:8080/Hello/HelloService?WSDL
+</code>
+<h2>Get Artifact files</H2>
+In order to compile a client, we need some special files that the Hello Webservice will give us.
+This is required so that the client has the webservice interfaces and ports available.
+We use wsimport, an App Server-supplied program to do this like so:
+<p>
+<code>
+${javaee.home}/bin/wsimport -d ./build http://${javaee.server.name}:${javaee.server.port}/Hello/HelloService?WSDL"/>
+</code>
+
+<h2>Compile Client</h2>
+The Client is also simple:
+<p><code>
+package client;
+
+import javax.xml.ws.WebServiceRef;<br>
+import endpoint.HelloService;<br>
+import endpoint.Hello;<br>
+<br>
+public class Client<br>
+{<br>
+    @WebServiceRef(wsdlLocation="http://localhost:8080/Hello/HelloService?WSDL")<br>
+    static HelloService service;<br>
+    <br>
+    public static void main(String[] args)<br>
+    {<br>
+        Client client = new Client();<br>
+        client.doHello();<br>
+    }<br>
+    <br>
+    public void doHello()<br>
+    {<br>
+        try<br>
+        {<br>
+            Hello port = service.getHelloPort();<br>
+            String ret = port.getHello(System.getProperty("user.name"));<br>
+            System.out.println("Hello result = " + ret);<br>
+        }<br>
+        catch(Exception e)<br>
+        {<br>
+            e.printStackTrace();<br>
+        }<br>
+    }<br>
+}<br>
+</code>
+<p><b>Note: If you aren't using the default host and port you will need to edit this line:</b>
+<p><code>
+    @WebServiceRef(wsdlLocation="http://localhost:8080/Hello/HelloService?WSDL")<br>
+</code>
+<p>
+The @WebServiceRef line is the magic annotation that figures out what is needed from the artifact files.
+The client is compiled like so:
+<p><code>
+javac -cp ./build:${javaee.home}/lib/javaee.jar -d ./build client/Client.java 
+</code>
+
+<h2>Run the Client</H2>
+You can run the client like this:
+<p>
+<code>
+cd ./build
+${javaee.home}/bin/appclient.bat client.Client
+</code>
+<p>
+The client will print out a greeting from the Webservice using your name.
+</code>
+</body>
+</html>

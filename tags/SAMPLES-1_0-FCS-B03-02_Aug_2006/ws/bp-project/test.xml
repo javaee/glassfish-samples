@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 2005-2006 Sun Microsystems, Inc.  All rights reserved.  You may not modify, use, reproduce, or distribute this software except in compliance with the terms of the License at: 
+ http://developer.sun.com/berkeley_license.html
+ $Id$ -->
+
+
+<!-- test.xml: this is the file that should be 
+     included in build.xml for unit test targets 
+     @Author: Sreenivas Munnangi -->
+<project name="test" default="dummy-default">
+    <property file="${ant.file.test}/../test.properties"/>    
+    <property name="extra.classpath" value="${junit.home}/junit-4.0.jar"/>
+    <import file="${ant.file.test}/../main.xml"/>
+</project>
