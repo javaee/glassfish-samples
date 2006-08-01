@@ -21,6 +21,11 @@
     description="packages the archive">
     <mkdir dir="${jar.build.dir}"/>
 
+    <!-- Copy the descriptors if any -->
+    <mkdir dir="${jar.build.dir}/META-INF"/>
+    <copy file="${src.conf}/ejb-jar.xml" todir="${jar.build.dir}/META-INF/" failonerror="false"/>
+    <copy file="${src.conf}/sun-ejb-jar.xml" todir="${jar.build.dir}/META-INF/" failonerror="false"/>
+
     <!-- Copy in the compiled Classes -->
     <copy todir="${jar.build.dir}">
       <fileset dir="${build.classes.dir}"/>
