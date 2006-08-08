@@ -11,7 +11,6 @@
         <filelist dir="enterprise/interceptor-stateless-ear" files="build.xml"/>
         <filelist dir="enterprise/security-stateless-ear" files="build.xml"/>
         <filelist dir="enterprise/customer-cmp-ear" files="build.xml"/>
-        <filelist dir="enterprise/jsf-jpa" files="build.xml"/>
     </path>
 
     <macrodef name="iterate">
