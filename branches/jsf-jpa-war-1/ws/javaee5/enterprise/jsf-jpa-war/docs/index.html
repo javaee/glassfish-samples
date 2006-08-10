@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+    <title>The JavaServer Faces/Java Persistence Sample Application</title>
+    <style type="text/css">
+        body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 10pt
+        }
+
+        h1 {
+            font-size: 18pt
+        }
+
+        h2 {
+            font-size: 14pt
+        }
+
+        h3 {
+            font-size: 12pt
+        }
+
+        code, kbd, tt, pre {
+            font-family: monaco, courier, "courier new";
+            font-size: 10pt;
+            color: #666
+        }
+
+        li {
+            padding-bottom: 8px
+        }
+
+        p.copy, p.copy a {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 8pt
+        }
+
+        p.copy {
+            text-align: center
+        }
+    </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+      alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+        <tr>
+            <td align="right" bgcolor="#587993" valign="top"><font
+                  color="#ffffff" size="-1"><b>Sun Java System Application
+                Server</b></font>&nbsp;
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+
+<h1>The JavaServer Faces/Java Persistence Sample Application</h1>
+
+<p>
+    This sample demonstrates the use of Java Persistence APIs based on the new
+    Java Persistence specification in conjunction with JavaServer Faces that
+    creates a simple authentication scheme using JavaServer Faces
+    PhaseListeners and a simple Entity bean representing a user.
+</p>
+
+<p>If you are familiar with EJB 2.1 persistence, you will notice a lot of
+    changes in this example based on the new Java Persistence specification.
+    Although this application provides the same functionality as a corresponding
+    EJB 2.1 implementation, it is much simpler:
+    <ul>
+        <li>There are no complex and arcane deployment descriptors.
+            All metadata information is specified by annotations and you do not
+            have to implement any
+            EJBLocalObject or EJBObject interfaces.
+        <li>You can rely a great deal on defaults,
+            so you code for the exceptional cases. This significantly reduces
+            turnaround time
+            for implementations.
+        <li>Most importantly, you can switch your
+            persistence implementation to any vendor that supports the Java
+            Persistence specification.
+    </ul>
+</p>
+
+<p>Additionally, JavaServer Faces can easily use JPA within its
+    managed bean facility via resource injection making it easier
+    than before to bridge between web and EJB applications.</p>
+
+<h2>Application Structure</h2>
+
+<p>
+    The application is built and deployed as an WAR file.
+
+<h3>Web Module</h3>
+
+<p>
+    The web module consists of:
+    <ul>
+        <li>
+            Several JSP pages which represent the view layer of the
+            application
+        </li>
+        <li>
+            A simple Entity bean which represents a user
+        </li>
+        <li>
+            An JSF managed bean which is the mediator between
+            the JSF application and the Entity bean
+        </li>
+        <li>
+            A JSF PhaseListener which determines whether or not
+            a request has access to a secure resource.
+        </li>
+    </ul>
+    The starting point of the application is the main<code>index.html</code>
+    page. Follow these next steps to see the application in action:
+    <ul>
+        <li>
+            Click the <code>JavaServer Faces Welcome Page</code> link.
+            Since the user hasn't been authenticated, the PhaseListener
+            will direct the user to the login page
+        </li>
+        <li>
+            Make an attempt to login. The JSF managed bean,
+            <code>UserManager</code> will use JPA to attempt to locate
+            the appropriate Enity based of the provided user name.
+            Since the example starts from scratch each time it is deployed,
+            an error message occurs stating the user doesn't exist.
+        </li>
+        <li>
+            Click the <code>Create New Account</code> link.
+            Fill out the form. If any fields are left empty,
+            or the passwords do not match, error messages will
+            be provided. Click the <code>Create</code> button.
+            If everything is in order, the user will be directed
+            back to the login page.
+        </li>
+        <li>
+            Attempt to login again, using the username previously specified
+            with a bad password. This time, we locate the appropriate
+            Entity, but since the password isn't correct, an error message
+            is displayed.
+        </li>
+        <li>
+            Now login again, with the correct username and password. This
+            will take to to the resource originally reference by the
+            <code>JavaServer Faces Welcome Page</code> link. The welcome
+            page should greet the user with their first and last name,
+            and the date they registered.
+        </li>
+    </ul>
+</p>
+
+<h2>Building, Deploying, and Running the Application</h2>
+
+<p>Follow these steps to build, deploy, and run the application.</p>
+
+<ol>
+    <li> Set up your build environment and Configure the application
+        server with which the build system has to work by following the <a
+          href="../../../docs/UserREADME.html">
+        common build instructions.</a></li>
+
+    <li>
+        <p>Make sure the JavaDB database is started. If not, refer to
+            <a href="../../../docs/UserREADME.html"> common build
+                instructions.</a>
+    </li>
+    <li>
+        Use the target <code>dist</code> to build the project.
+    </li>
+    <li>
+        Use the target <code>run</code> to deploy the archive to
+        the target application server.
+    </li>
+    <li>
+        Use the target <code>clean</code> to remove the temporary directories 
+        like build and dist       
+    </li>
+</ol>
+
+<h2>Troubleshooting</h2>
+
+<p>If you have problems when running the application, refer to <a
+      href="../../../docs/UserTroubleShooting.html">
+    troubleshooting document</a>.
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
+    Microsystems, Inc.</a>
+    All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
