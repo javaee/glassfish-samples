@@ -1,1 +1,0 @@
-Main-Class: enterprise.security_stateless_appclient.SlessAppClient
