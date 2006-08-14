@@ -43,11 +43,9 @@ to build a sample application:
 directory to your PATH environment variable.&nbsp; </li>
   <li>Edit the file <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties</code>
 and set the value of <code>javaee.server.passwordfile</code> (see
-below). Note that the Java EE 5 SDK installer&nbsp;automatically sets
-default values for other properties.&nbsp;
-If <code>build.properties</code> does not exist, copy <code></code><code>build.properties.sample
-to </code><code>build.properties. </code>The following table
-describes all the relevant properties. </li>
+below). <span style="font-weight: bold;">Note:</span> the Java EE 5
+SDK installer&nbsp;automatically sets
+default values for some of these properties.&nbsp; </li>
   <br>
 <!-- add application server specific properties. 
     <p>With the Java EE 5 SDK then the
@@ -109,7 +107,27 @@ the admin password for the Java EE 5 SDK.</p>
         <td valign="top">The
 port number for admin server you chose
 while installing the Java EE 5 SDK</td>
-        <td valign="top">4848</td>
+        <td valign="top">4848<br>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top;">proxy.host<br>
+        </td>
+        <td style="vertical-align: top;">The host name of your HTTP
+proxy server, if the server
+running Java EE SDK is behind a firewall. Leave blank otherwise</td>
+        <td style="vertical-align: top;">myproxy.mydomain<br>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top;">proxy.port<br>
+        </td>
+        <td style="vertical-align: top;">The port number of your HTTP
+proxy server, if the server running Java EE SDK is behind a firewall.
+Leave blank otherwise<br>
+        </td>
+        <td style="vertical-align: top;">9090<br>
+        </td>
       </tr>
     </tbody>
   </table>
