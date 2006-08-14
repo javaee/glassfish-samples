@@ -29,6 +29,10 @@ javaee.server.username=admin
 #
 javaee.server.passwordfile=/path/to/passwordfile
 
+# Hostname and port of the proxy server if you are behind a firewall
+# Leave blank otherwise
+proxy.host=
+proxy.port=
 
 # default server instance name
 appserver.instance=server
