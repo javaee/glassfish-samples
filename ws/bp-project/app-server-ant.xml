@@ -37,6 +37,7 @@
     <!-- setup properties for various Java EE tools -->
     <property name="asadmin" value="${javaee.home}/bin/asadmin${javaee-script-suffix}"/>
     <property name="appclient" value="${javaee.home}/bin/appclient${javaee-script-suffix}"/>
+    <property name="wsimport" value="${javaee.home}/bin/wsimport${javaee-script-suffix}"/>
   </target>
 
   <!-- Construct Java EE classpath -->
