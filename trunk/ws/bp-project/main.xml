@@ -11,8 +11,6 @@
      @Author: Inderjeet Singh -->
 <project name="main" default="dummy-default">
 
-  <import file="${ant.file.main}/../common-properties.xml"/>
-
   <condition property="common-ant-tasks-file" 
 	     value="${ant.file}/../nbproject/build-impl.xml"
 	     else="${ant.file.main}/../command-line-ant-tasks.xml">
