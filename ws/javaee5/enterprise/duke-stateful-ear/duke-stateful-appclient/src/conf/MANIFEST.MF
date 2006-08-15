@@ -1,1 +1,0 @@
-Main-Class: enterprise.duke_stateful_appclient.StatefulSessionAppClient

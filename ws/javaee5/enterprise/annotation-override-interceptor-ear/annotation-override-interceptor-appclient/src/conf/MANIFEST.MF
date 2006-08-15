@@ -1,1 +1,0 @@
-Main-Class: enterprise.annotation_override_interceptor_appclient.StatelessSessionAppClient
