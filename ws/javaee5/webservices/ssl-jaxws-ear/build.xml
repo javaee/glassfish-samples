@@ -29,7 +29,6 @@
 
     <path id="ear-components">
         <filelist dir="./ssl-jaxws-war" files="build.xml" />
-        <filelist dir="./ssl-jaxws-appclient" files="build.xml" />
     </path>
 
     <import file="../../../bp-project/main.xml" />
