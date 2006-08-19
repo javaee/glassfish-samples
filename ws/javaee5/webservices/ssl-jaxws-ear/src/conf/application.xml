@@ -7,7 +7,4 @@
       <context-root>/ssl-jaxws-war</context-root>
     </web>
   </module>
-  <module>
-    <java>ssl-jaxws-appclient.jar</java>
-  </module>
 </application>

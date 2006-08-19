@@ -32,20 +32,20 @@
     <target name="all" depends="run-app-client"></target>
 
     <target name="run-app-client" unless="netbeans.home">
-        <antcall target="tools"/>
-        <antcall target="compile"/>
-        <antcall target="run-client"/>
+        <ant target="compile"/>
+        <ant target="run-client"/>
     </target>
 
     <target name="-pre-compile" unless="netbeans.home">
-        <antcall target="get-artifacts"/>
+        <ant target="get-artifacts"/>
         <replace 
             file="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java" 
             token="localhost: 8080" 
             value="${javaee.server.name}:${javaee.server.port}"/>
     </target>
 
-    <target name="get-artifacts">
+    <target name="get-artifacts" depends="tools">
+        <echo message="msr: wsimport = ${wsimport}"/>
         <mkdir dir="${build.classes.dir}"/>
         <exec executable="${wsimport}">
             <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
@@ -53,7 +53,7 @@
         </exec>
     </target>
 
-    <target name="run-client">
+    <target name="run-client" depends="tools">
         <exec executable="${appclient}" dir="${build.classes.dir}">
             <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
             <arg value="webservices.ssl_jaxws_appclient.TaxCalClient"/>
