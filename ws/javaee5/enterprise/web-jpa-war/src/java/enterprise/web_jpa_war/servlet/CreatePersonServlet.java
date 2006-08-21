@@ -58,7 +58,7 @@ public class CreatePersonServlet extends HttpServlet {
         try {
             
             //Get the data from user's form
-            String id         = (String) request.getParameter("ID");
+            String id         = (String) request.getParameter("id");
             String firstName  = (String) request.getParameter("firstName");
             String lastName   = (String) request.getParameter("lastName");
             
