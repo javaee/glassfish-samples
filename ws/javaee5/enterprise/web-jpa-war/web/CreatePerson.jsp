@@ -8,18 +8,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create a Person</title>
+        <title>Create a Person Record</title>
     </head>
     <body>
 
     <h1>Create a Person record</h1>
     <form id="createPersonForm" action="CreatePerson" method="post">
     <table>
-        <tr><td>ID:</td><td><input type="text" name="ID" /></td></tr>
-        <tr><td>FirstName</td><td><input type="text" name="firstName" /></td></tr>
-        <tr><td>LastName</td><td><input type="text" name="lastName" /></td></tr>
+        <tr><td>ID:</td><td><input type="text" id = "id" name="id" /></td></tr>
+        <tr><td>FirstName</td><td><input type="text" id = "firstName" name="firstName" /></td></tr>
+        <tr><td>LastName</td><td><input type="text" id = "lastName" name="lastName" /></td></tr>
     </table>
-    <input type="submit" value="CreateRecord" />
+    <input type="submit" id="CreateRecord" value="CreateRecord" />
     </form>
 <a href="ListPerson"><strong>Go to List of persons</strong></a>
 </body>
