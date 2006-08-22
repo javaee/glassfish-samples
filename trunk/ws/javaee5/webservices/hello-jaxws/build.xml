@@ -38,7 +38,7 @@
     </path>
     
     <target name="all" depends="run-client">
-		<antcall target="restore"/>
+		<!--antcall target="restore"/-->
 	</target>
 
 
