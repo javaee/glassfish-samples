@@ -38,8 +38,8 @@
     </path>
     
     <target name="all" depends="run-client">
-		<!--antcall target="restore"/-->
-	</target>
+        <!--antcall target="restore"/-->
+    </target>
 
 
     <target name="init">
@@ -81,6 +81,7 @@
             <arg line="-keep -d ${classesdir} http://${javaee.server.name}:${javaee.server.port}/Hello/HelloService?WSDL"/>
         </exec>
     </target>
+
     <target name="get-artifacts-unix" if="unix">
         <exec executable="${javaee.home}/bin/wsimport">
             <arg line="-keep -d ${classesdir} http://${javaee.server.name}:${javaee.server.port}/Hello/HelloService?WSDL"/>
@@ -94,28 +95,31 @@
     </target>
     
     <target name="clean">
-	<delete dir="${classesdir}"/>
+    <delete dir="${classesdir}"/>
     </target>
 
     <target name="run-client" depends="compile-client,run-client-windows,run-client-unix"/>
 
     <target name="run-client-windows" if="windows">
-		<exec executable="${javaee.home}/bin/appclient.bat" dir="${classesdir}">
-			<arg value="client.Client"/>    
-		</exec>    
+        <exec executable="${javaee.home}/bin/appclient.bat" dir="${classesdir}">
+            <arg value="client.Client"/>    
+        </exec>    
     </target>
 
     <target name="run-client-unix" if="unix"> 
-		<exec executable="${javaee.home}/bin/appclient" dir="${classesdir}" failifexecutionfails="false">
-			<arg value="client.Client"/>    
-		</exec>    
+        <exec executable="${javaee.home}/bin/appclient" dir="${classesdir}" failifexecutionfails="false">
+            <arg value="client.Client"/>    
+        </exec>    
     </target>
 
-	<target name="restore">
-		<delete>
-		<fileset dir="${autodeploydir}/endpoint" includes="Hello*.*"/>
-		</delete>
-	</target>
+    <target name="restore">
+        <delete>
+        <fileset dir="${autodeploydir}/endpoint" includes="Hello*.*"/>
+        </delete>
+    </target>
 
+    <target name="undeploy">
+        <antcall target="restore"/>
+    </target>
 
 </project>
