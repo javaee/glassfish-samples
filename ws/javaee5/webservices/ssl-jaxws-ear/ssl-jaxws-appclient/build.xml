@@ -34,6 +34,7 @@
     <target name="run-app-client" unless="netbeans.home">
         <ant target="compile"/>
         <ant target="run-client"/>
+        <ant target="restore-client-source"/>
     </target>
 
     <target name="-pre-compile" unless="netbeans.home">
@@ -59,6 +60,12 @@
             <arg value="webservices.ssl_jaxws_appclient.TaxCalClient"/>
             <arg line="90000.00 10000.00"/>
         </exec>
+    </target>
+
+    <target name="restore-client-source" depends="tools">
+	<copy file="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java.orig"
+              tofile="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java"/>   
+        <delete file="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java.orig"/>
     </target>
 
 </project>
