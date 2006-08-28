@@ -1,1 +1,0 @@
-Main-Class: enterprise.customer_cmp_appclient.CustomerAppClient
