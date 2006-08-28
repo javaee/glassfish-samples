@@ -1,1 +1,0 @@
-Main-Class: enterprise.lottery_annotation_appclient.JavaClient
