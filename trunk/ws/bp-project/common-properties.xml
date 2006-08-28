@@ -17,6 +17,9 @@
 <project name="common-properties" default="dummy-default">
 
   <!-- include common properties -->
+  <property file="${ant.file.common-properties}/../common.properties"/>
+
+  <!-- include common properties -->
   <property file="${ant.file.common-properties}/../build.properties"/>
 
   <property file="build.properties"/>
@@ -28,9 +31,6 @@
   <property file="nbproject/project.properties"/>
   <property file="nbproject/private/private.properties"/>
   <property file="${deploy.ant.properties.file}" />
-
-  <!-- include common properties -->
-  <property file="${ant.file.common-properties}/../common.properties"/>
 
   <!-- Look for a suitable value for javaee.home if it is not already set -->
   <condition property="javaee.home" value="${sjsas.root}">
