@@ -22,7 +22,7 @@
     </target>
 
     <patternset id="include.sdk.contents"
-        includes="bp-project/**, docs/**, index.html, javaee5/build.xml, javaee5/docs/**, javaee5/index.html, javaee5/LICENSE, javaee5/webservices/hello-jaxws/**, javaee5/webservices/simple-jaxb/**, javaee5/enterprise/lottery-annotation-ear/**, javaee5/enterprise/servlet-stateless-ear/**, javaee5/enterprise/interceptor-stateless-ear/**, javaee5/enterprise/security-stateless-ear/**, javaee5/enterprise/customer-cmp-ear/**"
+        includes="bp-project/**, docs/**, index.html, javaee5/build.xml, javaee5/docs/**, javaee5/index.html, javaee5/LICENSE, javaee5/webservices/hello-jaxws/**, javaee5/webservices/simple-jaxb/**, javaee5/webservices/ssl-jaxws-ear/**, javaee5/enterprise/lottery-annotation-ear/**, javaee5/enterprise/servlet-stateless-ear/**, javaee5/enterprise/interceptor-stateless-ear/**, javaee5/enterprise/security-stateless-ear/**, javaee5/enterprise/customer-cmp-ear/**, javaee5/enterprise/annotation-override-interceptor-ear/**, javaee5/enterprise/jsf-jpa-war/**, javaee5/enterprise/web-jpa-war/**"
         excludes="build.xml,bp-project/test.xml,bp-project/build.properties,bp-project/test.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
 
     <patternset id="exclude.installer.license"
@@ -62,13 +62,17 @@
     </target>
 
     <path id="samples-test-list">
-        <filelist dir="javaee5/enterprise/interceptor-stateless-ear/test" files="build.xml"/>
-        <filelist dir="javaee5/enterprise/servlet-stateless-ear/test" files="build.xml"/>
-        <filelist dir="javaee5/enterprise/security-stateless-ear/test" files="build.xml"/>
-        <filelist dir="javaee5/webservices/simple-jaxb/test" files="build.xml"/>
-        <filelist dir="javaee5/enterprise/lottery-annotation-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/annotation-override-interceptor-ear/test" files="build.xml"/>
         <filelist dir="javaee5/enterprise/customer-cmp-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/interceptor-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/jsf-jpa-war/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/lottery-annotation-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/security-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/servlet-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/web-jpa-war/test" files="build.xml"/>
         <filelist dir="javaee5/webservices/hello-jaxws/test" files="build.xml"/>
+        <filelist dir="javaee5/webservices/simple-jaxb/test" files="build.xml"/>
+        <filelist dir="javaee5/webservices/ssl-jaxws-ear/test" files="build.xml"/>
     </path>
 
     <macrodef name="iterate-tests">

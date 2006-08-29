@@ -34,7 +34,7 @@
     <target name="run-app-client" unless="netbeans.home">
         <ant target="compile"/>
         <ant target="run-client"/>
-        <ant target="restore-client-source"/>
+        <!--ant target="restore-client-source"/-->
     </target>
 
     <target name="-pre-compile" unless="netbeans.home">
@@ -46,7 +46,6 @@
     </target>
 
     <target name="get-artifacts" depends="tools">
-        <echo message="msr: wsimport = ${wsimport}"/>
         <mkdir dir="${build.classes.dir}"/>
         <exec executable="${wsimport}">
             <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
