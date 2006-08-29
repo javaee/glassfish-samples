@@ -33,7 +33,7 @@
         <filelist dir="./customer-cmp-appclient" files="build.xml" />
     </path>
 
-    <property name="run.uri" value="customer/index.html"/>
+    <property name="run.uri" value="customer-cmp-war/index.html"/>
 
     <import file="../../../bp-project/main.xml" />
 
