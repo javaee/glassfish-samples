@@ -23,7 +23,7 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="jsf-jpa-war" default="default" basedir=".">
+<project name="jsf-jpa-war" default="run" basedir=".">
 
     <property name="is.war.module" value="true" />
 
