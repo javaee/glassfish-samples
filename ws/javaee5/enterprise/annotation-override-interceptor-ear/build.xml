@@ -34,14 +34,29 @@
 
     <import file="../../../bp-project/main.xml" />
 
-    <target name="all" depends="ear,deploy,client-jar">
-        <antcall target="run" />
+    <target name="all" unless="netbeans.home">
+        <antcall target="ear" />
+        <antcall target="deploy" />
+        <antcall target="client-jar" />
+        <antcall target="run-ant" />
     </target>
 
     <target name="run">
+        <antcall target="run-ant"/>
+        <antcall target="run-nb"/>
+    </target>
+
+    <target name="run-ant" unless="netbeans.home">
         <subant target="run-app-client">
             <fileset dir="annotation-override-interceptor-appclient" includes="build.xml" />
         </subant>
+    </target>
+
+    <target name="run-nb" if="netbeans.home">
+        <antcall target="init"/>
+        <antcall target="run-deploy"/>
+        <antcall target="run-display-browser"/>
+        <antcall target="run-ac"/>
     </target>
 
 </project>
