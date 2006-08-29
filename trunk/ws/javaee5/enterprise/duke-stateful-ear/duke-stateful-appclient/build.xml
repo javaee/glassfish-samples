@@ -23,7 +23,7 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="duke_stateful_appclient" default="default" basedir=".">
+<project name="duke-stateful-appclient" default="default" basedir=".">
 
     <property name="is.app-client.module" value="true"/>
 

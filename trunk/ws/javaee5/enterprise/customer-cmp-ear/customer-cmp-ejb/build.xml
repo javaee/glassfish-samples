@@ -26,7 +26,8 @@
 <project name="customer-cmp-ejb" default="default" basedir=".">
 
     <property name="is.ejb-jar.module" value="true" />
-    <property name="is.persistence-unit.module" value="true" />
+    <!--property name="is.persistence-unit.module" value="true" /-->
     <import file="../../../../bp-project/main.xml" />
+    <target name="msr"><echo message="build.classes.dir = ${build.classes.dir}"/></target>
 
 </project>

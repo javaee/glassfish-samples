@@ -26,19 +26,42 @@
 <project name="lottery-annotation-ear" default="all" basedir=".">
 
   <property name="is.ear.module" value="true"/>
+
   <path id="ear-components">
     <filelist dir="./lottery-annotation-ejb" files="build.xml"/>
-    <filelist dir="./lottery-annotation-web" files="build.xml"/>
-    <filelist dir="./lottery-annotation-client" files="build.xml"/>
+    <filelist dir="./lottery-annotation-war" files="build.xml"/>
+    <filelist dir="./lottery-annotation-appclient" files="build.xml"/>
   </path>
+
   <import file="../../../bp-project/main.xml"/>
 
-  <target name="all" depends="ear,deploy,run"/>
+  <target name="all" unless="netbeans.home">
+    <antcall target="ear"/>
+    <antcall target="deploy"/>
+    <antcall target="client-jar"/>
+    <antcall target="run" />
+  </target>
 
-  <target name="run-client">
+  <target name="run">
+    <antcall target="run-bp"/>
+    <antcall target="run-nb"/>
+  </target>
+
+   <target name="run-bp" unless="netbeans.home">
+    <antcall target="launch"/>
+  </target>
+  
+  <target name="run-client" unless="netbeans.home">
     <subant target="run">
-      <fileset dir="lottery-annotation-client" includes="build.xml"/>
+      <fileset dir="lottery-annotation-appclient" includes="build.xml"/>
     </subant>
+  </target>
+
+  <target name="run-nb" if="netbeans.home">
+    <antcall target="init"/>
+    <antcall target="run-deploy"/>
+    <antcall target="run-display-browser"/>
+    <antcall target="run-ac"/>
   </target>
 
 </project>
