@@ -6,11 +6,15 @@
     <path id="samples-list">
         <filelist dir="webservices/hello-jaxws" files="build.xml"/>
         <filelist dir="webservices/simple-jaxb" files="build.xml"/>
+        <filelist dir="webservices/ssl-jaxws-ear" files="build.xml"/>
         <filelist dir="enterprise/lottery-annotation-ear" files="build.xml"/>
         <filelist dir="enterprise/servlet-stateless-ear" files="build.xml"/>
         <filelist dir="enterprise/interceptor-stateless-ear" files="build.xml"/>
         <filelist dir="enterprise/security-stateless-ear" files="build.xml"/>
         <filelist dir="enterprise/customer-cmp-ear" files="build.xml"/>
+        <filelist dir="enterprise/annotation-override-interceptor-ear" files="build.xml"/>
+        <filelist dir="enterprise/jsf-jpa-war" files="build.xml"/>
+        <filelist dir="enterprise/web-jpa-war" files="build.xml"/>
     </path>
 
     <macrodef name="iterate">
