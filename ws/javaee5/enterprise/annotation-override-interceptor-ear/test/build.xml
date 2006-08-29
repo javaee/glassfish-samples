@@ -23,7 +23,7 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="annotation-override-interceptor-ejb-test" default="runtest" basedir=".">
+<project name="annotation-override-interceptor-ear-test" default="runtest" basedir=".">
 
 
     <import file="../../../../bp-project/test.xml"/>
