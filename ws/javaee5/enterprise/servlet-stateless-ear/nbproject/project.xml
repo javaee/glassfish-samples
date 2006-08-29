@@ -1,83 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://www.netbeans.org/ns/project/1">
-    <type>org.netbeans.modules.ant.freeform</type>
+    <type>org.netbeans.modules.j2ee.earproject</type>
     <configuration>
-        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
-            <!-- Do not use Project Properties customizer when editing this file manually. -->
+        <data xmlns="http://www.netbeans.org/ns/j2ee-earproject/2">
             <name>servlet-stateless-ear</name>
-            <properties/>
-            <folders>
-                <source-folder>
-                    <label>servlet-stateless-ejb\src\java</label>
-                    <type>java</type>
-                    <location>servlet-stateless-ejb/src/java</location>
-                </source-folder>
-                <source-folder>
-                    <label>servlet-stateless-war\src\java</label>
-                    <type>java</type>
-                    <location>servlet-stateless-war/src/java</location>
-                </source-folder>
-                <source-folder>
-                    <label>servlet-stateless-war\web\WEB-INF</label>
-                    <type>java</type>
-                    <location>servlet-stateless-war/web/WEB-INF</location>
-                </source-folder>
-            </folders>
-            <ide-actions>
-                <action name="build">
-                    <target>all</target>
-                </action>
-                <action name="clean">
-                    <target>clean</target>
-                </action>
-                <action name="run">
-                    <target>run</target>
-                </action>
-                <action name="rebuild">
-                    <target>clean</target>
-                    <target>all</target>
-                </action>
-            </ide-actions>
-            <view>
-                <items>
-                    <source-folder style="packages">
-                        <label>servlet-stateless-ejb\src\java</label>
-                        <location>servlet-stateless-ejb/src/java</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>servlet-stateless-war\src\java</label>
-                        <location>servlet-stateless-war/src/java</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>servlet-stateless-war\web\WEB-INF</label>
-                        <location>servlet-stateless-war/web/WEB-INF</location>
-                    </source-folder>
-                    <source-file>
-                        <location>build.xml</location>
-                    </source-file>
-                </items>
-                <context-menu>
-                    <ide-action name="build"/>
-                    <ide-action name="clean"/>
-                    <ide-action name="run"/>
-                    <ide-action name="rebuild"/>
-                </context-menu>
-            </view>
-            <subprojects/>
-        </general-data>
-        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
-            <compilation-unit>
-                <package-root>servlet-stateless-ejb/src/java</package-root>
-                <source-level>1.5</source-level>
-            </compilation-unit>
-            <compilation-unit>
-                <package-root>servlet-stateless-war/src/java</package-root>
-                <source-level>1.5</source-level>
-            </compilation-unit>
-            <compilation-unit>
-                <package-root>servlet-stateless-war/web/WEB-INF</package-root>
-                <source-level>1.5</source-level>
-            </compilation-unit>
-        </java-data>
+            <minimum-ant-version>1.6</minimum-ant-version>
+            <web-module-libraries/>
+            <web-module-additional-libraries>
+                <library files="1">
+                    <file>${reference.servlet-stateless-ejb.dist-ear}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library files="1">
+                    <file>${reference.servlet-stateless-war.dist-ear}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+            </web-module-additional-libraries>
+        </data>
+        <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
+            <reference>
+                <foreign-project>servlet-stateless-ejb</foreign-project>
+                <artifact-type>j2ee_ear_archive</artifact-type>
+                <script>build.xml</script>
+                <target>dist-ear</target>
+                <clean-target>clean-ear</clean-target>
+                <id>dist-ear</id>
+            </reference>
+            <reference>
+                <foreign-project>servlet-stateless-war</foreign-project>
+                <artifact-type>j2ee_ear_archive</artifact-type>
+                <script>build.xml</script>
+                <target>dist-ear</target>
+                <clean-target>clean-ear</clean-target>
+                <id>dist-ear</id>
+            </reference>
+        </references>
     </configuration>
 </project>

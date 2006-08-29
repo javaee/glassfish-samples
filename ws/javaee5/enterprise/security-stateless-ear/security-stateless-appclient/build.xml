@@ -23,11 +23,10 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="security_stateless_appclient" default="default" basedir=".">
+<project name="security-stateless-appclient" default="run-app-client" basedir=".">
 
     <property name="is.app-client.module" value="true"/>
 
-	<property name="extraclasspath" value="/export/s1AS9/glassfish-samples/ws/javaee5/enterprise/security-stateless-ear/security-stateless-ejb/build/classes"/>
     <import file="../../../../bp-project/main.xml"/>
 
     <target name="run-app-client">

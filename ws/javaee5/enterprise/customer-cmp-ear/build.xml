@@ -37,31 +37,53 @@
 
     <import file="../../../bp-project/main.xml" />
 
-    <target name="-pre-setup">
+    <target name="-pre-setup" unless="netbeans.home">
 	<subant target="create-db">
 		<fileset dir="setup" includes="build.xml"/>
 	</subant>
     </target>
 
-    <target name="all" depends="setup,ear,deploy,client-jar,launch">
+    <target name="all" unless="netbeans.home">
+        <antcall target="setup"/>
+        <antcall target="ear"/>
+        <antcall target="deploy"/>
+        <antcall target="client-jar"/>
+        <antcall target="launch"/>
     </target>
 
-    <target name="-post-unsetup" depends="unsetup">
+    <target name="-post-unsetup" unless="netbeans.home">
+        <antcall target="unsetup"/>
 	<subant target="delete-db">
 		<fileset dir="setup" includes="build.xml"/>
 	</subant>
     </target>
 
-    <target name="setup">
+    <target name="setup" unless="netbeans.home">
 	<subant target="setup">
 		<fileset dir="setup" includes="build.xml"/>
 	</subant>
     </target>
 
-    <target name="unsetup">
+    <target name="unsetup" unless="netbeans.home">
 	<subant target="unsetup">
 		<fileset dir="setup" includes="build.xml"/>
 	</subant>
+    </target>
+
+    <target name="run">
+        <antcall target="run-bp"/>
+        <antcall target="run-nb"/>
+    </target>
+
+    <target name="run-bp" unless="netbeans.home">
+        <antcall target="launch"/>
+    </target>
+  
+    <target name="run-nb" if="netbeans.home">
+        <antcall target="init"/>
+        <antcall target="run-deploy"/>
+        <antcall target="run-display-browser"/>
+        <antcall target="run-ac"/>
     </target>
 
 </project>

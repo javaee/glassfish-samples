@@ -36,7 +36,10 @@
 
     <import file="../../../bp-project/main.xml" />
 
-    <target name="all" depends="ear,deploy,client-jar">
+    <target name="all" unless="netbeans.home">
+        <antcall target="ear"/>
+        <antcall target="deploy"/>
+        <antcall target="client-jar"/>
         <antcall target="run" />
     </target>
 
