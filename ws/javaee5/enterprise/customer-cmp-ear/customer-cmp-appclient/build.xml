@@ -23,7 +23,7 @@
  Copyright 2006 Sun Microsystems, Inc. All rights reserved.
 -->
 
-<project name="customer_cmp_appclient" default="run" basedir=".">
+<project name="customer-cmp-appclient" default="run" basedir=".">
 
     <property name="is.app-client.module" value="true"/>
 
