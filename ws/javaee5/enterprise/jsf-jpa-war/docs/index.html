@@ -59,18 +59,17 @@
 
 <p>
     This sample demonstrates the use of Java Persistence APIs based on the new
-    Java Persistence specification in conjunction with JavaServer Faces that
+    Java Persistence specification along with JavaServer Faces that
     creates a simple authentication scheme using JavaServer Faces
     PhaseListeners and a simple Entity bean representing a user.
 </p>
 
-<p>If you are familiar with EJB 2.1 persistence, you will notice a lot of
-    changes in this example based on the new Java Persistence specification.
+<p>If you are familiar with EJB 2.1 persistence, you will notice many changes in this example based on the new Java Persistence specification.
     Although this application provides the same functionality as a corresponding
     EJB 2.1 implementation, it is much simpler:
     <ul>
         <li>There are no complex and arcane deployment descriptors.
-            All metadata information is specified by annotations and you do not
+            All metadata information is specified by annotations, and you do not
             have to implement any
             EJBLocalObject or EJBObject interfaces.
         <li>You can rely a great deal on defaults,
@@ -84,13 +83,13 @@
 </p>
 
 <p>Additionally, JavaServer Faces can easily use JPA within its
-    managed bean facility via resource injection making it easier
-    than before to bridge between web and EJB applications.</p>
+    managed bean facility through resource injection, making it easier
+  to bridge between web and EJB applications.</p>
 
 <h2>Application Structure</h2>
 
 <p>
-    The application is built and deployed as an WAR file.
+    The application is built and deployed as a WAR file.
 
 <h3>Web Module</h3>
 
@@ -105,51 +104,50 @@
             A simple Entity bean which represents a user
         </li>
         <li>
-            An JSF managed bean which is the mediator between
+            A JSF managed bean which is the mediator between
             the JSF application and the Entity bean
         </li>
         <li>
             A JSF PhaseListener which determines whether or not
-            a request has access to a secure resource.
+            a request has access to a secure resource
         </li>
     </ul>
     The starting point of the application is the main<code>index.html</code>
-    page. Follow these next steps to see the application in action:
-    <ul>
+    page. Follow these steps to see the application in action:
+    <ol>
         <li>
             Click the <code>JavaServer Faces Welcome Page</code> link.
-            Since the user hasn't been authenticated, the PhaseListener
-            will direct the user to the login page
+            Because the user hasn't been authenticated, the PhaseListener
+            will direct the user to the login page.
         </li>
         <li>
-            Make an attempt to login. The JSF managed bean,
+            Make an attempt to log in. The JSF managed bean,
             <code>UserManager</code> will use JPA to attempt to locate
             the appropriate Enity based of the provided user name.
-            Since the example starts from scratch each time it is deployed,
-            an error message occurs stating the user doesn't exist.
+            Because the example starts from scratch each time it is deployed,
+            an error message states that the user doesn't exist.
         </li>
         <li>
             Click the <code>Create New Account</code> link.
             Fill out the form. If any fields are left empty,
-            or the passwords do not match, error messages will
-            be provided. Click the <code>Create</code> button.
-            If everything is in order, the user will be directed
+            or the passwords do not match, error messages are
+            provided. Click the <code>Create</code> button.
+            If everything is in order, the user is directed
             back to the login page.
         </li>
         <li>
-            Attempt to login again, using the username previously specified
-            with a bad password. This time, we locate the appropriate
-            Entity, but since the password isn't correct, an error message
+            Attempt to log in again, using the user name previously specified, and a bad password. This time, we locate the appropriate
+            Entity, but because the password isn't correct, an error message
             is displayed.
         </li>
         <li>
-            Now login again, with the correct username and password. This
-            will take to to the resource originally reference by the
+            Now log in again, with the correct user name and password. This
+            will take you to the resource originally referenced by the
             <code>JavaServer Faces Welcome Page</code> link. The welcome
             page should greet the user with their first and last name,
             and the date they registered.
         </li>
-    </ul>
+    </ol>
 </p>
 
 <h2>Building, Deploying, and Running the Application</h2>
