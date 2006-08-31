@@ -36,9 +36,8 @@ Index</A></P>
 <H1>The Java Persistence / Servlet Sample Application</H1>
 <P>This sample demonstrates the use of Java Persistence APIs based on
 the new Java Persistence specification within a servlet.</P>
-<P>If you are familiar with EJB 2.1 persistence, you will notice a
-lot of changes in this example based on the new Java Persistence
-specification. 
+<P>If you are familiar with EJB 2.1 persistence, you will notice many changes in this example based on the new Java Persistence
+specification: 
 </P>
 <UL>
 	<LI><P STYLE="margin-bottom: 0in">There are no complex and arcane
@@ -61,32 +60,32 @@ specification.
 </P>
 <UL>
 	<LI><P STYLE="margin-bottom: 0in">A POJO which represents a Person.
-	The persistence.xml which defines a persistence unit. The
-	persistence unit uses &ldquo;jdbc/__default' as the data source and
+	The persistence.xml file defines a persistence unit. The
+	persistence unit uses jdbc/__default as the data source, and the
 	java2db feature of glassfish to create tables.</P>
 	<LI><P STYLE="margin-bottom: 0in">A servlet that corresponds to
-	listing current Person records in database and other that
-	corresponds to creating a Person record in database. Along with two
-	jsp pages that actually renders the view</P>
+	listing current Person records in the database, and another that
+	corresponds to creating a Person record in the database. Also, two
+	JSP pages render the view.</P>
 	<P STYLE="margin-bottom: 0in"></P>
 </UL>
 <P>The starting point of the application is defined as index.jsp
-which forwads to ListPerson servlet.The servlet queries list of
+which forwards to the ListPerson servlet. The servlet queries the list of
 Person records from the database using Java Persistence API. The list
-is passed on to ListPerson.jsp to render. You can click on  &ldquo;Create
-a Person Record&rdquo; link at bottom of the listing to go to
+is passed on to ListPerson.jsp to render. You can click the Create
+a Person Record link at bottom of the listing to go to
 CreatePerson.jsp. This renders a form where you can enter data for a
-new Person record. When you hit &ldquo;CreateRecord&rdquo; button,
+new Person record. When you click the CreateRecord button,
 the form is submitted to CreatePerson Servlet which creates a new
-Person record in database using Java Persistence API.     
+Person record in the database using Java Persistence API.     
 </P>
-<P>Please note the pattern used to obtain EntityManager instance in
+<P>Please note the pattern used to obtain an EntityManager instance in
 the servlets.  It is always obtained from injected
 EntityManagerFactory. Here is a <A HREF="https://blueprints.dev.java.net/bpcatalog/ee5/persistence/webonlyapp.html">discussion</A>
 about why this pattern is used instead of directly injecting an
 EntityManager.</P>
-<H2>Application archive</H2>
-<P>The web-module is archived in web-jp-war.war</P>
+<H2>Application Archive</H2>
+<P>The web-module is archived in web-jp-war.war.</P>
 <H2>Building, Deploying, and Running the Application</H2>
 <P>Follow these steps to build, deploy, and run the application.</P>
 <OL>
