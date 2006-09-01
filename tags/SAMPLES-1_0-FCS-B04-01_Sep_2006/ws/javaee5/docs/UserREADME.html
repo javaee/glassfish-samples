@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <title>Common Build Instructions for Sample Applications</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Common Build Instructions for Sample Applications</h1>
+<p>
+The sample applications use the Java BluePrints build system
+that employs a set of Ant build scripts (XML files) in the <code>samples/bp-project</code>
+directory.
+</p>
+<h3>Procedure</h3>
+<p>In the instructions below, <code><span style="font-style: italic;">&lt;javaee.home&gt;</span></code>
+refers to the path where you installed the Java EE 5 SDK (for Windows,
+the default path is <code>c:/Sun/AppServer</code>). Follow these steps
+to build a sample application:
+</p>
+<ol>
+  <li>Add <code><span style="font-style: italic;">&lt;javaee.home&gt;</span>/lib/ant/bin</code>
+directory to your PATH environment variable.&nbsp; </li>
+  <li>Edit the file <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties</code>
+and set the value of <code>javaee.server.passwordfile</code> (see
+below). <span style="font-weight: bold;">Note:</span> the Java EE 5
+SDK installer&nbsp;automatically sets
+default values for some of these properties.&nbsp; </li>
+  <br>
+<!-- add application server specific properties. 
+    <p>With the Java EE 5 SDK then the
+installer automatically creates build.properties under
+<code>samples/bp-project</code> and pre populates all the values except
+javaee.server.passwordfile which need to be defined by the user. 
+--->
+  <table border="1" cellpadding="5" cellspacing="0" width="80%">
+    <tbody>
+      <tr>
+        <td align="center" valign="top" width="20%"><b>Property Name</b></td>
+        <td align="center" valign="top" width="50%"><b>Description</b></td>
+        <td align="center" valign="top" width="30%"><b>Examples</b></td>
+      </tr>
+      <tr>
+        <td>javaee.home</td>
+        <td>The installation
+directory of the Java EE 5 SDK</td>
+        <td>c:/Sun/AppServer</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.name</td>
+        <td valign="top">Host
+name of the server where the Java EE 5 SDK
+is installed</td>
+        <td valign="top">localhost</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.port</td>
+        <td valign="top">The
+port number for the server you chose
+while
+installing Java EE 5 SDK</td>
+        <td valign="top">8080</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.username</td>
+        <td valign="top">The
+administrator username specified for the serve while installing Java EE
+5 SDK</td>
+        <td valign="top">admin</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.passwordfile</td>
+        <td valign="top">The
+path to a file containing the admin
+password for the Java EE 5 SDK. The password file needs to be in the
+following format:
+        <p><code>AS_ADMIN_PASSWORD=&lt;javaeesdk-admin-password&gt;</code>
+        </p>
+        <p>Where you will
+replace &lt;javaeesdk-admin-password&gt; with
+the admin password for the Java EE 5 SDK.</p>
+        </td>
+        <td style="font-style: italic;" valign="top">/path/to/passwordfile</td>
+      </tr>
+      <tr valign="top">
+        <td valign="top">javaee.adminserver.port</td>
+        <td valign="top">The
+port number for admin server you chose
+while installing the Java EE 5 SDK</td>
+        <td valign="top">4848<br>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top;">proxy.host<br>
+        </td>
+        <td style="vertical-align: top;">The host name of your HTTP
+proxy server, if the server
+running Java EE SDK is behind a firewall. Leave blank otherwise</td>
+        <td style="vertical-align: top;">myproxy.mydomain<br>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top;">proxy.port<br>
+        </td>
+        <td style="vertical-align: top;">The port number of your HTTP
+proxy server, if the server running Java EE SDK is behind a firewall.
+Leave blank otherwise<br>
+        </td>
+        <td style="vertical-align: top;">9090<br>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <li>Start the application server&nbsp;and the JavaDB
+database. To do so, open a command prompt and change
+directory to <span style="font-style: italic;">&lt;javaee.home&gt;</span>/bin
+and issue the following
+commands:<br>
+    <code>asadmin start-domain<br>
+asadmin start-database</code> </li>
+  <li>Follow the process specific to a sample application to build and
+run it. </li>
+  <li>Common build targets are</li>
+  <ul>
+    <li><span style="font-weight: bold;">all</span>: compiles, packages
+the archive, deploys the application and run the sample</li>
+    <li><span style="font-weight: bold;">compile</span>: compiles the
+sample application</li>
+    <li><span style="font-weight: bold;">package-module</span>:
+packages the archive</li>
+    <li><span style="font-weight: bold;">default</span>: compiles,
+packages the archive</li>
+    <li><span style="font-weight: bold;">run</span>: runs the sample
+application </li>
+    <li><span style="font-weight: bold;">clean</span>: undeploys the
+application, removes the generated directories like build and dist</li>
+  </ul>
+  <li>See <a href="JavaDB.html">Using Java DB with Sample applications</a>
+for information on configuring the built-in Java DB database and
+corresponding JDBC resources. </li>
+  <li>See <a href="webservices_mgmt.html">Monitoring Web Services</a>
+for
+information on how to monitor web services applications. </li>
+  <li>All the samples are NetBeans ready and can be opened as netbeans projects in 
+      <a href="http://www.netbeans.org">NetBeans IDE</a>.
+      <ul>
+      <li> Configure the browser which the NetBeans IDE will use by selecting 
+           Tools->Options->General->WebBrowser
+      <li> <a href="http://www.netbeans.org/downloads/index.html">Download</a> and install NetBeans IDE
+      <li> Configure and start the application server using runtime tab of netbeans
+      <li> Open any sample as a netbeans project and right click to execute the ant targets, say run
+      <li> Detailed instructions are given in the sample specific documentation including any pre-requisites
+      </ul>
+</ol>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

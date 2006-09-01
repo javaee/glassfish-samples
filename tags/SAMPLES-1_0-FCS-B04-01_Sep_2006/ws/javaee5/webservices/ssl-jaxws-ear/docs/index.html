@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <title>The SSL-JAXWS Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>The SSL-JAXWS-EAR Sample Application</h1>
+Through a Tax calculation service, this sample demonstrates how to create a secure JAXWS web service
+endpoint (https) and access it using a Java application client. The
+service is protected at transport level and accessed by performing SSL
+server side
+authentication.<br>
+<h2><a name="secure"></a>Secure the Web Service Endpoint at Transport
+Level (https)</h2>
+To protect the webservice endpoint at transport level, the
+Java EE web application's runtime xml (sun-web.xml) should include the <transport-gaurantee>
+element &lt;transport-guarantee&gt; . Here, webservice-endpoint should
+match the above JAX-WS endpoint. <br>
+<br>
+See the snapshot used in the sample.<br>
+</transport-gaurantee>
+<p><code> </code></p>
+<pre>        &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>        &lt;!DOCTYPE sun-web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Servlet 2.5//EN" "http://www.sun.com/software/appserver/dtds/sun-web-app_2_5-0.dtd"&gt;<br>        &lt;sun-web-app error-url=""&gt;<br>            &lt;context-root&gt;ssl-jaxws&lt;/context-root&gt;<br>            &lt;servlet&gt;<br>                &lt;servlet-name&gt;Tax&lt;/servlet-name&gt;<br>                &lt;webservice-endpoint&gt;<br>                    &lt;!-- default name is namePort --&gt;<br>                    &lt;port-component-name&gt;Tax&lt;/port-component-name&gt;<br>                    &lt;!-- default name service_name/name --&gt;<br>                    &lt;endpoint-address-uri&gt;TaxService&lt;/endpoint-address-uri&gt;<br>                    <b>&lt;transport-guarantee&gt;CONFIDENTIAL&lt;/transport-guarantee&gt;</b>
+                &lt;/webservice-endpoint&gt;
+            &lt;/servlet&gt;
+        &lt;/sun-web-app&gt;
+<br></pre>
+Once the endpoint is deployed, you can access the
+service using https protocol (instead of http) as follows, and see the <code>&lt;soap:address
+location="https://.."&gt;</code> in the wsdl file with https protocol:<br>
+<p><code>https://localhost:8181/ssl-jaxws-war/TaxService?wsdl
+</code><br>
+</p>
+<h2><a name="gen_artifacts"></a>Generation of artifacts when endpoint
+is secured using https</h2>
+To compile a client, we need some special files that the Tax
+web service will give us.
+This is required so that the client has the web service interfaces and
+ports available.
+Use wsimport, an App Server-supplied program, to do this. To accept
+the server certificate, set the SSL trust store as system property in
+the environment variable, VMARGS. See the snapshot below:
+<p><code><br>
+set
+VMARGS=-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks
+<br>
+where cacerts.jks is the default trust store for the application
+server.
+<br>
+<br>
+${javaee.home}/bin/wsimport -d ./build
+http://${javaee.server.name}:${javaee.server.port}/ssl-jaxws-war/TaxService?wsdl"/&gt;<br>
+<br>
+</code></p>
+<h2><a name="runtime"></a>Runtime Environment of the AppClient
+During&nbsp; Secured
+https Access to WS<br>
+</h2>
+The appclient runtime environment should have the SSL truststore path
+to be set in the VMARGS environment variable before running the client. You
+can run the client like this:<br>
+<p><code>set
+VMARGS=-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks
+<br>
+cd ./build
+<br>
+${javaee.home}/bin/appclient
+webservices.ssl_jaxws_appclient.TaxCalClient income deductions </code>
+</p>
+<p></p>
+<p>To debug whether SSL is involved or not, you can add <code>-Djavax.net.debug=SSL,handshake&nbsp;</code>
+(JSSE system property) to VMARGS. During runtime you can see all the
+activities of ssl handshake.</p>
+<br>
+<h2><a name="sources_build"></a>Source Code and Instructions for
+Building and Running the Sample<br>
+</h2>
+<p>The source code can be viewed by clicking these links:
+ <a
+ href="../ssl-jaxws-war/src/java/webservices/ssl_jaxws_war/Tax.java">jax-ws
+web service</a> and <a
+ href="../ssl-jaxws-appclient/src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java">client</a>.<br>
+</p>
+<p>The sample building runtime has been done using the ANT framework. See the <a href="../../docs/UserREADME.html">common instructions</a>
+for steps.&nbsp;&nbsp; Run ant in the &lt;ssl-jaxws-ear&gt; directory to build and deploy the web service and run the client. <br>
+</p>
+<p>The followingsteps describe the application process.<br>
+</p>
+<ol>
+  <li>
+    <p>Build and deploy the web service alone:&nbsp; <code>cd
+ssl-jaxws-ear/ssl-jaxws-war; ant</code></p>
+  </li>
+  <li><code></code>Run the Java EE standalone client build, and run: <code>cd
+ssl-jaxws-ear/ssl-jaxws-appclient; ant</code></li>
+  <li>
+    <p><code></code>Run the Java SE junit test: <code>cd
+ssl-jaxws-ear/ssl-jaxws-test; ant</code></p>
+  </li>
+</ol>
+<p></p>
+<p>A sample snapshot of client runtime is as follows:<br>
+</p>
+<p>The client will print out income, deductions, and federal tax.
+<code><br>
+</code><code>${javaee.home}/bin/appclient</code><code>
+webservices.ssl_jaxws_appclient.TaxCalClient 80000 3000
+<br>
+Invoking TaxService...
+<br>
+Income=80000.0
+<br>
+Deductions=3000.0
+<br>
+Federal tax=15400.0<br>
+</code></p>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Working with NetBeans team to make this sample work in NetBeans IDE. Will update this section with the progress.
+</p>
+
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to <a
+ href="../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+If you see the following certificate error, make sure that the
+VMARGS (for appclient) or -Djavax.net.ssl.trustStore (for Java SE
+client) environment has the trust store path.<code><br>
+javax.xml.ws.WebServiceException: HTTP transport error:
+javax.net.ssl.SSLHandshakeException:
+sun.security.validator.ValidatorException: No trusted certificate found
+</code><br>
+<br>
+<p></p>
+</body>
+</html>
