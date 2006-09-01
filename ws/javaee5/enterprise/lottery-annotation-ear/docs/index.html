@@ -288,6 +288,45 @@ directories like <code>build </code>and <code>dist</code>.</li>
 </span>ant
 clean</code></div>
 
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Follow these instructions to build, deploy, and run
+this sample application using NetBeans IDE.
+</p>
+<ol>
+  <li> Refer to  <a href="../../../docs/UserREADME.html"> common build instructions.</a>
+       for setting up NetBeans IDE and the application server with which the IDE will use.</li>
+  <li> In NetBeans IDE, select File->OpenProject and select 
+<code><i>samples_install_dir</i>/javaee5/enterprise/lottery-annotation-ear</code> as the project.</li>
+  <li> Right click on <code>lottery-annotation-ear</code> and select <code>Run Project</code> which will build, deploy and run the project. If configured properly, the IDE will open the browser with appropriate url. Sample output is given below. </li>
+  <b>NetBeans IDE output</b>
+  <pre>
+  Browsing: http://localhost:8080/lottery-annotation-ear/
+  run-display-browser:
+  pre-init:
+  init-private:
+  init-userdir:
+  init-user:
+  init-project:
+  do-init:
+  post-init:
+  init-check:
+  init:
+  run-ac:
+  BUILD SUCCESSFUL (total time: 11 seconds)
+  </pre>
+  <b>Browser output</b>
+  <pre>
+  http://localhost:8080/lottery-annotation-ear/
+
+  Simple Annotation Application
+    Super Lotto
+    Quick Pick
+  When you click Quick Pick, your lottery number will be generated.
+  </pre>
+</ol>
+
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer to <a
  href="../../../docs/UserTroubleShooting.html">
