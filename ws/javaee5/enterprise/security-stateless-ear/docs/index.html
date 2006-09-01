@@ -115,7 +115,7 @@ default to the class name of its Remote business interface &nbsp;.
 <h2>Building, Deploying, and Running the Application</h2>
 
 <p>Follow these instructions to build, deploy, and run
-this sample application. s
+this sample application.
 <ol>
   <li> Setup your build environment and Configure the application
 server with which the build system has to work by following the <a
@@ -162,6 +162,30 @@ clean<br>
 undeploy</code> </p>
   </li>
 </ol>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Follow these instructions to build, deploy, and run
+this sample application using NetBeans IDE.
+</p>
+<ol>
+  <li> Refer to  <a href="../../../docs/UserREADME.html"> common build instructions.</a>
+       for setting up NetBeans IDE and the application server with which the IDE will use.</li>
+  <li> Refer to instructions above to <code>create-file-user</code> which is a pre-requisite for running this sample using NetBeans IDE.
+  <li> In NetBeans IDE, select File->OpenProject and select 
+<code><i>samples_install_dir</i>/javaee5/enterprise/security-stateless-ear</code> as the project.</li>
+  <li> Right click on <code>security-stateless-ear</code> and select <code>Run Project</code> which will build, deploy and run the project. As part of running the sample, it will popup a dialog box for user name and password. Enter javaee for both user name and password, then it will continue with execution and display the output. Sample output is given below. </li>
+  <pre>
+  Copying 1 file to /home/sreeni/IAS/SAMPLES/WS/glassfish-samples/ws/javaee5/enterprise/security-stateless-ear/dist
+  SlessEJB.helloRolesAllowed(): Hello World
+  Expected Exception for sless.helloRolesAllowed2()
+  SlessEJB.helloPermitAll(): Hello World
+  Expected Exception for sless.helloDenyAll()
+  run-security-stateless-appclient:
+  BUILD SUCCESSFUL (total time: 10 minutes 11 seconds)
+  </pre>
+</ol>
+
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer to <a
  href="../../../docs/UserTroubleShooting.html">
