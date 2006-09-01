@@ -23,7 +23,7 @@
 
     <patternset id="include.sdk.contents"
         includes="bp-project/**, docs/**, index.html, javaee5/build.xml, javaee5/docs/**, javaee5/index.html, javaee5/LICENSE, javaee5/webservices/hello-jaxws/**, javaee5/webservices/simple-jaxb/**, javaee5/webservices/ssl-jaxws-ear/**, javaee5/enterprise/lottery-annotation-ear/**, javaee5/enterprise/servlet-stateless-ear/**, javaee5/enterprise/interceptor-stateless-ear/**, javaee5/enterprise/security-stateless-ear/**, javaee5/enterprise/customer-cmp-ear/**, javaee5/enterprise/annotation-override-interceptor-ear/**, javaee5/enterprise/jsf-jpa-war/**, javaee5/enterprise/web-jpa-war/**"
-        excludes="build.xml,bp-project/test.xml,bp-project/build.properties,bp-project/test.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
+        excludes="build.xml,bp-project/test.xml,bp-project/build.properties.xyz,bp-project/test.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
 
     <patternset id="exclude.installer.license"
         excludes="javaee5/LICENSE"/>
@@ -33,6 +33,7 @@
         <mkdir dir="${dist.dir}"/>
 	<antcall target="check-out-legal"/>
         <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
         <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
         <zip destfile="${dist.dir}/${release.dirname}.jar">
             <zipfileset dir="${dist.dir}" 
@@ -44,15 +45,19 @@
         </zip>
         <delete file="${dist.dir}/index.html"/>
         <delete dir="${dist.dir}/javaee5"/>
+        <move failonerror="false" file="bp-project/build.properties.xyz" tofile="bp-project/build.properties" />
     </target>
 
     <target name="package-installer"
         description="packages the samples into a single jar for installer">
+        <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
+        <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
         <zip destfile="${dist.dir}/${release.dirname}.gf.jar">
             <zipfileset dir="."> 
                 <patternset refid="include.sdk.contents"/>
             </zipfileset>
         </zip>
+        <move failonerror="false" file="bp-project/build.properties.xyz" tofile="bp-project/build.properties" />
     </target>
 
     <target name="clean"
