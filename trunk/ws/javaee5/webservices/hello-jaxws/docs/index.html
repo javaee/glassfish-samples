@@ -150,5 +150,35 @@ ${javaee.home}/bin/appclient.bat client.Client
 <p>
 The client will print out a greeting from the Webservice using your name.
 </code>
+
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Follow these instructions to build, deploy, and run
+this sample application using NetBeans IDE.
+</p>
+<ol>
+  <li> Refer to  <a href="../../../docs/UserREADME.html"> common build instructions.</a>
+       for setting up NetBeans IDE and the application server with which the IDE will use.</li>
+  <li> Make usre that you have defined the appropriate values in build.properties based on above
+       common build instructions which is a pre-requisite for this sample.
+  <li> In NetBeans IDE, select File->OpenProject and select 
+<code><i>samples_install_dir</i>/javaee5/webservices/hello-jaxws</code> as the project.</li>
+  <li> Right click on <code>hello-jaxws</code> and select <code>Run Project</code> which will build, deploy and run the project. Sample output is given below. </li>
+  <pre>
+  Compiling 1 source file to /space/SDK_b05_2006_08_31/domains/domain1/autodeploy
+  get-artifacts-windows:
+  get-artifacts-unix:
+  get-artifacts:
+  compile-client:
+  Compiling 1 source file to /home/sreeni/IAS/SAMPLES/WS/glassfish-samples/ws/javaee5/webservices/hello-jaxws/build
+  run-client-windows:
+  run-client-unix:
+  Hello result = Hello sreeni!
+  run-client:
+  BUILD SUCCESSFUL (total time: 21 seconds)
+  </pre>
+</ol>
+
 </body>
 </html>
