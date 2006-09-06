@@ -28,7 +28,7 @@
 
 <fmt:message key="search_for_customer"/> :
 <p>
-    <form method="get" action="/customer/searchCustomer.jsp">
+    <form method="get" action="/customer-cmp-war/searchCustomer.jsp">
     Search by 
     <select name="searchCriteria">
       <option value="customerID" selected><fmt:message key="customer_id"/> 
@@ -72,7 +72,7 @@ for (int i = 0; i < customers.size(); i++) {
   Customer c = (Customer)(customers).get(i);
   String cid = (String)c.getCustomerID();
 %>
-<a href="/customer/editCustomer.jsp?cid=<%=cid%>"> 
+<a href="/customer-cmp-war/editCustomer.jsp?cid=<%=cid%>"> 
 <%=c.getLastName()%>, <%=c.getFirstName()%></a> has
 <%=c.getAddresses().size()%> addresses,
 <%=c.getSubscriptions().size()%> subscriptions.
@@ -89,7 +89,7 @@ for (int i = 0; i < customers.size(); i++) {
 %>
 
 <hr>
-[<a href="/customer/index.html"><fmt:message key="home"/> </a>]
+[<a href="/customer-cmp-war/index.html"><fmt:message key="home"/> </a>]
 </center>
 </body>
 </html>

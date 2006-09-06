@@ -26,7 +26,7 @@
 
 <fmt:message key="create_subscription"/> :
 <p>
-<form method="post" action="/customer/createSubscription.jsp">
+<form method="post" action="/customer-cmp-war/createSubscription.jsp">
 <table border=10>
   <tr>
     <td><fmt:message key="title"/>: </td>
@@ -79,7 +79,7 @@ if (title != null && !"".equals(title)) {
 %>
 
 <hr>
-[<a href="/customer/index.html"><fmt:message key="home"/> </a>]
+[<a href="/customer-cmp-war/index.html"><fmt:message key="home"/> </a>]
 </center>
 </body>
 </html>

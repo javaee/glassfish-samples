@@ -28,7 +28,7 @@
 
 <fmt:message key="search_address_by_id"/>:
 <p>
-    <form method="get" action="/customer/searchAddress.jsp">
+    <form method="get" action="/customer-cmp-war/searchAddress.jsp">
     <input type="text" name="searchText" size="25">
     <p>
     <input type="submit" value=<fmt:message key="search"/> >
@@ -68,7 +68,7 @@ if (address != null) {
 %>
 
 <hr>
-[<a href="/customer/index.html"><fmt:message key="home"/> </a>]
+[<a href="/customer-cmp-war/index.html"><fmt:message key="home"/> </a>]
 </center>
 </body>
 </html>
