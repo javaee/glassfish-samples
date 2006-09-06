@@ -156,21 +156,21 @@ while(subs_iter.hasNext()) {
 
 <p>
 
-<form method="post" ation="/customer/editCustomer.jsp?cid=<%=cid%>">
+<form method="post" ation="/customer-cmp-war/editCustomer.jsp?cid=<%=cid%>">
 <input type="submit" name="removeCustomer" value=<fmt:message key="remove"/> >
 </form>
 
 <p>
 
 <fmt:message key="add_new_subscription"/> :
-<form method="post" action="/customer/editCustomer.jsp?cid=<%=cid%>">
+<form method="post" action="/customer-cmp-war/editCustomer.jsp?cid=<%=cid%>">
 <table border="2">
 <%
 if (allSubscriptions.size() == 0) {
 %>
 <tr>
     <td><fmt:message key="subscription"/> </td>
-    <td><fmt:message key="none_avaialable"/> . [<a href="/customer/createSubscription.jsp"><fmt:message key="create_here"/> .</a>]</td>
+    <td><fmt:message key="none_avaialable"/> . [<a href="/customer-cmp-war/createSubscription.jsp"><fmt:message key="create_here"/> .</a>]</td>
 </tr>
 <%
 } else {
@@ -202,7 +202,7 @@ if (allSubscriptions.size() == 0) {
 
 <fmt:message key="add_an_address"/> :
 <p>
-<form method="post" action="/customer/editCustomer.jsp?cid=<%=cid%>">
+<form method="post" action="/customer-cmp-war/editCustomer.jsp?cid=<%=cid%>">
 <table border=10>
   <tr>
     <td><fmt:message key="address_id"/> :</td>
@@ -232,7 +232,7 @@ if (allSubscriptions.size() == 0) {
 
 <% } %>
 <hr>
-[<a href="/customer/index.html"><fmt:message key="home"/> </a>]
+[<a href="/customer-cmp-war/index.html"><fmt:message key="home"/> </a>]
 </center>
 </body>
 </html>

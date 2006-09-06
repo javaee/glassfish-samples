@@ -29,7 +29,7 @@
 
 <fmt:message key="search_by_title"/> :
 <p>
-    <form method="get" action="/customer/searchSubscription.jsp">
+    <form method="get" action="/customer-cmp-war/searchSubscription.jsp">
     <input type="text" name="searchText" size="25">
     <p>
     <input type="submit" value= <fmt:message key="search"/> >
@@ -63,7 +63,7 @@ Iterator cust_iter = customers.iterator();
 while(cust_iter.hasNext()){
   Customer customer = (Customer)cust_iter.next();
 %>
-  <a href="/customer/editCustomer.jsp?cid=<%=customer.getCustomerID()%>">
+  <a href="/customer-cmp-war/editCustomer.jsp?cid=<%=customer.getCustomerID()%>">
   <%=customer.getLastName()%>, <%=customer.getFirstName()%></a>
   <p>
 <%
@@ -85,7 +85,7 @@ if (customers.size() == 0) {
 %>
 
 <hr>
-[<a href="/customer/index.html"><fmt:message key="home"/> </a>]
+[<a href="/customer-cmp-war/index.html"><fmt:message key="home"/> </a>]
 </center>
 </body>
 </html>
