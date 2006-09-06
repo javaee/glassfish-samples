@@ -26,7 +26,7 @@
 
 <fmt:message key="create_customer"/> :
 <p>
-<form method="post" action="/customer/createCustomer.jsp">
+<form method="post" action="/customer-cmp-war/createCustomer.jsp">
 <table border=10>
   <tr>
     <td><fmt:message key="customer_id"/> : </td>
@@ -61,13 +61,13 @@ if (id != null && !"".equals(id)) {
         custSession.persist(customer);
 %>
 <fmt:message key="new_customer"/> : 
-<a href = "/customer/editCustomer.jsp?cid=<%=id%>">
+<a href = "/customer-cmp-war/editCustomer.jsp?cid=<%=id%>">
 <%=customer.getLastName()%>, 
 <%=customer.getFirstName()%>
 </a>
 <fmt:message key="created"/> . 
 </p>
-<a href = "/customer/searchCustomer.jsp">SEARCH</a></p>
+<a href = "/customer-cmp-war/searchCustomer.jsp">SEARCH</a></p>
 <!--<fmt:message key="create_customer_failed"/>-->
 <%
     } catch(Exception e) {
@@ -78,7 +78,7 @@ if (id != null && !"".equals(id)) {
 %>
 
 <hr>
-[<a href="/customer/index.html"><fmt:message key="home"/> </a>]
+[<a href="/customer-cmp-war/index.html"><fmt:message key="home"/> </a>]
 </center>
 </body>
 </html>
