@@ -53,6 +53,9 @@
     </target>
 
     <target name="run-nb" if="netbeans.home">
+        <antcall target="init"/>
+        <antcall target="run-deploy"/>
+        <antcall target="run-display-browser"/>
         <antcall target="run-ac"/>
     </target>
 
