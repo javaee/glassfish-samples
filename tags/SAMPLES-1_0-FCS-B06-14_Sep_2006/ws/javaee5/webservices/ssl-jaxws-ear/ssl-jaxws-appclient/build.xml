@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ The contents of this file are subject to the terms 
+ of the Common Development and Distribution License 
+ (the License).  You may not use this file except in
+ compliance with the License.
+ 
+ You can obtain a copy of the license at 
+ https://glassfish.dev.java.net/public/CDDLv1.0.html or
+ glassfish/bootstrap/legal/CDDLv1.0.txt.
+ See the License for the specific language governing 
+ permissions and limitations under the License.
+ 
+ When distributing Covered Code, include this CDDL 
+ Header Notice in each file and include the License file 
+ at glassfish/bootstrap/legal/CDDLv1.0.txt.  
+ If applicable, add the following below the CDDL Header, 
+ with the fields enclosed by brackets [] replaced by
+ you own identifying information: 
+ "Portions Copyrighted [year] [name of copyright owner]"
+ 
+ Copyright 2006 Sun Microsystems, Inc. All rights reserved.
+-->
+
+<project name="ssl-jaxws-appclient" default="all" basedir=".">
+
+    <property name="is.app-client.module" value="true"/>
+
+    <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" depends="run-app-client"></target>
+
+    <target name="run-app-client" unless="netbeans.home">
+        <ant target="compile"/>
+        <ant target="run-client"/>
+        <!--ant target="restore-client-source"/-->
+    </target>
+
+    <target name="-pre-compile" unless="netbeans.home">
+        <ant target="get-artifacts"/>
+        <replace 
+            file="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java" 
+            token="localhost: 8080" 
+            value="${javaee.server.name}:${javaee.server.port}"/>
+    </target>
+
+    <target name="get-artifacts" depends="tools">
+        <mkdir dir="${build.classes.dir}"/>
+        <exec executable="${wsimport}">
+            <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
+            <arg line="-keep -d ${build.classes.dir} http://${javaee.server.name}:${javaee.server.port}/ssl-jaxws-war/TaxService?wsdl"/>
+        </exec>
+    </target>
+
+    <target name="run-client" depends="tools">
+        <exec executable="${appclient}" dir="${build.classes.dir}">
+            <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
+            <arg value="webservices.ssl_jaxws_appclient.TaxCalClient"/>
+            <arg line="90000.00 10000.00"/>
+        </exec>
+    </target>
+
+    <target name="restore-client-source" depends="tools">
+	<copy file="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java.orig"
+              tofile="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java"/>   
+        <delete file="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java.orig"/>
+    </target>
+
+</project>
