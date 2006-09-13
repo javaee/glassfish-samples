@@ -46,29 +46,65 @@ More than one interceptor can be chained to
 interpose a single business
 method. @Interceptors is an annotation that can be used to indicate the
 list of interceptors to be invoked before any business methods are
-invoked on this bean. Interceptors can be specified at the ejb-jar
-level (in the deployment descritptor only), at bean class level, or for an
-individual bean method. Interceptors can be overridden using the
+invoked on this bean. The order in which the interceptors are invoked
+before the business method is invoked is same as the order in which
+they are specified using the @Interceptors annotation (or in the
+deployment descriptor). Interceptors can be specified at the ejb-jar
+level (in the deployment descritptor only), at bean class level, or for
+an
+individual bean method and can be overridden using the
 deployment descriptors. <br>
 <br>
-<h3>What Does the Sample Do?</h3>
-The sample demonstrates how the order in which the
-interceptors are invoked can be altered using the deployment
+Default interceptors may be defined to apply to all the components
+within the ejb-jar. The deployment descriptor is used to define default
+interceptors and their relative ordering. Default interceptors are
+automatically applied to all components defined in the ejb-jar. The
+default interceptors are invoked before any other interceptors for a
+bean.<br>
+<br>
+If multiple interceptors are specified then they are invoked in the
+following order. <br>
+<ul>
+  <li>Default interceptors, if any, are invoked first. Default
+interceptors can only be specified in the deployment descriptor.</li>
+  <li>Any interceptor classes defined on the bean class are then
+invoked (Note that they are invoked in the same order as the
+specification of the interceptor classes in the @Interceptors
+annotation. Also, If the interceptor class has any super classes, then
+the interceptor methods in the
+super classes are executed before the interceptor's interceptor method)</li>
+  <li>The interceptor method on the bean (if any). (Note: If the bean
+has any super classes, then the interceptor methods in the super
+classes are executed before the bean's interceptor method)<br>
+  </li>
+</ul>
+<br>
+At runtime, before a business method is invoked OR a lifecycle event
+occurs, the container creates an instance of InvocationContext and
+passes the same instance of InvocationContext to each interceptor
+method. The InvocationContext&nbsp; interface a number of methods to
+examine method name, method params etc. It also provides a method
+called getContextData() that returns a Map. Since the same
+invocationContext instance is passed for each interceptor for the
+duration of the business method or lifecycle event, it is possible for
+an interceptor to save information in the context data property
+of the InvocationContext that can be subsequently retrieved in other
+interceptors. This allows the interceptors to pass contextual data
+between them.
+The contextual data is not sharable across separate business method
+invocations or lifecycle callback events. <br>
+&nbsp;
+<br>
+<h3>What does the sample do?<br>
+</h3>
+The sample demonstrates how the interceptors are invoked can be altered
+using the deployment
 descriptor. For this, the sample defines three interceptors. One is
 defined in the bean class itself, while the other two interceptors are
 defined in two other classes.&nbsp; Of the
 two, one is a default interceptor that gets invoked for every business
 method for all the beans in the module. The second interceptor is
-invoked for all the business methods for the session bean. As you might
-already know, at runtime each interceptor method is passed an
-invocationContext object as an argument. Note that the same&nbsp;
-InvocationContext instance will be passed to each interceptor method
-for a given business method or lifecycle event interception. This
-allows an interceptor to save information in the context data property
-of the InvocationContext that can be subsequently retrieved in other
-interceptors as a means to pass contextual data between interceptors.
-The contextual data is not sharable across separate business method
-invocations or lifecycle callback events. <br>
+invoked for all the business methods for the session bean. <br>
 <br>
 To easily demonstrate the concept, each interceptor
 adds its name
@@ -78,9 +114,9 @@ invocationContext.getContextData() method. Finally, the interceptor
 method that is defined in the bean itself gets this list and puts in a
 HashMap that is defined in the bean itself. Note that we use a list to
 preserve the interceptor ordering. The bean itself provides a business
-method that returns the interceptor name list for a given method.<br>
+method that returns the interceptor name list for a given method name.<br>
 <br>
-<h3>Business Interface</h3>
+<h3>Business interface</h3>
 <p>The Stateless Session bean has a Remote business interface
 with three business methods.
 </p>
@@ -94,7 +130,7 @@ is an application exception. </p>
 through
 the @javax.ejb.Remote annotation.
 </p>
-<h3>Stateless Session Bean Class</h3>
+<h3>Stateless session bean class</h3>
 <p>
 Here is the bean implementation:
 </p>
@@ -108,7 +144,8 @@ this class as the bean class for a stateless session bean.
 first character in the parameter to
 upper / lower case. The isOddNumber returns true if the passed value is
 an odd number. Note that the business methods do not check if the
-argument is null OR if the parameter starts with an alphabetic character. It could
+argument is null OR if the parameter starts with an alphabetic
+character. It could
 have been handled in the business method itself, but we use the EJB 3.0
 interceptor facility to do the parameter validation checks.
 </p>
@@ -121,7 +158,7 @@ populated by other interceptors). The method then adds this list to a
 static HashMap. This HashMap is queried in the getInterceptorNamesFor()
 business method.<br>
 </p>
-<h3>Interceptor Classes</h3>
+<h3>Interceptor classes</h3>
 <p>
 The bean lists (using @Interceptor
 annotation) the interceptors to be fired before its business
@@ -160,15 +197,17 @@ first character in the string is not a letter. Note that an interceptor
 can throw any runtime exception or application exceptions that are
 allowed in the throws clause of the business method. If the
 interceptors find the parameter value to be valid, it calls
-InvocationContext.proceed(), thereby invoking the next interceptor OR the
+InvocationContext.proceed(), thereby invoking the next interceptor OR
+the
 business method.
 </p>
-<h3>Default Interceptors</h3>
-You might have (correcly) noticed that
+<h3>Default interceptors</h3>
+You might have noticed that
 ArgumentChecker will fail badly for two cases. First, it assumes that
 the argument that is passed to a business method is not null. Second,
 it typecasts the parameter to a java.lang.String and then checks if the
-first character is an alphabetic character.&nbsp; Clearly, the argument passed to
+first character is an alphabetic character.&nbsp; Clearly, the argument
+passed to
 the isOddNumber() method is not a String. <br>
 <br>
 We can fix the first problem by adding another
@@ -179,14 +218,14 @@ deployment descriptor that ArgumentsChecker must NOT be invoked for
 isOddNumber() method.<br>
 <br>
 <pre>import java.lang.reflect.Method;<br>import javax.interceptor.AroundInvoke;<br>import javax.interceptor.InvocationContext;<br><br>public class NullChecker {<br><br>    @AroundInvoke<br>    public Object checkIfNull(InvocationContext ctx)<br>        throws Exception {<br>        Method method = ctx.getMethod();<br>        if (method.getName().equals("initUpperCase")) {<br>            String param = (String) (ctx.getParameters()[0]);<br>                if (param == null) {<br>                    throw new BadArgumentException("Illegal argument: null");<br>                }<br>        }<br>       <br>        // An interceptor can throw any runtime exception or<br>        // application exceptions that are allowed in the<br>        // throws clause of the business method<br><br>        return ctx.proceed();    // Proceed to the next interceptor<br>    }<br>}<br></pre>
-<h3>Deployment Descriptor</h3>
+<h3>Deployment descriptor</h3>
 <p>We will use ejb-jar.xml to specify the
 default interceptor that gets invoked for all business methods for
 every bean defined in the module. This is done by using the
 &lt;interceptor-binding&gt; xml element in the deployment descriptor.
 The important thing to note here is that the &lt;ejb-name&gt; must be *
 meaning that it applies to all enterprise beans defined in this jar.
-The name of the default interceptor itself is specfied using the
+The name of the default interceptor itself is specified using the
 &lt;interceptor-class&gt; element. Here is the snippet for specifying
 the default interceptor:</p>
 <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interceptor-binding&gt;<br>            &lt;ejb-name&gt;*&lt;/ejb-name&gt;	    <br>            &lt;interceptor-class&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; enterprise.interceptor_stateless_xml_ejb.NullChecker<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/interceptor-class&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/interceptor-binding&gt;</pre>
@@ -198,8 +237,8 @@ must not be fired for the isOddNumber() method, we specify the
 </p>
 <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;interceptor-binding&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ejb-name&gt;StatelessSessionBean&lt;/ejb-name&gt;<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;     &lt;exclude-class-interceptors&gt;<br>               true<br>            &lt;/exclude-class-interceptors&gt;<br>&nbsp;&nbsp;&nbsp;     &nbsp;&nbsp;&nbsp; &lt;method&gt;<br>    &nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp; &lt;method-name&gt;isAnOddNumber&lt;/method-name&gt;<br>   &nbsp;&nbsp;&nbsp;      &lt;/method&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/interceptor-binding&gt;</pre>
 <p></p>
-<h3>Sun-Specific Deployment Configuration</h3>
-<p>You do not need to define any Sun-specific deployment
+<h3>Vendor specific deployment configuration</h3>
+<p>You do not need to define any vendor specific deployment
 descriptors (for example, <code>sun-ejb-jar.xml</code> and <code>sun-application-client.xml</code>)
 for this
 example. The JNDI name for the Remote Stateless Session bean will
@@ -258,6 +297,7 @@ this sample application using NetBeans IDE.
   BUILD SUCCESSFUL (total time: 20 seconds)
   </pre>
 </ol>
+
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer to <a
  href="../../../docs/UserTroubleShooting.html">
