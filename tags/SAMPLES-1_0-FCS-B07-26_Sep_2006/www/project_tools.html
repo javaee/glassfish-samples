@@ -1,0 +1,85 @@
+</dd>
+<script id="eraser">
+// hide all default navigation bars
+
+// get to the block
+var dd = document.getElementById("eraser").previousSibling;
+for( n=dd; n!=null; n=n.previousSibling ) {
+  if(n.nodeType==1) { // if element
+    if(n.tagName=="DD") { // kill all the link items
+      n.style.display = "none";
+    }
+    if(n.tagName=="DT") { // change the title
+      n.innerHTML = "<strong>glassfish-samples</strong>";
+    }
+  }
+}
+
+// delete the "get involved" block
+for( n=dd.parentNode.previousSibling; n!=null; n=n.previousSibling ) {
+  if(n.nodeType==1) { // if element
+    if(n.tagName=="DL") {
+      n.style.display = "none";
+    }
+  }
+}
+</script>
+<dd>
+  <ul>
+      <li>
+	<a href="https://glassfish-samples.dev.java.net/">Project Home</a>
+      </li>
+      <li>
+        <a href="https://glassfish-samples.dev.java.net/servlets/ProjectDocumentList">Downloads</a><br>
+      </li>
+      <li>
+        <a href="https://glassfish-samples.dev.java.net/servlets/ProjectMembershipRequest">Membership</a>
+      </li>
+  </ul>
+<dd>
+  <ul>
+      <li>
+	<a href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/index.html" target="gfsamples">Use samples</a>
+      </li>
+      <li>
+	  <a href="mailto:users@glassfish-samples.dev.java.net">Send us feedback</a><br>
+      </li>
+      <li>
+	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectNewsList">Announcements</a>
+      </li>
+      <li>
+	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectForumView">Discussion forums</a>
+      </li>
+  </ul>
+<dd>
+  <ul>
+      <li>
+	<a href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/DeveloperREADME.html" target="gfsamples">Develop samples</a>
+      </li>
+      <li>
+	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectMailingListList">Mailing lists</a>
+      </li>
+      <li>
+  	<a href="https://glassfish-samples.dev.java.net/source/browse/glassfish-samples">Source code - CVS</a><br>
+      </li>
+      <li>
+  	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectIssues">Issue tracker</a><br>
+      </li>
+      <li>
+        <form method="get" action="https://glassfish.dev.java.net/issues/show_bug.cgi">
+        <input type="submit" value="Go to"/>Issue #<input name="id" size="3"/>
+        </form>
+      </li>
+      <li>
+  </ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=1779417; 
+var sc_invisible=1; 
+var sc_partition=16; 
+var sc_security="88d57600"; 
+</script>
+
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c17.statcounter.com/counter.php?sc_project=1779417&amp;amp;java=0&amp;amp;security=88d57600&amp;amp;invisible=1" alt="web statistic" border="0"></a> </noscript>
+<!-- End of StatCounter Code -->
