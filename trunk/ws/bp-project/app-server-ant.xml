@@ -34,6 +34,15 @@
            <os family="windows"/>
         </not>
      </condition>
+     <condition property="space.enclosure" value="&quot;">
+       <os family="windows"/>
+     </condition>
+     <condition property="space.enclosure" value="">
+       <not>
+         <os family="windows"/>
+       </not>
+     </condition>
+     
     <!-- setup properties for various Java EE tools -->
     <property name="asadmin" value="${javaee.home}/bin/asadmin${javaee-script-suffix}"/>
     <property name="appclient" value="${javaee.home}/bin/appclient${javaee-script-suffix}"/>
