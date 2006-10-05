@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <jdbc-connection-pool allow-non-component-callers="false" connection-validation-method="auto-commit" datasource-classname="org.apache.derby.jdbc.ClientDataSource" fail-all-connections="false" idle-timeout-in-seconds="300" is-connection-validation-required="false" is-isolation-level-guaranteed="true" max-pool-size="32" max-wait-time-in-millis="60000" name="SamplesJdbcPool" non-transactional-connections="false" pool-resize-quantity="2" res-type="javax.sql.DataSource" steady-pool-size="8" validation-table-name="null">
+    <property name="serverName" value="localhost"/>
+    <property name="PortNumber" value="1527"/>
+    <property name="DatabaseName" value="sun-appserv-samples"/>
+    <property name="User" value="APP"/>
+    <property name="Password" value="APP"/>
+  </jdbc-connection-pool>
+</resources>
