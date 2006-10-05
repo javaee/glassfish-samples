@@ -48,14 +48,14 @@
     <target name="get-artifacts" depends="tools">
         <mkdir dir="${build.classes.dir}"/>
         <exec executable="${wsimport}">
-            <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
+            <env key="VMARGS" value="${space.enclosure}-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks${space.enclosure}"/>
             <arg line="-keep -d ${build.classes.dir} http://${javaee.server.name}:${javaee.server.port}/ssl-jaxws-war/TaxService?wsdl"/>
         </exec>
     </target>
 
     <target name="run-client" depends="tools">
         <exec executable="${appclient}" dir="${build.classes.dir}">
-            <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
+            <env key="VMARGS" value="${space.enclosure}-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks${space.enclosure}"/>
             <arg value="webservices.ssl_jaxws_appclient.TaxCalClient"/>
             <arg line="90000.00 10000.00"/>
         </exec>
@@ -66,5 +66,6 @@
               tofile="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java"/>   
         <delete file="./src/java/webservices/ssl_jaxws_appclient/TaxCalClient.java.orig"/>
     </target>
+
 
 </project>
