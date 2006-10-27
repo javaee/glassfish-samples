@@ -91,6 +91,8 @@
     <echo message="Starting default domain for ${javaee.home}"/>
     <exec executable="${asadmin}" failonerror="true">
         <arg line=" start-domain"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
    </exec>
    <waitfor>
         <http url="http://${javaee.server.name}:${javaee.server.port}"/>
