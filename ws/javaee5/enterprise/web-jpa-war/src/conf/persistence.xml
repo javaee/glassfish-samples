@@ -4,7 +4,7 @@
     <provider>oracle.toplink.essentials.ejb.cmp3.EntityManagerFactoryProvider</provider>
     <jta-data-source>jdbc/__default</jta-data-source>
     <properties>
-      <property name="toplink.ddl-generation" value="create-tables"/>
+      <property name="toplink.ddl-generation" value="drop-and-create-tables"/>
     </properties>
   </persistence-unit>
 </persistence>
