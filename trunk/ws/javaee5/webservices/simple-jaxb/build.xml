@@ -34,7 +34,7 @@
     <pathelement path="src" />
     <pathelement path="build/classes" />
     <pathelement path="schemas" />
-    <fileset dir="${javaee.home}" includes="lib/appserv-ws.jar, lib/javaee.jar" />
+    <fileset dir="${javaee.home}" includes="lib/webservices-rt.jar, lib/webservices-tools.jar, lib/javaee.jar" />
   </path>
   <taskdef name="xjc" classname="com.sun.tools.xjc.XJC2Task">
     <classpath refid="classpath" />
