@@ -56,6 +56,8 @@
     <pathelement location="${javaee.home}/lib/jsf-impl.jar"/>
     <pathelement location="${javaee.home}/lib/appserv-jstl.jar"/>
     <pathelement location="${javaee.home}/lib/commons-logging.jar"/>
+    <pathelement location="${javaee.home}/lib/webservices-rt.jar"/>
+    <pathelement location="${javaee.home}/lib/webservices-tools.jar"/>
     <pathelement location="${javaee.home}/bin"/>
   </path>
 
