@@ -60,6 +60,7 @@
     <echo message="Running the sample application..." />
     <java classname="webservices.simple_jaxb.UnmarshalRead" fork="true">
       <classpath refid="classpath" />
+      <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed" />
     </java>
   </target>
   
