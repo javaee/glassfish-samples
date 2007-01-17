@@ -112,6 +112,7 @@
     </target>
 
     <target name="all">
+	<antcall target="set-perm-size"/>
 	<antcall target="start-domain"/>
 	<antcall target="start-db"/>
 	<echo message="Build and run every sample"/>

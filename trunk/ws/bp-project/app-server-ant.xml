@@ -109,6 +109,18 @@
    </exec>
   </target>
 
+  <target name="set-perm-size" depends="tools"
+    description="sets MaxPermSize for the default domain">
+    <echo message="Setting MaxPermSize"/>
+    <antcall target="start-domain"/>
+    <exec executable="${asadmin}" failonerror="false">
+        <arg line=" create-jvm-options"/>
+        <arg line=" --target server"/>
+        <arg line=" -- -XX\:MaxPermSize=128m"/>
+    </exec>
+    <antcall target="stop-domain"/>
+  </target>
+
 
   <target name="keygen-common" depends="tools"
     description="create file-realm user">
