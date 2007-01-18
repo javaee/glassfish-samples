@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+
+    <interceptors>
+        <interceptor>
+            <interceptor-class>
+                enterprise.annotation_override_interceptor_ejb.NullChecker
+            </interceptor-class>
+        </interceptor>
+    </interceptors>
+
+    <assembly-descriptor>
+        <interceptor-binding>
+            <ejb-name>*</ejb-name>
+            <interceptor-class>
+                enterprise.annotation_override_interceptor_ejb.NullChecker
+            </interceptor-class>
+        </interceptor-binding>
+        <interceptor-binding>
+            <ejb-name>StatelessSessionBean</ejb-name>
+	    <exclude-class-interceptors>true</exclude-class-interceptors>
+	    <method>
+		<method-name>isOddNumber</method-name>
+	    </method>
+        </interceptor-binding>
+    </assembly-descriptor>
+</ejb-jar>
