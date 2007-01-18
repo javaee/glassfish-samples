@@ -33,6 +33,7 @@
 	<java classname="org.junit.runner.JUnitCore" fork="on">
 		<arg value="webservices.simple_jaxb_test.UnmarshalReadTest"/>
 		<classpath refid="classpath"/>
+                <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed" />
 	</java>
     </target>
 

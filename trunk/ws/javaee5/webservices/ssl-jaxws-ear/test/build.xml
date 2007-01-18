@@ -32,6 +32,7 @@
         <java classname="org.junit.runner.JUnitCore" fork="on">
             <arg value="webservices.ssl_jaxws_ear.SSLJaxWSTest"/>
             <sysproperty key="javax.net.ssl.trustStore" value="${javaee.domaindir}/config/cacerts.jks"/>
+            <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed" />
             <classpath refid="classpath"/>
         </java>
     </target>

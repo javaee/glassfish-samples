@@ -52,6 +52,7 @@
 		<arg value="${javaee.home}"/>
 		<arg value="${classesdir}"/>
 		<classpath refid="classpath"/>
+                <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed" />
 	</java>
 	<ant dir=".." inheritAll="false" target="restore"/>
     </target>
