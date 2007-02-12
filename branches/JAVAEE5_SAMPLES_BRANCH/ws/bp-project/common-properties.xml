@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 2005-2006 Sun Microsystems, Inc.  All rights reserved.  You may not modify, use, reproduce, or distribute this software except in compliance with the terms of the License at: 
+ http://developer.sun.com/berkeley_license.html
+ $Id$ -->
+
+
+<!-- common-properties.xml: Handling of various properties for the project. 
+     This file is not meant to be included directly. 
+     This file automatically sets the following properties: 
+       build.dir, build.classes.dir
+     To change the value of these properties for your project, you need to set them
+     BEFORE you include this file. You can do that by defining the property in 
+     <user.home>/bpcatalog.properties, build.properties, <root.dir>/build.properties
+     or in the build.xml file.
+     @Author Inderjeet Singh  -->
+<project name="common-properties" default="dummy-default">
+
+  <!-- include common properties -->
+  <property file="${ant.file.common-properties}/../common.properties"/>
+
+  <!-- include common properties -->
+  <property file="${ant.file.common-properties}/../build.properties"/>
+
+  <property file="build.properties"/>
+
+  <!-- include user specific build properties -->
+  <property file="${user.home}/build.properties"/>
+
+  <!-- include netbeans properties -->
+  <property file="nbproject/project.properties"/>
+  <property file="nbproject/private/private.properties"/>
+  <property file="${deploy.ant.properties.file}" />
+
+  <!-- Look for a suitable value for javaee.home if it is not already set -->
+  <condition property="javaee.home" value="${sjsas.root}">
+    <and>
+      <not><isset property="javaee.home"/></not>
+      <isset property="sjsas.root"/>
+    </and>
+  </condition>  
+  <condition property="javaee.home" value="${com.sun.aas.InstallRoot}">
+    <and>
+      <not><isset property="javaee.home"/></not>
+      <isset property="com.sun.aas.InstallRoot"/>
+    </and>
+  </condition>  
+
+  <target name="dummy-default"/>
+</project>
