@@ -109,19 +109,24 @@
     </target>
   
     <!-- This target launches a browser for the specified URL -->
-    <target name="launch" depends="getBrowser" description="launches the
-        application in a browser">
+    <target name="launch" depends="getBrowser" description="launches the application in a browser">
+      <antcall target="if-can-launch"/>
+      <antcall target="if-can-not-launch"/>
+    </target>
 
+    <target name="if-can-not-launch" unless="default.browser">
+        <property name="run.uri" value="${module.name}"/>
         <echo>
-        Trying to launch the browser with the url
+        To launch the application, open a Web browser and visit: 
         http://${javaee.server.name}:${javaee.server.port}/${run.uri}
 
-        If the above does not work, you may open a browser and copy and paste the above URL.
-
-        For non-windows and non-mac machines, make sure that you have specified
-        valid browser for the property default.browser in bp-project/build.properties
+        To launch the browser automatically on non-windows and non-mac
+        machines, make sure that you have specified valid browser for
+        the property default.browser in
+        bp-project/build.properties. 
         </echo>
-
+    </target>
+    <target name="if-can-launch" if="default.browser">
         <!-- Default the value of run.uri to be module.name -->
         <property name="run.uri" value="${module.name}"/>
         <condition property="extra-args" value="url.dll,FileProtocolHandler">
