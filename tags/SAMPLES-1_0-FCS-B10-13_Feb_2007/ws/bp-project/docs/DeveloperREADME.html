@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <title>The [application name] Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Java BluePrints Build System</h1>
+Java BluePrints Build system is a collection of build scripts based on
+ant. It provides for building, packaging, deploying and running
+different types of Java EE modules including ejb, war, ear, rar and
+par.
+<h2>Build Environment</h2>
+<ol>
+  <li>Download and install the Java EE 5 SDK bundle along with Java SE.
+Make sure to use the Java SE which is bundled with Java EE 5 SDK since
+this has been tested. </li>
+  <li>Set&nbsp; JAVA_HOME and
+JAVA_HOME\bin in PATH</li>
+  <li>Set ANT_HOME and ANT_HOME\bin in PATH. Make sure to use the 'ant'
+which came bundled with Java EE 5 SDK.</li>
+  <li>Make the application server specific properties known to <code>ant</code>
+by editing build.properties under user's home directory and by adding
+the following properties.<br>
+  </li>
+  <br>
+  <table border="1" cellpadding="5" cellspacing="0" width="80%">
+    <tbody>
+      <tr>
+        <td align="center" valign="top" width="20%"><code>Property
+Name</code></td>
+        <td align="center" valign="top" width="50%"><code>Description</code></td>
+        <td align="center" valign="top" width="30%"><code>Examples</code></td>
+      </tr>
+      <tr>
+        <td>javaee.home</td>
+        <td>The installation
+directory of the Java EE 5 SDK</td>
+        <td>/home/username/glassfish</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.name</td>
+        <td valign="top">Host
+name of the server where the Java EE 5 SDK
+is installed</td>
+        <td valign="top">localhost</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.port</td>
+        <td valign="top">The
+port number for the server you chose
+while
+installing Java EE 5 SDK</td>
+        <td valign="top">8080</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.username</td>
+        <td valign="top">The
+administrator username specified for the serve while installing Java EE
+5 SDK</td>
+        <td valign="top">admin</td>
+      </tr>
+      <tr align="left">
+        <td valign="top">javaee.server.passwordfile</td>
+        <td valign="top">The
+path to a file containing the admin
+password for the Java EE 5 SDK. The password file needs to be in the
+following format:
+        <p><code>AS_ADMIN_PASSWORD=&lt;javaeesdk-admin-password&gt;</code>
+        </p>
+        <p>Where you will
+replace &lt;javaeesdk-admin-password&gt; with
+the admin password for the Java EE 5 SDK.</p>
+        </td>
+        <td valign="top">/path/to/passwordfile</td>
+      </tr>
+      <tr valign="top">
+        <td valign="top">javaee.adminserver.port</td>
+        <td valign="top">The
+port number for admin server you chose
+while installing the Java EE 5 SDK</td>
+        <td valign="top">4848</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <li>Start the application server and make sure it is running.</li>
+</ol>
+<h2>Ant Targets<br>
+</h2>
+Following are the commonly used ant targets:<br>
+<blockquote>
+  <pre>check                        verify the build setup which is common for all modules<br>clean                        removes the generated directories like build and dist<br>compile                      compiles the project<br>create-javamail-resource     creates javamail resource<br>create-jdbc-connection-pool  creates jdbc connection pool<br>create-jdbc-resource         creates jdbc resource<br>create-jms-connection        creates jms connection<br>create-jms-resource          creates jms resource<br>create-persistence-resource  creates persistence resource<br>default                      compiles and packages the archive<br>delete-javamail-resource     deletes javamail resource<br>delete-jdbc-connection-pool  deletes jdbc connection pool<br>delete-jdbc-resource         deletes jdbc resource<br>delete-jms-resource          deletes jms resource<br>delete-persistence-resource  deletes persistence resource<br>deploy                       deploys the application<br>keydel_common                delete file-realm user<br>keygen_common                create file-realm user<br>launch                       launches the application in a browser<br>listJmsDestinations          lists jms destinations<br>package                      packages the archive<br>package-persistence-unit     packages the archive<br>reconfig                     reconfigures the application server<br>run                          builds, packages and runs the application<br>runjavaclient                run stand-alone java client<br>start-db                     starts the databse server.<br>stop-db                      stops the database server.<br>undeploy                     undeploys the application<br></pre>
+</blockquote>
+<br>
+Use the following targets to provide sample application specific
+behavior. The target names are self explanatory.<br>
+<blockquote>
+  <pre> -post-compile<br> -pre-clean<br> -pre-compile<br> -pre-deploy<br> -pre-setup<br></pre>
+</blockquote>
+<h2>Java EE Modules/Applications<br>
+</h2>
+Using the above targets it is possible to build and run various types
+Java EE modules and applications as given below.<br>
+<br>
+<dl style="margin-left: 40px;">
+  <dt>ear </dt>
+  <dd>Application Archive
+  </dd>
+  <dt>jar
+  </dt>
+  <dd>EJB Module
+  </dd>
+  <dt>war </dt>
+  <dd>Web Module
+  </dd>
+  <dt>rar
+  </dt>
+  <dd>Connector Module
+  </dd>
+  <dt>par
+  </dt>
+  <dd>Persistence Archive
+  </dd>
+  <dt>jar
+  </dt>
+  <dd>Application Client Archive
+  </dd>
+</dl>
+<br>
+<h2>Sample Build Files</h2>
+<br>
+<h3>Application&nbsp; Project</h3>
+<code></code>
+<pre style="margin-left: 40px;" id="line1"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br></span>&lt;<span
+ class="start-tag">project</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"duke-stateful-ear" </span><span
+ class="attribute-name">default</span>=<span class="attribute-value">"ear" </span><span
+ class="attribute-name">basedir</span>=<span class="attribute-value">"."</span>&gt;<br><br>    &lt;<span
+ class="start-tag">property</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"is.ear.module" </span><span
+ class="attribute-name">value</span>=<span class="attribute-value">"true"</span><span
+ class="attribute-name">/</span>&gt;<br><br>    &lt;<span
+ class="start-tag">path</span><span class="attribute-name"> id</span>=<span
+ class="attribute-value">"ear-components"</span>&gt;<br>        &lt;<span
+ class="start-tag">filelist</span><span class="attribute-name"> dir</span>=<span
+ class="attribute-value">"./duke-stateful-ejb" </span><span
+ class="attribute-name">files</span>=<span class="attribute-value">"build.xml"</span><span
+ class="attribute-name">/</span>&gt;<br>        &lt;<span
+ class="start-tag">filelist</span><span class="attribute-name"> dir</span>=<span
+ class="attribute-value">"./duke-stateful-appclient" </span><span
+ class="attribute-name">files</span>=<span class="attribute-value">"build.xml"</span><span
+ class="attribute-name">/</span>&gt;<br>        &lt;<span
+ class="start-tag">filelist</span><span class="attribute-name"> dir</span>=<span
+ class="attribute-value">"./test" </span><span class="attribute-name">files</span>=<span
+ class="attribute-value">"build.xml"</span><span class="attribute-name">/</span>&gt;<br>    &lt;/<span
+ class="end-tag">path</span>&gt;<br><br>    &lt;<span class="start-tag">import</span><span
+ class="attribute-name"> file</span>=<span class="attribute-value">"../../bp-project/main.xml"</span><span
+ class="attribute-name">/</span>&gt;<br><br>    &lt;<span
+ class="start-tag">target</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"all" </span><span class="attribute-name">depends</span>=<span
+ class="attribute-value">"ear,deploy,client-stubs"</span>&gt;<br>        &lt;<span
+ class="start-tag">antcall</span><span class="attribute-name"> target</span>=<span
+ class="attribute-value">"run"</span><span class="attribute-name">/</span>&gt;<br>    &lt;/<span
+ class="end-tag">target</span>&gt;<br><br>    &lt;<span
+ class="start-tag">target</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"run"</span>&gt;<br>        &lt;<span
+ class="start-tag">subant</span><span class="attribute-name"> target</span>=<span
+ class="attribute-value">"run-app-client"</span>&gt;<br>            &lt;<span
+ class="start-tag">fileset</span><span class="attribute-name"> dir</span>=<span
+ class="attribute-value">"duke-stateful-appclient" </span><span
+ class="attribute-name">includes</span>=<span class="attribute-value">"build.xml"</span><span
+ class="attribute-name">/</span>&gt;<br>        &lt;/<span
+ class="end-tag">subant</span>&gt;<br>    &lt;/<span class="end-tag">target</span>&gt;<br><br>&lt;/<span
+ class="end-tag">project</span>&gt;<br></pre>
+<br>
+<h3>EJB Jar Project</h3>
+<code></code>
+<pre style="margin-left: 40px;" id="line1"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br></span>&lt;<span
+ class="start-tag">project</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"hello-stateless-ejb" </span><span
+ class="attribute-name">default</span>=<span class="attribute-value">"default" </span><span
+ class="attribute-name">basedir</span>=<span class="attribute-value">"."</span>&gt;<br><br>    &lt;<span
+ class="start-tag">property</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"is.ejb-jar.module" </span><span
+ class="attribute-name">value</span>=<span class="attribute-value">"true"</span><span
+ class="attribute-name">/</span>&gt;<br><br>    &lt;<span
+ class="start-tag">import</span><span class="attribute-name"> file</span>=<span
+ class="attribute-value">"../../bp-project/main.xml"</span><span
+ class="attribute-name">/</span>&gt;<br><br>    &lt;<span
+ class="start-tag">target</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"all" </span><span class="attribute-name">depends</span>=<span
+ class="attribute-value">"default,deploy"</span>&gt;<br>        &lt;<span
+ class="start-tag">subant</span><span class="attribute-name"> target</span>=<span
+ class="attribute-value">"default"</span>&gt;<br>            &lt;<span
+ class="start-tag">fileset</span><span class="attribute-name"> dir</span>=<span
+ class="attribute-value">"test" </span><span class="attribute-name">includes</span>=<span
+ class="attribute-value">"build.xml"</span><span class="attribute-name">/</span>&gt;<br>        &lt;/<span
+ class="end-tag">subant</span>&gt;<br>        &lt;<span
+ class="start-tag">antcall</span><span class="attribute-name"> target</span>=<span
+ class="attribute-value">"run"</span><span class="attribute-name">/</span>&gt;<br>    &lt;/<span
+ class="end-tag">target</span>&gt;<br><br>    &lt;<span
+ class="start-tag">target</span><span class="attribute-name"> name</span>=<span
+ class="attribute-value">"run"</span>&gt;<br>        &lt;<span
+ class="start-tag">subant</span><span class="attribute-name"> target</span>=<span
+ class="attribute-value">"runtest"</span>&gt;<br>            &lt;<span
+ class="start-tag">fileset</span><span class="attribute-name"> dir</span>=<span
+ class="attribute-value">"test" </span><span class="attribute-name">includes</span>=<span
+ class="attribute-value">"build.xml"</span><span class="attribute-name">/</span>&gt;<br>        &lt;/<span
+ class="end-tag">subant</span>&gt;<br>    &lt;/<span class="end-tag">target</span>&gt;<br>&lt;/<span
+ class="end-tag">project</span>&gt;<br></pre>
+<h3>Web Project</h3>
+<div style="margin-left: 40px;"><code>&lt;?xml version="1.0" </code><code>encoding="UTF-8"</code><code>?&gt;</code><br>
+<code>&lt;project name="bp-web-project" default="default"
+basedir="."&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;property name="is.war.module"
+value="true"/&gt;&nbsp; </code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;import
+file="bp-project/main.xml"/&gt;&nbsp;&nbsp;&nbsp; </code><br>
+<code>&lt;/project&gt;</code><br>
+<code></code></div>
+<br>
+<h3>Java Persistence Unit Project</h3>
+<div style="margin-left: 40px;"><code>&lt;?xml version="1.0" </code><code>encoding="UTF-8"</code><code>?&gt;</code><br>
+<code>&lt;project name="hello-pu" default="default" basedir="."&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;description&gt;Builds,
+tests, and runs the project hello-pu.&lt;/description&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;property name="is.jar.module"
+value="true"/&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;property
+name="is.persistence-unit.module" value="true"/&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;import
+file="../../setup/main.xml"/&gt;</code><br>
+<code>&lt;/project&gt;</code><br>
+<code></code></div>
+<h3>Web Project That Depends on the above Java Persistence Unit
+Project</h3>
+<div style="margin-left: 40px;"><code>&lt;?xml version="1.0"
+encoding="UTF-8"?&gt;</code><br>
+<code>&lt;project name="hello-servlet" default="default"
+basedir="."&gt;</code><br>
+<code></code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;property name="is.war.module"
+value="true"/&gt;</code><br>
+<code></code><br>
+<code>&nbsp;&nbsp; &nbsp;&lt;!-- This project is dependent on
+the hello-pu project so it is declaring a dependency --&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;property name="hello-pu.home"
+value="${home.dir}/../hello-pu"/&gt;</code><br>
+<code></code><br>
+<code>&nbsp; &nbsp; &lt;!-- extra.classpath property adds to the
+classpath used for compilation --&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;property name="extra.classpath"
+value="${hello-pu.home}/dist/hello-pu.jar"/&gt;</code><br>
+<code></code><br>
+<code>&nbsp; &nbsp; &lt;!-- include the persistence unit in the
+Web-app --&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;target name="-post-compile"
+depends="init"&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;copy
+file="${hello-pu.home}/dist/hello-pu.jar"
+todir="${build.dir}/web/WEB-INF/lib"/&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;/target&gt;</code><br>
+<code></code><br>
+<code></code><code>&nbsp; &nbsp; &lt;!-- Note that
+this project is sharing the build system with other projects --&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp; &lt;import
+file="../../bp-project/main.xml"/&gt;</code><br>
+<code></code><code>&lt;/project&gt;</code><br>
+<code></code></div>
+<h3>Web Project That Depends on a JSF Component Library<br>
+</h3>
+<div style="margin-left: 40px;"><code>&lt;?xml version="1.0"?&gt;</code><br>
+<code>&lt;project name="bp-slider-navigator" default="default"
+basedir="."&gt;</code><br>
+<code></code><br>
+<code>&nbsp; &lt;property name="is.war.module" value="true"/&gt;</code><br>
+<code></code><code>&nbsp; &lt;import
+file="../../../bp-project/main.xml"/&gt;</code><br>
+<code></code><br>
+<code></code><code>&nbsp; &lt;property name="project.ui"
+value="../../../components/ui"/&gt;</code><br>
+<code>&nbsp; &lt;property name="reference.ui.jar"
+value="${project.ui}/dist/ui.jar"/&gt;</code><br>
+<code></code><br>
+<code>&nbsp;&lt;target name="-pre-compile" depends="init"&gt;</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;copy
+file="${reference.ui.jar}" todir="${build.web.dir}/WEB-INF/lib"/&gt;</code><br>
+<code>&nbsp; &lt;/target&gt;&nbsp;
+&nbsp;&nbsp;&nbsp; </code><br>
+<code>&lt;/project&gt;</code><br>
+</div>
+<br>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

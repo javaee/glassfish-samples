@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//Tigris//DTD XHTML 1.0 Transitional//EN" "http://style.tigris.org/nonav/tigris_transitional.dtd">
+<html>
+<head>
+  <link rel="SHORTCUT ICON" href="images/glassfish_favicon.gif">
+  <style>
+  	.app H3 {
+  		clear: none;
+  	}
+  	.axial {
+  		display: none;
+  	}
+  	#apphead {
+  		display: none;
+  	}
+  	#subprojects {
+  		display: none;
+  	}
+  </style>
+  <title>GlassFish Community</title>
+</head>
+<body>
+<script>
+// kill "description" h3 bar
+ld = document.getElementById("longdescription");
+for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+  if(n.nodeType==1 && n.innerHTML=="Description" ) {
+    n.parentNode.removeChild(n);
+    break;
+  }
+}
+</script>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td><a href="http://glassfish.dev.java.net"
+ alt="GlassFish Community"><img align="left"
+ src="images/glassfish_logo.gif" valign="top"
+ style="border: 0px solid ;"></a></td>
+      <td>
+      <h1>Samples for the GlassFish project</h1>
+      </td>
+      <td> <a
+ href="https://glassfish-samples.dev.java.net/servlets/ProjectDocumentList?folderID=5214&expandFolder=5214&folderID=0">
+      <img src="images/download_now_glassfish.gif"
+ alt="download samples now" border="0"></a></td>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
+    <td align=center>
+      <b><a href="./new_samples.html">Inviting contributions for new samples</a></b>
+    </td>
+    <td>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<p></p>
+<h3>Project Description</h3>
+The Samples project provides relevant sample applications to
+demonstrate the <a href="http://java.sun.com/javaee/"
+ target="gfsamples">Java EE Technolgy</a> using the <a
+ href="http://java.sun.com/javaee/downloads/" target="gfsamples">Java
+EE SDK</a> built by project <a href="https://glassfish.dev.java.net/"
+ target="gfsamples">GlassFish</a>. These sample applications also ship
+as part of Java EE SDK. Contributing to this project means contributing
+to the SDK and being part of a bundle which has millions of downloads.
+The sample applications also work with Sun Java System Application
+Server SJSAS 9.0. These sample applications conform to the <a
+ href="http://java.sun.com/blueprints/code/projectconventions.html"
+ target="gfsamples">BluePrints project guidelines</a> and may be used
+as templates to start a project or learn a specific Java EE technology.
+<h3>Learn the JavaEE 5 technologies</h3>
+<ul>
+  <li> Click on the sample from the <a
+ href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/list.html"
+ target="gfsamples"> list</a> to learn about the sample and the
+procedure to build and run. </li>
+  <li>Make sure you have downloaded and installed <a
+ href="http://java.sun.com/javaee/downloads/" target="gfsamples">Java
+EE SDK</a> or <a href="https://glassfish.dev.java.net/"
+ target="gfsamples">GlassFish</a>. In the instructions below, <code><span
+ style="font-style: italic;">&lt;javaee.home&gt;</span></code>
+refers to the path where you installed the application server. </li>
+  <li> <a
+  href="https://glassfish-samples.dev.java.net/servlets/ProjectDocumentList?folderID=5214&expandFolder=5214&folderID=0">Download</a>
+the samples installer and for subsequent instructions, let
+us call this javaee5-samples-1.0-installer.jar </li>
+  <li> <code><span style="font-style: italic;">cd
+&lt;javaee.home&gt;/samples</span></code><br>
+Create the <code><span style="font-style: italic;">samples</span></code>
+directory if it does not exist </li>
+  <li> Install the samples by executing the following command <br>
+    <code><span style="font-style: italic;"> java -jar
+javaee5-samples-1.0-installer.jar </span></code> <br>
+Study and accept the license agreemnt for the samples to get installed </li>
+  <li>Refer to <a
+ href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/index.html"
+ target="gfsamples">samples/javaee5/index.html</a> for instructions on
+using sample applications. A simple one time <a
+ href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/UserREADME.html">
+setup</a>. which is common for all samples is needed to build and run
+the sample applications. Click on the sample from the <a
+ href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/list.html"
+ target="gfsamples"> list</a> to learn about the sample and the
+procedure to build and run. </li>
+  <li>Report issues to <a href="mailto:users@glassfish-samples.dev.java.net">users@glassfish-samples.dev.java.net</a></li>
+</ul>
+<h3>Developing sample applications</h3>
+<ul>
+  <li>Understand the <a
+ href="https://glassfish.dev.java.net/public/GovernancePolicy.html">
+governance policy</a> for information on roles and responsibilities </li>
+  <li>All contributors must sign and return a <a
+ href="https://glassfish.dev.java.net/public/GovernancePolicy.html#SCA_Policy">
+Contributor Agreement</a> </li>
+  <li>Make sure you have downloaded and installed <a
+ href="http://java.sun.com/javaee/downloads/" target="gfsamples">Java
+EE SDK</a> or <a href="https://glassfish.dev.java.net/"
+ target="gfsamples">GlassFish</a> </li>
+  <li>Refer to <a
+ href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/DeveloperREADME.html"
+ target="gfsamples">Sample Applications Development Process</a> for
+checking out samples workspace and developing sample application </li>
+  <li>Report issues to <a href="mailto:dev@glassfish-samples.dev.java.net">dev@glassfish-samples.dev.java.net</a></li>
+</ul>
+<h3>Samples Archive</h3>
+<ul>
+  <li><a href="http://java.sun.com/j2ee/1.4/download.html"
+ target="gfsamples">J2EE 1.4 SDK Samples Bundle</a> </li>
+</ul>
+<h3>Additional Resources</h3>
+<ul>
+  <li> <a href="http://java.sun.com/j2ee/1.4/docs/tutorial/doc/"
+ target="gfsamples">J2EE Tutorial</a> </li>
+  <li> <a href="https://blueprints.dev.java.net/" target="gfsamples">Java
+BluePrints</a> </li>
+</ul>
+</body>
+</html>
