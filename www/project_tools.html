@@ -1,69 +1,36 @@
 </dd>
-<script id="eraser">
-// hide all default navigation bars
-
-// get to the block
-var dd = document.getElementById("eraser").previousSibling;
-for( n=dd; n!=null; n=n.previousSibling ) {
-  if(n.nodeType==1) { // if element
-    if(n.tagName=="DD") { // kill all the link items
-      n.style.display = "none";
-    }
-    if(n.tagName=="DT") { // change the title
-      n.innerHTML = "<strong>glassfish-samples</strong>";
-    }
-  }
-}
-
-// delete the "get involved" block
-for( n=dd.parentNode.previousSibling; n!=null; n=n.previousSibling ) {
-  if(n.nodeType==1) { // if element
-    if(n.tagName=="DL") {
-      n.style.display = "none";
-    }
-  }
-}
-</script>
-<dd>
-  <ul>
-      <li>
-	<a href="https://glassfish-samples.dev.java.net/">Project Home</a>
-      </li>
-      <li>
-        <a href="https://glassfish-samples.dev.java.net/servlets/ProjectDocumentList">Downloads</a><br>
-      </li>
-      <li>
-        <a href="https://glassfish-samples.dev.java.net/servlets/ProjectMembershipRequest">Membership</a>
-      </li>
-  </ul>
-<dd>
-  <ul>
-      <li>
-	<a href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/index.html" target="gfsamples">Use samples</a>
-      </li>
-      <li>
+<script>document.getElementById("main").parentNode.style.display="none";</script>
+<dd id=menubar>
+<ul>
+  <li>
+    <a href="/servlets/ProjectDocumentList">Downloads</a><br>
+  </li>
+  <li>
+    <a href="/servlets/ProjectMembershipRequest">Membership</a>
+  </li>
+  <li>
+<a href="/source/browse/*checkout*/glassfish-samples/ws/javaee5/index.html" target="gfsamples">Use samples</a>
+  </li>
+  <li>
 	  <a href="mailto:users@glassfish-samples.dev.java.net">Send us feedback</a><br>
+  </li>
+      <li>
+	<a href="/servlets/ProjectNewsList">Announcements</a>
       </li>
       <li>
-	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectNewsList">Announcements</a>
+	<a href="/servlets/ProjectForumView">Discussion forums</a>
       </li>
       <li>
-	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectForumView">Discussion forums</a>
-      </li>
-  </ul>
-<dd>
-  <ul>
-      <li>
-	<a href="https://glassfish-samples.dev.java.net/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/DeveloperREADME.html" target="gfsamples">Develop samples</a>
+	<a href="/source/browse/*checkout*/glassfish-samples/ws/javaee5/docs/DeveloperREADME.html" target="gfsamples">Develop samples</a>
       </li>
       <li>
-	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectMailingListList">Mailing lists</a>
+	<a href="/servlets/ProjectMailingListList">Mailing lists</a>
       </li>
       <li>
-  	<a href="https://glassfish-samples.dev.java.net/source/browse/glassfish-samples">Source code - CVS</a><br>
+  	<a href="/source/browse/glassfish-samples">Source code - CVS</a><br>
       </li>
       <li>
-  	<a href="https://glassfish-samples.dev.java.net/servlets/ProjectIssues">Issue tracker</a><br>
+  	<a href="/servlets/ProjectIssues">Issue tracker</a><br>
       </li>
       <li>
         <form method="get" action="https://glassfish.dev.java.net/issues/show_bug.cgi">
@@ -71,7 +38,15 @@ for( n=dd.parentNode.previousSibling; n!=null; n=n.previousSibling ) {
         </form>
       </li>
       <li>
-  </ul>
+</ul>
+<script>
+var info = {
+	title: "Glassfish Samples"
+}
+</script>
+<script src="https://glassfish-theme.dev.java.net/zone-core.js"></script>
+<script src="https://glassfish-theme.dev.java.net/theme.js"></script>
+
 
 <!-- Start of StatCounter Code -->
 <script type="text/javascript" language="javascript">

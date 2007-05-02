@@ -19,42 +19,11 @@
   <title>GlassFish Community</title>
 </head>
 <body>
-<script>
-// kill "description" h3 bar
-ld = document.getElementById("longdescription");
-for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
-  if(n.nodeType==1 && n.innerHTML=="Description" ) {
-    n.parentNode.removeChild(n);
-    break;
-  }
-}
-</script>
-<table border="0" width="100%">
-  <tbody>
-    <tr>
-      <td><a href="http://glassfish.dev.java.net"
- alt="GlassFish Community"><img align="left"
- src="images/glassfish_logo.gif" valign="top"
- style="border: 0px solid ;"></a></td>
-      <td>
-      <h1>Samples for the GlassFish project</h1>
-      </td>
-      <td> <a
- href="https://glassfish-samples.dev.java.net/servlets/ProjectDocumentList?folderID=5214&expandFolder=5214&folderID=0">
-      <img src="images/download_now_glassfish.gif"
- alt="download samples now" border="0"></a></td>
-    </tr>
-    <tr>
-    <td>&nbsp;</td>
-    <td align=center>
-      <b><a href="./new_samples.html">Inviting contributions for new samples</a></b>
-    </td>
-    <td>&nbsp;</td>
-    </tr>
-  </tbody>
-</table>
-<hr>
-<p></p>
+<div style="float:right">
+<a href="/servlets/ProjectDocumentList?folderID=5214&expandFolder=5214&folderID=0">
+<img src="images/download_now_glassfish.gif"
+ alt="download samples now" border="0"></a>
+</div>
 <h3>Project Description</h3>
 The Samples project provides relevant sample applications to
 demonstrate the <a href="http://java.sun.com/javaee/"
