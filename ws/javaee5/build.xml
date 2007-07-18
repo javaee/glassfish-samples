@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
 
 <project name="glassfish-samples" default="all" basedir=".">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
