@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
-<project name="duke-stateful-ejb" default="default" basedir=".">
-
-    <property name="is.ejb-jar.module" value="true"/>
-
-    <import file="../../../../bp-project/main.xml"/>
-
-</project>
