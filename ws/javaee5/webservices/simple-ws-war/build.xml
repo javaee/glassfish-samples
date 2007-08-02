@@ -7,6 +7,10 @@
 
     <import file="../../../bp-project/jaxws.xml" />
 
+    <target name="setup">
+        <mkdir dir="web"/>
+    </target>
+
     <target name="jaxws">
 	<!-- apt -->
 	<apt fork="true" debug="true" verbose="${verbose}" destdir="${build.classes.dir}" sourcedestdir="${build.classes.dir}"
@@ -22,7 +26,7 @@
 	</apt>
     </target>
 
-    <target name="all" depends="jaxws" unless="netbeans.home">
+    <target name="all" depends="setup,jaxws" unless="netbeans.home">
         <antcall target="run" />
     </target>
 
