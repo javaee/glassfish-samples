@@ -170,13 +170,24 @@ information on how to monitor web services applications. </li>
            Tools->Options->General->WebBrowser
       <li> Configure and start the application server using runtime tab of netbeans
       <li> Open any sample as a netbeans project and right click to execute the ant targets, say run<p>
-           <b>Please note the following regarding NetBeans IDE 6.0.</b><p>
-           Because of a change in default behavior of NetBeans IDE 6.0 when a samples main
+           <b>Please note the following regarding NetBeans IDE 6.x.</b><p>
+           Because of a change in default behavior of NetBeans IDE 6.x when a samples main
            project is opened the corresponding sub-projects are not opened. These
            sub-projects are needed for the successful building and running of the sample.
            The solution is to select the sub-projects by checking the corresponding check
            box when the main samples project is opened. Then follow the other instructions
            as mentioned in the sample documentation.
+           <p>
+            Sometimes it is possible that because of Netbeans caching, 
+            the sample may not work correctly. In such a case, do the following.
+            <ul>
+            <li>Close netbeans ide and remove .netbeans directory from your home directory just to make sure nothing is cached. You may want to rename instead of deleting.
+            <li>Start netbeans IDE and the Application Server.
+            <li>Open the specific sample project and remember to check 'open required projects' otherwise you'll encounter file not found exception.
+            <li>Run create-file-user command using ant if needed.
+            <li>Right click on main sample project and select 'run'
+            </ul>
+           <p>
       <li> Detailed instructions are given in the sample specific documentation including any pre-requisites
       </ul>
 </ol>
