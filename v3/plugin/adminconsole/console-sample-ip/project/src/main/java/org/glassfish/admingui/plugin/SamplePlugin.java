@@ -34,10 +34,6 @@
  * holder.
  */
 
-/**
- *
- * @author anilam
- */
 package org.glassfish.admingui.plugin;
 
 import org.glassfish.api.admingui.ConsoleProvider;
