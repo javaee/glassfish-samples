@@ -3,14 +3,13 @@ This is a sample project that creates a plugin module to GlassFish v3 Admin Cons
 The goal is to update this project whenever there is more integration point available.
 For a list of available Integration Point,  refer to http://wiki.glassfish.java.net/Wiki.jsp?page=V3IntegrationPoint
 
-The jar itself is available as you check out this project.  If you want to build your own or rebuild after making modification, you can perform the first 2 steps, or you can skip them.
+The jar itself is available as you check out this project.  If you want to build your own or rebuild after making modification, you can perform the first 3 steps, otherwise  you can skip them.
 1.  cd project
 2.  mvn install
+3.  cd ..
 
-
-3.  cp target/console-sample-ip-plugin-10.0-SNAPSHOT.jar  <GFv3-INSTALL>/glassfish/modules
-4.  restart the server. 
-
+4.  cp project/target/console-sample-ip-plugin-10.0-SNAPSHOT.jar  <GFv3-INSTALL>/glassfish/modules
+5.  restart the server. 
 
 Access the Console,  by default, it is http://localhost:4848/
 You should see the sample tree nodes, tabs, commonTask etc. added to the admin console.
