@@ -8,7 +8,7 @@ The jar itself is available as you check out this project.  If you want to build
 2.  mvn install
 3.  cd ..
 
-4.  cp project/target/console-sample-ip-plugin-10.0-SNAPSHOT.jar  <GFv3-INSTALL>/glassfish/modules
+4.  cp project/target/console-sample-ip-plugin-3.0-Prelude.jar  <GFv3-INSTALL>/glassfish/modules
 5.  restart the server. 
 
 Access the Console,  by default, it is http://localhost:4848/
