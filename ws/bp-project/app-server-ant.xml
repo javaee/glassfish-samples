@@ -50,6 +50,7 @@
 
   <!-- Construct Java EE classpath -->
   <path id="javaee.classpath">
+    <fileset dir="${javaee.home}/modules" includes="*.jar"/>
     <pathelement location="${javaee.home}/lib/javaee.jar"/>
     <pathelement location="${javaee.home}/lib/jsf-api.jar"/>
     <pathelement location="${javaee.home}/lib/jsf-impl.jar"/>
