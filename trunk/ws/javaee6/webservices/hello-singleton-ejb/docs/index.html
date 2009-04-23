@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en"><head><title>The [application name] Sample Application</title>
+<html lang="en"><head><title>The [application name] Singleton Ejb Webservices Application</title>
   
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
@@ -17,67 +17,48 @@
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Glassfish v3</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../docs/list.html">Samples Index</a></p>
-<h1>The EJB 3.0 Stateless Session Bean Sample Application</h1>
-This is a very simple EJB 3.0 Stateless Session Bean with a Remote
-business interface.<br>
+<h1>The EJB 3.1 Singleton Webservices Sample Application</h1>
+This is a very simple EJB 3.1 Singleton webservice application
 <br>
-<b>Business Interface</b>
-<blockquote>The Stateless Session bean has a Remote business interface
+<br>
+<b>Singleton Webservice</b>
+<blockquote>There are 2 annotations place @Singleton and @Webservice
 with a
-single business method.<br>
+single web method.<br>
   <br>
-import javax.ejb.Remote;<br>
   <br>
-@Remote<br>
-public interface StatelessSession {<br>
+@Singleton<br>
+@Webservice<br>
+public class HelloSingletonImpl {<br>
   <br>
 &nbsp;&nbsp;&nbsp; public String hello();<br>
   <br>
 }<br>
   <br>
-Note that unlike prior versions of EJB, the Remote interface is <b>not</b>
-required to extend java.rmi.Remote and its business methods are <b>not</b>
-required to throw java.rmi.RemoteException. <br>
   <br>
-The business interface is designated as a remote business interface via
-the @javax.ejb.Remote annotation.<br>
-</blockquote>
-<b>Stateless Session Bean Class</b>
-<blockquote> Here's the bean implementation :<br>
-  <br>
-@Stateless<br>
-public class StatelessSessionBean implements StatelessSession {<br>
-  <br>
-&nbsp;&nbsp;&nbsp; public String hello() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return "hello, world!\n";<br>
-&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-}<br>
-  <br>
-@javax.ejb.Stateless is a component-defining annotation that designates
-this class as the bean class for a Stateless Session Bean. &nbsp; <br>
+@javax.ejb.Singleton is a component-defining annotation that designates
+this class as the bean class for a Singleton Session Bean. &nbsp; <br>
+@javax.jws.Webservice is a component-defining annotation that designates
+this class as a Webservice Service Implementation Bean
   <br>
 </blockquote>
 <b>Deployment Descriptor</b>
 <blockquote> The good news is the deployment descriptor is no longer
 required!!! &nbsp;The two java files above are sufficient to completely
-describe this stateless session bean. &nbsp;<br>
+describe this singleton webservice. &nbsp;<br>
 </blockquote>
 <b>SUN App Server Specific Deployment Configuration</b>
 <blockquote> There is no need to define any SUN App Server-specific
 deployment
 descrpitors (e.g. sun-ejb-jar.xml, sun-application-client.xml) for this
-example. &nbsp; The JNDI name for the Remote Stateless Session bean
-will
-default to the class name of its Remote business interface &nbsp;: <b>StatelessSession</b>.<br>
-  <br>
+example. &nbsp; 
 </blockquote>
 <br>
 <h2>Building, Deploying, and Running the Application</h2>
@@ -92,12 +73,12 @@ this sample application. <br>
 server with which the build system has to work by following the 
 <a href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
-  <li><code><i>app_dir</i></code> is the sample application base
-directory: <code><i>install_dir</i>/samples/foo</code>.</li>
-  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+  <li><code><i>hello-singleton-ejb</i></code> is the sample application base
+directory: <code><i>install_dir</i>/ws/javaee6/webservices/hello-singleton-ejb</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>hello-singleton-ejb<br>
     </i></code></li>
   <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
+  <p><code><span style="font-style: italic;">hello-singleton-ejb&gt; </span></code>ant
 all </p>
   <li>It is possible to do the above separately by issuing separate
 commands as given below.</li>
@@ -108,7 +89,7 @@ deploy</code> deploys it to application server </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run</code> runs the test java client </p>
   <li>To run this sample, the ant targert invokes the 
-  <a href="../hello-stateless-client/docs/index.html">java client code</a>
+  <a href="../hello-singleton-client/docs/index.html">java client code</a>
 under 'test' directory. The sample can be run from either the parent
 directory or test directory using the targets 'run' and 'runtest'
 respectively.</li>
