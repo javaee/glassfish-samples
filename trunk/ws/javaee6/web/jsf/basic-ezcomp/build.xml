@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bp-web-project" default="default" basedir=".">
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="basicezcomp"/>
+    <import file="../../../../bp-project/main.xml"/>
+</project>
