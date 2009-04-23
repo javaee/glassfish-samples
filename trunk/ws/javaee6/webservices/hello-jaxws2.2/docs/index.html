@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en"><head><title>The Hello-JAXWS Sample Application</title>
+<html lang="en"><head><title>The Hello-JAXWS 2.2 Sample Application</title>
   
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
@@ -39,16 +39,16 @@ build framework in the Samples hierarchy.
 <p>You do, however, have to setup some variables for Ant.  The easiest way to do this is to add 
 these variables to <your-home>/build.properties (they are populated with sample values)
 <p><code>
-javaee.home=/as9<br>
+javaee.home=/glassfish<br>
 javaee.server.name=localhost<br>
 javaee.server.port=8080<br>
-javaee.domaindir=/as9/domains/domain1<br>
+javaee.domaindir=/glassfish/domains/domain1<br>
 </code>
 <h2>How to use the build script</h2>
 <ul>
 <li>Start the App Server and make sure you have <home>/build.properties setup correctly.
 <li>To do everything, simply run ant with no arguments
-<li><b>ant compile-deploy-service</b> compiles and deploys the Webservice
+<li><b>ant compile-deploy-service</b> compiles and deploys the Webservice and creates a hello-jaxws2.2.war
 <li><b>ant get-artifacts</b> Gets the artifacts from the running Hello Webservice
 <li><b>ant compile-client</b> Compiles the client
 <li><b>ant run-client</b> Runs the Appclient
@@ -75,15 +75,11 @@ All you need to create the Webservice is one extra line:  <br><b>@WebService</b>
 <p>
 
 <h2>Deployment</h2>
-Here we use the simplest possible deployment technique.  The Webservice is not even packaged.  
-You just compile the Webservice class directly into the autodeploy directory:
-<p><code>
-javac -cp ${javaee.home}/lib/javaee.jar -d ${javaee.domaindir}/autodeploy endpoint/Hello.java
-</code>
+We create a simple war and deploy it to v3. No wsgen is used to generate artifacts. JAXWS 2.2 dynamically generates all the artifacts.
 <p>
 You can verify the Webservice is active by entering this in a browser (example server host and port):
 <p><code>
-http://localhost:8080/Hello/HelloService?WSDL
+http://localhost:8080/hellojaxws2.2/HelloService?wsdl
 </code>
 <h2>Get Artifact files</H2>
 In order to compile a client, we need some special files that the Hello Webservice will give us.
@@ -91,22 +87,20 @@ This is required so that the client has the webservice interfaces and ports avai
 We use wsimport, an App Server-supplied program to do this like so:
 <p>
 <code>
-${javaee.home}/bin/wsimport -d ./build http://${javaee.server.name}:${javaee.server.port}/Hello/HelloService?WSDL"/>
+${javaee.home}/bin/wsimport -Xendorsed -d ./build http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/>
 </code>
 
+<b>Note the Xendorsed option since JDK 6 u4 JAXWS 2.1 is packaged as part of rt.jar. We want to use JAXWS 2.2 apis and need to override the JAXWS 2.1 which is part of JDK 6u4 so we need to use Xendorsed"</b>
 <h2>Compile Client</h2>
 The Client is also simple:
 <p><code>
 package client;
 
-import javax.xml.ws.WebServiceRef;<br>
 import endpoint.HelloService;<br>
 import endpoint.Hello;<br>
 <br>
 public class Client<br>
 {<br>
-    @WebServiceRef(wsdlLocation="http://localhost:8080/Hello/HelloService?WSDL")<br>
-    static HelloService service;<br>
     <br>
     public static void main(String[] args)<br>
     {<br>
@@ -118,6 +112,7 @@ public class Client<br>
     {<br>
         try<br>
         {<br>
+            HelloService service =new HelloService();<br>
             Hello port = service.getHelloPort();<br>
             String ret = port.getHello(System.getProperty("user.name"));<br>
             System.out.println("Hello result = " + ret);<br>
@@ -128,16 +123,6 @@ public class Client<br>
         }<br>
     }<br>
 }<br>
-</code>
-<p><b>Note: If you aren't using the default host and port you will need to edit this line:</b>
-<p><code>
-    @WebServiceRef(wsdlLocation="http://localhost:8080/Hello/HelloService?WSDL")<br>
-</code>
-<p>
-The @WebServiceRef line is the magic annotation that figures out what is needed from the artifact files.
-The client is compiled like so:
-<p><code>
-javac -cp ./build:${javaee.home}/lib/javaee.jar -d ./build client/Client.java 
 </code>
 
 <h2>Run the Client</H2>
@@ -163,21 +148,8 @@ this sample application using NetBeans IDE.
   <li> Make usre that you have defined the appropriate values in build.properties based on above
        common build instructions which is a pre-requisite for this sample.
   <li> In NetBeans IDE, select File->OpenProject and select 
-<code><i>samples_install_dir</i>/javaee5/webservices/hello-jaxws</code> as the project.</li>
-  <li> Right click on <code>hello-jaxws</code> and select <code>Run Project</code> which will build, deploy and run the project. Sample output is given below. </li>
-  <pre>
-  Compiling 1 source file to /space/SDK_b05_2006_08_31/domains/domain1/autodeploy
-  get-artifacts-windows:
-  get-artifacts-unix:
-  get-artifacts:
-  compile-client:
-  Compiling 1 source file to /home/sreeni/IAS/SAMPLES/WS/glassfish-samples/ws/javaee5/webservices/hello-jaxws/build
-  run-client-windows:
-  run-client-unix:
-  Hello result = Hello sreeni!
-  run-client:
-  BUILD SUCCESSFUL (total time: 21 seconds)
-  </pre>
+<code><i>samples_install_dir</i>/javaee6/webservices/hello-jaxws</code> as the project.</li>
+  <li> Right click on <code>hello-jaxws2.2</code> and select <code>Run Project</code> which will build, deploy and run the project. 
 </ol>
 
 </body>
