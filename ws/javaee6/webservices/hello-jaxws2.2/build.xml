@@ -3,7 +3,7 @@
 <project name="hello-jaxws" default="all" basedir=".">
     <!-- include user specific build properties -->
 
-    <property file="../../../bp-project/build.properties"/>
+   
     <property file="${user.home}/build.properties"/>
     <property file="../../../bp-project/app-server.properties"/>
     <property name="autodeploydir" value="${javaee.domaindir}/autodeploy"/>
@@ -53,14 +53,13 @@
 
         <copy  file="${wardir}/${warname}"  todir="${autodeploydir}" overwrite="true"/>
 
-      <!--<waitfor maxwait="100" maxwaitunit="second">
-          <available file="http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/>
-           --><!--<or>
+     <waitfor maxwait="100" maxwaitunit="second">
+          <or>
                 <available file="${autodeploydir}/hellojaxws2.2.war_deployed"/>
                 <available file="${autodeploydir}/hellojaxws2.2.war_deployFailed"/>
-           </or>--><!--
+           </or>
         </waitfor>
-        <condition property="deploy_succeeded">
+        <!--<condition property="deploy_succeeded">
                 <available file="http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/>
         </condition>
         <condition property="deploy_failed">
@@ -68,7 +67,7 @@
         </condition>-->
     </target>
 
-    <target name="get-artifacts" depends="compile-deploy-service,deploy,get-artifacts-windows,get-artifacts-unix"/>
+    <target name="get-artifacts" depends="compile-deploy-service,get-artifacts-windows,get-artifacts-unix"/>
 
     <target name="get-artifacts-windows" if="windows">
         <exec executable="${javaee.home}/bin/wsimport.bat">
