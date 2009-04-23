@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-  <title>The [application name] Sample Application</title>
+  <title>The JSF 2.0 Basic Ajax Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -27,57 +27,16 @@
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../docs/list.html">Samples Index</a></p>
-<h1>The [application name] Sample Application</h1>
-<p>
-<i>Provide general description of the application here: it's purpose
-and how it works at a high level.
-Try to keep it brief and to the point.
-</i></p>
-<p><i>
-NOTE: Be sure to change the paths for all relative links based on the
-location of this file.
-Otherwise, the links won't work.
-</i></p>
-<h2>Setting up the environment</h2>
-<p>
-<i>This section is only for apps that require database access, or other
-external resources such as JMS.
-Remove if app doesn't use a database, MQ, or other such external
-resource.
-Below is a template: add/modify as appropriate.
-</i></p>
-<p>
-Before you deploy or run the application, you must ensure that a
-database resource has been configured for
-Application Server. You can use any JDBC-compliant relational database
-server, but specific instructions
-are provided for the following:
-</p>
-<ul>
-  <li><b>Java DB</b>: Java DB comes with Application Server in most
-configurations.
-For more information, see <a href="../../javaee5/docs/JavaDB.html">Using
-the Java DB Database with
-Sample Applications</a>. </li>
-</ul>
-<p>
-</p>
-<h2>Additional Configuration Steps</h2>
-<p>
-<i>If any other additional configuration steps are required, describe
-them here.
-For example, creating JDBC connection pools and resources.
-</i></p>
+<h1>The JSF 2.0 Basic Ajax Sample Application</h1>
+<p>This is a series of simple programs, intended to illustrate some of the new Ajax features that are contained in JSF 2.0.
+Many of these programs have blog postings associated with them, with further explanations contained there.</p>
+
 <h2>Building, Deploying, and Running the Application</h2>
-<p>
-<i>Replace the paths and file names below with those of the app.
-If the app does not have an EAR file, replace with the equivalent, for
-example, WAR file.
-</i></p>
+
 <p>
 The general instructions for building, deploying, and running sample
 applications are provided in
-<a href="../../javaee5/docs/UserREADME.html">Building,
+<a href="../../../../../javaee5/docs/UserREADME.html">Building,
 Deploying, and Running Sample Applications</a>.
 In reading this document, use the following variables for this
 application:
@@ -85,10 +44,10 @@ application:
 <ul>
   <li><code><i>install_dir</i></code> is the directory where
 Application Server is installed. </li>
-  <li><code><i>app_dir</i></code> is the application base directory: <code><i>install_dir</i>/samples/foo/bar/baz</code>.
+  <li><code><i>app_dir</i></code> is the application base directory: <code><i>install_dir</i>/samples/javaee6/web/jsf/basicajax</code>.
   </li>
-  <li><i>appname</i> is the application name: foobar. </li>
-  <li>The prebuilt EAR file is <code>foo.ear</code>. </li>
+  <li><i>appname</i> is the application name: basicajax. </li>
+  <li>The prebuilt WAR file is <code>basicajax.war</code>. </li>
 </ul>
 <p>
 Follow this general procedure:
@@ -98,17 +57,11 @@ Follow this general procedure:
 the Application:</span> The build file, <code>build.xml</code>, is in
 the <code><i>app_dir</i></code> directory. </li>
   <li><span style="font-weight: bold;">Deploy
-the Application:</span> The EAR file is <code><i>install_dir</i>/samples/foo/bar/baz/foo.ear</code>.
+the Application:</span> The WAR file is <code><i>install_dir</i>/samples/javaee6/web/jsf/basicajax/basicajax.war</code>.
   </li>
   <li><span style="font-weight: bold;">Run the
-Application:</span> The application name is foo. </li>
+Application:</span> The application name is basicajax. </li>
 </ol>
-<h3>Running the Sample Application</h3>
-<p>
-<i>If the app uses a standalone or ACC Java client (not a web client),
-then replace step 3 with appropriate instructions
-for running the client and accessing the app here.
-</i></p>
 <h2>Troubleshooting</h2>
 <p>
 <i>Include any pertinent troubeshooting info here.
@@ -119,11 +72,8 @@ following:
 </p>
 <ul>
   <li>Review the log files, as described in <a
- href="../../javaee5/docs/UserTroubleShooting.html">Building,
+ href="../../../../../javaee5/docs/UserTroubleShooting.html">Building,
 Deploying, and Running Sample Applications</a>. </li>
-  <li>Make sure the database is running.
-To reset your database, run the command <code>asant sql</code> if
-using Derby</li>
   <li>To redeploy the application, you must undeploy it first. Use the
 commands <code>asant undeploy</code>, <code>asant clean</code> and
 then <code>asant
