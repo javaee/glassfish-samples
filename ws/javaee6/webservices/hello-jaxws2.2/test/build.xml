@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="hello-jaxws-test" default="runtest" basedir=".">
+    <property name="classesdir" value="../build"/>
+    <property file="../../../../bp-project/build.properties"/>
+    <property file="../../../../bp-project/app-server.properties"/>
+    <property file="${user.home}/build.properties"/>
+
+    <path id="classpath">
+        <pathelement location="${javaee.home}/lib/j2ee.jar"/>
+        <pathelement location="${classesdir}"/>
+    </path>
+
+	<target name="runtime">
+		<ant dir=".." inheritAll="false" target="run-client"/>
+	</target>
+	
+	<target name="compile" depends="runtime">
+        <javac srcdir="./src/java" destdir="${classesdir}">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+
+    <target name="runtest" depends="compile">
+	<echo message="Testing ${module.name} ..."/>
+	<echo message="Running the unit test for hello-jaxws" />
+	<java classname="test.Hello_jaxws_test" fork="on">
+		<arg value="${javaee.home}"/>
+		<arg value="${classesdir}"/>
+		<classpath refid="classpath"/>
+                <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed" />
+	</java>
+	<ant dir=".." inheritAll="false" target="restore"/>
+    </target>
+
+</project>
