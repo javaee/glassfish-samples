@@ -3,4 +3,7 @@
     <property name="is.war.module" value="true"/>
     <property name="javadoc.packagenames" value="basicajax"/>
     <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" depends="default,deploy,run"/>
+
 </project>
