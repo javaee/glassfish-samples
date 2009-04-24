@@ -35,8 +35,8 @@
  */
 package basicezcomptest;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -45,8 +45,23 @@ public class BasicEzcompTest {
     @Test
     public void homePage() throws Exception {
         final WebClient webClient = new WebClient();
-        final HtmlPage page = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        final HtmlPage page = webClient.getPage("http://localhost:8080/basicezcomp/index.jsf");
         Assert.assertEquals("JavaServer Faces 2.0 Composite Component Demo", page.getTitleText());
     }
+
+    @Test
+    public void checkInPage() throws Exception {
+        final WebClient webClient = new WebClient();
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicezcomp/index.jsf");
+        HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
+        HtmlTableCell cell = table.getCellAt(1,2);
+        HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
+        HtmlPage demopage = link.click();
+        HtmlElement div = demopage.getHtmlElementById("cc");
+        HtmlElement span = div.getHtmlElementsByTagName("span").get(0);
+        Assert.assertEquals("Test Value",span.getTextContent());
+    }
+
+    
 
 }
