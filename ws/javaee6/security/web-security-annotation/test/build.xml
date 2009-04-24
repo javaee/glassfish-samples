@@ -9,7 +9,7 @@
     <target name="runtest" depends="compile">
 	<echo message="Running the sample application..." />
 	<java classname="org.junit.runner.JUnitCore" fork="on">
-		<arg value="enterprise.hello_stateless_ejb_test.HelloStatelessEjbTest"/>
+		<arg value="enterprise.web_security_annotation_client.WebSecurityAnnotationTest"/>
 		<classpath refid="classpath"/>
 	</java>
     </target>
