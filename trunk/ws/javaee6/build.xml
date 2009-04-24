@@ -6,6 +6,8 @@
 
     <path id="samples-list">
         <filelist dir="ejb/hello-stateless-ejb" files="build.xml"/>
+        <filelist dir="web/jsf/basic-ajax" files="build.xml"/>
+        <filelist dir="web/jsf/basic-ezcomp" files="build.xml"/>
     </path>
 
     <macrodef name="iterate">
