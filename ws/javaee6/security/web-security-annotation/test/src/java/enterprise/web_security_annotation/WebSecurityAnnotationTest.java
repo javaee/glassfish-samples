@@ -40,25 +40,25 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import junit.framework.Assert;
+import org.junit.Test;
 
-public class WebSecurityAnnotationClient {
 
-    static String host = System.getProperty("http.host","localhost");
-    static String portS = System.getProperty("http.port","8080");
+public class WebSecurityAnnotationTest {
+
+    static String host = System.getProperty("javaee.server.name","localhost");
+    static String portS = System.getProperty("javaee.server.port","8080");
     static int port = new Integer(portS).intValue();
-    static final String url = "/httpomission/omissionservlet";
-    static final String auth = "Authorization: Basic amF2YWVlNnVzZXI6YWJjMTIz\n";
+    static final String url = "/web-security-annotation/annotate";
+    static final String auth = "Authorization: 	Basic amF2YWVlNnVzZXI6YWJjMTIz\n";
 
-    public static void main(String args[])throws Exception {
-        //goGet();
-        goPost();
-    }
 
     /**
      * Connect to host:port and issue GET with given auth info.
      *
      */
-    private static void goGet()
+    @Test
+    public  void goGetTest()
             throws Exception {
         Socket s = new Socket(host, port);
         OutputStream os = s.getOutputStream();
@@ -70,10 +70,17 @@ public class WebSecurityAnnotationClient {
         InputStream is = s.getInputStream();
         BufferedReader bis = new BufferedReader(new InputStreamReader(is));
         String line = null;
+        StringBuilder outPut = new StringBuilder();
 
         while ((line = bis.readLine()) != null) {
+            outPut.append(line);
            System.out.println(line);
         }
+        
+        int index = outPut.indexOf("Welcome");
+        
+        Assert.assertTrue(index != -1);
+        
 
         s.close();
         
@@ -82,7 +89,8 @@ public class WebSecurityAnnotationClient {
      * Connect to host:port and issue GET with given auth info.
      *
      */
-    private static void goPost()
+    @Test
+    public  void goPostTest()
             throws Exception {
         Socket s = new Socket(host, port);
         OutputStream os = s.getOutputStream();
@@ -94,10 +102,15 @@ public class WebSecurityAnnotationClient {
         InputStream is = s.getInputStream();
         BufferedReader bis = new BufferedReader(new InputStreamReader(is));
         String line = null;
+        StringBuilder outPut = new StringBuilder();
 
         while ((line = bis.readLine()) != null) {
+             outPut.append(line);
            System.out.println(line);
         }
+        int index = outPut.indexOf("403");
+        
+        Assert.assertTrue(index != -1);
 
         s.close();
         
