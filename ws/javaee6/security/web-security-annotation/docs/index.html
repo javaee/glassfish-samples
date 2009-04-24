@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en"><head><title>The [application name] Sample Application</title>
+  
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style></head>
+
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>Servlet 3.0 Web Security Annotations Sample</h1>
+This is a simple web application that demonstrates the access control annotations in servlets <br>
+<br>
+<h2>Access Control Annotations</h2>
+<p>
+The @RolesAllowed, @DenyAll, @PermitAll, and @TransportProtected 
+annotations provide an alternative mechanism for defining security constraints equivalent to 
+those that could otherwise have been expressed declaratively in the portable deployment 
+descriptor. These annotations are defined in the Common Annotations for the Java
+Platform specification (JSR 250). Servlet containers are required to support the use of 
+these annotations within classes (and subclasses thereof) that implement the 
+javax.servlet.Servlet interface and for which the Servlet container would process security- 
+constaints if they were specified in web.xml.
+</p>
+<h2>AnnotationServlet</h2>
+<p>
+The @PermitAll method is applied on the servlet class and is applicable to all the methods. 
+However, this is overridden by the method-specific annotations (viz) @RolesAllowed defined on the doGet() method and @DenyAll defined on the doPost() method. 
+The @DeclareRoles annotation is used to specify the roles applicable to the servlet.
+A single role (viz) javaee6user is defined and is  configured to allow doGet() method, while doPost() is precluded from access by any user.
+Note that there are no security-constraint configurations in web.xml and the application works based on the access control annotations
+</p>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+</p>
+<p>Following are the instructions for building, deploying, and running
+this sample application. <br>
+<br>
+</p>
+<ol>
+  <li> Setup your build environment and Configure the application
+server with which the build system has to work by following the 
+<a href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>install_dir</i>/samples/foo</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+	<li>Open the browser and clear the browser cache.</li>
+  <li>Build, Deploy and Run the sample application<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant</p>
+  <li><p>The launch target opens the browser. Try the Get method to see a challenge posed to the user to enter username/password.Enter javaee6user/abc123 (the configured file-user for role javaee6user). Try the post method to check that all users are denied access.</p></li>
+  <li>Use the target clean to undeploy the sample application and to remove the temporary directories like build and dist.
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+</li></ol>
+
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to 
+<a href="../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+&nbsp;<p>
+<!--- Do not modify the rest of the document -->
+</p><hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright � 2006 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body></html>
