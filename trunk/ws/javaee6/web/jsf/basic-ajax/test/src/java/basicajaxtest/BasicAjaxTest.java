@@ -35,8 +35,8 @@
  */
 package basicajaxtest;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -49,4 +49,50 @@ public class BasicAjaxTest {
         Assert.assertEquals("JavaServer Faces 2.0 Basic Ajax Demo", page.getTitleText());
     }
 
+    @Test
+    public void checkInPage() throws Exception {
+        final WebClient webClient = new WebClient();
+        webClient.setAjaxController(new NicelyResynchronizingAjaxController());
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
+        HtmlTableCell cell = table.getCellAt(1,2);
+        HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
+        HtmlPage demopage = link.click();
+        Assert.assertEquals("0",demopage.getHtmlElementById("out1").getTextContent());
+        HtmlSubmitInput button = demopage.getHtmlElementById("_0");
+        demopage = button.click();
+        Assert.assertEquals("1",demopage.getHtmlElementById("out1").getTextContent());
+    }
+
+    @Test
+    public void checkSimpleCount() throws Exception {
+        final WebClient webClient = new WebClient();
+        webClient.setAjaxController(new NicelyResynchronizingAjaxController());
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
+        HtmlTableCell cell = table.getCellAt(2,2);
+        HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
+        HtmlPage demopage = link.click();
+        Assert.assertEquals("0",demopage.getHtmlElementById("out1").getTextContent());
+        HtmlSubmitInput button = demopage.getHtmlElementById("button1");
+        demopage = button.click();
+        Assert.assertEquals("1",demopage.getHtmlElementById("out1").getTextContent());
+    }
+
+    @Test
+    public void checkSecondEcho() throws Exception {
+        final WebClient webClient = new WebClient();
+        webClient.setAjaxController(new NicelyResynchronizingAjaxController());
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
+        HtmlTableCell cell = table.getCellAt(5,2);
+        HtmlAnchor link =  (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
+        HtmlPage demopage = link.click();
+        Assert.assertEquals("hello",demopage.getHtmlElementById("form1:out1").getTextContent());
+        HtmlTextInput input = demopage.getHtmlElementById("form1:in1");
+        input.setValueAttribute("hello test");
+        HtmlButtonInput button = demopage.getHtmlElementById("form1:button1");
+        demopage = button.click();
+        Assert.assertEquals("hello test",demopage.getHtmlElementById("form1:out1").getTextContent());
+    }
 }
