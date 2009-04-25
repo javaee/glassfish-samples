@@ -32,10 +32,10 @@
 
     <!-- Copy in the content -->
     <mkdir dir="${build.web.dir}"/>
-    <copy todir="${build.web.dir}">
+    <copy todir="${build.web.dir}" failonerror="false">
      <fileset dir="${src.web}"/>
     </copy>
-    <copy todir="${war.build.dir}">
+    <copy todir="${war.build.dir}" failonerror="false">
      <fileset dir="${build.web.dir}"/>
     </copy>
 
