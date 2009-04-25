@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en"><head><title>The [application name] Sample Application</title>
+  
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style></head>
+
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>The Servlet 3.0 Annotations Sample Application</h1>
+This is a simple Servlet 3.0 application using annotations for servlet, filter 
+and content listener.<br>
+<br>
+<b>Servlet</b>
+<blockquote>The servlet reads the initial parameter, a request attribute and a
+    context attribute and then output the result.<p>
+
+    @WebServlet(name="mytest",<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;urlPatterns={"/"},<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;initParams={ @WebInitParam(name="message", value="my servlet") } )<br>
+    public class TestServlet extends HttpServlet {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;public void init(ServletConfig config) throws ServletException {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//read the context attribute<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<p>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<p>
+    }<br>
+
+<p>@javax.servlet.annotation.WebServlet is an annotation specifying the meta-data for given servlet.
+In our case, it specifies the url pattern and an init-param. Note that one still need
+to extends javax.servlet.http.HttpServlet here.
+</blockquote>
+
+<b>Filter</b>
+<blockquote>The filter read the initial parameter and set a request attribute.<p>
+
+    @WebFilter(urlPatterns={"/"}, initParams={ @WebInitParam(name="mesg", value="my filter") })<br>
+    public class TestFilter implements Filter {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;public void init(FilterConfig filterConfig) throws ServletException {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<p>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+    throws IOException, ServletException {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<p>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;public void destroy() {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<p>
+    }<br>
+
+<p>javax.servlet.annotation.WebFilter is an annotation specifying the meta-data for given filter.
+In our case, it specifies the url pattern and an init-param. Note that one still need
+to implement javax.servlet.Filter here.
+</blockquote>
+
+<b>ContextListener</b>
+<blockquote>The context listener set a context attribute in contextInitialized() method.<p>
+    
+    @javax.servlet.annotation.WebListener<br>
+    public class TestServletContextListener implements ServletContextListener {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;public void contextInitialized(ServletContextEvent sce) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<p>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;public void contextDestroyed(ServletContextEvent sce) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    }
+
+<p>@javax.servlet.annotaton.WebListener indicates that the given class is a context listener.
+</blockquote>
+
+<b>Deployment Descriptor</b>
+<blockquote> The good news is the deployment descriptor is no longer
+required!!!<br>
+</blockquote>
+<b>SUN App Server Specific Deployment Configuration</b>
+<blockquote> There is no need to define any SUN App Server-specific
+deployment descrpitor (sun-web.xml) for this
+example.
+</blockquote>
+<br>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+</p>
+<p>Following are the instructions for building, deploying, and running
+this sample application. <br>
+<br>
+</p>
+<ol>
+  <li> Setup your build environment and Configure the application
+server with which the build system has to work by following the 
+<a href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>install_dir</i>/javaee6/web/servlet/annotation_war</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, Deploy and Run the sample application using the target all<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
+all </p>
+  <li>It is possible to do the above separately by issuing separate
+commands as given below.</li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> runs the test</p>
+  <li>Note that one can run the test in one of the following way:
+  <ul>
+      <li>use browser to access http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/annotation_war 
+        <br>The following is expected in the browser:
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;Hello, my servlet, my filter, my listener.
+      <li><code><span style="font-style: italic;">app_dir&gt; </span>ant run</code>
+      <li><code><span style="font-style: italic;">app_dir/test&gt; </span>ant runtest</code>
+  </ul>
+  <li>Use the target clean to undeploy the sample application and to remove the temporary directories like build and dist.
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+</li></ol>
+
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to 
+<a href="../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+&nbsp;<p>
+<!--- Do not modify the rest of the document -->
+</p><hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright © 2006 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body></html>
