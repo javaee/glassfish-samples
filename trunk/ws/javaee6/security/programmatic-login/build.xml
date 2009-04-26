@@ -7,9 +7,14 @@
     <property name="is.war.module" value="true" />
 
     <import file="../../../bp-project/main.xml"/>
+    <import file="../build.xml"/>
 
-    <target name="all" depends="default,deploy,run">
+    <target name="all" depends="default,deploy">
+        <antcall target="create-file-user"/>
+        <antcall target="run"/>
+        <!--<antcall target="delete-file-user"/>-->
     </target>
+
 
     <target name="-pre-clean" depends="undeploy">
     </target>
@@ -21,10 +26,12 @@
     <antcall target="launch"/>
   </target>
 
+
     <target name="run-java-client">
         <subant target="run">
             <fileset dir="programmatic-login-client" includes="build.xml"/>
         </subant>
     </target>
+
 
 </project>
