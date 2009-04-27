@@ -59,6 +59,8 @@
         <fileset dir="${javaee.home}" includes="lib/javaee.jar, lib/appserv-rt.jar, lib/appserv-ws.jar"/>
         <dirset dir="${antfile.dir}/..">
             <include name="**/build/classes"/>
+            <!-- netbeans projects get compiled into a directory named build/jar -->
+            <include name="**/build/jar"/>
         </dirset>
         <pathelement location="${build.classes.dir}"/>
         <pathelement path="${javac.classpath}"/>
