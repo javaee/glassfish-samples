@@ -5,67 +5,74 @@
 
     <property name="is.ejb-jar.module" value="true"/>
 
-    <property file="${user.home}/build.properties"/>
-    <property name="javadoc.packagenames" value="enterprise.hello_singleton_ejb"/>
+    <!-- <property file="${user.home}/build.properties"/> -->
+    <!-- <property name="javadoc.packagenames" value="enterprise.hello_singleton_ejb"/> -->
     <property name="classesdir" value="./build"/>
 
     <import file="../../../bp-project/main.xml"/>
-     <path id="classpath">
 
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="post-run-deploy">
+        <subant target="run">
+            <fileset dir="hello-singleton-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- to get the test client to run when the user runs the project from ant -->
+    <target name="launch">
+        <subant target="run">
+            <fileset dir="hello-singleton-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+<!--
+    <path id="classpath">
         <fileset dir="${javaee.home}/modules">
-                      <include name="*.jar"/>
-               
-                   </fileset>
-
+            <include name="*.jar"/>
+        </fileset>
         <pathelement location="${classesdir}"/>
-
     </path>
 
-     <target name="init">
+
+    <target name="-pre-init">
         <condition property="windows">
             <os family="windows" />
         </condition>
         <condition property="unix">
             <os family="unix" />
         </condition>
-         <mkdir  dir="${classesdir}"/>
+        <mkdir  dir="${classesdir}"/>
     </target>
-
-    <target name="all" depends="init,default,deploy">
-      
-        <antcall target="run"/>
-    </target>
-
-    <target name="-pre-clean" depends="undeploy">
+     
+    <target name="-pre-clean">
         <subant target="clean">
             <fileset dir="hello-singleton-client" includes="build.xml"/>
         </subant>
     </target>
 
 
-
-    <target name="get-artifacts" depends="deploy,get-artifacts-windows,get-artifacts-unix"/>
+    <target name="get-artifacts" depends="get-artifacts-windows,get-artifacts-unix"/>
 
     <target name="get-artifacts-windows" if="windows">
         <exec executable="${javaee.home}/bin/wsimport.bat">
-            <arg line="-keep -Xendorsed -d ${classesdir} -p enterprise.hello_singleton_ejb http://${javaee.server.name}:${javaee.server.port}/HelloSingletonImplService/HelloSingletonImpl?WSDL"/>
+            <arg line="-keep -Xendorsed -d ${classesdir} -p enterprise.hello_singleton_ejb http://localhost:8080/HelloSingletonImplService/HelloSingletonImpl?WSDL"/>
         </exec>
     </target>
 
     <target name="get-artifacts-unix" if="unix">
         <exec executable="${javaee.home}/bin/wsimport">
-            <arg line="-keep -Xendorsed -d ${classesdir} -p enterprise.hello_singleton_ejb http://${javaee.server.name}:${javaee.server.port}/HelloSingletonImplService/HelloSingletonImpl?WSDL"/>
+            <arg line="-keep -Xendorsed -d ${classesdir} -p enterprise.hello_singleton_ejb http://localhost:8080/HelloSingletonImplService/HelloSingletonImpl?WSDL"/>
         </exec>
     </target>
 
-    <target name="compile-client" depends="init,get-artifacts">
+    <target name="compile-client" depends="-pre-init,get-artifacts">
         <javac srcdir="hello-singleton-client/src/java" destdir="${classesdir}">
             <classpath refid="classpath"/>
         </javac>
     </target>
 
 
- <target name="run" depends="compile-client,run-client-windows,run-client-unix"/>
+    <target name="run-client" depends="compile-client,run-client-windows,run-client-unix"/>
 
     <target name="run-client-windows" if="windows">
         <exec executable="${javaee.home}/bin/appclient.bat" dir="${classesdir}">
@@ -75,11 +82,9 @@
 
     <target name="run-client-unix" if="unix">
         <exec executable="${javaee.home}/bin/appclient" dir="${classesdir}" failifexecutionfails="false">
-            <arg value="enterprise.hello_singleton_client.SingletonJavaClient"/>    
+            <arg value="enterprise.hello_singleton_client.SingletonJavaClient"/>
         </exec>
     </target>
-
-
-   
+    -->
 
 </project>
