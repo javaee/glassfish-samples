@@ -46,11 +46,13 @@ import javax.servlet.ServletContextEvent;
  */
 @javax.servlet.annotation.WebListener
 public class TestServletContextListener implements ServletContextListener {
+    @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
         context.setAttribute("listenerMessage", "my listener");
     }   
 
+    @Override
     public void contextDestroyed(ServletContextEvent sce) {
     }
 }
