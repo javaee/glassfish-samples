@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="mailconnector-war" default="default" basedir=".">
+    <property name="is.war.module" value="true"/>
+    <import file="../../../../../../bp-project/main.xml"/>
+
+    <path id="classpath">
+	    <fileset dir="../../mailconnector-ra/dist/rar" includes="*.jar"/>
+    </path>
+
+    <target name="-post-compile">
+       <copy todir="${build.classes.dir}">
+         <fileset dir="src/conf"/>
+       </copy>
+     </target>
+    
+</project>
