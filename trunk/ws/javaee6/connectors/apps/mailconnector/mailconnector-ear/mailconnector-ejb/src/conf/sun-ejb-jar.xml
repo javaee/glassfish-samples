@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Copyright 2004-2009 Sun Microsystems, Inc.  All rights reserved.
+ Use is subject to license terms.
+-->
+<!DOCTYPE sun-ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD GlassFish Application Server 3.0 EJB 3.1//EN" "http://www.sun.com/software/appserver/dtds/sun-ejb-jar_3_1-0.dtd">
+<sun-ejb-jar>
+  <enterprise-beans>
+    <name>EBJAR</name>
+    <unique-id>1</unique-id>
+    <ejb>
+      <ejb-name>JavaMailMDB</ejb-name>
+      <jndi-name>JavaMailMDB</jndi-name>
+      <resource-ref>
+        <res-ref-name>TheMailSession</res-ref-name>
+        <jndi-name>mail/MySession</jndi-name>
+      </resource-ref>
+      <pass-by-reference>false</pass-by-reference>
+      <ior-security-config>
+        <transport-config>
+          <integrity>SUPPORTED</integrity>
+          <confidentiality>SUPPORTED</confidentiality>
+          <establish-trust-in-target>SUPPORTED</establish-trust-in-target>
+          <establish-trust-in-client>SUPPORTED</establish-trust-in-client>
+        </transport-config>
+        <as-context>
+          <auth-method>USERNAME_PASSWORD</auth-method>
+          <realm>default</realm>
+          <required>true</required>
+        </as-context>
+        <sas-context>
+          <caller-propagation>SUPPORTED</caller-propagation>
+        </sas-context>
+      </ior-security-config>
+      <is-read-only-bean>false</is-read-only-bean>      
+      <gen-classes/>
+      <mdb-resource-adapter>
+        <resource-adapter-mid>mailconnector</resource-adapter-mid>
+      </mdb-resource-adapter>
+    </ejb>
+  </enterprise-beans>
+</sun-ejb-jar>
