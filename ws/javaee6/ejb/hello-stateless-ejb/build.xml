@@ -8,6 +8,34 @@
 
     <import file="../../../bp-project/main.xml"/>
 
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="post-run-deploy">
+        <subant target="run">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- to get the test client to run when the user runs the project from ant -->
+    <target name="launch">
+        <subant target="run">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="-post-clean">
+        <subant target="clean">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="-post-dist">
+        <subant target="compile">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+<!-- original content
+
     <target name="all" depends="default,deploy,run">
         <subant target="default">
             <fileset dir="hello-stateless-client" includes="build.xml"/>
@@ -26,5 +54,6 @@
             <fileset dir="hello-stateless-client" includes="build.xml"/>
         </subant>
     </target>
+    -->
 
 </project>
