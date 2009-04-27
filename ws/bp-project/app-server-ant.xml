@@ -217,6 +217,40 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     </exec>     
   </target>
 
+    <target name="create-connector-connection-pool" depends="tools"
+       description="creates connector connection pool">
+       <fail unless="connector.pool.name" message="The property connector.pool.name must be set before invoking this target.
+       Otherwise there is no pool to use with the connector resource."/>
+       <exec executable="${asadmin}">
+           <arg line=" create-connector-connection-pool"/>
+           <arg line=" --user ${javaee.server.username}" />
+           <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+           <arg line=" --host ${javaee.server.name}" />
+           <arg line=" --port ${javaee.adminserver.port}" />
+           <arg line=" --connectiondefinition ${connectiondefinition.name}" />
+           <arg line=" --raname ${ra.name}" />
+           <arg line=" ${connector.pool.name} " />
+       </exec>
+    </target>
+
+     <target name="create-connector-resource"  depends="tools"
+       description="creates connector resource">
+       <fail unless="connector.pool.name" message="The property connector.pool.name must be set before invoking this target.
+       Otherwise there is no pool to use with the connector resource."/>
+       <fail unless="connector.resource.name" message="The property connector.resource.name must be set before invoking this target.
+       Otherwise there is no Connector resource to create."/>
+        <exec executable="${asadmin}">
+           <arg line="create-connector-resource"/>
+           <arg line=" --user ${javaee.server.username}" />
+           <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+           <arg line=" --host ${javaee.server.name}" />
+           <arg line=" --port ${javaee.adminserver.port}" />
+           <arg line=" --poolname ${connector.pool.name}" />
+           <arg line=" --enabled=true" />
+           <arg line=" ${connector.resource.name}" />
+       </exec>
+     </target>
+
   <target name="create-persistence-resource" depends="tools"
     description="creates persistence resource">
      <exec executable="${asadmin}">
@@ -363,6 +397,34 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
         <arg line="${pool.name}" />
     </exec>
   </target>
+
+    <target name="delete-connector-resource"
+      description="deletes connector resource" depends="tools">
+      <fail unless="connector.resource.name" message="The property connector.resource.name must be set before invoking this target.
+      Otherwise there is no connector resource to delete."/>
+       <exec executable="${asadmin}">
+          <arg line="delete-connector-resource"/>
+         <arg line=" --user ${javaee.server.username}" />
+          <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+          <arg line=" --host ${javaee.server.name}" />
+          <arg line=" --port ${javaee.adminserver.port}" />
+          <arg line="${connector.resource.name}" />
+      </exec>
+    </target>
+
+    <target name="delete-connector-connection-pool"
+      description="deletes connector connection pool" depends="tools">
+      <fail unless="connector.pool.name" message="The property connector.pool.name must be set before invoking this target. 
+      Otherwise there is no connector pool to delete."/>
+       <exec executable="${asadmin}">
+          <arg line="delete-connector-connection-pool"/>
+          <arg line=" --user ${javaee.server.username}" />
+          <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+          <arg line=" --host ${javaee.server.name}" />
+          <arg line=" --port ${javaee.adminserver.port}" />
+          <arg line="${connector.pool.name}" />
+      </exec>
+    </target>
 
   <target name="delete-jms-resource"
     description="deletes jms resource" depends="tools">
