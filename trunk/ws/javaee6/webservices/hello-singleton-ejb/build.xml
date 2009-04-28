@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
 
-<project name="hello-singleton-ejb" default="all" basedir=".">
+<project name="hello-singleton-ejb" default="run" basedir=".">
 
     <property name="is.ejb-jar.module" value="true"/>
 
