@@ -22,18 +22,24 @@
         </subant>
     </target>
 
+    <target name="all" depends="run"/>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+        <subant target="clean">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- clean up subproject from NB (undeploy is handled automatically) -->
     <target name="-post-clean">
         <subant target="clean">
             <fileset dir="hello-stateless-client" includes="build.xml"/>
         </subant>
     </target>
 
-    <target name="-post-dist">
-        <subant target="compile">
-            <fileset dir="hello-stateless-client" includes="build.xml"/>
-        </subant>
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
     </target>
-
-    <target name="all" depends="run"/>
 
 </project>

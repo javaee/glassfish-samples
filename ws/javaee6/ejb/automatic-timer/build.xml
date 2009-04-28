@@ -12,7 +12,6 @@
     <target name="post-run-deploy">
         <subant target="run" verbose="true">
             <fileset dir="automatic-timer-client" includes="build.xml"/>
-            <property name="javac.classpath" value="../../build/classes"/>
         </subant>
     </target>
 
@@ -23,12 +22,24 @@
         </subant>
     </target>
 
-    <target name="-pre-clean">
+    <target name="all" depends="run"/>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
         <subant target="clean">
             <fileset dir="automatic-timer-client" includes="build.xml"/>
         </subant>
     </target>
     
-    <target name="all" depends="run"/>
+    <!-- clean up subproject from NB (undeploy is handled automatically) -->
+    <target name="-post-clean">
+        <subant target="clean">
+            <fileset dir="automatic-timer-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
 
 </project>
