@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
 
-<project name="hello-stateless-ejb" default="all" basedir=".">
+<project name="hello-stateless-ejb" default="run" basedir=".">
 
     <property name="is.ejb-jar.module" value="true"/>
     <property name="javadoc.packagenames" value="enterprise.hello_stateless_ejb"/>
