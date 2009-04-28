@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="glassfish-samples" default="all" basedir=".">
+    <description>Builds, tests, and packages the project glassfish-samples.</description>
+
+    <import file="bp-project/main.xml"/>
+
+    <property file="bp-project/test.properties"/>
+    <property file="javaee6_samples.properties"/>
+
+    <property name="dist.dir" value="dist"/>
+    <property name="test.results.dir" value="test-results"/>
+
+    <target name="init-dist">
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <target name="init-test">
+        <delete dir="${test.results.dir}"/>
+        <mkdir dir="${test.results.dir}"/>
+    </target>
+
+    <patternset id="include.sdk.contents"
+        includes="bp-project/**, docs/**, index.html, javaee6/build.xml, javaee6/docs/**, javaee6/index.html, javaee6/LICENSE, javaee6/connectors/apps/mailconnector/mailconnector-ear/**, javaee6/connectors/apps/mailconnector/mailconnector-ra/**, javaee6/ejb/automatic-timer/**, javaee6/ejb/ejb31-war/**, javaee6/ejb/hello-stateless-ejb/**, javaee6/jpa/locking/**, javaee6/rest/message-board-war/**, javaee6/security/http-method-omission/**, javaee6/security/programmatic-login/**, javaee6/security/web-security-annotation/**, javaee6/web/jsf/basic-ajax/**, javaee6/web/jsf/basic-ezcomp/**, javaee6/web/servlet/annotation-war/**, javaee6/web/servlet/async-request-war/**, javaee6/web/servlet/dynamicregistration-war/**, javaee6/webservices/hello-jaxws2.2/**, javaee6/webservices/hello-singleton-ejb/**"
+        excludes="build.xml,bp-project/test.xml,bp-project/build.properties.xyz,bp-project/test.properties,javaee6/docs/DeveloperREADME.html, javaee6/docs/DeveloperTroubleShooting.html, javaee6/docs/sample_doc_template.html,javaee6/docs/sdk_samples_index.html,javaee6/docs/UnitTesting.html,javaee6/**/test/**"/>
+
+    <patternset id="exclude.installer.license"
+        excludes="javaee6/LICENSE"/>
+
+    <target name="package-sdk" depends="init-dist"
+        description="packages the samples into a single jar for SDK">
+        <mkdir dir="${dist.dir}"/>
+	<antcall target="check-out-legal"/>
+        <copy file="javaee6/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
+        <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
+        <zip destfile="${dist.dir}/${release.dirname}.jar">
+            <zipfileset dir="${dist.dir}" 
+                includes="index.html,javaee6/**"/>
+            <zipfileset dir="."> 
+                <patternset refid="include.sdk.contents"/>
+                <patternset refid="exclude.installer.license"/>
+            </zipfileset>
+        </zip>
+        <delete file="${dist.dir}/index.html"/>
+        <delete dir="${dist.dir}/javaee6"/>
+        <move failonerror="false" file="bp-project/build.properties.xyz" tofile="bp-project/build.properties" />
+    </target>
+
+    <target name="package-profiles" depends="init-dist"
+        description="creates packages for bp-project, web-profile and classic-profile">
+        <mkdir dir="${dist.dir}"/>
+	<antcall target="check-out-legal"/>
+	<antcall target="package-bp"/>
+	<antcall target="package-web"/>
+	<antcall target="package-classic"/>
+    </target>
+
+    <target name="package-bp" 
+        description="packages the bp-project into a single jar">
+        <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
+        <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
+        <zip destfile="${dist.dir}/${release.dirname}-bp-project.jar">
+            <zipfileset dir="." 
+                includes="bp-project/**"
+                excludes="build.xml,bp-project/test.xml,bp-project/build.properties,bp-project/build.properties.xyz,bp-project/test.properties"
+            />
+        </zip>
+        <move failonerror="false" file="bp-project/build.properties.xyz" tofile="bp-project/build.properties" />
+    </target>
+
+    <target name="package-web"
+        description="packages the web-profile samples into a single jar for SDK">
+        <copy file="javaee6/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <zip destfile="${dist.dir}/${release.dirname}-web-profile.jar">
+            <zipfileset dir="${dist.dir}" 
+                includes="index.html"/>
+            <zipfileset dir="." 
+                includes="javaee6/web/**,javaee6/security/**"/>
+        </zip>
+    </target>
+
+    <target name="package-classic"
+        description="packages the classic-profile samples into a single jar for SDK">
+        <copy file="javaee6/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <zip destfile="${dist.dir}/${release.dirname}-classic-profile.jar">
+            <zipfileset dir="${dist.dir}" 
+                includes="index.html"/>
+            <zipfileset dir="." 
+                includes="javaee6/connectors/**,javaee6/ejb/**,javaee6/jpa/**,javaee6/rest/**,javaee6/webservices/**"/>
+        </zip>
+    </target>
+
+    <target name="package-installer"
+        description="packages the samples into a single jar for installer">
+        <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
+        <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
+        <zip destfile="${dist.dir}/${release.dirname}.gf.jar">
+            <zipfileset dir="."> 
+                <patternset refid="include.sdk.contents"/>
+            </zipfileset>
+        </zip>
+        <move failonerror="false" file="bp-project/build.properties.xyz" tofile="bp-project/build.properties" />
+    </target>
+
+    <target name="clean"
+        description="cleans workspace by removing temporary directories like dist">
+        <delete dir="${dist.dir}"/>
+        <delete dir="${test.results.dir}"/>
+    </target>
+
+    <path id="samples-test-list">
+        <filelist dir="javaee6/connectors/apps/mailconnector/mailconnector-ear/test" files="build.xml"/>
+        <filelist dir="javaee6/connectors/apps/mailconnector/mailconnector-ra/test" files="build.xml"/>
+        <filelist dir="javaee6/ejb/automatic-timer/test" files="build.xml"/>
+        <filelist dir="javaee6/ejb/ejb31-war/test" files="build.xml"/>
+        <filelist dir="javaee6/ejb/hello-stateless-ejb/test" files="build.xml"/>
+        <filelist dir="javaee6/jpa/locking/test" files="build.xml"/>
+        <filelist dir="javaee6/rest/message-board-war/test" files="build.xml"/>
+        <filelist dir="javaee6/security/http-method-omission/test" files="build.xml"/>
+        <filelist dir="javaee6/security/programmatic-login/test" files="build.xml"/>
+        <filelist dir="javaee6/security/web-security-annotation/test" files="build.xml"/>
+        <filelist dir="javaee6/web/jsf/basic-ajax/test" files="build.xml"/>
+        <filelist dir="javaee6/web/jsf/basic-ezcomp/test" files="build.xml"/>
+        <filelist dir="javaee6/web/servlet/annotation-war/test" files="build.xml"/>
+        <filelist dir="javaee6/web/servlet/async-request-war/test" files="build.xml"/>
+        <filelist dir="javaee6/web/servlet/dynamicregistration-war/test" files="build.xml"/>
+        <filelist dir="javaee6/webservices/hello-jaxws2.2/test" files="build.xml"/>
+        <filelist dir="javaee6/webservices/hello-singleton-ejb/test" files="build.xml"/>
+    </path>
+
+    <macrodef name="iterate-tests">
+        <attribute name="target"/>
+        <sequential>
+            <subant target="@{target}" failonerror="false">
+                <buildpath refid="samples-test-list"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="runtest" depends="init-test">
+	<tstamp/>
+	<!--property name="results.file" value="${test.results.dir}/${DSTAMP}_${TSTAMP}_test_results.txt"/-->
+	<property name="results.file" value="${test.results.dir}/test_results.txt"/>
+	<record name="${results.file}" action="start" loglevel="info"/>
+	<iterate-tests target="runtest"/>
+	<record name="${results.file}" action="stop"/>
+    </target>
+
+    <target name="check-out-legal">
+        <exec dir="${dist.dir}" executable="cvs">
+            <arg line="co samples/javaee5/legal"/>
+        </exec>
+	<move todir="${dist.dir}/javaee5/legal">
+	    <fileset dir="${dist.dir}/samples/javaee5/legal">
+                <include name="**/*.txt"/>
+                <include name="**/*.pdf"/>
+	    </fileset>
+	</move>
+        <delete dir="${dist.dir}/samples"/>
+    </target>
+
+    <target name="all">
+	<antcall target="set-perm-size"/>
+	<antcall target="start-domain"/>
+	<antcall target="start-db"/>
+	<echo message="Build and run every sample"/>
+	<subant target="-pre-setup">
+	    <fileset dir="." includes="javaee6/build.xml"/>
+	</subant>
+	<subant target="all">
+	    <fileset dir="." includes="javaee6/build.xml"/>
+	</subant>
+	<echo message="Unit testing"/>
+	<antcall target="runtest"/>
+	<subant target="-post-unsetup">
+	    <fileset dir="." includes="javaee6/build.xml"/>
+	</subant>
+	<subant target="clean">
+	    <fileset dir="." includes="javaee6/build.xml"/>
+	</subant>
+	<echo message="Packaging jar for staging"/>
+	<antcall target="package-sdk"/>
+	<antcall target="create-installer"/>
+	<antcall target="stop-db"/>
+	<antcall target="stop-domain"/>
+    </target>
+
+    <!-- build installer -->
+    <taskdef name="installerBuilder" 
+        classname="com.sun.tools.xjc.installer.builder.BuilderTask">
+        <classpath>
+            <fileset dir="${poormans.installer.home}" includes="*.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="create-installer" depends="package-installer">
+        <!-- generate manifest.mf -->
+        <property name="manifest.file" value="${dist.dir}/manifest.mf"/>
+        <!-- do not format the following echo which is intentional -->
+        <echo file="${manifest.file}" append="false">Main-Class: glassfish_samples_project</echo>
+        <installerBuilder
+            classFile="${dist.dir}/classes/glassfish_samples_project.class"
+            licenseFile="javaee5/LICENSE"
+            zipFile="${dist.dir}/${release.dirname}.gf.jar"/>
+        <jar jarfile="${dist.dir}/${release.dirname}-installer.jar" 
+            basedir="${dist.dir}/classes" manifest ="${manifest.file}"/>
+        <delete file="${dist.dir}/${release.dirname}.gf.jar"/>
+        <delete dir="${dist.dir}/classes"/>
+        <delete file="${manifest.file}"/>
+    </target>
+
+</project>
