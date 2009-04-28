@@ -5,9 +5,23 @@
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
     <path id="samples-list">
+        <filelist dir="connectors/apps/mailconnector/mailconnector-ear" files="build.xml"/>
+        <filelist dir="connectors/apps/mailconnector/mailconnector-ra" files="build.xml"/>
+        <filelist dir="ejb/automatic-timer" files="build.xml"/>
+        <filelist dir="ejb/ejb31-war" files="build.xml"/>
         <filelist dir="ejb/hello-stateless-ejb" files="build.xml"/>
+        <filelist dir="jpa/locking" files="build.xml"/>
+        <filelist dir="rest/message-board-war" files="build.xml"/>
+        <filelist dir="security/http-method-omission" files="build.xml"/>
+        <filelist dir="security/programmatic-login" files="build.xml"/>
+        <filelist dir="security/web-security-annotation" files="build.xml"/>
         <filelist dir="web/jsf/basic-ajax" files="build.xml"/>
         <filelist dir="web/jsf/basic-ezcomp" files="build.xml"/>
+        <filelist dir="web/servlet/annotation-war" files="build.xml"/>
+        <filelist dir="web/servlet/async-request-war" files="build.xml"/>
+        <filelist dir="web/servlet/dynamicregistration-war" files="build.xml"/>
+        <filelist dir="webservices/hello-jaxws2.2" files="build.xml"/>
+        <filelist dir="webservices/hello-singleton-ejb" files="build.xml"/>
     </path>
 
     <macrodef name="iterate">
