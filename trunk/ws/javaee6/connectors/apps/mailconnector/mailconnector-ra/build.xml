@@ -53,10 +53,11 @@
 
     <target name="mkdir_rar_common">
         <mkdir dir="${assemble.rar}"/>
+        <mkdir dir="${build.classes.dir}"/>
     </target>
 
     <target name="assemble_connector_jar"
-            depends="compile, clean_rar_common, mkdir_rar_common,
+            depends="clean_rar_common, mkdir_rar_common,compile,
           add_classes_to_rar_jar, add_properties_to_rar_jar"
             description="Create Connector jar"/>
 
@@ -70,6 +71,7 @@
 
     <target name="clean_rar_common">
         <delete dir="${assemble.rar}"/>
+        <delete dir="${build.classes.dir}"/>
     </target>
 
     <!-- =================== DEPLOY : JavaMail Connector RAR ========= -->
