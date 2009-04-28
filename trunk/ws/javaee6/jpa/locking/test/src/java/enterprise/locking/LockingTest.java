@@ -39,6 +39,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -51,19 +52,13 @@ import java.util.ArrayList;
  */
 public class LockingTest {
 
-    // Sample data, which can be adjusted to see locking effect
-    private int NumConsumer = 6;
-    private int NumSupplier = 3;
-    private int NumType = 3;
-    private int NumUser = NumConsumer + NumSupplier;
 
     // System property values used to configure the HTTP connection
     private String contextRoot = "/locking";
     private String host = "localhost";
     private String port = "8080";
+    private String baseURL = null;
 
-    // simulate multiple users
-    private static int UserCount = 0;
 
     /**
      * Set up instance variables required by this test case.
@@ -73,17 +68,19 @@ public class LockingTest {
         host = System.getProperty("javaee.server.name");
         port = System.getProperty("javaee.server.port");
         // System.out.println("host="+host+", port="+port);
+        baseURL = "http://" + host + ":" + port + contextRoot + "/test/?tc=";
     }
 
     @Test
     public void lockingTest() throws Exception {
         System.out.println("lockingTest: Test is starting.");
+	boolean updateResult = false;
+        int userId = 1;
         try {
-            test("secondRun");
-            testThread("updateWOL");
-            test("checkOLR");
-            testThread("updateWPL");
-            test("checkPLR");
+ 	    updateResult = callUpdate("updateWOL", userId);
+            Assert.assertTrue("updateWOL", updateResult);
+ 	    updateResult = callUpdate("updateWPL", userId);
+            Assert.assertTrue("updateWPL", updateResult);
         } catch (Exception ex) {
             System.out.println("Got Ex");
             // ex.printStackTrace();
@@ -91,88 +88,34 @@ public class LockingTest {
         System.out.println("lockingTest: Test is ended.");
     }
 
-    private void test(String testcase) throws Exception {
-        String EXPECTED_RESPONSE = "Test:Pass";
-        String EXPECTED_MESSAGE = "MESSAGE";
+    private boolean callUpdate(String updateMethod, int userID) throws IOException {
+        String url = baseURL + updateMethod + "&uid=" + userID;
+        return callServlet(url);
+    }
 
-        boolean status = false;
-        String url = "http://" + host + ":" + port + contextRoot +
-                "/test/?tc=" + testcase;
-        if ("initData".equals(testcase)) {
-            url = url + "&nc=" + NumConsumer + "&ns=" + NumSupplier + "&nt=" + NumType;
-        } else if ("updateWOL".equals(testcase)) {
-            UserCount++;
-            url = url + "&uid=" + UserCount;
-        } else if ("updateWPL".equals(testcase)) {
-            UserCount++;
-            url = url + "&uid=" + UserCount;
-        }
-        // System.out.println("url="+url);
-
+    private boolean callServlet(String url) throws IOException {
+        boolean callResult = false;
+        System.out.println("Calling URL:" + url);
         HttpURLConnection conn = (HttpURLConnection)
                 (new URL(url)).openConnection();
         int code = conn.getResponseCode();
-        if (code != 200) {
-            System.err.println("Unexpected return code: " + code);
-        } else {
+        if (code == 200) {
             InputStream is = conn.getInputStream();
             BufferedReader input = new BufferedReader(
                     new InputStreamReader(is));
             String line = null;
             while ((line = input.readLine()) != null) {
-                // System.out.println("line="+line);
-                if (line.contains(EXPECTED_MESSAGE)) {
-                    System.out.println(" ");
-                    System.out.println(line);
-                    System.out.println(" ");
-                } else if (line.contains(EXPECTED_RESPONSE)) {
-                    status = true;
-                    break;
+                final String METHODRESULT = "MethodResult=";
+                if (line.contains(METHODRESULT)) {
+                    String result = line.substring(METHODRESULT.length());
+                    callResult = Boolean.parseBoolean(result);
                 }
             }
-            /*
-	    if (line == null) {
-	      System.out.println(testcase+": Unable to find " +
-	      EXPECTED_RESPONSE + " in the response");
-	    } */
+        } else {
+            System.err.println("Unexpected return code: " + code);
         }
-        if ("checkOLR".equals(testcase) || "checkPLR".equals(testcase)) {
-            System.out.println("testcase=" + testcase + ", status=" + status);
-            Assert.assertTrue(testcase, status);
-        }
+        return callResult;
     }
 
-    public void testThread(String testcase) {
-        boolean status = false;
-        UserCount = 0;
-        final String tc = testcase;
-        try {
-            ArrayList<Thread> threads = new ArrayList<Thread>();
-            int i = 0;
-            for (i = 0; i < NumUser; i++) {
-                threads.add(new Thread() {
-                    public void run() {
-                        // static int threadid = 0;
-                        try {
-                            test(tc);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                });
-            }
-            System.out.println(NumUser + " Threads starts for " + tc);
-            for (i = 0; i < NumUser; i++) {
-                threads.get(i).start();
-            }
-
-            for (i = 0; i < NumUser; i++) {
-                threads.get(i).join();
-            }
-            System.out.println("Done multi-threading!");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }
 
