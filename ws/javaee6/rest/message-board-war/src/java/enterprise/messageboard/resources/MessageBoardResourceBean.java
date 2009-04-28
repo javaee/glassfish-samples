@@ -70,8 +70,6 @@ public class MessageBoardResourceBean {
 
         URI msgURI = ui.getRequestUriBuilder().path(Integer.toString(m.getUniqueId())).build();
 
-        System.out.println("-->" + msgURI);
-
         return Response.created(msgURI).build();
     }
 
