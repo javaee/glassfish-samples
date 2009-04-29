@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:menu="http://java.sun.com/jsf/composite/components" >
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="pageTitle">
+            <h:outputText value="#{i18n['task.create.title']}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form  id="createForm">
+                <h:panelGrid columns="3" headerClass="tituloForm" footerClass="footerForm">
+                    <f:facet name="header">
+                        <h:outputText value="#{i18n['task.create.form.title']}" styleClass="tituloForm" />
+                    </f:facet>
+                                        
+                        <menu:postit>
+                            <ui:param name="postitLabel" value="#{i18n['story.form.label.sprint.name']}:"></ui:param>
+                            <ui:param name="postitText" value="#{storyManager.sprint.name}"></ui:param>
+                        </menu:postit>
+                        <menu:postit>
+                            <ui:param name="postitLabel" value="#{i18n['task.form.label.story.name']}:"></ui:param>
+                            <ui:param name="postitText" value="#{taskManager.story.name}"></ui:param>
+                        </menu:postit>                    
+
+                    <ui:include src="form.xhtml" />
+                    <f:facet name="footer">
+                        <h:commandButton id="btnCreate" action="#{taskManager.save}" value="#{i18n['task.create.button.create']}" styleClass="formInput" />
+                        <h:commandButton id="btnCancel" action="show" value="#{i18n['task.create.button.cancel']}" styleClass="formInput" immediate="true" />
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
