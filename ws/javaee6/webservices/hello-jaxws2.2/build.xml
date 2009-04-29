@@ -48,6 +48,9 @@
             destdir="${classesdir}"><classpath refid = "classpath"> </classpath></javac>
 
         <war destfile="${wardir}/${warname}" webxml="etc/web.xml" >
+            <fileset dir="etc">
+                <include name="sun-web.xml"/>
+            </fileset>
             <classes dir="${classesdir}"/>
         </war>
 
