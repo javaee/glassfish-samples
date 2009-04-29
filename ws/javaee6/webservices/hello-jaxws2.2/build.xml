@@ -24,7 +24,7 @@
 
     </path>
     
-    <target name="all" depends="run-client">
+    <target name="all" depends="clean,run-client">
         <!--antcall target="restore"/-->
     </target>
 
@@ -111,7 +111,8 @@
 
     <target name="restore">
         <delete>
-        <fileset dir="${autodeploydir}/endpoint" includes="Hello*.*"/>
+        <fileset dir="${autodeploydir}" includes="hellojaxws-2.2*.*"/>
+
         </delete>
     </target>
 
