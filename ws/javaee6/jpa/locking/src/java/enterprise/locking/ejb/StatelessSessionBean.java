@@ -58,6 +58,9 @@ public class StatelessSessionBean {
         this.name = name;
     }
 
+    /**
+     * Initializes data for given number of consumers, suppliers and parts
+     */
     public void initData(int numberOfConsumers, int numberOfSuppliers, int numberOfParts) {
         // user info
         int uid = 0;
@@ -107,16 +110,17 @@ public class StatelessSessionBean {
         }
     }
 
+    /**
+     * A find followed by some think time, followed by update.
+     */
     public boolean updateWithOptimisticLock(int uID, int s) {
         boolean updateSuccessfull = true;
         User u = em.find(User.class, uID);
-        System.out.println("*****Updating user +++++" + uID);
-        System.out.println("*****User.getPart+++++" + u.getPart());
         int pID = u.getPart().getId();
         Part p = em.find(Part.class, pID);
 
         // Simulate think time to allow parallel threads to find Usrs in parallel.
-        simulateThingTimeForSecond(s);
+        simulateThinkTimeForSecond(s);
         int uCount = u.getCount();
         int pAmount = p.getAmount();
         // update part
@@ -139,6 +143,9 @@ public class StatelessSessionBean {
         return updateSuccessfull;
     }
 
+    /**
+     * A find with pessimistic lock followed by some think time, followed by update.
+     */
     public boolean updateWithPessimisticLock(int uID, int s) {
         boolean updateSuccessfull = true;
 
@@ -148,7 +155,7 @@ public class StatelessSessionBean {
         Part p = em.find(Part.class, pID, LockModeType.PESSIMISTIC_WRITE);
 
         // Simulate think time to allow parallel threads to find in parallel.
-        simulateThingTimeForSecond(s);
+        simulateThinkTimeForSecond(s);
         int uCount = u.getCount();
         int pAmount = p.getAmount();
         // update part
@@ -161,14 +168,13 @@ public class StatelessSessionBean {
         try {
             em.flush();
         } catch (PersistenceException e) {
-            System.out.println("Got Exception while updating with Pessimistic lock" + e);
             updateSuccessfull = false;
         }
         return updateSuccessfull;
 
     }
 
-    public void simulateThingTimeForSecond(int sec) {
+    public void simulateThinkTimeForSecond(int sec) {
         //TODO check if sleep is allowed by EE spec
         try {
             Thread.sleep(sec * 1000);
