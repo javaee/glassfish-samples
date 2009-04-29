@@ -47,17 +47,17 @@ import java.util.ArrayList;
 public class LockingJavaClient {
 
     // Sample data, which can be adjusted to see locking effect
-    private int NumConsumer = 6;
-    private int NumSupplier = 3;
-    private int NumParts = 3;
-    private int NumUser = NumConsumer + NumSupplier;
+    private final int NumConsumers = 6;
+    private final int NumSuppliers = 3;
+    private final int NumParts = 3;
+    private final int NumUsers = NumConsumers + NumSuppliers;
 
     // server info
-    private String host = System.getProperty("javaee.server.name", "localhost");
-    private String port = System.getProperty("javaee.server.port", "8080");
-    private String contextRoot = "/locking";
+    private final String host = System.getProperty("javaee.server.name", "localhost");
+    private final String port = System.getProperty("javaee.server.port", "8080");
+    private final String contextRoot = "/locking";
     //Base URL to call Servlet
-    private String baseURL = "http://" + host + ":" + port + contextRoot + "/test/?tc=";
+    private final String baseURL = "http://" + host + ":" + port + contextRoot + "/test/?tc=";
 
     public static void main(String args[]) throws Exception {
         System.out.println("LockingJavaClient: Test is starting");
@@ -70,24 +70,33 @@ public class LockingJavaClient {
         try {
             initData();
             simulateParallelUpdates("updateWOL");
-            //callServlet(baseURL + "checkOLR");
             simulateParallelUpdates("updateWPL");
-            //callServlet(baseURL + "checkPLR");
         } catch (IOException ex) {
             System.out.println("Got Exception while executing test" + ex);
         }
     }
 
+    /**
+     * Initializes data required for this test.
+     */
     private void initData() throws IOException {
-        String url = baseURL + "initData" + "&nc=" + NumConsumer + "&ns=" + NumSupplier + "&np=" + NumParts;
+        String url = baseURL + "initData" + "&nc=" + NumConsumers + "&ns=" + NumSuppliers + "&np=" + NumParts;
         callServlet(url);
     }
 
+    /**
+     * Call update for given userID using given updateMethod
+     * @return true if the update succeeded false otherwise
+     */
     private boolean callUpdate(String updateMethod, int userID) throws IOException {
         String url = baseURL + updateMethod + "&uid=" + userID;
         return callServlet(url);
     }
 
+    /**
+     * Calls the servlet with given url.
+     * @return true if the call succeeded false otherwise
+     */
     private boolean callServlet(String url) throws IOException {
         boolean callResult = false;
         System.out.println("Calling URL:" + url);
@@ -100,9 +109,9 @@ public class LockingJavaClient {
                     new InputStreamReader(is));
             String line = null;
             while ((line = input.readLine()) != null) {
-                final String METHODRESULT = "MethodResult=";
-                if (line.contains(METHODRESULT)) {
-                    String result = line.substring(METHODRESULT.length());
+                final String METHODRESULT_TOKEN = "MethodResult=";
+                if (line.contains(METHODRESULT_TOKEN)) {
+                    String result = line.substring(METHODRESULT_TOKEN.length());
                     callResult = Boolean.parseBoolean(result);
                 }
             }
@@ -112,9 +121,12 @@ public class LockingJavaClient {
         return callResult;
     }
 
+    /**
+     * Simulate parallel updates for given operation using NumUsers
+     */
     private void simulateParallelUpdates(final String operation) {
         ArrayList<Thread> threads = new ArrayList<Thread>();
-        for (int i = 0; i < NumUser; i++) {
+        for (int i = 0; i < NumUsers; i++) {
             final int userId = i + 1; // userId are indexed at 1
             threads.add(new Thread() {
                 public void run() {
@@ -129,18 +141,20 @@ public class LockingJavaClient {
                 }
             });
         }
-        System.out.println(NumUser + " Threads started for " + operation);
-        for (int i = 0; i < NumUser; i++) {
+        System.out.println("\nStarting parallel updates with " + NumUsers + " users for operation: " + operation);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < NumUsers; i++) {
             threads.get(i).start();
         }
 
-        for (int i = 0; i < NumUser; i++) {
+        for (int i = 0; i < NumUsers; i++) {
             try {
                 threads.get(i).join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("Done multi-threading!");
+        long endTime = System.currentTimeMillis();
+        System.out.println("Parallel updates executed with " + NumUsers + " users for operation: " + operation + " Time taken:" + (endTime - startTime) + " miliseconds");
     }
 }
