@@ -15,7 +15,7 @@
                     <include name="**/junit*.jar"/>
                 </fileset>
 
-                <fileset dir="${javaee.home}/modules">
+                <fileset dir="${javaee.home}">
                     <include name="**/*.jar"/>
                     <exclude name="**/*ant*.jar"/>
                 </fileset>
