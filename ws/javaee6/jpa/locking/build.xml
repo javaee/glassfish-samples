@@ -4,23 +4,33 @@
 <project name="locking" default="all" basedir=".">
 
     <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="enterprise.locking"/>  <!-- TODO -->
 
     <import file="../../../bp-project/main.xml"/>
 
-
-    <target name="all" depends="default,deploy">
-        <antcall target="run"/>
-    </target>
-
-    <target name="-pre-clean" depends="undeploy">
-        <subant target="clean">
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="-post-run-deploy">
+        <subant target="run" verbose="true">
             <fileset dir="locking_client" includes="build.xml"/>
+            <property name="javac.classpath" value="../../build/classes"/>
         </subant>
     </target>
 
-    <target name="run">
+    <target name="all" depends="run"/>
+
+    <!-- to get the test client to run when the user runs the project from ant -->
+    <target name="launch">
         <subant target="run">
             <fileset dir="locking_client" includes="build.xml"/>
         </subant>
     </target>
+
+    <target name="-pre-clean">
+        <subant target="clean">
+            <fileset dir="locking_client" includes="build.xml"/>
+        </subant>
+    </target>
+    
+    
+    
 </project>
