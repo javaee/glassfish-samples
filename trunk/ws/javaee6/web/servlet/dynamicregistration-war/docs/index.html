@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en"><head><title>The [application name] Sample Application</title>
-  
+<html lang="en">
+<head>
+  <title>The Dynamic Registration of Servlets and Filters Sample
+Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -11,81 +13,112 @@
   li {padding-bottom: 8px}
   p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
   p.copy {text-align: center}
-  </style></head>
-
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<p><a href="../../../docs/list.html">Samples Index</a></p>
-<h1>The Servlet 3.0 Dynamic Registration of Servlets and Filters Sample Application</h1>
-This sample application features the dynamic registration of Servlets and Filters from a ServletContextListener.<br>
-
-<br>
+<p><a href="../../../docs/list.html">Samples Main Page<br>
+</a></p>
+<h1>The Servlet 3.0 Dynamic Registration of Servlets and Filters Sample
+Application</h1>
+This sample application features the dynamic registration of Servlets
+and Filters from a ServletContextListener.<br>
 <h2>Description</h2>
-<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt> (of type <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>) in its deployment descriptor. The ServletContextListener registers a Servlet (of type <tt>web.servlet.dynamicregistration_war.TestServlet</tt>) with name <tt>DynamicServlet</tt> and a Filter (of type <tt>web.servlet.dynamicregistration_war.TestFilter</tt>) with name <tt>DynamicFilter</tt> in response to the <tt>ServletContextListener.contextInitialized</tt> event.
-
-<p>The Servlet and Filter are registered using the <tt>ServletContext.addServlet</tt> and <tt>ServletContext.addFilter</tt> methods, respectively, which are new in Servlet 3.0.
-
-<p>The former returns a <tt>javax.servlet.ServletRegistration</tt> object through which all aspects of the registered Servlet, including its mappings and initialization parameters, may be configured, whereas the latter returns a <tt>FilterRegistration</tt> object, through which all aspects of the registered Filter, including its mappings and initialization parameters, may be configured.
-
-<p>This sample application then accesses the Servlet at its designated URI, and checks to make sure that the Filter that was mapped to the Servlet has also been invoked.
-
-<br>
-<h2>Building, Deploying, and Running the Application</h2>
-<p>Following are the instructions for building, deploying, and running
-this sample application. <br>
+<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt>
+(of type <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>)
+in its deployment descriptor. The ServletContextListener registers a
+Servlet (of type <tt>web.servlet.dynamicregistration_war.TestServlet</tt>)
+with name <tt>DynamicServlet</tt> and a Filter (of type <tt>web.servlet.dynamicregistration_war.TestFilter</tt>)
+with name <tt>DynamicFilter</tt> in response to the <tt>ServletContextListener.contextInitialized</tt>
+event.
+</p>
+<p>The Servlet and Filter are registered using the <tt>ServletContext.addServlet</tt>
+and <tt>ServletContext.addFilter</tt> methods, respectively. These
+methods are new in Servlet 3.0.
+</p>
+<p>The former returns a <tt>javax.servlet.ServletRegistration</tt>
+object through which all aspects of the registered Servlet, including
+its mappings and initialization parameters, may be configured, whereas
+the latter returns a <tt>FilterRegistration</tt> object, through which
+all aspects of the registered Filter, including its mappings and
+initialization parameters, may be configured.
+</p>
+<p>This sample application then accesses the Servlet at its designated
+URI, and checks to make sure that the Filter that was mapped to the
+Servlet has also been invoked.
 <br>
 </p>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+Perform the following steps to build, deploy, and run the
+application:<br>
+</p>
 <ol>
-  <li> Setup your build environment and Configure the application
-server with which the build system has to work by following the 
-<a href="../../../docs/UserREADME.html">
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>install_dir</i>/javaee6/web/servlet/dynamicregistration_war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-  <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
-all </p>
-  <li>It is possible to do the above separately by issuing separate
-commands as given below.</li>
+  <li>Build, deploy and run the sample application using the <code>all</code>
+target<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span></code><code>ant
+all<br>
+  </code></p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  <code></code></p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 default</code> compiles and packages the application </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 deploy</code> deploys it to application server </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run</code> runs the test</p>
-  <li>Note that one can run the test in one of the following way:
-  <ul>
-      <li>use browser to access http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/dynamicregistration_war 
-        <br>The following output is expected in the browser:
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;HELLO WORLD!
-      <li><code><span style="font-style: italic;">app_dir&gt; </span>ant run</code>
-      <li><code><span style="font-style: italic;">app_dir/test&gt; </span>ant runtest</code>
-  </ul>
-  <li>Use the target clean to undeploy the sample application and to remove the temporary directories like build and dist.
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+  <li><span style="font-weight: bold;">Note</span>: You can run the
+test in one of the following ways:
+    <ul>
+      <li>Use the browser to access <a
+ href="http:%3Cjavaee.server.name%3E:%3Cjavaee.server.port%3E/dynamicregistration_war">http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/dynamicregistration_war
+        </a><br>
+The following output is expected in the browser: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;HELLO WORLD! </li>
+      <li><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> </li>
+      <li><code><span style="font-style: italic;">app_dir/test&gt; </span>ant
+runtest</code> </li>
+    </ul>
+  </li>
+  <li>Use the target <code>clean</code> to undeploy the sample
+application and to remove the temporary directories like build and
+dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 clean</code> </p>
-</li></ol>
-
+  </li>
+</ol>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to 
-<a href="../../../docs/UserTroubleShooting.html">
+<p>If you have problems when running the application, refer the <a
+ href="../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
-&nbsp;<p>
-<!--- Do not modify the rest of the document -->
-</p><hr noshade="noshade" size="1"><!-- start copyright -->
+&nbsp;
+<p><!--- Do not modify the rest of the document --></p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
 <p class="copy"> Copyright &copy; 2009 <a href="http://sun.com/">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
-</body></html>
+</body>
+</html>
