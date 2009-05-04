@@ -20,41 +20,42 @@
   <tbody>
     <tr>
       <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<h1>Sample Applications Development Process.<br>
+<h1>Sample Applications Development Process<br>
 </h1>
-Following is the process for checking out workspace, developing,
-testing, documenting and checking in the sample application into
-glassfish-samples project. <br>
+The process for checking out workspace, developing,
+testing, documenting, and checking in the sample application into
+glassfish-samples project is as follows: <br>
 <br>
 <ol>
   <li>Get developer access to <a
  href="https://glassfish-samples.dev.java.net/">glassfish-samples</a>
 project
 by sending email to <a href="mailto:dev@glassfish-samples.dev.java.net">dev@glassfish-samples.dev.java.net</a>
-with your glassfish user id. Once you are granted the developer access,
+with your GlassFish user id. Once you are granted the developer access,
 you will be able to check out from and check in to the samples
 workspace.</li>
   <li>Check out the glassfish-samples project of java.net.<br>
     <code>cvs -d
 :pserver:&lt;glassfish-userid&gt;@cvs.dev.java.net:/cvs co
 glassfish-samples</code></li>
-  <li>There are separate directories for each version of Java EE. For
-Java EE 6, the samples will be under <code>javaee6</code> directory
-and the samples for Java EE 5 are under <code>javaee5</code> directory.<br>
+  <li>There are separate directories for each version of Java EE. The
+samples for Java EE 6 are under the <code>javaee6</code> directory
+and the samples for Java EE 5 are under the <code>javaee5</code>
+directory.<br>
   </li>
   <li>All the samples follow blueprints <a
  href="http://java.sun.com/blueprints/code/projectconventions.html">project
 conventions</a> for directory structure and <a
  href="http://java.sun.com/blueprints/code/namingconventions.html">naming</a>.<br>
   </li>
-  <li>The sample applications use blue prints build infrastructure
-called <code>bp-project</code> which is at the top level of samples
+  <li>The sample applications use the blue prints build infrastructure
+called <code>bp-project</code>, which is at the top level of samples
 directory so that it can be shared by many sample applications. The
 bp-project is part of blueprints java.net project on <a
  href="https://conventions.dev.java.net/">conventions</a>.<br>
@@ -62,8 +63,7 @@ bp-project is part of blueprints java.net project on <a
   <li>It is important that each sample application is provided with
 appropriate documentation and test code. </li>
   <li>Refer to the existing representative sample <code></code><code>hello-stateless-ejb</code>&nbsp;
-under <code>javaee6</code> directory (also previous Java EE 5 samples
-are under <code>javaee5</code> directory) to understand the directory
+under the <code>javaee6</code> directory to understand the directory
 structure, build scripts, test code, documentation.<br>
   </li>
   <ul>
@@ -71,23 +71,24 @@ structure, build scripts, test code, documentation.<br>
 module, provide test
 code using a java client<br>
     </li>
-    <li>For better user experience the number of ant targets to be
+    <li>For better user experience, the number of ant targets to be
 executed by
 the developer need to be kept to a minimum. Basically, the default ant
 target should be able to build, deploy and run the sample. All of the
 representative samples do this by using the ant target 'all'.</li>
     <li>To understand how the entire build infrastructure works and
 what are various
-targets, pl. refer to <a
- href="../../bp-project/docs/DeveloperREADME.html">build
+targets, refer to <a href="../../bp-project/docs/DeveloperREADME.html">build
 infrastructure
 documentation</a>. <br>
     </li>
   </ul>
   <li>For guidelines
 on documenting the sample, refer to the representative
-sample <code>hello-stateless-ejb</code> which is documented using the <a
- href="http://wiki.glassfish.java.net/attach/JavaEE6Samples/index.html">sample application
+sample <code>hello-stateless-ejb</code>, which is documented using the
+    <a
+ href="http://wiki.glassfish.java.net/attach/JavaEE6Samples/index.html">sample
+application
 documentation
 template</a>.<br>
   </li>
@@ -100,7 +101,7 @@ for information.<br>
 Refer to documentation on <a href="../../javaee5/docs/UnitTesting.html">developing
 unit
 tests</a> for detailed information. </li>
-  <li>For setup of database and usage of jdbc resources, refer to <a
+  <li>For setup of database and usage of JDBC resources, refer to <a
  href="../../javaee5/docs/JavaDB.html">Using Java DB with Sample
 applications.</a></li>
   <li>Make sure that the sample works with Netbeans IDE.<br>
@@ -113,7 +114,7 @@ colleague before checking it in.<br>
 <span style="font-weight: bold;"></span>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
