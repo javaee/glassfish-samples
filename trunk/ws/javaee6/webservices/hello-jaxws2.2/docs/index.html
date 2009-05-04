@@ -20,7 +20,7 @@
   <tbody>
     <tr>
       <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Sun Glassfish Application Server</b></font>&nbsp;
+ color="#ffffff" size="-1"><b>Sun Glassfish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
@@ -32,14 +32,10 @@
 This is a very simple JAX Web Service. This sample demonstrates the
 lowest possible effort way to:
 <ul>
-  <li>Write a Webservice
-  </li>
-  <li>Compile and deploy the Webservice
-  </li>
-  <li>Write an appclient that calls the Webservice
-  </li>
-  <li>Connect and run the Webservice from the Appclient
-  </li>
+  <li>Write a Webservice </li>
+  <li>Compile and deploy the Webservice </li>
+  <li>Write an appclient that calls the Webservice </li>
+  <li>Connect and run the Webservice from the Appclient </li>
 </ul>
 <h2>Web Service</h2>
 <code>
@@ -75,8 +71,7 @@ Webservice will give us.
 This is required so that the client has the webservice interfaces and
 ports available.
 We use wsimport, an App Server-supplied program to do this like so:
-<p><code>
-${javaee.home}/bin/wsimport -Xendorsed -d ./build
+<p><code>${javaee.home}/bin/wsimport -Xendorsed -d ./build
 http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/&gt;
 <br>
 </code><b>Note: </b>the Xendorsed option since JDK 6 u4 JAXWS 2.1 is
@@ -118,8 +113,7 @@ e.printStackTrace();<br>
 </p>
 <h2>Running the Client</h2>
 You can run the client like this:
-<p><code>
-cd ./build
+<p><code>cd ./build
 ${javaee.home}/bin/appclient.bat client.Client
 </code></p>
 <p>The client will print out a greeting from the Webservice using your
@@ -161,8 +155,7 @@ compile-client</code> compiles the client</p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run-client</code> runs the client<br>
   </p>
-  <li>To run this sample, the ant target invokes the <a
- href="../../../ejb/hello-stateless-ejb/hello-stateless-client/test">java
+  <li>To run this sample, the ant target invokes the <a href="../test">java
 client code</a>
 under the test directory. The sample can be run from the parent
 directory by using the <code>run</code> target or from the test
@@ -177,7 +170,7 @@ clean</code></p>
 </ol>
 <p></p>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to <a
+<p>If you have problems when running the application, refer the <a
  href="../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
