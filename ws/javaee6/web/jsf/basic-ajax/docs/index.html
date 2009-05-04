@@ -20,68 +20,70 @@
   <tbody>
     <tr>
       <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<p><a href="../docs/list.html">Samples Index</a></p>
+<p><a href="../docs/list.html">Samples Main Page<br>
+</a></p>
 <h1>The JSF 2.0 Basic Ajax Sample Application</h1>
-<p>This is a series of simple programs, intended to illustrate some of the new Ajax features that are contained in JSF 2.0.
-Many of these programs have blog postings associated with them, with further explanations contained there.</p>
-
+<p>This is a series of simple programs, intended to illustrate some of
+the new Ajax features that are contained in JSF 2.0.
+Many of these programs have blog postings associated with them, with
+further explanations contained there.</p>
 <h2>Building, Deploying, and Running the Application</h2>
-
-<p>
-The general instructions for building, deploying, and running sample
-applications are provided in
-<a href="../../../../../javaee5/docs/UserREADME.html">Building,
-Deploying, and Running Sample Applications</a>.
-In reading this document, use the following variables for this
-application:
-</p>
-<ul>
-  <li><code><i>install_dir</i></code> is the directory where
-Application Server is installed. </li>
-  <li><code><i>app_dir</i></code> is the application base directory: <code><i>install_dir</i>/samples/javaee6/web/jsf/basicajax</code>.
-  </li>
-  <li><i>appname</i> is the application name: basicajax. </li>
-  <li>The prebuilt WAR file is <code>basicajax.war</code>. </li>
-</ul>
-<p>
-Follow this general procedure:
+<p>Perform the following steps to build, deploy, and run the
+application:<br>
+<br>
 </p>
 <ol>
-  <li><span style="font-weight: bold;">Build
-the Application:</span> The build file, <code>build.xml</code>, is in
-the <code><i>app_dir</i></code> directory. </li>
-  <li><span style="font-weight: bold;">Deploy
-the Application:</span> The WAR file is <code><i>install_dir</i>/samples/javaee6/web/jsf/basicajax/basicajax.war</code>.
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory:<code><i>install_dir</i>/samples/javaee6/web/jsf/basicajax/</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> runs the test java client </p>
+  <li>To run this sample, the ant target invokes the <a
+ href="../../../../ejb/hello-stateless-ejb/hello-stateless-client/test">java
+client code</a>
+under the test directory. The sample can be run from the parent
+directory by using the <code>run</code> target or from the test
+directory by using <code>runtest</code>
+target. </li>
+  <li>Use the target clean to undeploy the sample application and to
+remove the temporary directories such as build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code><br>
+    </p>
   </li>
-  <li><span style="font-weight: bold;">Run the
-Application:</span> The application name is basicajax. </li>
 </ol>
 <h2>Troubleshooting</h2>
-<p>
-<i>Include any pertinent troubeshooting info here.
-Below is a template: add/modify as appropriate.
-</i></p>
-<p>If you have problems when running the application, try the
-following:
-</p>
-<ul>
-  <li>Review the log files, as described in <a
- href="../../../../../javaee5/docs/UserTroubleShooting.html">Building,
-Deploying, and Running Sample Applications</a>. </li>
-  <li>To redeploy the application, you must undeploy it first. Use the
-commands <code>asant undeploy</code>, <code>asant clean</code> and
-then <code>asant
-all</code>. </li>
-</ul>
+If you have problems when running the application, refer to <a
+ href="../../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+<br>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
