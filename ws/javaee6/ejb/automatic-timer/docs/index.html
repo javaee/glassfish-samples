@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-  <title>The [application name] Sample Application</title>
+  <title>The EJB 3.1 Automatic Timer Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -20,13 +20,14 @@
   <tbody>
     <tr>
       <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<p><a href="../../../docs/list.html">Samples Index</a></p>
+<p><a href="../../../docs/list.html">Samples Main Page<br>
+</a></p>
 <h1>The EJB 3.1 Automatic Timer Sample Application</h1>
 This is a very simple EJB Stateless Session Bean with a Remote
 business interface and a POJO Entity that demonstrates EJB 3.1
@@ -37,14 +38,15 @@ automatic timer feature.<br>
 <p>The EJB module consists of: </p>
 <ul>
   <li>
-    <p style="margin-bottom: 0in;">A POJO which represents a LogRecord.
-The persistence.xml file defines a persistence unit. The persistence
-unit uses jdbc/__default as the data source, and the java2db feature of
+    <p style="margin-bottom: 0in;">A POJO that represents a <code>LogRecord</code>.
+The <code>persistence.xml</code> file defines a persistence unit. The
+persistence
+unit uses <code>jdbc/__default</code> as the data source, and the <code>java2db</code>
+feature of
 glassfish to create tables.</p>
   </li>
   <li>
-    <p style="margin-bottom: 0in;">An EJB that uses
-    <span style="font-weight: bold;">@javax.ejb.Schedule</span>
+    <p style="margin-bottom: 0in;">An EJB that uses <code>@javax.ejb.Schedule</code>
 annotation to both cause
 creation of an EJB Timer and designate the method <span
  style="font-style: italic;">test_automatic_timer </span>as the
@@ -59,24 +61,26 @@ uses JPA to store the log records in the database.<br>
 with a
 single business method.<br>
   <br>
-@Remote<br>
+  <code>@Remote<br>
 public interface StatelessSession {<br>
   <br>
 &nbsp;&nbsp;&nbsp; public List&lt;String&gt; getRecords();<br>
   <br>
-}<br>
+}</code><br>
   <br>
-Note that unlike EJB 3.0 this interface is used <span
- style="font-weight: bold;">only</span> to verify the timeout calls,
-not to create the EJB Timer.<br>
-  <br>
-The business interface is designated as a remote business interface via
-the @javax.ejb.Remote annotation.<br>
 </blockquote>
+<b>Note</b>: Unlike EJB 3.0, this interface is used only to verify the
+timeout
+calls,
+not to create the EJB Timer.<br>
+<br>
+The business interface is designated as a remote business interface by
+using the <code>@javax.ejb.Remote</code> annotation.<br>
+<br>
 <b>Stateless Session Bean Class</b>
-<blockquote> Here's the bean implementation :<br>
+<blockquote>The bean implementation is as follows:<br>
   <br>
-@Stateless<br>
+  <code>@Stateless<br>
 public class StatelessSessionBean implements StatelessSession {<br>
   <br>
 &nbsp;&nbsp;&nbsp; @PersistenceContext EntityManager em;<br>
@@ -119,59 +123,59 @@ em.persist(lr);<br>
   <br>
   <br>
 }<br>
-  <br>
-Note the use of the <span style="font-weight: bold;">@javax.ejb.Schedule</span>
+  </code> <br>
+Note: The use of the <code>@javax.ejb.Schedule</code>
 annotation that causes timeouts to happen every 3 seconds starting with
 0.<br>
   <br>
 </blockquote>
 <b>Deployment Descriptor</b>
 <blockquote> The good news is the deployment descriptor is no longer
-required!!! &nbsp;The two java files above are sufficient to completely
+required! &nbsp;The two java files above are sufficient to completely
 describe this stateless session bean. &nbsp;<br>
 </blockquote>
-<b>SUN App Server Specific Deployment Configuration</b>
-<blockquote> There is no need to define any SUN App Server-specific
+<b>Sun GlassFish Enterprise Server Specific Deployment Configuration</b>
+<blockquote> There is no need to define any Sun GlassFish Enterprise
+Server-specific
 deployment
-descrpitors (e.g. sun-ejb-jar.xml, sun-application-client.xml) for this
+descrpitors, such as <code>sun-ejb-jar.xml</code>, <code>sun-application-client.xml</code>
+for this
 example. &nbsp; The global JNDI name used for lookup of the Remote
-Stateless Session is : <span style="font-weight: bold;">java:global/automatic-timer-ejb/StatelessSessionBean</span><br>
-  <br>
+Stateless Session is : <code>java:global/automatic-timer-ejb/StatelessSessionBean</code><br>
 </blockquote>
-<br>
 <h2>Building, Deploying, and Running the Application</h2>
-<p>
-</p>
-<p>Following are the instructions for building, deploying, and running
-this sample application. <br>
-<br>
-</p>
+Perform the following steps to build, deploy, and run the
+application:
 <ol>
-  <li> Setup your build environment and Configure the application
+  <li> Setup your build environment and configure the application
 server with which the build system has to work by following the <a
- href="../../../../javaee5/docs/UserREADME.html">
+ href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
-directory: <code><i>install_dir</i>/samples/foo</code>.</li>
-  <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
-  <li>Make sure the JavaDB database is started. If not, refer to <a
- href="../../../../javaee5/docs/UserREADME.html">common build instructions.</a></li>
-  <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
-all </p>
-  <li>It is possible to do the above separately by issuing separate
-commands as given below.</li>
+directory: <code><i>install_dir</i>/samples/ejb/automatic-timer</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 default</code> compiles and packages the application </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 deploy</code> deploys it to application server </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run</code> runs the test java client </p>
-  <li>To run this sample, the ant targert invokes the <a
- href="../automatic-timer-client/docs/index.html">java client code</a>
-under 'test' directory. The sample can be run from either the parent
-directory or test directory using the targets 'run' and 'runtest'
-respectively.</li>
+  <li>To run this sample, the ant target invokes the <a
+ href="../automatic-timer/test">java client code</a>
+under the test directory. The sample can be run from the parent
+directory by using the <code>run</code> target or from the test
+directory by using <code>runtest</code>
+target. </li>
   <li>Use the target clean to undeploy the sample application and to
 remove the temporary directories like build and dist.
     <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
@@ -179,14 +183,14 @@ clean</code> </p>
   </li>
 </ol>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to <a
+<p>If you have problems when running the application, refer the <a
  href="../../../../javaee5/docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
 &nbsp;
 <p><!--- Do not modify the rest of the document --></p>
 <hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com/">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->

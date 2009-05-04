@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en"><head><title>The async_request_war Sample Application</title>
-  
+<html lang="en">
+<head>
+  <title>The Servlet 3.0 Asynchronous Request Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -11,123 +12,154 @@
   li {padding-bottom: 8px}
   p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
   p.copy {text-align: center}
-  </style></head>
-
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<p><a href="../../../../docs/list.html">Samples Index</a></p>
+<p><a href="../../../../docs/list.html">Samples Main Page<br>
+</a></p>
 <h1>The Servlet 3.0 Asynchronous Sample Application</h1>
 This is a simple Servlet 3.0 application using asychronous API.
-<p>
-<b>Servlet</b>
+<p><b>Servlet</b>
+</p>
 <p>The servlet is responsible for asynchronous request processing.
+</p>
 <blockquote>
-    <ul>
-    <li>In init method, one starts a thread to read message from the messageQueue and
-    then processes the message for each AsyncContext in the queue as follows:
-    <p>
-    PrintWriter acWriter = ac.getResponse().getWriter();<br>
-    acWriter.println(cMessage);<br>
-    acWriter.flush();<br>
-    <p>
-    This will write a message to each asynchronous request corresponding to AsynContext.
-    <p>
-
-    <li>In doGet, one starts asynchronous, set the timeout to ten minutes and add the AsyncContext to a queue as follows:
-    <p>
-        final AsyncContext ac = req.startAsync();<br>
-        req.setAsyncTimeout(10 * 60 * 1000);<br>
-        queue.add(ac);<br>
-        <p>
-        Then one registers a AsyncListener to the given request. In this case, one only cleans up the AsynContext from the queue.
-        <p>
-        req.addAsyncListener(new AsyncListener() {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;public void onComplete(AsyncEvent event) throws IOException {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
-        &nbsp;&nbsp;&nbsp;&nbsp; }<br>
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;public void onTimeout(AsyncEvent event) throws IOException {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-        });<br>
-
-    <li>In doPost, basically, one will put a message to the messageQueue. Then it will be pick up in the thread starting in init method.
-
-
+  <ul>
+    <li>In the <code>init</code> method, start a thread to read
+message from the <code>messageQueue</code> and then process the
+message for each <code>AsyncContext</code>
+in
+the queue as follows:
+      <p> <code>PrintWriter acWriter = ac.getResponse().getWriter();<br>
+acWriter.println(cMessage);<br>
+acWriter.flush();</code><br>
+      </p>
+      <p> The preceding code writes a message to each asynchronous
+request
+corresponding to <code>AsynContext</code>. </p>
+      <p> </p>
+    </li>
+    <li>In <code>doGet</code>, start asynchronous, set the timeout to
+ten
+minutes, and add <code>AsyncContext</code> to a queue as follows:
+      <p> <code>final AsyncContext ac = req.startAsync();<br>
+req.setAsyncTimeout(10 * 60 * 1000);<br>
+queue.add(ac);</code><br>
+      </p>
+      <p> Registers <code>AsyncListener</code> to the given request.
+In
+this case, only clean up the <code>AsynContext</code> from the queue. </p>
+      <p><code> req.addAsyncListener(new AsyncListener() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onComplete(AsyncEvent event) throws
+IOException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onTimeout(AsyncEvent event) throws
+IOException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+});</code><br>
+      </p>
+    </li>
+    <li>In <code>doPost</code>, put a message to the
+messageQueue. This message is picked up in the thread that starts in
+the <code>init</code>
+method. </li>
+  </ul>
 </blockquote>
-
-<b>Deployment Descriptor</b>
-<blockquote> The good news is the deployment descriptor is no longer
-required!!!<br>
-</blockquote>
-<b>SUN App Server Specific Deployment Configuration</b>
-<blockquote> There is no need to define any SUN App Server-specific
-deployment descrpitor (sun-web.xml) for this
+<b>Deployment Descriptor</b><br>
+<br>
+The good news is the deployment descriptor is no longer
+required!<br>
+<br>
+<b>Sun GlassFish Enterprise Server Specific Deployment Configuration</b><br>
+<br>
+There is no need to define any Sun GlassFish Enterprise Server specific
+deployment descrpitor (<code>sun-web.xml</code>) for this
 example.
-</blockquote>
 <br>
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
 </p>
-<p>Following are the instructions for building, deploying, and running
-this sample application. <br>
-<br>
+<p>
+Perform the following steps to build, deploy, and run the
+application:
 </p>
 <ol>
-  <li> Setup your build environment and Configure the application
-server with which the build system has to work by following the 
-<a href="../../../../docs/UserREADME.html">
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
-directory: <code><i>install_dir</i>/javaee6/web/servlet/async_request_war</code>.</li>
+directory: <code><i>install_dir</i>/javaee6/web/servlet/async_request_war</code></li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-  <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
-all </p>
-  <li>It is possible to do the above separately by issuing separate
-commands as given below.</li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 default</code> compiles and packages the application </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 deploy</code> deploys it to application server </p>
-  <li>In order to run this chat application, one need two browsers, say Browser A and Browser B.
-      Note that one may like to start two new browsers for the test.
-     <ul>
-     <li>In Browser A, one accesses http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/async_request_war .
-         Similarly for Browser B.
-     <li>In Browser A, input user name, say "userA", in text box and click the "Login" button. Then one will see
-         the following in Browser A and Browser B:
-         <p><code>System Message:<br>userA has joined.</code>
-         <p>Similarly, one login as "userB" in Browser B.       
-     <li>Now, one is ready to chat. In Browser A, one can type message, say "Hello", in text box
-         and click the "Post Message" button. Then one will see the following message in both Browser A and Browser B:
-         <p><code>userA:<br>Hello</code>
-         <p>Similarly in Browser B.
-     </ul>
-  <li>Use the target clean to undeploy the sample application and to remove the temporary directories like build and dist.
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+  <li>To run this chat application, you need two browsers, say
+Browser A and Browser B.&nbsp;
+    <ul>
+      <li>In Browser A, open <a
+ href="http:%3Cjavaee.server.name%3E:%3Cjavaee.server.port%3E/async_request_war">http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/async_request_war</a>.
+Repeat this step for Browser B also. </li>
+      <li>In Browser A, input user name, say "userA", in the text box.
+Click the Login button. The following message is displayed in Browser A
+and Browser B:
+        <p><code>System Message:<br>
+userA has joined.</code> </p>
+        <p>Similarly, login as "userB" in Browser B. </p>
+      </li>
+      <li>Now, you are ready to chat. In Browser A,type "Hello", in
+text box and click the Post Message button. You will see the following
+message in both Browser A and Browser
+B:
+        <p><code>userA:<br>
+Hello</code> </p>
+        <p>Try the same step in Browser B also. </p>
+      </li>
+    </ul>
+  </li>
+  <li>Use the <code>clean</code>&nbsp; target to undeploy the sample
+application and to
+remove the temporary directories like build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 clean</code> </p>
-</li></ol>
-
+  </li>
+</ol>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to 
-<a href="../../../../docs/UserTroubleShooting.html">
+<p>If you have problems when running the application, refer the <a
+ href="../../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
-&nbsp;<p>
-<!--- Do not modify the rest of the document -->
-</p><hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright © 2006 <a href="http://sun.com/">Sun
+&nbsp;
+<p><!--- Do not modify the rest of the document --></p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com/">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
-</body></html>
+</body>
+</html>

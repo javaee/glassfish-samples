@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-  <title>The [application name] Sample Application</title>
+  <title>The WAR-based EJB 3.1 Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -20,23 +20,24 @@
   <tbody>
     <tr>
       <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+ color="#ffffff" size="-1"><b>Sun GlassFish Enteprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<p><a href="../../../docs/list.html">Samples Index</a></p>
-<h1>A Simple .war based EJB 3.1Application<br>
+<p><a href="../../../docs/list.html">Samples </a><a
+ href="../../../docs/list.html"> Main Page</a></p>
+<h1>A Simple WAR-based EJB 3.1 Application<br>
 </h1>
-This is a simple EJB 3.1 application that shows the use of : .war based
+This is a simple EJB 3.1 application that shows the use of WAR-based
 packaging , the no-interface Local view, Singleton session beans, and
 startup/shutdown callbacks.<br>
 <br>
 <span style="font-weight: bold;">Overview<br>
 <br>
-</span>&nbsp;&nbsp;&nbsp; The application is composed of 1 Servlet, 1
-Singleton session bean, and 1 Stateless session bean.&nbsp; Each
+</span>The application is composed of a Servlet, a
+Singleton session bean, and a Stateless session bean.&nbsp; Each
 session bean exposes a no-interface view.&nbsp; The Singleton defines a
 callback that is called by the container during application
 initialization.&nbsp; Both the Servlet and Stateless bean use the
@@ -44,20 +45,21 @@ Singleton to access common application configuration info. When the
 Servlet is accessed, it invokes the session beans and prints some
 messages containing the return values.&nbsp;&nbsp; <br>
 <br>
-&nbsp;&nbsp;&nbsp; The entire application is packaged within a .war
-file, without any .xml files.&nbsp;&nbsp; <br>
+The entire application is packaged within a <code>.war</code> file,
+without any <code>.xml</code>
+files.&nbsp;&nbsp; <br>
 <br>
-<b>no-interface view<br>
+<b>No-interface view<br>
 <br>
-</b>&nbsp;&nbsp;&nbsp; Each session bean exposes a no-interface Local
+</b>Each session bean exposes a no-interface Local
 view.&nbsp; This client view has the same semantics as the EJB 3.0
-Local business interface, except that it doesn't require a separate
+Local business interface, except that it does not require a separate
 interface.&nbsp; All public methods of the bean class are automatically
 exposed to the caller.&nbsp;&nbsp; By default, any session bean that
 has an empty implements clause and does not define any other
-Local/Remote client views exposes a no-interface client view :<br>
+Local/Remote client views exposes a no-interface client view:<br>
 <br>
-&nbsp;&nbsp;&nbsp; @Stateless<br>
+<code>&nbsp;&nbsp;&nbsp; @Stateless<br>
 &nbsp;&nbsp;&nbsp; public class HelloBean {<br>
 <br>
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public String sayHello() {<br>
@@ -66,38 +68,43 @@ Local/Remote client views exposes a no-interface client view :<br>
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return message;<br>
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
 <br>
-&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }</code><br>
 <br>
-&nbsp;&nbsp;&nbsp; A client of the no-interface view always acquires an
+A client of the no-interface view always acquires an
 ejb reference, either through injection or JNDI lookup.&nbsp; The java
 type of the ejb reference is the bean class.&nbsp; The client never
-uses the new() operator to explicitly instantiate the bean
+uses the <code>new()</code> operator to explicitly instantiate the
+bean
 class.&nbsp;&nbsp; <br>
 <br>
-&nbsp;&nbsp;&nbsp; @EJB <br>
+<code>&nbsp;&nbsp;&nbsp; @EJB <br>
 &nbsp;&nbsp;&nbsp; private HelloBean helloBean;<br>
 <br>
 &nbsp;&nbsp;&nbsp; ...<br>
 &nbsp;<br>
 &nbsp;&nbsp;&nbsp; String msg = helloBean.sayHello();<br>
-<b><br>
+</code><b><br>
 <br>
-Singleton bean</b>
-<blockquote>A Singleton bean is a new kind of session bean component
+Singleton bean</b><br>
+<br>
+A Singleton bean is a new kind of session bean component
 that is guaranteed to be instantiated once per application in a
 particular JVM.&nbsp;&nbsp; A Singleton bean is defined using the
 @Singleton component-defining annotation.<br>
-  <br>
+<br>
 By default, the container decides when to instantiate the Singleton
 bean instance.&nbsp; However, the developer can force the container to
 instantiate the Singleton bean instance during application
-initialization by using the @Startup annotation.&nbsp;&nbsp; This
-allows the bean to define a @PostConstruct method that is guaranteed to
+initialization by using the <code>@Startup</code>
+annotation.&nbsp;&nbsp; This
+allows the bean to define a <code>@PostConstruct</code> method that is
+guaranteed to
 be called during startup time.&nbsp;&nbsp; In addition, regardless of
-eager vs. lazy instantiation, any Singleton @PostDestroy method is
+eager vs. lazy instantiation, any Singleton <code>@PostDestroy</code>
+method is
 guaranteed to be called when the application is shutting down.<br>
-  <br>
-@Singleton<br>
+<blockquote> <br>
+  <code>@Singleton<br>
 @Startup<br>
 public class PropertiesBean {<br>
   <br>
@@ -110,55 +117,57 @@ public class PropertiesBean {<br>
   <br>
 &nbsp;&nbsp;&nbsp; ...<br>
   <br>
-}<br>
+}</code><br>
   <br>
 </blockquote>
-<b>Deployment Descriptor</b>
-<blockquote>No deployment descriptors are needed, even for the
-Servlet.&nbsp; All metadata is either defaulted or specified via
+<b>Deployment Descriptor</b><br>
+<br>
+No deployment descriptors are needed, even for the
+Servlet.&nbsp; All metadata is either defaulted or specified using
 annotations.&nbsp; <br>
-  <b><br>
-  </b></blockquote>
-<span style="font-weight: bold;">Packaging<br>
+<span style="font-weight: bold;"><br>
+Packaging<br>
 <br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; </span>The entire
-application is packaged in a single .war file.&nbsp; The EJB 3.1
+</span>The entire
+application is packaged in a single <code>.war</code> file.&nbsp; The
+EJB 3.1
 specification allows any enterprise bean classes to be packaged
-directly in WEB-INF/classes (or in a .jar in WEB-INF/lib) , just like
-other .war classes.&nbsp; <br>
+directly in <code><span style="font-style: italic;">WEB-INF/classes</span></code>
+(or in a <code>.jar</code> in <code><span style="font-style: italic;">WEB-INF/lib</span></code>)
+, just like
+other <code>.war</code> classes.&nbsp; <br>
 <br>
-&nbsp;&nbsp;&nbsp; app_dir/dist&gt; jar tvf ejb-ejb31-war.war <br>
+&nbsp;&nbsp;&nbsp;<code><span style="font-style: italic;">
+app_dir/dist&gt;</span>; jar tvf ejb-ejb31-war.war</code> <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEB-INF/<br>
-&nbsp;&nbsp; &nbsp;&nbsp; WEB-INF/classes/<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEB-INF/classes/ejb/<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEB-INF/classes/ejb/ejb31/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/</span></code><br>
+&nbsp;&nbsp; &nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/ejb/</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/</span></code><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-WEB-INF/classes/ejb/ejb31/war/&nbsp;&nbsp;&nbsp; <br>
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/</span></code>&nbsp;&nbsp;&nbsp;
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-WEB-INF/classes/ejb/ejb31/war/HelloBean.class<br>
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/HelloBean.class</span></code><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-WEB-INF/classes/ejb/ejb31/war/PropertiesBean.class<br>
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/PropertiesBean.class</span></code><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-WEB-INF/classes/ejb/ejb31/war/TestServlet.class<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEB-INF/classes/app.properties<br>
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/TestServlet.class</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/app.properties</span></code><br>
 <br>
 <br>
 <span style="font-weight: bold;">Deployment</span><br>
 <br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; After
+After
 deployment, the test servlet can be accessed at
-http://&lt;host&gt;:&lt;http-port&gt;/ejb-ejb31-war/<br>
+<a href="http://%3Chost%3E:%3Chttp-port%3E/ejb-ejb31-war/">http://&lt;host&gt;:&lt;http-port&gt;/ejb-ejb31-war/</a><br>
 <br>
 <h2>Building, Deploying, and Running the Application</h2>
-<p>
-</p>
-<p>Following are the instructions for building, deploying, and running
-this sample application. <br>
+Perform the following steps to build, deploy, and run the
+application:<br>
 <br>
-</p>
 <ol>
-  <li> Setup your build environment and Configure the application
+  <li> Setup your build environment and configure the application
 server with which the build system has to work by following the <a
  href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
@@ -166,38 +175,42 @@ common build instructions.</a></li>
 directory: <code><i>install_dir</i>/samples/ejb/ejb31-war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-  <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span></code>ant
-all </p>
-  <li>It is possible to do the above separately by issuing separate
-commands as given below.</li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-default</code> compiles and packages the application </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-deploy</code> deploys it to application server </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-run</code> runs the http access test that invokes the servlet and
-enterprise beans<br>
+all</code><br>
   </p>
-  <li>Use the undeploy target to undeploy the application<br>
-  </li>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-undeploy</code>&nbsp; </p>
-  <li>Use the target clean to
+default</code> compiles and packages the application. </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server. </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> runs the test java client. </p>
+  <li>To run this sample, the ant target invokes the <a
+ href="../ejb31-war/test">java client code</a>
+under the test directory. The sample can be run from the parent
+directory by using the <code>run</code> target or from the test
+directory by using <code>runtest</code>
+target. </li>
+  <li>Use the target clean to undeploy the sample application and to
 remove the temporary directories like build and dist.
     <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 clean</code> </p>
   </li>
 </ol>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to <a
+<p>If you have problems when running the application, refer the <a
  href="../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
 &nbsp;
 <p><!--- Do not modify the rest of the document --></p>
 <hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com/">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
