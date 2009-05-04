@@ -72,31 +72,35 @@ public class AjaxCometServlet extends HttpServlet {
 
     private static final long serialVersionUID = -2919167206889576860L;
 
+    private Thread notifierThread = null;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         Runnable notifierRunnable = new Runnable() {
             public void run() {
-                while (true) {
+                boolean done = false;
+                while (!done) {
                     String cMessage = null;
                     try {
                         cMessage = messageQueue.take();
-                    } catch(InterruptedException iex) {
-                        System.out.println(iex);
-                    }
-                    for (AsyncContext ac : queue) {
-                        try {
-                            PrintWriter acWriter = ac.getResponse().getWriter();
-                            acWriter.println(cMessage);
-                            acWriter.flush();
-                        } catch(Exception ex) {
-                            System.out.println(ex);
-                            queue.remove(ac);
+                        for (AsyncContext ac : queue) {
+                            try {
+                                PrintWriter acWriter = ac.getResponse().getWriter();
+                                acWriter.println(cMessage);
+                                acWriter.flush();
+                            } catch(IOException ex) {
+                                System.out.println(ex);
+                                queue.remove(ac);
+                            }
                         }
+                    } catch(InterruptedException iex) {
+                        done = true;
+                        System.out.println(iex);
                     }
                 }
             }
         };
-        Thread notifierThread = new Thread(notifierRunnable);
+        notifierThread = new Thread(notifierRunnable);
         notifierThread.start();
     }
 
@@ -155,6 +159,7 @@ public class AjaxCometServlet extends HttpServlet {
     @Override
     public void destroy() {
         queue.clear();
+        notifierThread.interrupt();
     }
 
     private void notify(String cMessage) throws IOException {
