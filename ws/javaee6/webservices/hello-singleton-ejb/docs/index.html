@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en"><head><title>The [application name] Singleton Ejb Webservices Application</title>
-  
+<html lang="en">
+<head>
+  <title>The Singleton EJB Web Services Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -11,110 +12,117 @@
   li {padding-bottom: 8px}
   p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
   p.copy {text-align: center}
-  </style></head>
-
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Glassfish Application Server</b></font>&nbsp;
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
-<p><a href="../../../docs/list.html">Samples Index</a></p>
+<p><a href="../../../docs/list.html">Samples Main Page<br>
+</a></p>
 <h1>The EJB 3.1 Singleton Webservices Sample Application</h1>
 This is a very simple EJB 3.1 Singleton webservice application
 <br>
 <br>
-<b>Singleton Webservice</b>
-<blockquote>There are 2 annotations place @Singleton and @Webservice
+<b>Singleton Webservice</b><br>
+<br>
+There are two annotations: <code>@Singleton</code> and <code>@Webservice</code>
 with a
 single web method.<br>
-  <br>
-  <br>
-@Singleton<br>
+<blockquote> <br>
+  <code>@Singleton<br>
 @Webservice<br>
 public class HelloSingletonImpl {<br>
   <br>
 &nbsp;&nbsp;&nbsp; public String hello();<br>
   <br>
-}<br>
-  <br>
-  <br>
-@javax.ejb.Singleton is a component-defining annotation that designates
+}</code></blockquote>
+<code>@javax.ejb.Singleton</code> is a component-defining annotation
+that designates
 this class as the bean class for a Singleton Session Bean. &nbsp; <br>
-@javax.jws.Webservice is a component-defining annotation that designates
-this class as a Webservice Service Implementation Bean
-  <br>
-</blockquote>
-<b>Deployment Descriptor</b>
-<blockquote> The good news is the deployment descriptor is no longer
-required!!! &nbsp;The two java files above are sufficient to completely
-describe this singleton webservice. &nbsp;<br>
-</blockquote>
-<b>SUN App Server Specific Deployment Configuration</b>
-<blockquote> There is no need to define any SUN App Server-specific
-deployment
-descrpitors (e.g. sun-ejb-jar.xml, sun-application-client.xml) for this
-example. &nbsp; 
-</blockquote>
+<code>@javax.jws.Webservice</code> is a component-defining annotation
+that
+designates
+this class as a Webservice Service Implementation Bean.<br>
 <br>
+<b>Deployment Descriptor</b><br>
+<br>
+The good news is the deployment descriptor is no longer
+required!&nbsp; The two java files above are sufficient to completely
+describe this singleton webservice. &nbsp;<br>
+<b><br>
+</b><b>Sun GlassFish Enterprise Server</b><b> Specific Deployment
+Configuration</b><br>
+<br>
+There is no need to define Sun GlassFish Enterprise Server specific
+deployment
+descriptors, such as <code>sun-ejb-jar.xml</code>, <code>sun-application-client.xml</code>,
+for
+this
+example.
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
 </p>
-<p>Following are the instructions for building, deploying, and running
-this sample application. <br>
-<br>
-</p>
+<p>
+Perform the following steps to build, deploy, and run the
+application:</p>
 <ol>
-  <li> Setup your build environment and Configure the application
-server with which the build system has to work by following the 
-<a href="../../../docs/UserREADME.html">
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
-<p>Setup some variables for Ant. The easiest way to do this is to add these variables to your-homedir/build.properties (they are populated with sample values)
-<p>
-javaee.home=/glassfish<br>
-javaee.server.name=localhost<br>
-javaee.server.port=8080<br>
-javaee.domaindir=/glassfish/domains/domain1<br>
-<p>
-  <li><code><i>hello-singleton-ejb</i></code> is the sample application base
-directory: <code><i>install_dir</i>/ws/javaee6/webservices/hello-singleton-ejb</code>.</li>
-  <li><code></code><code></code>Change directory to <code><i>hello-singleton-ejb<br>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>install_dir</i>/samples/</code><code>webservices/hello-singleton-ejb</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-  <li>Build, Deploy and Run the sample application using the target all<code></code></li>
-  <p><code><span style="font-style: italic;">hello-singleton-ejb&gt; </span></code>ant
-all </p>
-  <li>It is possible to do the above separately by issuing separate
-commands as given below.</li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 default</code> compiles and packages the application </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 deploy</code> deploys it to application server </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run</code> runs the test java client </p>
-  <li>To run this sample, the ant targert invokes the 
-  <a href="../hello-singleton-client/docs/index.html">java client code</a>
-under 'test' directory. The sample can be run from either the parent
-directory or test directory using the targets 'run' and 'runtest'
-respectively.</li>
-  <li>Use the target clean to undeploy the sample application and to remove the temporary directories like build and dist.
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+  <li>To run this sample, the ant target invokes the <a href="../test">java
+client code</a>
+under the test directory. The sample can be run from the parent
+directory by using the <code>run</code> target or from the test
+directory by using <code>runtest</code>
+target. </li>
+  <li>Use the target clean to undeploy the sample application and to
+remove the temporary directories such as build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 clean</code> </p>
-</li></ol>
-
+  </li>
+</ol>
+<ol>
+</ol>
 <h2>Troubleshooting</h2>
-<p>If you have problems when running the application, refer to 
-<a href="../../../docs/UserTroubleShooting.html">
+<p>If you have problems when running the application, refer the <a
+ href="../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
-&nbsp;<p>
-<!--- Do not modify the rest of the document -->
-</p><hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright © 2006 <a href="http://sun.com/">Sun
+&nbsp;
+<p><!--- Do not modify the rest of the document --></p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com/">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
-</body></html>
+</body>
+</html>
