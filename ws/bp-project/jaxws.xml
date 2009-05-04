@@ -9,7 +9,8 @@
     <property name="jaxws.lib" value="${javaee.home}/modules"/>
 
     <path id="jaxws.classpath">
-	    <fileset dir="${jaxws.lib}" includes="*.jar" excludes="j2ee.jar"/>
+	    <fileset dir="${jaxws.lib}" includes="*.jar" />
+	    <fileset dir="${jaxws.lib}/endorsed" includes="*.jar" />
 	    <pathelement location="${java.home}/../lib/tools.jar"/>
     </path>
 
