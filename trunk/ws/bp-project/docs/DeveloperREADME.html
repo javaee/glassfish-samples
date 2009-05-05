@@ -20,7 +20,7 @@
   <tbody>
     <tr>
       <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
@@ -33,16 +33,16 @@ different types of Java EE modules including ejb, war, ear, rar and
 par.
 <h2>Build Environment</h2>
 <ol>
-  <li>Download and install the Java EE 5 SDK bundle along with Java SE.
-Make sure to use the Java SE which is bundled with Java EE 5 SDK since
+  <li>Download and install the Java EE 6 SDK bundle along with Java SE.
+Make sure to use the Java SE which is bundled with Java EE 6 SDK since
 this has been tested. <span style="font-weight: bold;">If using later
-version of Java EE, consider the reference to Java EE 5 SDK is actually
+version of Java EE, consider the reference to Java EE 6 SDK is actually
 for the later version in all subsequent discussions.</span><br>
   </li>
   <li>Set&nbsp; JAVA_HOME and
 JAVA_HOME\bin in PATH</li>
   <li>Set ANT_HOME and ANT_HOME\bin in PATH. Make sure to use the 'ant'
-which came bundled with Java EE 5 SDK.</li>
+which came bundled with Java EE 6 SDK.</li>
   <li>Make the application server specific properties known to <code>ant</code>
 by editing build.properties under user's home directory and by adding
 the following properties.<br>
@@ -59,13 +59,13 @@ Name</code></td>
       <tr>
         <td>javaee.home</td>
         <td>The installation
-directory of the Java EE 5 SDK</td>
+directory of the Java EE 6 SDK</td>
         <td>/home/username/glassfish</td>
       </tr>
       <tr align="left">
         <td valign="top">javaee.server.name</td>
         <td valign="top">Host
-name of the server where the Java EE 5 SDK
+name of the server where the Java EE 6 SDK
 is installed</td>
         <td valign="top">localhost</td>
       </tr>
@@ -74,27 +74,27 @@ is installed</td>
         <td valign="top">The
 port number for the server you chose
 while
-installing Java EE 5 SDK</td>
+installing Java EE 6 SDK</td>
         <td valign="top">8080</td>
       </tr>
       <tr align="left">
         <td valign="top">javaee.server.username</td>
         <td valign="top">The
 administrator username specified for the serve while installing Java EE
-5 SDK</td>
+6 SDK</td>
         <td valign="top">admin</td>
       </tr>
       <tr align="left">
         <td valign="top">javaee.server.passwordfile</td>
         <td valign="top">The
 path to a file containing the admin
-password for the Java EE 5 SDK. The password file needs to be in the
+password for the Java EE 6 SDK. The password file needs to be in the
 following format:
         <p><code>AS_ADMIN_PASSWORD=&lt;javaeesdk-admin-password&gt;</code>
         </p>
         <p>Where you will
 replace &lt;javaeesdk-admin-password&gt; with
-the admin password for the Java EE 5 SDK.</p>
+the admin password for the Java EE 6 SDK.</p>
         </td>
         <td valign="top">/path/to/passwordfile</td>
       </tr>
@@ -102,7 +102,7 @@ the admin password for the Java EE 5 SDK.</p>
         <td valign="top">javaee.adminserver.port</td>
         <td valign="top">The
 port number for admin server you chose
-while installing the Java EE 5 SDK</td>
+while installing the Java EE 6 SDK</td>
         <td valign="top">4848</td>
       </tr>
     </tbody>
@@ -308,7 +308,7 @@ file="${reference.ui.jar}" todir="${build.web.dir}/WEB-INF/lib"/&gt;</code><br>
 <br>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
