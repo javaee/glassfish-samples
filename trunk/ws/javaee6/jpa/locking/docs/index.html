@@ -1,113 +1,135 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
-	<TITLE>The Java Persistence Sample Application</TITLE>
-	<META NAME="GENERATOR" CONTENT="StarOffice 8  (Win32)">
-	<META NAME="CREATED" CONTENT="20060817;13180171">
-	<META NAME="CHANGEDBY" CONTENT="Mitesh">
-	<META NAME="CHANGED" CONTENT="20090428;18513779">
-	<STYLE>
-	<!--
-		TD P { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 10pt }
-		H1 { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 18pt }
-		P { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 10pt }
-		H2 { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 14pt }
-		H3 { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 12pt }
-		P.copy { font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 8pt; text-align: center }
-		A:link { color: #594fbf; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 10pt }
-		CODE { color: #666666; font-family: "monaco", "courier", "courier new"; font-size: 10pt }
-		A:visited { color: #1005fb }
-	-->
-	</STYLE>
-</HEAD>
-<BODY LANG="en-US" TEXT="#000000" LINK="#594fbf" VLINK="#1005fb" BGCOLOR="#ffffff" DIR="LTR">
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=4 STYLE="page-break-before: always">
-	<TR>
-		<TD VALIGN=TOP BGCOLOR="#587993">
-			<P ALIGN=RIGHT><B><FONT COLOR="#ffffff">Sun Java System
-			Application Server</FONT></B>&nbsp; 
-			</P>
-		</TD>
-	</TR>
-</TABLE>
-<P><!---- Don't modify anything above this line, except for the title tag --------><A HREF="../../../docs/list.html">Samples
-Index</A></P>
-<H1>The Java Persistence API Locking Sample Application</H1>
-<P>This sample demonstrates the use of locking with Java Persistence
-APIs.</P>
-<H2>Application Structure</H2>
-<P>The application is built and deployed as a WAR file. 
-</P>
-<H3>Web Module</H3>
-<P>The web module consists of: 
-</P>
-<UL>
-	<LI><P STYLE="margin-bottom: 0in">Two entities - User and Part. An
-	User can be either Consumer or Supplier of the part that it has
-	reference to.</P>
-	<LI><P STYLE="margin-bottom: 0in">A session bean that acts as a
-	facade to operate on these entities</P>
-	<LI><P STYLE="margin-bottom: 0in">A servlet that facilitates calling
-	into above session bean</P>
-</UL>
-<P><BR><BR>
-</P>
-<H3>Test Client</H3>
-<P>The Test client consist of 
-</P>
-<UL>
-	<LI><P STYLE="margin-bottom: 0in">A JavaSE client with main(). The
-	client calls into the servlet to initialize data and then simulates
-	parallel update operations using Optimistic Locking and Pessimistic
-	Locking.  You can observe that some update operations using
-	optimistic locking fails while all update operations using
-	pessimistic locking passes. However, the time it takes to update
-	using pessimistic locking is much higher than that taken using
-	optimistic locking. You can change NumConsumers, NumSuppliers and
-	NumParts to observe this behavior under various load condition. 
-	</P>
-</UL>
-<P STYLE="margin-bottom: 0in"><BR>
-</P>
-<P STYLE="margin-bottom: 0in">Optimistic Locking offers better
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE"
+ content="text/html; charset=windows-1252">
+  <title>The Java Persistence Sample Application</title>
+  <style type="text/css">
+body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+{font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+h1 {font-size:18pt}
+h2 {font-size:14pt}
+h3 {font-size:12pt}
+code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+li {padding-bottom: 8px}
+p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ dir="ltr" lang="en-US" link="#594fbf" vlink="#1005fb">
+<table style="page-break-before: always;" border="0" cellpadding="2"
+ cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td bgcolor="#587993" valign="top">
+      <p align="right"><b><font color="#ffffff">Sun GlassFish
+Enterprise Server</font></b>&nbsp; </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><!---- Don't modify anything above this line, except for the title tag --------><a
+ href="../../../docs/list.html">Samples Main Page<br>
+</a></p>
+<h1>The Java Persistence API Locking Sample Application</h1>
+<p>This sample demonstrates the use of locking with Java Persistence
+APIs.</p>
+<h2>Application Structure</h2>
+<p>The application is built and deployed as a WAR file. </p>
+<h3>Web Module</h3>
+<p>The web module consists of: </p>
+<ul>
+  <li>
+    <p style="margin-bottom: 0in;">Two entities - User and Part. An
+User can be either Consumer or Supplier of the part that it has
+reference to.</p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0in;">A session bean that acts as a facade
+to operate on these entities</p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0in;">A servlet that facilitates calling
+into above session bean</p>
+  </li>
+</ul>
+<h3>Test Client</h3>
+<p>The Test client consist of </p>
+<ul>
+  <li>
+    <p style="margin-bottom: 0in;">A Java SE client with main(). The
+client calls into the servlet to initialize data and then simulates
+parallel update operations using Optimistic Locking and Pessimistic
+Locking. You can observe that some update operations using optimistic
+locking fails while all update operations using pessimistic locking
+passes. However, the time it takes to update using pessimistic locking
+is much higher than that taken using optimistic locking. You can change
+NumConsumers, NumSuppliers and NumParts to observe this behavior under
+various load condition. </p>
+  </li>
+</ul>
+<p style="margin-bottom: 0in;">Optimistic Locking offers better
 concurrency but can result in few transaction failures. Where as
 using Pessimistic Locking reduces concurrency with no transaction
 failures. Please keep this point in mind while making locking choices
-for your application.</P>
-<UL>
-	<P STYLE="margin-bottom: 0in"></P>
-</UL>
-<H2>Building, Deploying, and Running the Application</H2>
-<P>Follow these steps to build, deploy, and run the application.</P>
-<OL>
-	<LI><P STYLE="margin-bottom: 0in">Set up your build environment and
-	Configure the application server with which the build system has to
-	work by following the <A HREF="../../../docs/UserREADME.html">common
-	build instructions.</A> 
-	</P>
-	<LI><P>Make sure the JavaDB database is started. If not, refer to
-	<A HREF="../../../docs/UserREADME.html">common build instructions.</A>
-		</P>
-	<LI><P STYLE="margin-bottom: 0in">Use the target <CODE>all</CODE> to
-	build, deploy and run the project. 
-	</P>
-	<LI><P>Use the target <CODE>clean</CODE> to remove the temporary
-	directories like build and dist  
-	</P>
-</OL>
-<H2>Troubleshooting</H2>
-<P>If you have problems when running the application, refer to
-<A HREF="../../../docs/UserTroubleShooting.html">troubleshooting
-document</A>. 
-</P>
-<P STYLE="margin-bottom: 0in">&nbsp;<!--- Do not modify the rest of the document -->
-</P>
-<HR SIZE=1 NOSHADE>
-<P CLASS="copy"><!-- start copyright -->Copyright &copy; 2009 <A HREF="http://sun.com/">Sun
-Microsystems, Inc.</A> All rights reserved. 
-</P>
-<P><!-- end copyright --><BR><BR>
-</P>
-</BODY>
-</HTML>
+for your application.</p>
+<br>
+<h2>Building, Deploying, and Running the Application<br>
+</h2>
+<p>
+Perform the following steps to build, deploy, and run the
+application:<br>
+<br>
+</p>
+<ol>
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>install_dir</i>/samples/foo</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> runs the test java client </p>
+  <li>To run this sample, the ant target invokes the <a href="../test">java
+client code</a>
+under the test directory. The sample can be run from the parent
+directory by using the <code>run</code> target or from the test
+directory by using <code>runtest</code>
+target. </li>
+  <li>Use the target clean to undeploy the sample application and to
+remove the temporary directories such as build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+  </li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the
+<a href="../../../docs/UserTroubleShooting.html">troubleshooting
+document</a>. </p>
+<p style="margin-bottom: 0in;">&nbsp;<!--- Do not modify the rest of the document -->
+</p>
+<hr noshade="noshade" size="1">
+<p class="copy"><!-- start copyright -->Copyright © 2009 <a
+ href="http://sun.com/">Sun
+Microsystems, Inc.</a> All rights reserved. </p>
+<p><!-- end copyright --><br>
+<br>
+</p>
+</body>
+</html>
