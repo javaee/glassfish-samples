@@ -51,7 +51,7 @@
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
             <compilation-unit>
                 <package-root>src/java</package-root>
-                <classpath mode="compile">../../../../../../../../feb10/v3/distributions/glassfish/target/installation/glassfishv3/glassfish/modules/javax.mail.jar:../../../../../../../../feb10/v3/distributions/glassfish/target/installation/glassfishv3/glassfish/modules/javax.resource.jar</classpath>
+                <classpath mode="compile">${javaee.home}/modules/javax.mail.jar:${javaee.home}/modules/javax.resource.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
