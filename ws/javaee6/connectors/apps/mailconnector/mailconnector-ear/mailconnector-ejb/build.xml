@@ -4,14 +4,11 @@
 <project name="mailconnector-ejb" default="default" basedir=".">
 
     <property name="is.ejb-jar.module" value="true"/>
-    <import file="../../../../../../bp-project/main.xml"/>
+    <property name="extra.classpath" value="../../mailconnector-ra/dist/rar/mailconnector.jar"/>
 
-    <path id="classpath">
-	    <fileset dir="../../mailconnector-ra/dist/rar" includes="*.jar"/>
-    </path>
+    <import file="../../../../../../bp-project/main.xml"/>
 
     <target name="msr">
         <echo message="build.classes.dir = ${build.classes.dir}"/>
     </target>
-
 </project>
