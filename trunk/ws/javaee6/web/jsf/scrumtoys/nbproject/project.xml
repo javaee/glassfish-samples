@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <name>scrumtoys</name>
+        </general-data>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>scrumtoys</name>
+            <properties/>
+            <folders>
+                <source-folder>
+                    <label>scrumtoys</label>
+                    <location>.</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>web</label>
+                    <type>doc_root</type>
+                    <location>web</location>
+                </source-folder>
+                <source-folder>
+                    <label>WEB-INF</label>
+                    <type>web_inf</type>
+                    <location>web/WEB-INF</location>
+                </source-folder>
+                <source-folder>
+                    <label>test/src/java</label>
+                    <type>java</type>
+                    <location>test/src/java</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>src/java</label>
+                    <type>java</type>
+                    <location>src/java</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <target>default</target>
+                </action>
+                <action name="clean">
+                    <target>clean</target>
+                </action>
+                <action name="run">
+                    <target>run</target>
+                </action>
+                <action name="redeploy">
+                    <target>deploy</target>
+                </action>
+                <action name="rebuild">
+                    <target>clean</target>
+                    <target>default</target>
+                </action>
+            </ide-actions>
+            <view>
+                <items>
+                    <source-folder style="tree">
+                        <label>Web Pages</label>
+                        <location>web</location>
+                    </source-folder>
+                    <source-folder style="tree">
+                        <label>WEB-INF Content</label>
+                        <location>web/WEB-INF</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>test/src/java</label>
+                        <location>test/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>src/java</label>
+                        <location>src/java</location>
+                    </source-folder>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
+                    <ide-action name="clean"/>
+                    <ide-action name="run"/>
+                    <ide-action name="redeploy"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/2">
+            <compilation-unit>
+                <package-root>test/src/java</package-root>
+                <unit-tests/>
+                <classpath mode="compile">/Users/edburns/Downloads/junit-4.4/lib/junit-4.4.jar:/Users/edburns/Projects/JavaEE/workareas/mojarra-2HEAD/dependencies/htmlunit-2.4/lib/htmlunit-2.4.jar</classpath>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>src/java</package-root>
+                <classpath mode="compile">/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/javax.persistence.jar:/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/jsf-api.jar:/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/javax.annotation.jar:/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/javax.transaction.jar</classpath>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+        </java-data>
+        <web-data xmlns="http://www.netbeans.org/ns/freeform-project-web/1">
+            <web-module>
+                <doc-root>web</doc-root>
+                <context-path>scrumtoys</context-path>
+                <j2ee-spec-level>1.5</j2ee-spec-level>
+            </web-module>
+        </web-data>
+    </configuration>
+</project>
