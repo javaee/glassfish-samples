@@ -28,39 +28,10 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../docs/list.html">Samples Main Page<br>
 </a></p>
-<h1>Servlet 3.0 Web Security Annotations Sample</h1>
-This is a simple web application that demonstrates the access control
-annotations in servlets.<br>
-<h2>Access Control Annotations</h2>
-<p>
-The <code>@RolesAllowed</code>, <code>@DenyAll</code>, <code>@PermitAll</code>,
-and <code>@TransportProtected</code>
-annotations provide an alternative mechanism for defining security
-constraints equivalent to those that could otherwise have been
-expressed declaratively in the portable deployment descriptor. These
-annotations are defined in the Common Annotations for the Java
-Platform specification (JSR 250). Servlet containers are required to
-support the use of these annotations within classes (and subclasses
-thereof) that implement the javax.servlet.Servlet interface and for
-which the Servlet container would process security- constaints if they
-were specified in web.xml.
-</p>
-<h2>AnnotationServlet</h2>
-<p>
-The <code>@PermitAll</code> method is applied on the servlet class and
-is applicable
-to all the methods. However, this is overridden by the method-specific
-annotations: <code>@RolesAllowed</code>, defined on the <code>doGet()</code>
-method
-and
-<code>@DenyAll</code> defined on the <code>doPost()</code> method. The
-<code>@DeclareRoles</code> annotation
-is used to specify the roles applicable to the servlet.
-A single role, <code>javaee6user</code> is defined and is configured
-to allow
-<code>doGet()</code> method, while <code>doPost()</code> is precluded
-from access by any user.
-</p>
+<h1>Servlet 3.0 HTTP Method Omissions Sample</h1>
+This sample demonstrates the use of http-method-omission feature of
+Servlet 3.0&nbsp; to restrict the set of supported HTTP methods to just
+GET and POST.
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
 </p>
