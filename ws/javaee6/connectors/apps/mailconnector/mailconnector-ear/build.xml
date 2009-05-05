@@ -6,20 +6,9 @@
     <property name="is.ear.module" value="true"/>
 
     <path id="ear-components">
-<!--
-        <filelist dir="../mailconnector-ra" files="build.xml"/>
--->
         <filelist dir="./mailconnector-ejb" files="build.xml"/>
         <filelist dir="./mailconnector-war" files="build.xml"/>
     </path>
-<!--
-
-    <path id="classpath">
-	    <fileset dir="../mailconnector-ra/dist/rar" includes="*.jar"/>
-    </path>
-
-    <property name="extra.classpath" refid="classpath"/>
--->
 
     <property name="run.uri" value="mailconnector-war"/>
 
@@ -27,6 +16,8 @@
 
 
     <target name="all" unless="netbeans.home">
+        <antcall target="clean"/>
+        <antcall target="clean-rar"/>
         <antcall target="rar"/>
         <antcall target="ear"/>
         <antcall target="deploy"/>
@@ -40,7 +31,6 @@
             <fileset dir="setup" includes="build.xml"/>
         </subant>
     </target>
-
 
     <target name="deploy">
         <antcall target="deploy-rar"/>
@@ -92,6 +82,10 @@
     </target>
 
     <!-- =================== JavaMail Connector RAR specific targets ========= -->
+
+    <target name="clean-rar">
+        <ant dir="../mailconnector-ra" target="clean_rar_common" antfile="build.xml"/>
+    </target>
 
     <target name="rar">
         <ant dir="../mailconnector-ra" target="assemble_rar" antfile="build.xml"/>
