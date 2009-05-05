@@ -3,16 +3,13 @@
 
 <project name="mailconnector-war" default="default" basedir=".">
     <property name="is.war.module" value="true"/>
+    <property name="extra.classpath" value="../../mailconnector-ra/dist/rar/mailconnector.jar"/>
+
     <import file="../../../../../../bp-project/main.xml"/>
 
-    <path id="classpath">
-	    <fileset dir="../../mailconnector-ra/dist/rar" includes="*.jar"/>
-    </path>
-
-    <target name="-post-compile">
+     <target name="-post-compile">
        <copy todir="${build.classes.dir}">
          <fileset dir="src/conf"/>
        </copy>
      </target>
-    
 </project>
