@@ -2,6 +2,7 @@
 <project name="scrumtoys" default="default" basedir=".">
     <property name="is.war.module" value="true"/>
     <property name="javadoc.packagenames" value="jsf2"/>
+    <property file="${user.home}/build.properties"/>
     <import file="../../../../bp-project/main.xml"/>
 
     <target name="all" depends="default,deploy,run"/>

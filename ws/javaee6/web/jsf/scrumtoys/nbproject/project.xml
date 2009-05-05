@@ -92,12 +92,12 @@
             <compilation-unit>
                 <package-root>test/src/java</package-root>
                 <unit-tests/>
-                <classpath mode="compile">/Users/edburns/Downloads/junit-4.4/lib/junit-4.4.jar:/Users/edburns/Projects/JavaEE/workareas/mojarra-2HEAD/dependencies/htmlunit-2.4/lib/htmlunit-2.4.jar</classpath>
+                <classpath mode="compile">${junit.home}/junit-4.4.jar:${htmlunit.home}/lib/htmlunit-2.4.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
             <compilation-unit>
                 <package-root>src/java</package-root>
-                <classpath mode="compile">/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/javax.persistence.jar:/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/jsf-api.jar:/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/javax.annotation.jar:/Users/edburns/Projects/JavaEE/workareas/glassfishv3-target/modules/javax.transaction.jar</classpath>
+                <classpath mode="compile">${javaee.home}/modules/javax.persistence.jar:${javaee.home}/modules/jsf-api.jar:${javaee.home}/modules/javax.annotation.jar:${javaee.home}/modules/javax.transaction.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
