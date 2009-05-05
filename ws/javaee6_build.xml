@@ -102,9 +102,10 @@
     <target name="package-classic"
         description="packages the classic-profile samples into a single jar for SDK">
         <copy file="javaee6/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <copy file="javaee6/docs/Components.js" tofile="${dist.dir}/javaee6/docs/Components.js"/>
         <zip destfile="${dist.dir}/${release.dirname}-classic-profile.jar">
             <zipfileset dir="${dist.dir}" 
-                includes="index.html"/>
+                includes="index.html, javaee6/docs/Components.js"/>
             <zipfileset dir="."> 
                 <patternset refid="classic.profile.contents"/>
             </zipfileset>
