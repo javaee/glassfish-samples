@@ -70,7 +70,7 @@
             </source>
             <source>
                 <label>Managed Bean</label>
-                <path>/WEB-INF/classes/ezcomp/InOutBean.java</path>
+                <path>/sources/InOutBean.java.source</path>
             </source>
         </sources>
     </demo>
@@ -91,7 +91,7 @@
             </source>
             <source>
                 <label>Managed Bean</label>
-                <path>/WEB-INF/classes/ezcomp/MultiNumberHolder.java</path>
+                <path>/sources/MultiNumberHolder.java.source</path>
             </source>
         </sources>
     </demo>
@@ -112,7 +112,7 @@
             </source>
             <source>
                 <label>Managed Bean</label>
-                <path>/WEB-INF/classes/ezcomp/NumberHolder.java</path>
+                <path>/sources/NumberHolder.java.source</path>
             </source>
         </sources>
     </demo>
@@ -136,7 +136,7 @@
         </source>
         <source>
             <label>Managed Bean</label>
-            <path>/WEB-INF/classes/ezcomp/NumberHolder.java</path>
+            <path>/sources/NumberHolder.java.source</path>
         </source>
     </sources>
 </demo>
@@ -165,7 +165,7 @@
         </source>
         <source>
             <label>Managed Bean</label>
-            <path>/WEB-INF/classes/ezcomp/MultiNumberHolder.java</path>
+            <path>/sources/MultiNumberHolder.java.source</path>
         </source>
     </sources>
 </demo>
@@ -190,7 +190,7 @@
         </source>
         <source>
             <label>Navigation Handler</label>
-            <path>/WEB-INF/classes/ezcomp/NavigationHandler.java</path>
+            <path>/sources/NavigationHandler.java.source</path>
         </source>
     </sources>
 </demo>
