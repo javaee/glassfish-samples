@@ -39,6 +39,9 @@
 </head>
 <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
  alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<!-- specifies whether it is web or classic -->
+<script type="text/javascript" language="JavaScript1.1"
+ src="Components.js"></script>
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
@@ -49,9 +52,24 @@
   </tbody>
 </table>
 <h2> Index of Sample Applications</h2>
-<p>These samples are available as part of the Java EE 6 SDK classic
-profile. If you are using the web profile, see the list of sample
-applications at <code><i>install_dir/samples/docs/list_web.html.</i></code></p>
+<script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true)
+{
+	document.write('<p>These samples are available as part of the Java EE 6 SDK classic profile. If you are using the web profile, see the list of sample applications at <code><i>install_dir/samples/docs/list_web.html.</i></code></p>');
+	
+}
+document.close();
+</script>
+<script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (web==true)
+{
+document.write('<p>These samples are available as part of the Java EE 6 SDK web profile. If you are using the classic profile, see the list of sample applications at <code><i>install_dir/samples/docs/list_classic.html.</i></code></p>');
+
+}
+document.close();
+</script>
 <p>Click the sample application to learn about the sample and the
 procedure to build and run.
 Some of the sample applications require you to configure resources
@@ -95,17 +113,23 @@ packaging , the no-interface Local view, Singleton session beans, and
 startup/shutdown callbacks. </p>
       </td>
     </tr>
-    <tr>
-      <td class="grey1" height="19" width="22%"> <a
- href="../ejb/automatic-timer/docs/index.html">EJB 3.1 Automatic Timer</a>
-      <br>
-      </td>
-      <td class="grey1" height="19" width="78%">
-      <p>An EJB Stateless Session Bean with a Remote
-business interface and a POJO Entity that demonstrates EJB 3.1
-automatic timer feature. </p>
-      </td>
-    </tr>
+    <script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true)
+{
+ document.write('<tr>');
+      document.write('<td class="grey1" height="19" width="22%"> <a href="../ejb/automatic-timer/docs/index.html">EJB 3.1 Automatic Timer</a>');
+       document.write('<br>');
+ document.write('</td>');
+      
+      document.write('<td class="grey1" height="19" width="78%">');
+     document.write(' <p>An EJB Stateless Session Bean with a Remote business interface and a POJO Entity that demonstrates EJB 3.1 automatic timer feature. </p>');
+	document.write('</td>');
+	document.write('</tr>');
+}
+
+document.close();
+    </script>
     <tr>
     </tr>
     <tr>
@@ -158,32 +182,19 @@ registration of Servlets
 and Filters from a ServletContextListener..</p>
       </td>
     </tr>
-    <tr>
-      <td colspan="2" class="insidehead"><a name="webservices"></a>Metro
-Web
-Services<code></code> </td>
-    </tr>
-    <tr>
-      <td class="grey1" style="text-align: left;" height="24"
- width="22%"><a href="../webservices/hello-jaxws2.2/docs/index.html">Hello
-JAXWS Application</a><br>
-      </td>
-      <td class="grey1" height="24" width="78%">An application
-demonstrates how JAXWS 2.2 can generate artifacts dynamically and no
-use of wsgen is required when bundling and packing the artifacts. </td>
-    </tr>
-    <tr>
-      <td class="grey1" style="text-align: left;" height="24"
- width="22%"><a
- href="../webservices/hello-singleton-ejb/docs/index.html">EJB 3.1
-Singleton Web Services Application</a><br>
-      </td>
-      <td class="grey1" height="24" width="78%">An application
-demonstrates a singleton EJB web service. It shows how easy it is to
-annotate a web service with @Singleton and develop clients for it. </td>
-    </tr>
-    <tr>
-    </tr>
+    <script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true)
+{
+	document.write('<tr><td colspan="2" class="insidehead"><a name="webservices"></a>Metro Web Services<code></code> </td></tr>');
+  	document.write(' <tr> <td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../webservices/hello-jaxws2.2/docs/index.html">Hello JAXWS Application</a><br></td>');
+    document.write('<td class="grey1" height="24" width="78%">An application demonstrates how JAXWS 2.2 can generate artifacts dynamically and no use of wsgen is required when bundling and packing the artifacts. </td></tr>');
+    document.write('<tr><td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../webservices/hello-singleton-ejb/docs/index.html">EJB 3.1 Singleton Web Services Application</a><br></td>');
+ document.write('<td class="grey1" height="24" width="78%">An application demonstrates a singleton EJB web service. It shows how easy it is to annotate a web service with @Singleton and develop clients for it. </td></tr>');
+   document.write('<tr> </tr>');
+}
+document.close();
+    </script>
     <tr>
       <td colspan="2" class="insidehead"><a name="rest"></a> Java API
 for RESTful Web Services<code></code> </td>
@@ -224,6 +235,16 @@ Composite Component Application</a><br>
 programs intended to illustrate some of
 the new Composite Component features that are contained in JSF 2.0. </td>
     </tr>
+    <script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (web==true)
+{
+    document.write('<tr><td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../web/jsf/scrumtoys/docs/index.html">AJAX Complete Application</a><br> </td>');
+    document.write('<td class="grey1" height="24" width="78%">A series of simple programs intended to illustrate some of the new Ajax features that are contained in JSF 2.0. </td>');
+    document.write('</tr>');
+}
+document.close();
+    </script>
     <tr>
       <td colspan="2" class="insidehead"><a name="SECURITY"></a>Security<code></code>
       </td>
@@ -267,26 +288,19 @@ GET and POST. &nbsp;&nbsp; </p>
       <p> </p>
       </td>
     </tr>
-    <tr>
-      <td colspan="2" class="insidehead"><a name="Connector">Java EE
-Connector Architecture 1.6 </a></td>
-    </tr>
-    <tr>
-      <td class="grey1" height="25" width="22%">
-      <p><a href="../connectors/apps/mailconnector/docs/index.html">MailConnector
-      </a><a href="../connectors/apps/mailconnector/docs/index.html">Resource
-Adapter Sample </a><a
- href="../connectors/apps/mailconnector/docs/index.html">Application<br>
-      </a></p>
-      </td>
-      <td class="grey1" height="25" width="78%">
-      <p> An application using the mail-connector resource-adapter to
-retrieve e-mails. Demonstrates how to use new annotations introduced in
-Java EE Connector Architecture 1.6 specification. The mail connector
-resource adapter is completely built by specifying annotations. No
-deployment descriptor is used.</p>
-      </td>
-    </tr>
+    <script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true)
+{
+	document.write('<tr><td colspan="2" class="insidehead"><a name="Connector">Java EE Connector Architecture 1.6 </a></td></tr>');
+	document.write('<tr><td class="grey1" height="25" width="22%"><p><a href="../connectors/apps/mailconnector/docs/index.html">MailConnector </a>');
+	document.write('<a href="../connectors/apps/mailconnector/docs/index.html">Resource Adapter Sample </a><a  href="../connectors/apps/mailconnector/docs/index.html">Application<br></a></p>');
+    document.write('</td>');
+      document.write('<td class="grey1" height="25" width="78%"><p> An application using the mail-connector resource-adapter to retrieve e-mails. Demonstrates how to use new annotations introduced in Java EE Connector Architecture 1.6 specification. The mail connector resource adapter is completely built by specifying annotations. No deployment descriptor is used.</p>');
+     document.write('</td>');
+}
+document.close();
+    </script>
     <tr>
       <td colspan="2" class="insidehead"><a name="jpa">Java Persistence
 API 2.0<br>
