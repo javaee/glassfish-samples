@@ -66,7 +66,7 @@
             </source>
             <source>
                 <label>Managed Bean</label>
-                <path>/WEB-INF/classes/basicajax/Count.java</path>
+                <path>/sources/Count.java.source</path>
             </source>
         </sources>
     </demo>
@@ -83,7 +83,7 @@
             </source>
             <source>
                 <label>Managed Bean</label>
-                <path>/WEB-INF/classes/basicajax/HideNShow.java</path>
+                <path>/sources/HideNShow.java.source</path>
             </source>
         </sources>
     </demo>
@@ -104,7 +104,7 @@
             </source>
             <source>
                 <label>Managed Bean</label>
-                <path>/WEB-INF/classes/basicajax/Echo.java</path>
+                <path>/sources/Echo.java.source</path>
             </source>
         </sources>
     </demo>
@@ -125,7 +125,7 @@
             </source>
             <source>
                 <label>Managed Bean</label>
-                <path>/WEB-INF/classes/basicajax/Echo.java</path>
+                <path>/sources/Echo.java.source</path>
             </source>
         </sources>
     </demo>

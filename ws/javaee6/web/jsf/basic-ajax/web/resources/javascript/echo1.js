@@ -44,13 +44,3 @@ function buttonpush(target, exec, element, event) {
     }
     return false;
 } 
-
-function resetpush(element, event) {
-    try {
-        jsf.ajax.request(element, event, {execute: element.id});
-    } catch (ex) {
-        // Handle errors here
-        alert(ex);
-    }
-    return false;
-}

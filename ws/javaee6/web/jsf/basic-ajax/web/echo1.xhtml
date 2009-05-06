@@ -60,10 +60,6 @@
         <h:commandButton id="button1" value="Echo"
                          onclick="return buttonpush('form1:out1 form1:in1', 'form1:button1 form1:in1', this, event);"/>
         <br/>
-        <!-- Resets the string, refreshes the form, but not the page -->
-        <h:commandButton id="reset" value="reset"
-                            onclick="return resetpush(this, event);"
-                            actionListener="#{echo.reset}"/>
         <!-- Reloads the page, doesn't reset the string -->
         <h:commandButton id="reload" value="reload"/>
         <h:messages/>
