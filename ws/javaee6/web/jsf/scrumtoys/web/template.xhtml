@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -6,46 +7,37 @@
       xmlns:c="http://java.sun.com/jstl/core"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       xmlns:menu="http://java.sun.com/jsf/composite/components">
-      
+
     <h:head>
         <h:outputStylesheet library="css/1_1" name="#{skinManager.selectedSkin}"/>
         <h:outputScript     library="js" name="menu.js" target="head"/>
         <h:outputScript     library="javax.faces" name="jsf.js"/>
         <title>
-        <ui:insert name="pageTitle">
-            <h:outputText value="#{i18n['template.title']}"></h:outputText>
-        </ui:insert>
-        
+            <ui:insert name="pageTitle">
+                <h:outputText value="#{i18n['template.title']}"></h:outputText>
+            </ui:insert>
+
         </title>
-
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </h:head>
-
+    
     <h:body>
-        <table align="center" cellpadding="0" cellspacing="0">
-            <tr>
-                <td align="center">
-            <menu:menu>
-                <ui:param name="image" value="/resources/images/menu/barraSuperior-04.png"></ui:param>                
-            </menu:menu>
-            
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <br/><br/>
-                    <ui:insert name="content">
-                        
-                        
+        <div align="center">
+            <h:panelGrid  width="1024">
+                <menu:menu>
+                    <ui:param name="image" value="/resources/images/menu/barraSuperior-04.png"></ui:param>
+                </menu:menu>
+                <h:panelGroup id="bodyContent" styleClass="tableBody">
+                    <div align="center">
+                        <ui:insert name="content">
                             <h:graphicImage  value="/resources/images/JSFScrumWhiteBoard.png"></h:graphicImage><br/>
-                        
-                    </ui:insert>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <ui:include src="./footer.xhtml" />
-                </td>
-            </tr>
-        </table>
+                        </ui:insert>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup>
+                <ui:include src="./footer.xhtml" />
+                </h:panelGroup>              
+            </h:panelGrid>
+        </div>
     </h:body>
 </html>  

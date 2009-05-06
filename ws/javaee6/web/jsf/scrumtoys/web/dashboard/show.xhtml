@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:menu="http://java.sun.com/jsf/composite/components" >
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="pageTitle">
+            <h:outputText value="#{i18n['story.show.title']}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form id="frmListStories">
+
+                <br/><br/>
+                <h:panelGrid columns="5" headerClass="tableHeader" footerClass="tableFooter"  width="1024" cellpadding="0" cellspacing="0">
+                    <f:facet name="header">
+                        <h:outputText value=""></h:outputText>
+                    </f:facet>
+                    <h:panelGrid columns="6" headerClass="tituloForm" footerClass="footerForm" styleClass="tableBody" width="1024">
+                        <f:facet name="header">
+                            <h:outputText rendered="#{storyManager.sprint.name!= null}" value="Dashboard - #{i18n['sprint.form.label.project.name']}: #{sprintManager.project.name} - #{i18n['story.form.label.sprint.name']} - #{storyManager.sprint.name} " styleClass="tituloForm" /><br/><br/>
+                            <h:outputText rendered="#{storyManager.sprint.name == null}" value="Dashboard - #{i18n['sprint.form.label.project.name']}: #{storyManager.sprint.name} - #{i18n['story.form.label.sprint.name']} - #{i18n['stories.show.nosprint']} " styleClass="tituloForm" /><br/><br/>
+                        </f:facet>
+                        <h:outputLabel value=""></h:outputLabel>
+
+                        <h:dataTable value="#{dashboardManager.stories}" var="story" rendered="#{dashboardManager.stories.rowCount > 0}" border="0" id="dtStories" >
+                            <h:column>
+                                 <f:facet name="header">
+                                    <h:outputText value="STORIES" />
+                                </f:facet>
+                                <menu:bigPostit>
+                                    <ui:param name="postitLabel" value=""></ui:param>
+                                    <ui:param name="postitText" value="#{story.name}"></ui:param>
+                                </menu:bigPostit>
+                            </h:column>
+
+                        </h:dataTable>
+                        <h:dataTable value="#{dashboardManager.stories}" var="story" rendered="#{dashboardManager.stories.rowCount > 0}" border="0" id="dtToDoTasks">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="TO DO" />
+                                </f:facet>
+                                <!-- TODO Tasks -->
+                                <h:dataTable  value="#{story.todoTasks}" var="task" title="Todo Tasks">
+                                    <h:column>
+                                        <menu:postit>
+                                            <ui:param name="postitLabel" value=""></ui:param>
+                                            <ui:param name="postitText" value="#{task.name}"></ui:param>
+                                        </menu:postit>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:column>
+
+                        </h:dataTable>
+                        <h:dataTable value="#{dashboardManager.stories}" var="story" rendered="#{dashboardManager.stories.rowCount > 0}" border="0" id="dtDoingTasks">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="DOING" />
+                                </f:facet>
+                                <!-- Working Tasks -->
+                                <h:dataTable  value="#{story.workingTasks}" var="task" title="Working Tasks">
+                                    <h:column>
+                                        <menu:postit>
+                                            <ui:param name="postitLabel" value=""></ui:param>
+                                            <ui:param name="postitText" value="#{task.name}"></ui:param>
+                                        </menu:postit>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:column>
+
+                        </h:dataTable>
+                        <h:dataTable value="#{dashboardManager.stories}" var="story" rendered="#{dashboardManager.stories.rowCount > 0}" border="0" id="dtDoneTasks">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="DONE" />
+                                </f:facet>
+                                <!-- Working Tasks -->
+                                <h:dataTable  value="#{story.doneTasks}" var="task" title="Done Tasks">
+                                    <h:column>
+                                        <menu:postit>
+                                            <ui:param name="postitLabel" value=""></ui:param>
+                                            <ui:param name="postitText" value="#{task.name}"></ui:param>
+                                        </menu:postit>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:column>
+
+                        </h:dataTable>
+                        <f:facet name="footer">
+                            <h:commandButton styleClass="botaoPostIt" action="showSprints" value="#{i18n['story.show.button.showSprints']}"  />
+                        </f:facet>
+                    </h:panelGrid>
+                    <f:facet name="footer">
+                        <h:outputText value=""></h:outputText>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
