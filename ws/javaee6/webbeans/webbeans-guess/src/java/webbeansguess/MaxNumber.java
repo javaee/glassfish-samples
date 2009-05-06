@@ -53,7 +53,6 @@ import javax.inject.BindingType;
 @Retention(RUNTIME)
 @Documented
 @BindingType
-public @interface MaxNumber
-{
+public @interface MaxNumber {
 
 }
