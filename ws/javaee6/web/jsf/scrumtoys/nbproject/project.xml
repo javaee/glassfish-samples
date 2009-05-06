@@ -5,11 +5,7 @@
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
             <name>scrumtoys</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <web-module-libraries>
-                <library>
-                    <file>${file.reference.htmlunit.jar}</file>
-                </library>
-            </web-module-libraries>
+            <web-module-libraries/>
             <web-module-additional-libraries/>
             <source-roots>
                 <root id="src.dir"/>
