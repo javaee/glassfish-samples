@@ -5,7 +5,7 @@
     <property file="${user.home}/build.properties"/>
     <import file="../../../../bp-project/main.xml"/>
 
-    <target name="all" depends="default,deploy,run"/>
+    <target name="all" depends="default,run"/>
 
     <target name="-post-compile">
 
@@ -19,4 +19,13 @@
 
     </target>
 
+    <target name="-pre-run-deploy" if="netbeans.home">
+      <echo message="copying resources to ${basedir}/build/classes" />
+      <copy todir="${basedir}/build/web/WEB-INF/classes" overwrite="true">
+        <fileset dir="src/resources">
+          <include name="**/*.*" />
+        </fileset>
+      </copy>
+    </target>
+    
 </project>
