@@ -45,7 +45,7 @@ public class BasicAjaxTest {
     @Test
     public void homePage() throws Exception {
         final WebClient webClient = new WebClient();
-        final HtmlPage page = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        final HtmlPage page = webClient.getPage("http://localhost:8080/basic-ajax/home.jsf");
         Assert.assertEquals("JavaServer Faces 2.0 Basic Ajax Demo", page.getTitleText());
     }
 
@@ -53,7 +53,7 @@ public class BasicAjaxTest {
     public void checkInPage() throws Exception {
         final WebClient webClient = new WebClient();
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basic-ajax/home.jsf");
         HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
         HtmlTableCell cell = table.getCellAt(1,2);
         HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
@@ -68,7 +68,7 @@ public class BasicAjaxTest {
     public void checkSimpleCount() throws Exception {
         final WebClient webClient = new WebClient();
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basic-ajax/home.jsf");
         HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
         HtmlTableCell cell = table.getCellAt(2,2);
         HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
@@ -83,7 +83,7 @@ public class BasicAjaxTest {
     public void checkSecondEcho() throws Exception {
         final WebClient webClient = new WebClient();
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicajax/home.jsf");
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basic-ajax/home.jsf");
         HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
         HtmlTableCell cell = table.getCellAt(5,2);
         HtmlAnchor link =  (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
