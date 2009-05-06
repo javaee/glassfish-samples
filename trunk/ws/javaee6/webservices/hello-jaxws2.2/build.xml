@@ -1,123 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
-<project name="hello-jaxws" default="all" basedir=".">
-    <!-- include user specific build properties -->
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+<project name="hello-jaxws" default="default" basedir=".">
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="endpoint"/>
+    <import file="../../../bp-project/main.xml"/>
 
-   
-    <property file="${user.home}/build.properties"/>
-    <property file="../../../bp-project/app-server.properties"/>
-    <property name="autodeploydir" value="${javaee.domaindir}/autodeploy"/>
-     <import file="../../../bp-project/main.xml"/>
-    <property name="classesdir" value="./build"/>
-    <property name="wardir" value="./war"/>
-    <property name= "warname" value="hellojaxws2.2.war"/>
-    <property name="app.module" value="${wardir}/${warname}"/>
+    <target name="all" depends="default,run"/>
 
-     <path id="classpath">
-
-        <fileset dir="${javaee.home}/modules">
-                      <include name="*.jar"/>
-
-                   </fileset>
-
-        <pathelement location="${classesdir}"/>
-
-    </path>
-    
-    <target name="all" depends="clean,run-client">
-        <!--antcall target="restore"/-->
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="-post-run-deploy">
+        <subant target="run" verbose="true">
+            <fileset dir="hello-jaxws-client" includes="build.xml"/>
+        </subant>
     </target>
 
-
-    <target name="init">
-        <condition property="windows">
-            <os family="windows" /> 
-        </condition>
-        <condition property="unix">
-            <os family="unix" /> 
-        </condition>
-        <mkdir  dir="${wardir}"/>
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+        <subant target="clean">
+            <fileset dir="hello-jaxws-client" includes="build.xml"/>
+        </subant>
     </target>
 
-    <target name="compile-deploy-service" depends="init">
-        <mkdir dir="${classesdir}"/>
-        <echo message="${javaee.home}"/>
-        <javac 
-            srcdir="./src" 
-            includes="endpoint/**"
-            destdir="${classesdir}"><classpath refid = "classpath"> </classpath></javac>
-
-        <war destfile="${wardir}/${warname}" webxml="etc/web.xml" >
-            <fileset dir="etc">
-                <include name="sun-web.xml"/>
-            </fileset>
-            <classes dir="${classesdir}"/>
-        </war>
-
-        <copy  file="${wardir}/${warname}"  todir="${autodeploydir}" overwrite="true"/>
-
-     <waitfor maxwait="100" maxwaitunit="second">
-          <or>
-                <available file="${autodeploydir}/hellojaxws2.2.war_deployed"/>
-                <available file="${autodeploydir}/hellojaxws2.2.war_deployFailed"/>
-           </or>
-        </waitfor>
-        <!--<condition property="deploy_succeeded">
-                <available file="http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/>
-        </condition>
-        <condition property="deploy_failed">
-                <available file="http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/>
-        </condition>-->
+    <!-- clean up subproject from NB (undeploy is handled automatically) -->
+    <target name="-post-clean">
+        <subant target="clean">
+            <fileset dir="hello-jaxws-client" includes="build.xml"/>
+        </subant>
     </target>
 
-    <target name="get-artifacts" depends="compile-deploy-service,get-artifacts-windows,get-artifacts-unix"/>
-
-    <target name="get-artifacts-windows" if="windows">
-        <exec executable="${javaee.home}/bin/wsimport.bat">
-            <arg line="-keep -Xendorsed -d ${classesdir} http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/>
-        </exec>
-    </target>
-
-    <target name="get-artifacts-unix" if="unix">
-        <exec executable="${javaee.home}/bin/wsimport">
-            <arg line="-keep -Xendorsed -d ${classesdir} http://${javaee.server.name}:${javaee.server.port}/hellojaxws2.2/HelloService?wsdl"/>
-        </exec>
-    </target>
-
-    <target name="compile-client" depends="get-artifacts">
-        <javac srcdir="./src/client" destdir="${classesdir}">
-            <classpath refid="classpath"/>
-        </javac>
-    </target>
-    
-    <target name="clean">
-        <delete dir="${classesdir}"/>
-        <delete dir="${wardir}"/>
-    </target>
-
-    <target name="run-client" depends="compile-client,run-client-windows,run-client-unix"/>
-
-    <target name="run-client-windows" if="windows">
-        <exec executable="${javaee.home}/bin/appclient.bat" dir="${classesdir}">
-            <arg value="client.Client"/>    
-        </exec>    
-    </target>
-
-    <target name="run-client-unix" if="unix"> 
-        <exec executable="${javaee.home}/bin/appclient" dir="${classesdir}" failifexecutionfails="false">
-            <arg value="client.Client"/>    
-        </exec>    
-    </target>
-
-    <target name="restore">
-        <delete>
-        <fileset dir="${autodeploydir}" includes="hellojaxws-2.2*.*"/>
-
-        </delete>
-    </target>
-
-    <target name="undeploy">
-        <antcall target="restore"/>
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
     </target>
 
 </project>
