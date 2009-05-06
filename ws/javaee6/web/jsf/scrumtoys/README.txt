@@ -1,7 +1,7 @@
 Note to sample developers.
 The actual source code for this sample is maintained in subversion 
 under the repository
- <https://mojarra.dev.java.net/svn/mojarra/branches/scrumtoys-glassfishv3>.
+ <https://mojarra.dev.java.net/svn/mojarra/branches/scrumtoys-glassfishv3-20090506>.
 
 The source code checked in here under CVS is arrived at by checking
 out the above repo and running 
