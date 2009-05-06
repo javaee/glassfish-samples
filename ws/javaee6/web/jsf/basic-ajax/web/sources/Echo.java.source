@@ -33,24 +33,28 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-
 package basicajax;
 
-import java.io.Serializable;
-import javax.faces.event.ActionEvent;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
+import java.io.Serializable;
 
-@ManagedBean(name = "count")
+@ManagedBean(name = "echo")
 @SessionScoped
-public class Count implements Serializable {
-    Integer count = 0;
+public class Echo implements Serializable {
+    String str = "hello";
 
-    public Integer getCount() {
-        return count++;
+    public String getStr() {
+        return str;
+    }
+
+    public void setStr(String str) {
+        this.str = str;
     }
 
     public void reset(ActionEvent ae) {
-        count = 0;
+        str = "";
     }
+
 }

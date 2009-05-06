@@ -61,10 +61,6 @@
         <!-- A no-op button, just to lose the focus from "in1" -->
         <h:commandButton id="button1" value="Echo" type="button"/>
         <br/>
-        <!-- Resets the string, refreshes the form, but not the page -->
-        <h:commandButton id="reset" value="reset"
-                            onclick="return resetpush(this, event);"
-                            actionListener="#{echo.reset}"/>
         <!-- Reloads the page, doesn't reset the string -->
         <h:commandButton id="reload" value="reload"/>
         <h:messages/>
