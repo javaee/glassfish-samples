@@ -52,80 +52,97 @@ import javax.inject.AnnotationLiteral;
 import javax.inject.Current;
 import javax.inject.manager.Manager;
 
+/**
+ * The Game class keeps track of Game information such as valid number ranges and 
+ * number guesses.  Each game interaction is a Web Beans <code>conversation</code>.
+ */
+ 
 @Named
 @ConversationScoped
 public class Game implements Serializable {
-   private int number;
+    private int number;
    
-   private int guess;
-   private int smallest;
+    private int guess;
+    private int smallest;
    
-   @MaxNumber
-   private int maxNumber;
+    @MaxNumber
+    private int maxNumber;
    
-   private int biggest;
-   private int remainingGuesses;
+    private int biggest;
+    private int remainingGuesses;
    
-   @Current Manager manager;
+    @Current Manager manager;
 
     private @Current Conversation conversation;
    
     public Game() {
     }
 
-   public int getNumber()
-   {
-      return number;
-   }
+    public int getNumber() {
+        return number;
+    }
    
-   public int getGuess()
-   {
-      return guess;
-   }
+    /**
+     * Return the user's number guess.
+     */
+    public int getGuess() {
+        return guess;
+    }
    
-   public void setGuess(int guess)
-   {
-      this.guess = guess;
-   }
+    /**
+     * Store the user's number guess.
+     */
+    public void setGuess(int guess) {
+        this.guess = guess;
+    }
    
-   public int getSmallest()
-   {
-      return smallest;
-   }
+    /**
+     * Return the low end of the number range of valid guesses.
+     */
+    public int getSmallest() {
+        return smallest;
+    }
    
-   public int getBiggest()
-   {
-      return biggest;
-   }
+    /**
+     * Return the high end of the number range of valid guesses.
+     */
+    public int getBiggest() {
+        return biggest;
+    }
    
-   public int getRemainingGuesses()
-   {
-      return remainingGuesses;
-   }
+    /**
+     * Determine how many guesses are left in the game.
+     */
+    public int getRemainingGuesses() {
+        return remainingGuesses;
+    }
    
-   public String check() throws InterruptedException
-   {
-      if (conversation.getId() == null) {
-          conversation.begin();
-      }
-System.out.println("CHECK() CONV ID:"+conversation.getId());
+    /**
+     * Start a new <code>conversation</code> scope if necessary.
+     * Check the users's guess and recalculate new number ranges.
+     */
+    public String check() throws InterruptedException {
+        if (conversation.getId() == null) {
+            conversation.begin();
+        }
 
-      if (guess>number)
-      {
-         biggest = guess - 1;
-      }
-      if (guess<number)
-      {
-         smallest = guess + 1;
-      }
-      if (guess == number)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correct!"));
-      }
-      remainingGuesses--;
-      return null;
-   }
+        if (guess>number) {
+            biggest = guess - 1;
+        }
+        if (guess<number) {
+            smallest = guess + 1;
+        }
+        if (guess == number) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correct!"));
+        }
+        remainingGuesses--;
+        return null;
+    }
    
+    /**
+     * Reset the game.  This will end the current <code>conversation</code> scope and
+     * start a new one.
+     */
     @PostConstruct
     public void reset() {
         this.smallest = 0;
@@ -135,19 +152,19 @@ System.out.println("CHECK() CONV ID:"+conversation.getId());
         this.number = manager.getInstanceByType(Integer.class, new AnnotationLiteral<Random>(){});
         conversation.end();
         conversation.begin();
-System.out.println("RESET() CONV ID:"+conversation.getId());
     }
    
-   public void validateNumberRange(FacesContext context,  UIComponent toValidate, Object value)
-   {
-      int input = (Integer) value;
+    /**
+     * Validate a number value within a number range.
+     */
+    public void validateNumberRange(FacesContext context,  UIComponent toValidate, Object value) {
+        int input = (Integer) value;
 
-      if (input < smallest || input > biggest) 
-	   {
-         ((UIInput)toValidate).setValid(false);
+        if (input < smallest || input > biggest) {
+            ((UIInput)toValidate).setValid(false);
 
-         FacesMessage message = new FacesMessage("Invalid guess");
-         context.addMessage(toValidate.getClientId(context), message);
-      }
-   }
+            FacesMessage message = new FacesMessage("Invalid guess");
+            context.addMessage(toValidate.getClientId(context), message);
+        }
+    }
 }
