@@ -65,6 +65,8 @@
             description="Create JavaMail Rar">
         <echo message="Creating connector rar "/>
         <copy file="${assemble.rar}/${rar.jar}" tofile="${assemble.rar}/${rar}"/>
+        <copy file="${assemble.rar}/${rar.jar}" tofile="../${rar.jar}"/>
+        <copy file="${assemble.rar}/${rar.jar}" tofile="../${rar}"/>
     </target>
 
     <!-- =================== CLEAN : JavaMail Connector RAR ========= -->
