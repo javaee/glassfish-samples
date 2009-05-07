@@ -75,7 +75,7 @@ server with which the build system has to work by following the <a
  href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
-directory: <code><i>install_dir</i>/samples/security/http-method-omission</code>.</li>
+directory: <code><i>install_dir</i>/samples/security/web-security-annotation</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
   <li>Open the browser and clear the browser cache.</li>
@@ -96,6 +96,29 @@ dist.
 clean</code> </p>
   </li>
 </ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Follow these instructions to build, deploy, and run
+this sample application using NetBeans IDE.
+</p>
+<ol>
+      <li>Download and install Netbeans IDE 6.7.</li>
+  
+  <li> In NetBeans IDE, select File->OpenProject and select 
+<code><i>install_dir</i>/samples/security/web-security-annotation</code> as the project.</li>
+<li>In Tools->Servers, add a new glassfish v3 server (taken from the Glassfish Javaone release) and start the server</li>
+<li>Access the adminconsole of the server (http://localhost:4848) and go to the Security->Realms->FileRealm node in the tree.</li>
+<li>Click the Manage Users button on the Edit Realm page to add a new user (UserID, Group List - javaee6user, password - abc123)</li>
+  <li> Right click on <code>web-security-annotation</code> and select <code>Run Project</code> which will build, deploy and run the project.</li>
+
+<p>
+Try the Post method to see a
+challenge posed to the user to enter username/password.Enter
+javaee6user/abc123 (the configured file-user for role javaee6user). Try
+the get method to check that all users are denied access.
+</p>
+</ol>
+
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer the <a
  href="../../../docs/UserTroubleShooting.html">
