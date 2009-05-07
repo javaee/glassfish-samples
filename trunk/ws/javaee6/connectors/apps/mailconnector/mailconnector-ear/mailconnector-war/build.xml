@@ -3,7 +3,7 @@
 
 <project name="mailconnector-war" default="default" basedir=".">
     <property name="is.war.module" value="true"/>
-    <property name="extra.classpath" value="../../mailconnector-ra/dist/rar/mailconnector.jar"/>
+    <property name="extra.classpath" value="../../mailconnector.jar"/>
 
     <import file="../../../../../../bp-project/main.xml"/>
 
