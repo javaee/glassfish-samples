@@ -5,7 +5,6 @@
     <property name="is.java-client.module" value="true"/>
 
     <import file="../../../../bp-project/jaxws.xml"/>
- <property file="${user.home}/build.properties"/>
 
     <property name="runjavaclient.class.name"
         value="enterprise.hello_singleton_client.SingletonJavaClient"/>
