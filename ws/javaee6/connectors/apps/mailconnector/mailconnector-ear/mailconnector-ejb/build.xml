@@ -4,7 +4,7 @@
 <project name="mailconnector-ejb" default="default" basedir=".">
 
     <property name="is.ejb-jar.module" value="true"/>
-    <property name="extra.classpath" value="../../mailconnector-ra/dist/rar/mailconnector.jar"/>
+    <property name="extra.classpath" value="../../mailconnector.jar"/>
 
     <import file="../../../../../../bp-project/main.xml"/>
 
