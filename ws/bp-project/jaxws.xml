@@ -5,7 +5,7 @@
 
 <project name="jaxws" default="dummy-default">
 
-<property file="${user.home}/build.properties"/>
+   <property file="../../../../bp-project/build.properties"/>
     <property name="jaxws.lib" value="${javaee.home}/modules"/>
 
     <path id="jaxws.classpath">
