@@ -132,7 +132,7 @@ server with which the build system has to work by following the <a
  href="../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
-directory: <code><i>install_dir</i>/samples/</code><code>webservices/hello-jaxws</code>.</li>
+directory: <code><i>install_dir</i>/samples/</code><code>webservices/hello-jaxws2.2</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
   <li>Build, deploy, and run the sample application using the <code>all</code>
@@ -140,27 +140,6 @@ target.<code></code></li>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 all</code><br>
   </p>
-  <p>You can replace the <code>ant all</code> command with the
-following set of
-commands:<br>
-  </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-compile-deploy-service</code> compiles and deploys the Webservice and
-creates a hello-jaxws2.2.war </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-get-artifacts</code> gets the artifacts from the running Hello
-Webservice </p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-compile-client</code> compiles the client</p>
-  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
-run-client</code> runs the client<br>
-  </p>
-  <li>To run this sample, the ant target invokes the <a href="../test">java
-client code</a>
-under the test directory. The sample can be run from the parent
-directory by using the <code>run</code> target or from the test
-directory by using <code>runtest</code>
-target. </li>
   <li>Use the target <code>clean</code> to undeploy the sample
 application and to
 remove the temporary directories such as build and dist.
