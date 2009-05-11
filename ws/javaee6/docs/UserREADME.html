@@ -150,6 +150,51 @@ application </li>
     <li><span style="font-weight: bold;">clean</span>: undeploys the
 application, removes the generated directories like build and dist</li>
   </ul>
+  <li>See <a href="JavaDB.html">Using Java DB with Sample applications</a>
+for information on configuring the built-in Java DB database and
+corresponding JDBC resources. </li>
+  <li>You can open the samples as netbeans
+projects in <a href="http://www.netbeans.org">NetBeans IDE</a>.
+    <ul>
+      <li> <a href="http://www.netbeans.org/downloads/index.html">Download</a>
+and install NetBeans IDE.&nbsp;<br>
+      </li>
+      <li> Configure the browser that the NetBeans IDE will use by
+selecting Tools-&gt;Options-&gt;General-&gt;WebBrowser </li>
+      <li> Configure and start Sun GlassFish Enterprise Server v3 from
+the NetBeans IDE. </li>
+      <li> Open any sample as a NetBeans project and right-click to
+execute the ant targets, say <code>run</code>.
+        <p><b>Note:</b> Because of a change in default behavior of
+NetBeans IDE
+6.x,
+when a samples main project is opened, the corresponding sub-projects
+are not opened. These sub-projects are needed for the successful
+building and running of the sample. The solution is to select the
+sub-projects by checking the corresponding check box when the main
+samples project is opened. Then follow the other instructions as
+mentioned in the sample documentation. </p>
+        <p>It is possible that the sample may not work correctly
+because of Netbeans caching. In that case, peform the following steps: </p>
+        <ul>
+          <li>Close NetBeans IDE and remove .netbeans directory from
+your home directory just to make sure nothing is cached. You may want
+to rename instead of deleting. </li>
+          <li>Start NetBeans IDE and Sun GlassFish Enterprise Server. </li>
+          <li>Open the specific sample project. Select the Open
+Required Projects option to avoid a File Not Found
+exception. </li>
+          <li>Run the create-file-user command using ant, if required. </li>
+          <li>Right-click the main sample project and select Run. </li>
+        </ul>
+        <p> </p>
+      </li>
+      <li> Detailed instructions including any pre-requisites are
+provided
+in the sample's
+documentation. </li>
+    </ul>
+  </li>
 </ol>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->
