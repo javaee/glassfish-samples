@@ -154,9 +154,10 @@ server with which the build system has to work by following the <a
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>install_dir</i>/samples/ejb/automatic-timer</code>.</li>
-  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
-    </i></code></li>
-  <li>Build, deploy, and run the sample application using the <code>all</code>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
+  <li>Make sure the JavaDB database is started. </li>
+  <li>Set up JDBC resources. Build, deploy, and run the sample
+application using the <code>all</code>
 target.<code></code></li>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 all</code><br>
@@ -171,12 +172,6 @@ default</code> compiles and packages the application </p>
 deploy</code> deploys it to application server </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run</code> runs the test java client </p>
-  <li>To run this sample, the ant target invokes the <a href="../test">java
-client code</a>
-under the test directory. The sample can be run from the parent
-directory by using the <code>run</code> target or from the test
-directory by using <code>runtest</code>
-target. </li>
   <li>Use the target clean to undeploy the sample application and to
 remove the temporary directories like build and dist.
     <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
@@ -185,7 +180,7 @@ clean</code> </p>
 </ol>
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer the <a
- href="../../../../javaee5/docs/UserTroubleShooting.html">
+ href="../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 </p>
 &nbsp;
