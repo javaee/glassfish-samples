@@ -69,10 +69,11 @@
     <target name="package-profiles" depends="init-dist"
         description="creates packages for bp-project, web-profile and classic-profile">
         <mkdir dir="${dist.dir}"/>
-	<antcall target="check-out-legal"/>
 	<antcall target="package-bp"/>
 	<antcall target="package-web"/>
 	<antcall target="package-classic"/>
+        <delete file="${dist.dir}/index.html"/>
+        <delete dir="${dist.dir}/javaee6"/>
     </target>
 
     <target name="package-bp" 
