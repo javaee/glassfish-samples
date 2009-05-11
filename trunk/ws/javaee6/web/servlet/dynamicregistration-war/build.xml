@@ -11,5 +11,9 @@
     <target name="all" unless="netbeans.home">
         <antcall target="run"/>
     </target>
-
+    
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+    
 </project>
