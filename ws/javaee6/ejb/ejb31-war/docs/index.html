@@ -159,7 +159,7 @@ app_dir/dist&gt;</span>; jar tvf ejb-ejb31-war.war</code> <br>
 <br>
 After
 deployment, the test servlet can be accessed at
-<a href="http://%3Chost%3E:%3Chttp-port%3E/ejb-ejb31-war/">http://&lt;host&gt;:&lt;http-port&gt;/ejb-ejb31-war/</a><br>
+http://&lt;host&gt;:&lt;http-port&gt;/ejb-ejb31-war/<br>
 <br>
 <h2>Building, Deploying, and Running the Application</h2>
 Perform the following steps to build, deploy, and run the
@@ -189,12 +189,6 @@ default</code> compiles and packages the application. </p>
 deploy</code> deploys it to application server. </p>
   <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
 run</code> runs the test java client. </p>
-  <li>To run this sample, the ant target invokes the <a href="../test">java
-client code</a>
-under the test directory. The sample can be run from the parent
-directory by using the <code>run</code> target or from the test
-directory by using <code>runtest</code>
-target. </li>
   <li>Use the target clean to undeploy the sample application and to
 remove the temporary directories like build and dist.
     <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
