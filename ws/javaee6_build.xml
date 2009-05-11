@@ -29,12 +29,12 @@
     />
 
     <patternset id="web.profile.contents"
-        includes="javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html,
-                  javaee6/jpa/**, javaee6/ejb/ejb31-war/**, javaee6/web/servlet/**, javaee6/web/jsf/**, javaee6/security/**"
+        includes="javaee6/index.html, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
+                  javaee6/jpa/**, javaee6/ejb/ejb31-war/**, javaee6/web/servlet/**, javaee6/web/jsf/**, javaee6/security/**, javaee6/webbeans/**"
         excludes="javaee6/**/test/**"/>
 
     <patternset id="classic.profile.contents"
-        includes="javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html,
+        includes="javaee6/index.html, javaee6/docs/Components.js, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html,
                   javaee6/ejb/automatic-timer/**, javaee6/rest/message-board-war/**, javaee6/webservices/**, javaee6/connectors/apps/mailconnector/**"
         excludes="javaee6/**/test/**"/>
 
@@ -72,8 +72,6 @@
 	<antcall target="package-bp"/>
 	<antcall target="package-web"/>
 	<antcall target="package-classic"/>
-        <delete file="${dist.dir}/index.html"/>
-        <delete dir="${dist.dir}/javaee6"/>
     </target>
 
     <target name="package-bp" 
@@ -90,10 +88,7 @@
 
     <target name="package-web"
         description="packages the web-profile samples into a single jar for SDK">
-        <copy file="javaee6/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
         <zip destfile="${dist.dir}/${release.dirname}-web-profile.jar">
-            <zipfileset dir="${dist.dir}" 
-                includes="index.html"/>
             <zipfileset dir="."> 
                 <patternset refid="web.profile.contents"/>
             </zipfileset>
@@ -102,11 +97,7 @@
 
     <target name="package-classic"
         description="packages the classic-profile samples into a single jar for SDK">
-        <copy file="javaee6/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
-        <copy file="javaee6/docs/Components.js" tofile="${dist.dir}/javaee6/docs/Components.js"/>
         <zip destfile="${dist.dir}/${release.dirname}-classic-profile.jar">
-            <zipfileset dir="${dist.dir}" 
-                includes="index.html, javaee6/docs/Components.js"/>
             <zipfileset dir="."> 
                 <patternset refid="classic.profile.contents"/>
             </zipfileset>
