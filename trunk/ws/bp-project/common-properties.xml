@@ -31,6 +31,29 @@
   <property file="nbproject/private/private.properties"/>
   <property file="${deploy.ant.properties.file}" />
 
+  <!-- try to configure javaee.home for clients that exercise a sample project -->
+  <loadfile srcFile="../nbproject/private/private.properties" property="javaee.home.foo" quiet="true">
+      <filterchain >
+          <linecontains >
+              <contains value="j2ee.server.instance=["/>
+          </linecontains>
+          <tokenfilter>
+              <replaceregex pattern="\].*[0-9]" replace=""/>
+          </tokenfilter>
+          <tokenfilter>
+              <replaceregex pattern="j2ee\.server\.instance=\[" replace=""/>
+          </tokenfilter>
+          <striplinebreaks/>
+      </filterchain>
+  </loadfile>
+
+  <condition property="javaee.home" value="${javaee.home.foo}">
+    <and>
+      <not><isset property="javaee.home"/></not>
+      <isset property="javaee.home.foo"/>
+    </and>
+  </condition>
+
   <!-- Look for a suitable value for javaee.home if it is not already set -->
   <condition property="javaee.home" value="${sjsas.root}">
     <and>
@@ -43,7 +66,7 @@
       <not><isset property="javaee.home"/></not>
       <isset property="com.sun.aas.InstallRoot"/>
     </and>
-  </condition>  
+  </condition>
 
   <target name="dummy-default"/>
 </project>
