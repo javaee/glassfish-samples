@@ -37,6 +37,7 @@ package enterprise.rest.test;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import java.net.URI;
 import javax.ws.rs.core.Response.Status;
@@ -73,6 +74,8 @@ public class MessageBoardTest {
         ClientResponse response = baseWebResource.path("app/messages").post(ClientResponse.class, "hello world!");
 
         assertTrue(response.getResponseStatus() == Status.CREATED);
+
+        c.resource(response.getLocation()).delete();
     }
 
     @Test public void testDeleteMessage() {
@@ -90,6 +93,18 @@ public class MessageBoardTest {
         assertTrue(s.contains("toDelete"));
 
         c.resource(u).delete();
+
+        boolean caught = false;
+
+        try {
+            s = c.resource(u).get(String.class);
+        } catch (UniformInterfaceException e) {
+            if (e.getResponse().getStatus() == 404) {
+                caught = true;
+            }
+        }
+
+        assertTrue(caught);
     }
 }
 

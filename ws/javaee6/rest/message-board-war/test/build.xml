@@ -27,4 +27,8 @@
             </test>
         </junit>
     </target>
+
+    <target name="-pre-clean">
+        <delete><fileset dir="."><include name="**/TEST-enterprise.rest.test.MessageBoardTest.xml" /></fileset></delete>
+    </target>
 </project>
