@@ -12,17 +12,18 @@
     <target name="all" depends="default,deploy">
         <antcall target="create-file-user"/>
         <antcall target="run"/>
-        <!--<antcall target="delete-file-user"/>-->
     </target>
 
 
     <target name="-pre-clean" depends="undeploy">
+        <antcall target="delete-file-user"/>
     </target>
   <target name="run">
     <antcall target="run-bp"/>
   </target>
 
    <target name="run-bp" unless="netbeans.home">
+<sleep seconds="5"/>
     <antcall target="launch"/>
   </target>
 
