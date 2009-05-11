@@ -12,11 +12,11 @@
     <target name="all" depends="default,deploy">
         <antcall target="create-file-user"/>
         <antcall target="run"/>
-        <!--<antcall target="delete-file-user"/>-->
     </target>
 
 
     <target name="-pre-clean" depends="undeploy">
+ 	<antcall target="delete-file-user"/>
     </target>
   <target name="run">
     <antcall target="run-bp"/>
