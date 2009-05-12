@@ -229,6 +229,7 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
            <arg line=" --port ${javaee.adminserver.port}" />
            <arg line=" --connectiondefinition ${connectiondefinition.name}" />
            <arg line=" --raname ${ra.name}" />
+           <arg line="${optional.attributes}"/>
            <arg line=" ${connector.pool.name} " />
        </exec>
     </target>
