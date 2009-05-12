@@ -46,6 +46,7 @@
         <antcall target="create-connector-connection-pool">
             <param name="ra.name" value="${connector.name}"/>
             <param name="connectiondefinition.name" value="${connectiondefinition.name}"/>
+            <param name="optional.attributes" value=" --steadypoolsize 2 " />
             <param name="connector.pool.name" value="${connector.pool.name}"/>
         </antcall>
     </target>
