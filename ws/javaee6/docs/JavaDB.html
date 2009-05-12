@@ -15,12 +15,12 @@
   </style>
 </head>
 <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
- link="#594fbf" vlink="#1005fb" alink="#333366" marginwidth="10">
-<table width="100%" border="0" cellspacing="4" cellpadding="2">
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td valign="top" align="right" bgcolor="#587993"> <font
- color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
@@ -29,75 +29,86 @@
 <h1>Using Java DB with Sample applications</h1>
 <p>
 The Java EE SDK includes the Java DB database server.
-This document describes how to start and stop the Java DB database server, create and delete databases using SQL scripts,
-create and delete JDBC connection pools, create and delete JDBC resources. 
-</p>
+This document describes how to start and stop the Java DB database
+server, create and delete databases using SQL scripts,
+create and delete JDBC connection pools, create and delete JDBC
+resources. </p>
 <p>
 Properties for the database are defined in the file <a
  href="../../bp-project/app-server.properties">bp-project/app-server.properties</a>.
-The <code>db.home</code> property specifies where Java DB creates new databases.
-Make sure that this property specifies a directory for which you have write
+The <code>db.home</code> property specifies where Java DB creates new
+databases.
+Make sure that this property specifies a directory for which you have
+write
 permission.</p>
 <p>
-Generally, each sample application has a <code>setup</code> sub-directory
-used to define the JDBC resources (and any other resources) needed for the project. The <a href="./javadb-setup/build.xml">build.xml</a> file in this directory
-defines Ant targets for manipulating the database. Usually, you must create and  
-populate the database and configure corresponding JDBC resources before running the
+Generally, each sample application has a <code>setup</code>
+sub-directory
+used to define the JDBC resources (and any other resources) needed for
+the project. The <a href="./javadb-setup/build.xml">build.xml</a> file
+in this directory
+defines Ant targets for manipulating the database. Usually, you must
+create and populate the database and configure corresponding JDBC
+resources before running the
 application. </p>
-
-<table border=1  cellpadding=3>
-<caption><b>Common Database Operations</b><br></caption>
-<tr>
-<th>Operation</th>
-<th>Ant command (target)</th>
-</tr>
-<tr><td>Start database server</td>
-<td>ant start-db </td>
-</tr>
-
-<tr><td>Stop database server</td>
-<td>ant stop-db </td>
-</tr>
-
-<tr><td>Create database using <a href="./javadb-setup/sql/create.sql">create
+<table border="1" cellpadding="3">
+  <caption><b>Common Database Operations</b><br>
+  </caption><tbody>
+    <tr>
+      <th>Operation</th>
+      <th>Ant command (target)</th>
+    </tr>
+    <tr>
+      <td>Start database server</td>
+      <td>ant start-db </td>
+    </tr>
+    <tr>
+      <td>Stop database server</td>
+      <td>ant stop-db </td>
+    </tr>
+    <tr>
+      <td>Create database using <a href="./javadb-setup/sql/create.sql">create
 sql script</a></td>
-<td>ant create-db</td>
-</tr>
-
-<tr><td>Delete database using <a href="./javadb-setup/sql/delete.sql">delete
+      <td>ant create-db</td>
+    </tr>
+    <tr>
+      <td>Delete database using <a href="./javadb-setup/sql/delete.sql">delete
 sql script</a></td>
-<td>ant delete-db</td>
-</tr>
-
-  <tr>
-<td>Create JDBC connection pool</td>
-<td>
+      <td>ant delete-db</td>
+    </tr>
+    <tr>
+      <td>Create JDBC connection pool</td>
+      <td>
 ant create-jdbc-connection-pool</td>
-</tr>
-
-  <tr><td>Delete JDBC connection pool</td><td>
-ant delete-jdbc-connection-pool</td></tr>
-
-  <tr><td>Create JDBC resource</td><td>
-ant create-jdbc-resource</td></tr>
-
-  <tr><td>Delete JDBC resource</td><td>
-ant delete-jdbc-resource</td></tr>
-
-  <tr><td>Create database, create JDBC connection pool and create JDBC resource</td><td>
-ant setup</td></tr>
-
-  <tr>
-<td>Delete database, delete JDBC connection pool and delete JDBC resource</td>
-<td>ant unsetup </td>
-</tr>
+    </tr>
+    <tr>
+      <td>Delete JDBC connection pool</td>
+      <td>ant delete-jdbc-connection-pool</td>
+    </tr>
+    <tr>
+      <td>Create JDBC resource</td>
+      <td>ant create-jdbc-resource</td>
+    </tr>
+    <tr>
+      <td>Delete JDBC resource</td>
+      <td>ant delete-jdbc-resource</td>
+    </tr>
+    <tr>
+      <td>Create database, create JDBC connection pool and create JDBC
+resource</td>
+      <td>ant setup</td>
+    </tr>
+    <tr>
+      <td>Delete database, delete JDBC connection pool and delete JDBC
+resource</td>
+      <td>ant unsetup </td>
+    </tr>
+  </tbody>
 </table>
-
 <br>
-
 <!--- Do not modify the rest of the document -->&nbsp;
 <hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com">Sun
 Microsystems, Inc.</a>
 All rights reserved. </p>
 <!--  end copyright  -->
