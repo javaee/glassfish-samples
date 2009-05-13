@@ -81,7 +81,7 @@ port number of the application server.</td>
       <tr align="left">
         <td valign="top">javaee.server.username</td>
         <td valign="top">The
-administrator username specified for the application server.</td>
+administrator username specified for the application server. If no username is specified, the default is <code>anonymous</code></td>
         <td valign="top">admin</td>
       </tr>
       <tr align="left">
@@ -92,7 +92,7 @@ password for the Java EE 6 SDK. The password file needs to be in the
 following format:
         <p><code>AS_ADMIN_PASSWORD=&lt;admin-password&gt;</code> </p>
         <p>Replace &lt;admin-password&gt; with
-the admin password of the application server.</p>
+the admin password of the application server. For <code>anonymous</code> user the password should be blank <code>AS_ADMIN_PASSWORD=&lt;""&gt;</code></p>
         </td>
         <td style="font-style: italic;" valign="top">/path/to/passwordfile</td>
       </tr>

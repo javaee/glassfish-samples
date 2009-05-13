@@ -34,7 +34,7 @@
         excludes="javaee6/**/test/**"/>
 
     <patternset id="classic.profile.contents"
-        includes="javaee6/index.html, javaee6/docs/Components.js, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html,
+        includes="javaee6/index.html, javaee6/docs/Components.js, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
                   javaee6/ejb/automatic-timer/**, javaee6/rest/message-board-war/**, javaee6/webservices/**, javaee6/connectors/apps/mailconnector/**"
         excludes="javaee6/**/test/**"/>
 
