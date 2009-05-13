@@ -23,8 +23,7 @@ javaee.adminserver.port=4848
 
 
 # administrator username of the app-server 
-javaee.server.username=admin
-
+javaee.server.username=anonymous
 
 # File that contains the password for the App-Server admin account. 
 # Edit this property to point to a file that 
@@ -32,9 +31,11 @@ javaee.server.username=admin
 # The file should contain the password in the following line: 
 #
 # AS_ADMIN_PASSWORD=adminadmin
+# 
+# For the default user anonymous there is no password in such case
+# the value for AS_ADMIN_PASSWORD should be blank as given below.
+# AS_ADMIN_PASSWORD="" 
 #
-# Notice that the password is adminadmin since this is 
-# the default password used by the glassfish app-server installation.
 # For your purpose, use the password that you chose while installing 
 # the SDK
 
