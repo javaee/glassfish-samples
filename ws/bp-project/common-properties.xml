@@ -32,7 +32,7 @@
   <property file="${deploy.ant.properties.file}" />
 
   <!-- try to configure javaee.home for clients that exercise a sample project -->
-  <loadfile srcFile="../nbproject/private/private.properties" property="javaee.home.foo" quiet="true">
+  <loadfile srcFile="../nbproject/private/private.properties" property="javaee.home.foo" failonerror="false">
       <filterchain >
           <linecontains >
               <contains value="j2ee.server.instance=["/>
