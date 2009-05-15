@@ -67,10 +67,10 @@ This document uses the following variables:
 <ul>
   <li><code><i>install_dir</i></code> is the directory where the
 application server is installed. </li>
-  <li><code><i>app_dir</i></code> is the application base directory: <code><i>install_dir</i>/samples/connectors/apps/mailconnector</code>.
+  <li><code><i>app_dir</i></code> is the application base directory: <code><i>samples_install_dir</i>/javaee6/connectors/apps/mailconnector</code>.
   </li>
   <li><code><i>ear_dir</i></code> is the <code>ear</code> base
-directory: <code><i>install_dir</i>/samples/connectors/apps/mailconnector</code>.
+directory: <code><i>samples_install_dir</i>/javaee6/connectors/apps/mailconnector</code>.
   </li>
   <li><i>appname</i> is the application name: mailconnector-ear. The
 resource adapter connector module is
@@ -296,11 +296,13 @@ clean</code> </p>
 use Netbeans IDE to open the pre
 configured projects for mailconnector-ear and mailconnector-ra. Once
 they are opened, <br>
-    configure the mailconnector-ra's dependencies to use
-    javax.mail.jar and javax.resource.jar from GlassFish installation.
-    <br>(<i>Right click</i> the mailconnector-ra project, select <i>Properties</i> > <i>Java Sources Classpath</i> and resolve
-    the dependencies to use the <i>javax.mail.jar and javax.resource.jar</i> in GlassFish Installation's <i>modules</i> directory)<br>
-    build mailconnector-ra and then build mailconnector-ear
+configure the mailconnector-ra's dependencies to use javax.mail.jar and
+javax.resource.jar from GlassFish installation. <br>
+(<i>Right click</i> the mailconnector-ra project, select <i>Properties</i>
+&gt; <i>Java Sources Classpath</i> and resolve the dependencies to use
+the <i>javax.mail.jar and javax.resource.jar</i> in GlassFish
+Installation's <i>modules</i> directory)<br>
+build mailconnector-ra and then build mailconnector-ear
 </p>
 <h2>Running the Sample Application</h2>
 <p>You can test the outbound resource adapter by running the
