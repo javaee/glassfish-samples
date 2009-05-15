@@ -25,12 +25,15 @@
         </subant>
     </target>
 
-    <target name="-pre-clean">
+    <target name="-pre-clean" depends="ant-undeploy">
         <subant target="clean">
             <fileset dir="locking_client" includes="build.xml"/>
         </subant>
     </target>
     
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
     
     
 </project>
