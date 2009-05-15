@@ -34,13 +34,17 @@ directory.
 </p>
 <h3>Procedure</h3>
 <p>In the instructions below, <code><span style="font-style: italic;">&lt;javaee.home&gt;</span></code>
-refers to the path where you installed the Java EE 6 SDK. Follow these
+refers to the path where you installed the Java EE 6 SDK and <code><span
+ style="font-style: italic;">&lt;ant.home&gt; </span></code>refers to
+the path where you installed Ant. Follow these
 steps
 to build a sample application:
 </p>
 <ol>
-  <li>Add <code><span style="font-style: italic;">&lt;javaee.home&gt;</span>/lib/ant/bin</code>
-directory to your PATH environment variable.&nbsp; </li>
+  <li>Add <code><span style="font-style: italic;">&lt;ant.home&gt;</span>/bin</code>
+directory to your PATH environment variable. The minimum version of Ant
+is 1.6.5. <br>
+  </li>
   <li>Edit the file <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties</code>
 and set the value of the following properties:<span
  style="font-weight: bold;"></span> </li>
@@ -81,7 +85,8 @@ port number of the application server.</td>
       <tr align="left">
         <td valign="top">javaee.server.username</td>
         <td valign="top">The
-administrator username specified for the application server. If no username is specified, the default is <code>anonymous</code></td>
+administrator username specified for the application server. If no
+username is specified, the default is <code>anonymous</code></td>
         <td valign="top">admin</td>
       </tr>
       <tr align="left">
@@ -92,7 +97,8 @@ password for the Java EE 6 SDK. The password file needs to be in the
 following format:
         <p><code>AS_ADMIN_PASSWORD=&lt;admin-password&gt;</code> </p>
         <p>Replace &lt;admin-password&gt; with
-the admin password of the application server. For <code>anonymous</code> user the password should be blank <code>AS_ADMIN_PASSWORD=&lt;""&gt;</code></p>
+the admin password of the application server. For <code>anonymous</code>
+user the password should be blank <code>AS_ADMIN_PASSWORD=&lt;""&gt;</code></p>
         </td>
         <td style="font-style: italic;" valign="top">/path/to/passwordfile</td>
       </tr>
