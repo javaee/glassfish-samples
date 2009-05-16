@@ -2,7 +2,7 @@
 
 <!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
 
-<project name="glassfish-samples" default="all" basedir=".">
+<project name="glassfish-samples" default="all" basedir="." xmlns:artifact="urn:maven-artifact-ant">
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
     <import file="bp-project/main.xml"/>
@@ -222,6 +222,57 @@
         <delete file="${dist.dir}/${release.dirname}.gf.jar"/>
         <delete dir="${dist.dir}/classes"/>
         <delete file="${manifest.file}"/>
+    </target>
+
+    <target name="initialize.maven">
+
+        <get
+           src="http://apache.hoxt.com/maven/binaries/maven-ant-tasks-2.0.9.jar"
+           dest="${dist.dir}/maven-ant-tasks-2.0.9.jar"
+           verbose="true"
+           usetimestamp="true"/>
+        <path id="maven-ant-tasks.classpath" path="${dist.dir}/maven-ant-tasks-2.0.9.jar" />
+        <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant"
+                 classpathref="maven-ant-tasks.classpath" />
+        <artifact:install-provider artifactId="wagon-svn" groupId="org.jvnet.wagon-svn" version="1.7">
+        <artifact:remoteRepository id="java.net.maven2.repository" url="http://download.java.net/maven/2/" />
+        <artifact:localRepository path="${maven.local.repo}"/>
+        </artifact:install-provider>
+    </target>
+
+    <target name="create.pom.file" if="artifact">
+        <copy file="samples_template.pom" tofile="${dist.dir}/pom-${artifact}.xml" overwrite="true">
+            <filterset>
+                <filter token="ARTIFACT_ID" value="${artifact}"/>
+                <filter token="VERSION" value="${release.version}"/>
+                <filter token="REPOSITORY_ID" value="java.net-maven2-repository"/>
+                <filter token="REPOSITORY_URL" value="java-net:/maven2-repository/trunk/repository/"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="upload.maven" depends="initialize.maven" description="Publish samples to Maven2 repository">
+        <echo message="release.version ${release.version}"/>
+
+        <antcall target="create.pom.file" >
+           <param name="artifact" value="bp-project"/>
+        </antcall>
+        <artifact:deploy file="${dist.dir}/${release.dirname}-bp-project.jar" uniqueVersion="false" >
+            <pom file="${dist.dir}/pom-bp-project.xml"/>
+        </artifact:deploy>
+        <antcall target="create.pom.file" >
+           <param name="artifact" value="web-profile"/>
+        </antcall>
+        <artifact:deploy file="${dist.dir}/${release.dirname}-web-profile.jar" uniqueVersion="false">
+            <pom file="${dist.dir}/pom-web-profile.xml"/>
+        </artifact:deploy>
+
+        <antcall target="create.pom.file" >
+           <param name="artifact" value="classic-profile"/>
+        </antcall>
+        <artifact:deploy file="${dist.dir}/${release.dirname}-classic-profile.jar" uniqueVersion="false">
+            <pom file="${dist.dir}/pom-classic-profile.xml"/>
+        </artifact:deploy>
     </target>
 
 </project>
