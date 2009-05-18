@@ -5,17 +5,7 @@
     <property name="is.war.module" value="true"/>
     <import file="../../../bp-project/main.xml"/>
 
-    <target name="runtest">
-        <subant target="runtest">
-            <fileset dir="test" includes="build.xml"/>
-        </subant>
-    </target>
+    <target name="-pre-clean" unless="netbeans.home" depends="undeploy" />
 
-    <target name="all" unless="netbeans.home" depends="run, runtest" />
-
-    <target name="-pre-clean">
-        <subant target="clean">
-            <fileset dir="test" includes="build.xml"/>
-        </subant>
-    </target>
+    <target name="all" unless="netbeans.home" depends="run" />
 </project>
