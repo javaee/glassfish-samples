@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="webbeans-guess" default="default" basedir=".">
+<project name="webbeans-guess" default="all" basedir=".">
     <property name="is.war.module" value="true"/>
     <property name="javadoc.packagenames" value="webbeans-guess"/>
     <import file="../../../bp-project/main.xml"/>
