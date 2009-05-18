@@ -13,9 +13,7 @@
             <source-roots>
                 <root id="src.java.dir"/>
             </source-roots>
-            <test-roots>
-                <root id="test.java.dir"/>
-            </test-roots>
+            <test-roots/>
         </data>
     </configuration>
 </project>
