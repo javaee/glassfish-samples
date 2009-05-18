@@ -256,21 +256,37 @@
         <antcall target="create.pom.file" >
            <param name="artifact" value="bp-project"/>
         </antcall>
+        <artifact:install file="${dist.dir}/${release.dirname}-bp-project.jar">
+            <pom file="${dist.dir}/pom-bp-project.xml"/>
+            <localRepository path="${maven.repo.local}"/>
+        </artifact:install>
         <artifact:deploy file="${dist.dir}/${release.dirname}-bp-project.jar" uniqueVersion="false" >
             <pom file="${dist.dir}/pom-bp-project.xml"/>
+            <localRepository path="${maven.repo.local}"/>
         </artifact:deploy>
+
         <antcall target="create.pom.file" >
            <param name="artifact" value="web-profile"/>
         </antcall>
+        <artifact:install file="${dist.dir}/${release.dirname}-web-profile.jar">
+            <pom file="${dist.dir}/pom-web-profile.xml"/>
+            <localRepository path="${maven.repo.local}"/>
+        </artifact:install>
         <artifact:deploy file="${dist.dir}/${release.dirname}-web-profile.jar" uniqueVersion="false">
             <pom file="${dist.dir}/pom-web-profile.xml"/>
+            <localRepository path="${maven.repo.local}"/>
         </artifact:deploy>
 
         <antcall target="create.pom.file" >
            <param name="artifact" value="classic-profile"/>
         </antcall>
+        <artifact:install file="${dist.dir}/${release.dirname}-classic-profile.jar">
+            <pom file="${dist.dir}/pom-classic-profile.xml"/>
+            <localRepository path="${maven.repo.local}"/>
+        </artifact:install>
         <artifact:deploy file="${dist.dir}/${release.dirname}-classic-profile.jar" uniqueVersion="false">
             <pom file="${dist.dir}/pom-classic-profile.xml"/>
+            <localRepository path="${maven.repo.local}"/>
         </artifact:deploy>
     </target>
 
