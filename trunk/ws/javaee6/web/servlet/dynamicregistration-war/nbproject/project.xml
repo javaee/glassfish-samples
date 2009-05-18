@@ -10,9 +10,7 @@
             <source-roots>
                 <root id="src.java.dir" name="Source Packages"/>
             </source-roots>
-            <test-roots>
-                <root id="test.java.dir" name="Test Packages"/>
-            </test-roots>
+            <test-roots/>
         </data>
     </configuration>
 </project>
