@@ -8,7 +8,7 @@
    <property file="../../../../bp-project/build.properties"/>
    
   <!-- try to configure javaee.home for clients that exercise a sample project -->
-  <loadfile srcFile="../nbproject/private/private.properties" property="javaee.home.foo" failonerror="false">
+  <loadfile srcFile="../nbproject/private/private.properties" property="javaee.home.foo" quiet="true">
       <filterchain >
           <linecontains >
               <contains value="j2ee.server.instance=["/>
