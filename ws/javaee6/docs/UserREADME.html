@@ -42,9 +42,9 @@ to build a sample application:
 </p>
 <ol>
   <li>Add <code><span style="font-style: italic;">&lt;ant.home&gt;</span>/bin</code>
-directory to your PATH environment variable. The minimum supported
-version of Ant
-is 1.6.5. <br>
+directory to your PATH environment variable. 
+The recommended version of Ant is 1.7.1 while some of the sample applications may work with Ant version 1.6.5.
+<br>
 Verify if you have a supported version of Ant by running the <code>ant
 -version</code> command. You can download Ant 1.7.1 from GlassFish
 Update
@@ -53,7 +53,9 @@ Tool topic in Chapter 1 of the <a
  href="http://docs.sun.com/app/docs/doc/820-7692">Sun GlassFish&nbsp;
 Enterprise Server v3 Administration Guide</a>. <br>
   </li>
-  <li>Copy <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties.sample</code>&nbsp;
+  <li>
+If <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties</code>&nbsp; does not exist,
+copy <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties.sample</code>&nbsp;
 to <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties.
     </code>Edit the file <code><i>&lt;javaee.home&gt;</i>/samples/bp-project/build.properties</code>
 and set the value of the following properties:<span
