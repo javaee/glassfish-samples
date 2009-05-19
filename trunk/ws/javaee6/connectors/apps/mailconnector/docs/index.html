@@ -296,14 +296,24 @@ clean</code> </p>
 use Netbeans IDE to open the pre
 configured projects for mailconnector-ear and mailconnector-ra. Once
 they are opened, <br>
+    <ol>
+    <li>
 configure the mailconnector-ra's dependencies to use javax.mail.jar and
 javax.resource.jar from GlassFish installation. <br>
+<p>
 (<i>Right click</i> the mailconnector-ra project, select <i>Properties</i>
 &gt; <i>Java Sources Classpath</i> and resolve the dependencies to use
 the <i>javax.mail.jar and javax.resource.jar</i> in GlassFish
 Installation's <i>modules</i> directory)<br>
-build mailconnector-ra and then build mailconnector-ear
 </p>
+</li>
+<li>
+build and deploy mailconnector-ra 
+</li>
+<li>
+build, deploy, run mailconnector-ear
+</li>
+</ol>
 <h2>Running the Sample Application</h2>
 <p>You can test the outbound resource adapter by running the
 MailConnector application.
