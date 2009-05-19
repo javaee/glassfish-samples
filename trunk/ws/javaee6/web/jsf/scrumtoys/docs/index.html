@@ -70,7 +70,50 @@ clean</code><br>
   </li>
 </ol>
 <h2>Troubleshooting</h2>
-If you have problems when running the application, refer the <a
+
+In case of receiving "Error on try to save Project" check if database is up. 
+<br>
+The domains/domain1/log/server.log file may contain the following errors:
+<p>
+<pre>
+[#|2009-05-14T23:23:17.140-0700|SEVERE|glassfish|org.eclipse.persistence.session
+.file:/C:/sdk/glassfish/samples/javaee6/web/jsf/scrumtoys/build/web/WEB-INF/clas
+ses/-scrumtoysPU.ejb|_ThreadID=18;_ThreadName=Thread-1;|
+Local Exception Stack:
+Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.0.0.v20090424-r40
+50): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: java.sql.SQLException: Error in allocating a connection. Cau
+se: Connection could not be allocated because: java.net.ConnectException : Error
+ connecting to server localhost on port 1527 with message Connection refused: co
+nnect.
+
+or
+
+[#|2009-05-14T16:37:52.578-0700|WARNING|glassfish|org.eclipse.persistence.sessio
+n.file:/C:/sdk/glassfish/domains/domain1/applications/scrumtoys/WEB-INF/classes/
+-scrumtoysPU|_ThreadID=15;_ThreadName=Thread-1;|
+Local Exception Stack:
+Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.0.0.v20090424-r40
+50): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: java.sql.SQLSyntaxErrorException: Table/View 'PROJECTS' does
+ not exist.
+</pre>
+
+Once the scrumtoys application is deployed while database is down, bringing
+database up will not fix the problem.  Restarting glassfish does not help
+either.  The only way to get the scrumtoys application working properly is to
+have the database up before *deploying* the application.  Thus to remedy the
+problem with not being able to save a project one needs to do the following:
+
+<p>
+<ol>
+<li>asadmin start-database
+<li>ant clean
+<li>ant run
+</ol>
+
+<p>
+If you still have problems when running the application, refer the <a
  href="../../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
 <br>
