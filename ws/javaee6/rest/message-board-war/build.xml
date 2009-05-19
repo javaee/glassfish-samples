@@ -5,7 +5,12 @@
     <property name="is.war.module" value="true"/>
     <import file="../../../bp-project/main.xml"/>
 
-    <target name="-pre-clean" unless="netbeans.home" depends="undeploy" />
+    <target name="-pre-clean" depends="ant-undeploy" />
 
     <target name="all" unless="netbeans.home" depends="run" />
+    
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+
 </project>
