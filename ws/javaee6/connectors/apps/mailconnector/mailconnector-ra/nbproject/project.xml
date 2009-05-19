@@ -44,6 +44,16 @@
                     <ide-action name="build"/>
                     <ide-action name="rebuild"/>
                     <ide-action name="clean"/>
+                    <action>
+                        <script>${ant.script}</script>
+                        <label>Deploy</label>
+                        <target>deploy_rar</target>
+                    </action>
+                    <action>
+                        <script>${ant.script}</script>
+                        <label>Undeploy</label>
+                        <target>undeploy_rar</target>
+                    </action>
                 </context-menu>
             </view>
             <subprojects/>
