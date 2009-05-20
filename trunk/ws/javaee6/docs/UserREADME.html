@@ -48,9 +48,8 @@ The recommended version of Ant is 1.7.1 while some of the sample applications ma
 Verify if you have a supported version of Ant by running the <code>ant
 -version</code> command. You can download Ant 1.7.1 from GlassFish
 Update
-Center. For instructions on using the Update Center, see the Update
-Tool topic in Chapter 1 of the <a
- href="http://docs.sun.com/app/docs/doc/820-7692">Sun GlassFish&nbsp;
+Center. For instructions on using the Update Center, see the <a
+ href="http://docs.sun.com/app/docs/doc/820-7692">Sun GlassFish
 Enterprise Server v3 Administration Guide</a>. <br>
   </li>
   <li>
@@ -177,13 +176,16 @@ projects in NetBeans IDE.
       <li> <a href="http://www.netbeans.org/downloads/index.html">Download</a>
 and install NetBeans IDE 6.7.&nbsp;<br>
       </li>
+      <li>You need JDK 6
+to run GlassFish v3. Set JDK 6 as your default JDK.<br>
+      </li>
       <li> Configure the browser that the NetBeans IDE will use by
 selecting Tools-&gt;Options-&gt;General-&gt;WebBrowser </li>
       <li> Configure and start Sun GlassFish Enterprise Server v3 from
 NetBeans IDE. <br>
-        <span style="font-weight: bold;">Note: </span>You need JDK 6
-to run GlassFish v3. In addition, install the GlassFish v3 Enabler
-plugin from the NetBeans Development Update Center. <br>
+        <span style="font-weight: bold;">Note:</span> Install the
+GlassFish v3 Enabler
+plugin from the Tools-&gt;Plugin dialog. <br>
       </li>
       <li> Open any sample as a NetBeans project and right-click to
 execute the ant targets, say <code>Run</code>.
@@ -200,7 +202,8 @@ mentioned in the sample documentation. </p>
 because of NetBeans caching. In that case, perform the following steps:
         </p>
         <ul>
-          <li>Close NetBeans IDE and remove .netbeans directory from
+          <li>Close NetBeans IDE and remove the .netbeans directory
+from
 your home directory just to make sure nothing is cached. You may want
 to rename instead of deleting. </li>
           <li>Start NetBeans IDE and Sun GlassFish Enterprise Server. </li>
