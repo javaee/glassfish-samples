@@ -4,6 +4,14 @@
     <property name="javadoc.packagenames" value="webbeans-guess"/>
     <import file="../../../bp-project/main.xml"/>
 
-    <target name="all" depends="default,deploy,run"/>
+    <target name="all" depends="run"/>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
 
 </project>
