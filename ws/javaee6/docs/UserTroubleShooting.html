@@ -56,6 +56,32 @@ database server is up and running and the resources are setup properly.
 Likewise, if the application usees JMS resources, make sure the MQ
 server is
 running and the JMS resources are configured properly. </li>
+<li>
+The recommended version of Ant is 1.7.1. 
+It is possible to use Ant 1.6.5 since certain samples support this
+version.
+The samples which do not support Ant 1.6.5 may cause exceptions
+similar to the following.
+<pre>
+C:\sonia2\glassfishv3\glassfish\samples\javaee6\security\http-method-omission\b
+ild.xml:9: The following error occurred while executing this line:
+C:\sonia2\glassfishv3\glassfish\samples\bp-project\main.xml:22: The
+following e
+ror occurred while executing this line:
+C:\sonia2\glassfishv3\glassfish\samples\bp-project\command-line-ant-tasks.xml:1
+: The following error occurred while executing this line:
+C:\sonia2\glassfishv3\glassfish\samples\bp-project\common-properties.xml:35:
+Th
+<loadfile> type doesn't support the "quiet" attribute. 
+</pre>
+To resolve this, one need to use Ant version 1.7.1 which can be
+downloaded using the Update Tool that is included with
+Sun GlassFish Enterprise Server. For instructions for using Update
+Tool, see
+<a href="http://docs.sun.com/doc/820-7692/ghapp">Extending Enterprise
+Server in <cite>Sun GlassFish Enterprise Server v3 Administration
+Guide</cite></a>.
+
 </ol>
 <p>
 The above list is evolving and is by no means exhaustive.
