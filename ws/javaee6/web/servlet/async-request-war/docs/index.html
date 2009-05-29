@@ -50,9 +50,8 @@ request
 corresponding to <code>AsyncContext</code>. </p>
       <p> </p>
     </li>
-    <li>In <code>doGet</code>, start asynchronous, set the timeout to
-ten
-minutes, and add <code>AsyncContext</code> to a queue as follows:
+    <li>In <code>doGet</code>, set the timeout to ten minutes,
+start asynchronous, and add <code>AsyncContext</code> to a queue as follows:
 <p> <code>req.setAsyncTimeout(10 * 60 * 1000);<br>
 final AsyncContext ac = req.startAsync();<br>
 queue.add(ac);</code><br>
