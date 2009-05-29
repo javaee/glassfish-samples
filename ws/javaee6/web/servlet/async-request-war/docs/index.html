@@ -47,19 +47,19 @@ acWriter.flush();</code><br>
       </p>
       <p> The preceding code writes a message to each asynchronous
 request
-corresponding to <code>AsynContext</code>. </p>
+corresponding to <code>AsyncContext</code>. </p>
       <p> </p>
     </li>
     <li>In <code>doGet</code>, start asynchronous, set the timeout to
 ten
 minutes, and add <code>AsyncContext</code> to a queue as follows:
-      <p> <code>final AsyncContext ac = req.startAsync();<br>
-req.setAsyncTimeout(10 * 60 * 1000);<br>
+<p> <code>req.setAsyncTimeout(10 * 60 * 1000);<br>
+final AsyncContext ac = req.startAsync();<br>
 queue.add(ac);</code><br>
       </p>
       <p> Registers <code>AsyncListener</code> to the given request.
 In
-this case, only clean up the <code>AsynContext</code> from the queue. </p>
+this case, only clean up the <code>AsyncContext</code> from the queue. </p>
       <p><code> req.addAsyncListener(new AsyncListener() {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;public void onComplete(AsyncEvent event) throws
 IOException {<br>
