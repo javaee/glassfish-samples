@@ -42,6 +42,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
+import javax.validation.ConstraintPayload;
 
 @Documented
 @Constraint(validatedBy = SprintNameUniquenessConstraintValidator.class)
@@ -52,6 +53,8 @@ public @interface SprintNameUniquenessConstraint {
 	String message() default "{sprint.form.label.name.unique}";
 
 	Class<?>[] groups() default {};
+
+    Class<? extends ConstraintPayload>[] payload() default {};
     
 
 }
