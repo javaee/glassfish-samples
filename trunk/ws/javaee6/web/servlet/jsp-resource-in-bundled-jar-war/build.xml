@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="jspResourceInBundledJar_war" default="all" basedir=".">
+
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="web.servlet.jspResourceInBundledJar_war"/>
+    <property name="run.uri" value="jspResourceInBundledJar_war/jsp/helloWorld.jsp"/>
+
+
+    <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="run"/>
+    </target>
+    
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+    
+</project>
