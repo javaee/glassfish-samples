@@ -35,8 +35,7 @@
  */
 package web.servlet.sessioncookieconfig_war;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
 import org.junit.*;
 
 /**
@@ -72,11 +71,7 @@ public class SessioncookieconfigWarTest {
                         ex);
         } finally {
             if (conn != null) {
-                try {
-                    conn.disconnect();
-                } catch (IOException ioe) {
-                    // ignore
-                }
+                conn.disconnect();
             }
         }
     }
