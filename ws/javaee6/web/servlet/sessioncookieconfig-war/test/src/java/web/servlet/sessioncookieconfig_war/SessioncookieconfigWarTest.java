@@ -46,9 +46,6 @@ import org.junit.*;
  */
 public class SessioncookieconfigWarTest {
 
-    private static final String REQUEST_URI =
-        "/sessioncookieconfig_war/createSession";
-
     private String host = null;
     private int port = 8080;
 
@@ -60,7 +57,7 @@ public class SessioncookieconfigWarTest {
 
     @Test
     public void testWebClient() {
-        String url = "http://" + host + ":" + port + REQUEST_URI;
+        String url = "http://" + host + ":" + port + "/sessioncookieconfig_war/";
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection)(new URL(url)).openConnection();
