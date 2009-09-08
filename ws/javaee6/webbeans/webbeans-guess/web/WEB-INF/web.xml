@@ -7,10 +7,6 @@
    
    <display-name>Web Beans Numberguess example</display-name>
 
-    <listener>
-        <listener-class>org.jboss.webbeans.servlet.WebBeansListener</listener-class>
-    </listener>
-
 
    <!-- JSF -->
 
