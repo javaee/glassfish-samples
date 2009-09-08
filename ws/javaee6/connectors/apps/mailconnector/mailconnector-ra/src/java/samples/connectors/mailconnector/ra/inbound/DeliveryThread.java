@@ -70,7 +70,7 @@ public class DeliveryThread  implements Work
     {
         this.endpointConsumer = endpointConsumer;
         
-        logger.info("[DeliveryThread::Constructor] Leaving");
+        logger.fine("[DeliveryThread::Constructor] Leaving");
 
     }
 
@@ -80,7 +80,7 @@ public class DeliveryThread  implements Work
 
     public void release()
     {
-        logger.info("[DT] Worker Manager called release for deliveryThread ");
+        logger.fine("[DT] Worker Manager called release for deliveryThread ");
     }
 
     /**
@@ -89,7 +89,7 @@ public class DeliveryThread  implements Work
 
     public void run()
     { 
-	//logger.info("[DT] WorkManager started delivery thread ");
+	logger.fine("[DT] WorkManager started delivery thread ");
                 
         try
 	{
@@ -99,6 +99,6 @@ public class DeliveryThread  implements Work
             te.printStackTrace();
         }
         
-	//logger.info("[DT] DeliveryThread leaving");
+	logger.fine("[DT] DeliveryThread leaving");
     }    
 }

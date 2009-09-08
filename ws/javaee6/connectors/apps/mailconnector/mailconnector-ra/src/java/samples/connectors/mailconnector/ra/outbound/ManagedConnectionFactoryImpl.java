@@ -79,7 +79,7 @@ public class ManagedConnectionFactoryImpl implements
 
     public ManagedConnectionFactoryImpl() 
     {
-        logger.info(" 1.- ManagedConnectionFactoryImpl::Constructor");
+        logger.fine(" 1.- ManagedConnectionFactoryImpl::Constructor");
     }
 
     /**
@@ -99,7 +99,7 @@ public class ManagedConnectionFactoryImpl implements
     public Object createConnectionFactory(ConnectionManager cxManager) 
 	throws ResourceException
     {
-    	logger.info(" 2.- MCF::createConnectionFactory(cxManager)");
+    	logger.fine(" 2.- MCF::createConnectionFactory(cxManager)");
     	JavaMailConnectionFactoryImpl cf = null;
     	try
 	{
@@ -124,7 +124,7 @@ public class ManagedConnectionFactoryImpl implements
     public Object createConnectionFactory() 
 	throws ResourceException
     {
-        logger.info(" 2.- MCF::createConnectionFactory()");
+        logger.fine(" 2.- MCF::createConnectionFactory()");
         return new JavaMailConnectionFactoryImpl(this, null);
     }
 
@@ -148,7 +148,7 @@ public class ManagedConnectionFactoryImpl implements
 				ConnectionRequestInfo cxRequestInfo) 
 	throws ResourceException
     {
-    	logger.info(" 3A.- ManagedConnectionFactory::createManagedConnection(Subject, cxM)");
+    	logger.fine(" 3A.- ManagedConnectionFactory::createManagedConnection(Subject, cxM)");
         String userName = null;
         ManagedConnectionImpl mc = null;
 

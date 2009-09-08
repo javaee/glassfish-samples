@@ -55,7 +55,7 @@ public class ConnectionManagerImpl implements ConnectionManager, Serializable
 
     public ConnectionManagerImpl() 
     {
-	logger.info("In ConnectionManagerImpl");
+	logger.fine("In ConnectionManagerImpl");
     }
 
     /**

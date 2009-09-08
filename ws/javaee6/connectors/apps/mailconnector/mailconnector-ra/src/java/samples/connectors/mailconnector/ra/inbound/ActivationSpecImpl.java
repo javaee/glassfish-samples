@@ -82,8 +82,8 @@ public class ActivationSpecImpl implements javax.resource.spi.ActivationSpec,
     )
     private String protocol = new String("imap");
     
-    // Polling interval (milliseconds)
-    private String interval = new String("4");
+    // Polling interval (seconds)
+    private String interval = new String("30");
     
     /**
      * Constructor. Creates a new instance of the base activation spec.

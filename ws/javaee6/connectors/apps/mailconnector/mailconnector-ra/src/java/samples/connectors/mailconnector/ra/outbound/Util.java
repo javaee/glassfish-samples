@@ -87,7 +87,7 @@ public class Util
 	{
             if (info == null) 
 	    {
-	        //logger.info("\tUtil::GetPasswordCred: INFO is null");
+	        logger.fine("\tUtil::GetPasswordCred: INFO is null");
                 return null;
             } else {
 
@@ -98,7 +98,7 @@ public class Util
 
 		if (myinfo.getUserName() == null || myinfo.getPassword() == null)
 		{
-		    //logger.info("\tUtil::GetPasswordCred: User or password is null");
+		    logger.fine("\tUtil::GetPasswordCred: User or password is null");
 		    return null;
 		}
 
@@ -108,7 +108,7 @@ public class Util
                     new PasswordCredential(myinfo.getUserName(), password);
 
                 pc.setManagedConnectionFactory(mcf);
-		//logger.info("\tUtil::GetPasswordCred: returning a created PC");
+		logger.fine("\tUtil::GetPasswordCred: returning a created PC");
                 return pc;
             }
         } else {
@@ -140,7 +140,7 @@ public class Util
                 throw new java.lang.SecurityException( 
                     resource.getString("util.no_credential"));
             } else {
-	        //logger.info("\tUtil::GetPasswordCred: returning a FOUND PC");
+	        logger.fine("\tUtil::GetPasswordCred: returning a FOUND PC");
                 return pc;
             }
         }
