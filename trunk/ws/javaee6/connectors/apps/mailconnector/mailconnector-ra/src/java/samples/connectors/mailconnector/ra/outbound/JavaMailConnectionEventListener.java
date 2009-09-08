@@ -66,7 +66,7 @@ public class JavaMailConnectionEventListener
 
     public JavaMailConnectionEventListener(ManagedConnection mcon) 
     {
-	logger.info(" 3C.- JavaMailConnectionEventListener::Constructor");
+	logger.fine(" 3C.- JavaMailConnectionEventListener::Constructor");
         listeners = new Vector();
         this.mcon = mcon;
     }

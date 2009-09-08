@@ -90,7 +90,7 @@ public class JavaMailConnectionFactoryImpl implements
     public JavaMailConnectionFactoryImpl(ManagedConnectionFactory mcf, 
                                          ConnectionManager cm) 
     {
-        logger.info(" 3. JavaMailConnectionFactoryImpl::Constructor"); 
+        logger.fine(" 3. JavaMailConnectionFactoryImpl::Constructor");
         this.mcf = mcf;
         if (cm == null) 
 	{
@@ -112,13 +112,13 @@ public class JavaMailConnectionFactoryImpl implements
     {
         JavaMailConnection con = null;
 
-        logger.info(" 3.- JMCFI::createConnection -- Client requested a connection. Get it from Connection Manager"); 
+        logger.fine(" 3.- JMCFI::createConnection -- Client requested a connection. Get it from Connection Manager");
         
 	// Use the default values of the Managed connection factory
 
         con = (JavaMailConnection) cm.allocateConnection(mcf, null);
 
-        logger.info(" 6.- JMCFI::createConnection -- Returning Connection to Client"); 
+        logger.fine(" 6.- JMCFI::createConnection -- Returning Connection to Client");
 
         return con;
     }
@@ -140,7 +140,7 @@ public class JavaMailConnectionFactoryImpl implements
     {
         JavaMailConnection con = null;
 
-        logger.info(" 3.- JMCFI::createConnection -- Client requested a connection. Get it from Connection Manager"); 
+        logger.fine(" 3.- JMCFI::createConnection -- Client requested a connection. Get it from Connection Manager");
 
         ConnectionRequestInfoImpl info =
             new ConnectionRequestInfoImpl(
@@ -153,7 +153,7 @@ public class JavaMailConnectionFactoryImpl implements
 
         con = (JavaMailConnection)cm.allocateConnection(mcf, info);
 
-	logger.info(" 6.- JMCFI::createConnection -- Returning Connection to user");
+	logger.fine(" 6.- JMCFI::createConnection -- Returning Connection to user");
 
         return con;
     }
@@ -226,7 +226,7 @@ public class JavaMailConnectionFactoryImpl implements
 
     public void setReference(Reference reference) 
     {
-        logger.info("In JavaMailConnectionFactoryImpl::setReference");
+        logger.fine("In JavaMailConnectionFactoryImpl::setReference");
         this.reference = reference;
     }
 
@@ -240,7 +240,7 @@ public class JavaMailConnectionFactoryImpl implements
 
     public Reference getReference() 
     {
-        logger.info("In JavaMailConnectionFactoryImpl::getReference");
+        logger.fine("In JavaMailConnectionFactoryImpl::getReference");
         return reference;
     }
 }
