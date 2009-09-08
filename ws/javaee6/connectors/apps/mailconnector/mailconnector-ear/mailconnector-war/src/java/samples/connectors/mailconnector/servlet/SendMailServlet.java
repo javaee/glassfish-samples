@@ -91,8 +91,8 @@ public class SendMailServlet extends HttpServlet {
         response.setContentType("text/html");
         writer.println("<html>");
         writer.println("<head>");
-        writer.println("<title>Sun Java System Application Server " +
-                       "Connector 1.5 Examples: Sending Results</title>");
+        writer.println("<title>GlassFish v3 : " +
+                       "Connector 1.6 Examples: Sending Results</title>");
         writer.println("</head>");
         writer.println("<body bgcolor=\"white\">");
 
