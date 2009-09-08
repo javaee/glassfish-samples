@@ -202,7 +202,7 @@ public class ResourceAdapterImpl
 
     public void stop() 
     {    
-        logger.info("[RA.stop()] Stopping the polling thread");
+        logger.fine("[RA.stop()] Stopping the polling thread");
 	try
 	{
 	    ((PollingThread)pollingThread).stopPolling();

@@ -102,7 +102,7 @@ public class ManagedConnectionImpl implements ManagedConnection
         throws ResourceException
     {
         myId = testCounter++;
-        logger.info(" 3B.- (" + myId + ") ManagedConnection::constructor");
+        logger.fine(" 3B.- (" + myId + ") ManagedConnection::constructor");
         this.mcf = mcf;
 	
 	// Note: this will select the credential that matches this MC's MCF.
@@ -134,7 +134,7 @@ public class ManagedConnectionImpl implements ManagedConnection
                                 ConnectionRequestInfo cxRequestInfo) 
  	throws ResourceException
     {
-	logger.info(" 4.- (" + myId + ") testManagedConnection::getConnection: ConnectionManager requested a Connection handle");
+	logger.fine(" 4.- (" + myId + ") testManagedConnection::getConnection: ConnectionManager requested a Connection handle");
 
         checkIfDestroyed();
 
@@ -165,7 +165,7 @@ public class ManagedConnectionImpl implements ManagedConnection
 	{
 	    folder = store.getFolder(folderName);
 	} catch (Exception e) {
-      	    logger.info("ManagedConnectionImpl::getConnection threw exception: " + e);
+      	    logger.warning("ManagedConnectionImpl::getConnection threw exception: " + e);
 	    throw new ResourceException(e.getMessage());
         } 
         
@@ -188,7 +188,7 @@ public class ManagedConnectionImpl implements ManagedConnection
         if (destroyed) 
 	    return;
 
-        logger.info(" 9.- (" + myId + ") ManagedConnection::destroy called");
+        logger.fine(" 9.- (" + myId + ") ManagedConnection::destroy called");
         destroyed = true;
 
         testCounter--;
@@ -199,7 +199,7 @@ public class ManagedConnectionImpl implements ManagedConnection
 	{
 	    store.closeStore();
 	} catch (Exception e) {
-      	    logger.info("ManagedConnectionImpl::destroy threw exception: " + e);
+      	    logger.warning("ManagedConnectionImpl::destroy threw exception: " + e);
 	    throw new ResourceException(e.getMessage());
         } 
 
@@ -218,7 +218,7 @@ public class ManagedConnectionImpl implements ManagedConnection
     {
         checkIfDestroyed();
         
-        logger.info(" 8.- (" + myId + ") ManagedConnection::cleanup called");
+        logger.fine(" 8.- (" + myId + ") ManagedConnection::cleanup called");
 
 	invalidateJavaMailConnections();
     }
@@ -502,7 +502,7 @@ public class ManagedConnectionImpl implements ManagedConnection
     
     public boolean isTheSameStore(ConnectionRequestInfoImpl cxRequestInfo)
     {
-        logger.info(" X.- (" + myId + ") ManagedConnection::isTheSame called");
+        logger.fine(" X.- (" + myId + ") ManagedConnection::isTheSame called");
         return store.isTheSameStore(cxRequestInfo);
     }
     /** Physical connection **/
@@ -565,7 +565,7 @@ public class ManagedConnectionImpl implements ManagedConnection
 	{
 	    return store.getNewMessages(folder);
 	} catch (Exception e) {
-      	    logger.info("ManagedConnectionImpl::getNewMessages threw exception: " + e);
+      	    logger.warning("ManagedConnectionImpl::getNewMessages threw exception: " + e);
 	    throw new ResourceException(e.getMessage());
         } 
     }
@@ -583,7 +583,7 @@ public class ManagedConnectionImpl implements ManagedConnection
 	{
 	    return store.getNewMessageHeaders(folder);
 	} catch (Exception e) {
-      	    logger.info("ManagedConnectionImpl::getNewMessageHeaders threw exception: " + e);
+      	    logger.warning("ManagedConnectionImpl::getNewMessageHeaders threw exception: " + e);
 	    throw new ResourceException(e.getMessage());
         } 
     } 

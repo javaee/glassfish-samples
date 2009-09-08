@@ -66,7 +66,7 @@ public class PollingThread  implements Work
     protected transient WorkManager workManager;    
     private   transient HashMap     endpointConsumers = null;
 
-    private static int              QUANTUM = 10000; // 10 Seconds
+    private static int              QUANTUM = 30 ; // 30 Seconds
 
     /**
      * Constructor.
@@ -85,7 +85,7 @@ public class PollingThread  implements Work
 
         endpointConsumers = new HashMap(10);
         
-        logger.info("[PollinThread::Constructor] Leaving");
+        logger.info("[PollingThread::Constructor] Leaving");
     }
 
     /**
@@ -114,7 +114,7 @@ public class PollingThread  implements Work
             try
             {
                 pollEndpoints();
-                Thread.sleep(QUANTUM);
+                Thread.sleep(QUANTUM * 1000L);
             } catch(Exception e) {
                 e.printStackTrace();
             }           
@@ -125,7 +125,7 @@ public class PollingThread  implements Work
     
     private void pollEndpoints()
     { 
-	//logger.info("[PT] polling endpoints entering");
+	logger.info("[PT] Polling endpoints entering");
         
         synchronized(endpointConsumers)
         {
@@ -150,7 +150,7 @@ public class PollingThread  implements Work
                 }
         }
         
-	//logger.info("[PT] Polling endpoints Leaving");
+	logger.info("[PT] Polling endpoints Leaving");
     }
 
     /**

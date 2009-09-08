@@ -78,7 +78,7 @@ public class JavaMailConnectionImpl implements JavaMailConnection
     {
         this.mc = mc;
         this.folder = folder;
-	logger.info(" 5. JavaMailConnectionImpl::Constructor");
+	logger.fine(" 5. JavaMailConnectionImpl::Constructor");
     }
   
     
@@ -179,7 +179,7 @@ public class JavaMailConnectionImpl implements JavaMailConnection
 
     void invalidate() 
     {
-	logger.info(" -- In JavaMailConnectionImpl::invalidate mc=" + mc);
+	logger.fine(" -- In JavaMailConnectionImpl::invalidate mc=" + mc);
         mc = null;
     }
 
@@ -197,7 +197,7 @@ public class JavaMailConnectionImpl implements JavaMailConnection
 	{
 	    return mc.getNewMessages(folder);
 	} catch (Exception e) {
-      	    logger.info("ManagedConnectionImpl::getNewMessages threw exception: " + e);
+      	    logger.warning("ManagedConnectionImpl::getNewMessages threw exception: " + e);
 	    throw new ResourceException(e.getMessage());
         } 
     }
@@ -216,7 +216,7 @@ public class JavaMailConnectionImpl implements JavaMailConnection
 	{
 	    return mc.getNewMessageHeaders(folder);
 	} catch (Exception e) {
-      	    logger.info("ManagedConnectionImpl::getNewMessageHeaders threw exception: " + e);
+      	    logger.warning("ManagedConnectionImpl::getNewMessageHeaders threw exception: " + e);
 	    throw new ResourceException(e.getMessage());
         } 
     } 

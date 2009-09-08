@@ -67,7 +67,7 @@ public class ConnectionMetaDataImpl implements ConnectionMetaData
 
     public ConnectionMetaDataImpl(ManagedConnectionImpl mc) 
     {
-	logger.info("ConnectionMetaDataImpl::constructor");
+	logger.fine("ConnectionMetaDataImpl::constructor");
         this.mc = mc;
     }
 
