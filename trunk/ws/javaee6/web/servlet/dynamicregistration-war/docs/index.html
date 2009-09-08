@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-  <title>The Dynamic Registration of Servlets and Filters Sample
+  <title>The Dynamic Registration of Servlets, Filters, and Listeners Sample
 Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
@@ -29,33 +29,16 @@ Application</title>
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
 </a></p>
-<h1>The Servlet 3.0 Dynamic Registration of Servlets and Filters Sample
-Application</h1>
-This sample application features the dynamic registration of Servlets
-and Filters from a ServletContextListener.<br>
+<h1>The Servlet 3.0 Dynamic Registration of Servlets, Filters, and Listeners Sample Application</h1>
+This sample application demonstrates the dynamic registration facilities for Servlets, Filters, and Listeners that were added in Servlet 3.0.<br>
 <h2>Description</h2>
-<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt>
-(of type <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>)
-in its deployment descriptor. The ServletContextListener registers a
-Servlet (of type <tt>web.servlet.dynamicregistration_war.TestServlet</tt>)
-with name <tt>DynamicServlet</tt> and a Filter (of type <tt>web.servlet.dynamicregistration_war.TestFilter</tt>)
-with name <tt>DynamicFilter</tt> in response to the <tt>ServletContextListener.contextInitialized</tt>
-event.
+<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt> (of type <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>) in its deployment descriptor. This ServletContextListener registers a <tt>javax.servlet.Servlet</tt> (of type <tt>web.servlet.dynamicregistration_war.TestServlet</tt>) with name <tt>DynamicServlet</tt>, a <tt>javax.servlet.Filter</tt> (of type <tt>web.servlet.dynamicregistration_war.TestFilter</tt>) with name <tt>DynamicFilter</tt>, and a <tt>javax.servlet.ServletRequestListener</tt> (of type <tt>web.servlet.dynamicregistration_war.TestServletRequestListener</tt>) in response to the <tt>ServletContextListener.contextInitialized</tt> event.
 </p>
-<p>The Servlet and Filter are registered using the <tt>ServletContext.addServlet</tt>
-and <tt>ServletContext.addFilter</tt> methods, respectively. These
-methods are new in Servlet 3.0.
+<p>The <tt>Servlet</tt>, <tt>Filter</tt>, and <tt>ServletRequestListener</tt> are registered using the <tt>ServletContext.addServlet</tt>, <tt>ServletContext.addFilter</tt>, and <tt>ServletContext.addListener</tt> methods, respectively, which are new in Servlet 3.0.
 </p>
-<p>The former returns a <tt>javax.servlet.ServletRegistration</tt>
-object through which all aspects of the registered Servlet, including
-its mappings and initialization parameters, may be configured, whereas
-the latter returns a <tt>FilterRegistration</tt> object, through which
-all aspects of the registered Filter, including its mappings and
-initialization parameters, may be configured.
+<p><tt>ServletContext.addServlet</tt> returns a <tt>javax.servlet.ServletRegistration</tt> object, through which all aspects of the registered <tt>Servlet</tt>, including its mappings and initialization parameters, may be configured. Similarly, <tt>ServletContext.addFilter</tt> returns a <tt>FilterRegistration</tt> object, through which all aspects of the registered <tt>Filter</tt>, including its mappings and initialization parameters, may be configured.
 </p>
-<p>This sample application then accesses the Servlet at its designated
-URI, and checks to make sure that the Filter that was mapped to the
-Servlet has also been invoked.
+<p>The sample application then accesses the registered <tt>Servlet</tt> at its designated URI. The <tt>Servlet</tt> makes sure that the <tt>ServletRequestListener</tt>, as well as the <tt>Filter</tt> that was mapped to the <tt>Servlet</tt>, have both been invoked, by checking for the existence of <tt>ServletRequest</tt> attributes that were supposed to have been set by these entities.
 <br>
 </p>
 <h2>Building, Deploying, and Running the Application</h2>

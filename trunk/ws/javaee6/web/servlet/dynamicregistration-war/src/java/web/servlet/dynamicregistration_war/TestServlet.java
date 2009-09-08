@@ -73,7 +73,16 @@ public class TestServlet extends HttpServlet {
         }
 
         if (!"filterInitValue".equals(req.getAttribute("filterInitName"))) {
-            throw new ServletException("Missing filter init param");
+            throw new ServletException("Missing request attribute that was " +
+                "supposed to have been set by programmtically registered " +
+                "Filter");
+        }
+
+        if (!"listenerAttributeValue".equals(req.getAttribute(
+                "listenerAttributeName"))) {
+            throw new ServletException("Missing request attribute that was " +
+                "supposed to have been set by programmtically registered " +
+                "ServletRequestListener");
         }
 
         res.getWriter().println("HELLO WORLD!\n");
