@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="web-customvalve-war-test" default="runtest" basedir=".">
+
+    <import file="../../../../../bp-project/test.xml"/>
+
+    <target name="runtest" depends="compile">
+        <echo message="Testing ${module.name} ..."/>
+        <java classname="org.junit.runner.JUnitCore" fork="on">
+            <sysproperty key="javaee.server.name" value="${javaee.server.name}"/>
+            <sysproperty key="javaee.server.port" value="${javaee.server.port}"/>
+            <arg value="web.container.customvalve_war.CustomvalveWarTest"/>
+            <classpath refid="classpath"/>
+        </java>
+    </target>
+
+</project>
