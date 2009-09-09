@@ -31,9 +31,9 @@
 <h1>The Programmatic Configuration of HTTP Session Cookies Sample Application</h1>
 This sample application demonstrates the new programmatic configuration support for session cookies available with Servlet 3.0.<br>
 <h2>Description</h2>
-<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt> (of type <tt>web.servlet.sessioncookieconfig_war.ConfigListener</tt>) in its deployment descriptor. This ServletContextListener configures, via the <tt>javax.servlet.SessionCookieConfig</tt> interface that is newly available with Servlet 3.0, various aspects of the application's cookies that will be used for HTTP session tracking purposes. Note that this application has enabled cookies.
+<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt> (of type <tt>web.servlet.sessioncookieconfig_war.ConfigListener</tt>) in its deployment descriptor. This ServletContextListener configures, via the <tt>javax.servlet.SessionCookieConfig</tt> interface that is newly available with Servlet 3.0, various aspects of the application's cookies that will be used for HTTP session tracking purposes. Note that this application has cookies enabled.
 </p>
-<p>The client then accesses the <tt>CreateSession</tt> servlet of the application, which creates an HTTP session, retrieves the value of the corresponding <tt>Set-Cookie</tt> header from the response, and makes sure that it matches the configuration that was applied by the ServletContextListener during the application's initialization phase.
+<p>The test client accesses the <tt>CreateSession</tt> servlet of the application, which creates an HTTP session, retrieves the value of the corresponding <tt>Set-Cookie</tt> header from the response, and makes sure that it matches the configuration that was applied by the ServletContextListener during the application's initialization phase.
 </p>
 <br>
 </p>
