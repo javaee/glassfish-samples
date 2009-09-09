@@ -326,12 +326,20 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
 
   <target name="create-javamail-resource"  depends="tools"
     description="creates javamail resource">
+    <property name="mail.transportprotocol" value="smtp"/>
+    <property name="mail.transportprotocolclass" value="com.sun.mail.smtp.SMTPTransport"/>
+    <property name="mail.storeprotocol" value="imap"/>
+    <property name="mail.storeprotocolclass" value="com.sun.mail.imap.IMAPStore"/>
      <exec executable="${asadmin}">
         <arg line="create-javamail-resource"/>
         <arg line=" --user ${javaee.server.username}" />
         <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
         <arg line=" --host ${javaee.server.name}" />
         <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --transprotocol ${mail.transportprotocol}" />
+        <arg line=" --transprotocolclass ${mail.transportprotocolclass}" />
+        <arg line=" --storeprotocol ${mail.storeprotocol}" />
+        <arg line=" --storeprotocolclass ${mail.storeprotocolclass}" />
         <arg line=" --mailhost ${mail.host}" />
         <arg line=" --mailuser ${mail.username}" />
         <arg line=" --fromaddress ${mail.fromaddress}" />
