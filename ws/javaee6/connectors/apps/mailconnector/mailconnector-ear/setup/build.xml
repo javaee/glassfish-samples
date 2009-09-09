@@ -64,6 +64,10 @@
             <param name="mail.host" value="${mailhost}"/>
             <param name="mail.fromaddress" value="${fromaddress}"/>
             <param name="mail.username" value="${mailuser}"/>
+            <param name="mail.storeprotocolclass" value="${storeprotocolclass}"/>
+            <param name="mail.storeprotocol" value="${storeprotocol}"/>
+            <param name="mail.transportprotocolclass" value="${transportprotocolclass}"/>
+            <param name="mail.transportprotocol" value="${transportprotocol}"/>
             <param name="javamail.resource.name" value="${javamail.resource.name}"/>
         </antcall>
     </target>
