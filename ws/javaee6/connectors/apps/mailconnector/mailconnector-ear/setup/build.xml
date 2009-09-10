@@ -22,10 +22,10 @@
     <!-- ======================================================= -->
 
     <target name="setup"
-            depends="create-javamail-resource-local, create-connector-connection-pool-local, create-connector-resource-local"/>
+            depends="create-javamail-resource-local, create-connector-connection-pool-local, create-connector-resource-local, create-users-local"/>
 
     <target name="unsetup"
-            depends="delete-javamail-resource-local, delete-connector-resource-local, delete-connector-connection-pool-local"/>
+            depends="delete-javamail-resource-local, delete-users-local, delete-connector-resource-local, delete-connector-connection-pool-local"/>
 
 
     <!-- mail properties to be read from properties file -->
@@ -39,6 +39,41 @@
             <entry key="debug" value="${debug}"/>
             <entry key="enabled" value="${enabled}"/>
         </propertyfile>
+    </target>
+
+    <target name="create-users-local">
+       <antcall target="keygen-common">
+          <param name="app.user" value="leo"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+       <antcall target="keygen-common">
+          <param name="app.user" value="tom"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+       <antcall target="keygen-common">
+          <param name="app.user" value="mike"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+       <antcall target="keygen-common">
+          <param name="app.user" value="george"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+    </target>
+
+
+    <target name="delete-users-local">
+       <antcall target="keydel-common">
+          <param name="app.user" value="leo"/>
+       </antcall>
+       <antcall target="keydel-common">
+          <param name="app.user" value="tom"/>
+       </antcall>
+       <antcall target="keydel-common">
+          <param name="app.user" value="mike"/>
+       </antcall>
+       <antcall target="keydel-common">
+          <param name="app.user" value="george"/>
+       </antcall>
     </target>
 
 

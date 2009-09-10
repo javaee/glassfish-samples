@@ -54,9 +54,9 @@
 
 <%
     if (session.getAttribute("mailto") == null)
-	session.setAttribute("mailto", "");
+	session.setAttribute("mailto", "joe@localhost");
     if (session.getAttribute("mailfrom") == null)
-	session.setAttribute("mailfrom", "joe@localhost");
+	session.setAttribute("mailfrom", "tom@localhost");
     if (session.getAttribute("mailsubject") == null)
 	session.setAttribute("mailsubject", "What's up");
 %>

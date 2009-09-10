@@ -150,7 +150,18 @@ public class JavaMailMessageBean implements MessageDrivenBean,
 		addresses = message.getReplyTo();
 	    }
 
+
             logger.info("<MDB> SENDER : " + addresses[0].toString());
+
+            Address[] recepients = message.getFrom();
+            if(recepients != null && recepients.length > 0){
+                String recepientId = recepients[0].toString();
+                if(recepientId.indexOf("@") > 0){
+                    recepientId = recepientId.substring(0,recepientId.indexOf("@"));
+                }
+                //logger.info("<MDB> isCallerInRole("+recepientId+") : " + mdc.isCallerInRole(recepientId));
+                logger.info("<MDB> getCallerPrincipal() : " + mdc.getCallerPrincipal());
+            }
 
             reply.setRecipients(Message.RecipientType.TO, addresses);
             reply.setSubject("MDB reply RE: " + message.getSubject());

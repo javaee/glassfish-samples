@@ -120,12 +120,12 @@ public class PollingThread  implements Work
             }           
         }
         
-	logger.info("[PT] Polling Thread Leaving");
+	logger.fine("[PT] Polling Thread Leaving");
     }
     
     private void pollEndpoints()
     { 
-	logger.info("[PT] Polling endpoints entering");
+	logger.fine("[PT] Polling endpoints entering");
         
         synchronized(endpointConsumers)
         {
@@ -141,8 +141,14 @@ public class PollingThread  implements Work
                         EndpointConsumer ec = (EndpointConsumer) entry.getValue();
                         try
                         {
-                            if (ec.hasNewMessages())
-                                scheduleMessageDeliveryThread(ec);
+                            if (ec.hasNewMessages()){
+                                Message[] messages = ec.getNewMessages();
+                                if(messages != null){
+                                    for(Message msg : messages){
+                                        scheduleMessageDeliveryThread(ec, msg);
+                                    }
+                                }
+                            }
                         } catch(Exception e) {
                             e.printStackTrace();
                         }   
@@ -150,20 +156,20 @@ public class PollingThread  implements Work
                 }
         }
         
-	logger.info("[PT] Polling endpoints Leaving");
+	logger.fine("[PT] Polling endpoints Leaving");
     }
 
     /**
      * @param message  the message to be delivered
      */
  
-    private void scheduleMessageDeliveryThread(EndpointConsumer ec)
+    private void scheduleMessageDeliveryThread(EndpointConsumer ec, Message msg)
         throws Exception
     {    
         logger.info("[PT] scheduling a delivery FROM: " + ec.getUniqueKey());
         try
         {
-            Work   deliveryThread     = new DeliveryThread(ec);
+            Work   deliveryThread     = new DeliveryThread(ec, msg);
             workManager.scheduleWork(deliveryThread);
         } catch (WorkRejectedException ex) {
             NotSupportedException newEx =  new NotSupportedException(
