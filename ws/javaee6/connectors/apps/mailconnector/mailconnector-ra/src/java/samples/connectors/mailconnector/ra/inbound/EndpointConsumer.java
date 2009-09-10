@@ -36,29 +36,20 @@
 
 package samples.connectors.mailconnector.ra.inbound;
 
-import javax.resource.NotSupportedException;
-import javax.resource.spi.*;
 import javax.resource.spi.endpoint.*;
 import javax.resource.spi.work.*;
-import javax.resource.*;
 
 import java.rmi.*;
-import javax.rmi.*;
-import java.rmi.server.*;
-import java.util.ArrayList;
 import java.util.logging.*;
-import java.security.*;
 import java.lang.reflect.*;
 
+import java.util.List;
 import javax.mail.*;
 import javax.mail.Message.*;
-import javax.mail.internet.*;
 
 //import samples.connectors.mailconnector.ra.*;
-import samples.connectors.mailconnector.api.*;
 //import samples.connectors.mailconnector.backend.*;
 
-import com.sun.mail.imap.*;
 
 /**
  * JavaMail Client RMI interface.
@@ -115,37 +106,13 @@ public class EndpointConsumer
         logger.info("[EC] Created EndpointConsumer for: " + getUniqueKey());
     }
 
-    public void deliverMessages()
-	throws RemoteException
-    {
-         try 
-	 {
-	      	Message msgs[] = folder.getNewMessages();
-	        if (msgs != null)
-	        {
-	            for (int i = 0; i < msgs.length; i++)
-	      	    {
-	                if ( !msgs[i].isSet(Flags.Flag.SEEN) ) //Deliver only once
-                        {
-                            deliverMessage(msgs[i]);
-		            // Mark message as seen
-		            msgs[i].setFlag(Flags.Flag.SEEN, true);
-                        }
-	            }
-	        }
-	 } catch(Exception ie) {
-		logger.info("[EC] deliverMessages caught an exception. Bailing out");
-		ie.printStackTrace();
-	 }
-    }
-    
     /**
      * Delivers it to the appropriate EndPoint.
      *
      * @param message  the message to be delivered
      */
 
-    private void deliverMessage(javax.mail.Message message)
+    public void deliverMessage(javax.mail.Message message)
 	throws RemoteException
     {
         MessageEndpoint endpoint = null;
@@ -202,5 +169,30 @@ public class EndpointConsumer
         return  activationSpec.getUserName() + "::" +
 		activationSpec.getFolderName() + "@" + 
 		activationSpec.getServerName();
-    }  
+    }
+
+    public Message[] getNewMessages(){
+        Message msgs[] = null;
+        try
+	 {
+	      	msgs = folder.getNewMessages();
+	        if (msgs != null)
+	        {
+	            for (int i = 0; i < msgs.length; i++)
+	      	    {
+	                if ( !msgs[i].isSet(Flags.Flag.SEEN) ) //Deliver only once
+                        {
+                            //deliverMessage(msgs[i]);
+		            // Mark message as seen
+		            msgs[i].setFlag(Flags.Flag.SEEN, true);
+                        }
+	            }
+	        }
+	 } catch(Exception ie) {
+		logger.info("[EC] getNewMessages caught an exception. Bailing out");
+		ie.printStackTrace();
+	 }
+        return msgs;
+
+    }
 }
