@@ -16,15 +16,15 @@
       <activation-config>
         <activation-config-property>
 	   <activation-config-property-name>serverName</activation-config-property-name>
-	   <activation-config-property-value>servername</activation-config-property-value>
+	   <activation-config-property-value>localhost</activation-config-property-value>
         </activation-config-property>
         <activation-config-property>
            <activation-config-property-name>userName</activation-config-property-name>
-	   <activation-config-property-value>username</activation-config-property-value>
+	   <activation-config-property-value>joe</activation-config-property-value>
         </activation-config-property>
         <activation-config-property>
 	   <activation-config-property-name>password</activation-config-property-name>
-	   <activation-config-property-value>password</activation-config-property-value>
+	   <activation-config-property-value>joe</activation-config-property-value>
         </activation-config-property>
         <activation-config-property>
           <activation-config-property-name>protocol</activation-config-property-name>
@@ -32,11 +32,11 @@
         </activation-config-property>
         <activation-config-property>
 	  <activation-config-property-name>folderName</activation-config-property-name>
-	  <activation-config-property-value>Inbox</activation-config-property-value>
+	  <activation-config-property-value>INBOX</activation-config-property-value>
         </activation-config-property>
         <activation-config-property>
 	  <activation-config-property-name>interval</activation-config-property-name>
-	  <activation-config-property-value>1</activation-config-property-value>
+	  <activation-config-property-value>30</activation-config-property-value>
         </activation-config-property>
       </activation-config>
       <resource-ref>

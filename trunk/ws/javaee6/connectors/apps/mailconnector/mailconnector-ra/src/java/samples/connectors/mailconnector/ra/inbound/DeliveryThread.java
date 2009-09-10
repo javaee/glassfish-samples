@@ -36,16 +36,13 @@
 
 package samples.connectors.mailconnector.ra.inbound;
 
-import javax.mail.*;
-import javax.mail.internet.*;
 
 import java.util.*;
 import java.util.logging.*;
-import javax.resource.*;
-import javax.resource.spi.*;
-import javax.resource.spi.endpoint.*;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.resource.spi.work.*;
-import javax.resource.cci.*;
 
 /**
  * 
@@ -53,7 +50,7 @@ import javax.resource.cci.*;
  *
  */
 
-public class DeliveryThread  implements Work 
+public class DeliveryThread  implements Work, WorkContextProvider
 {
     public static final Logger  logger = 
         Logger.getLogger("samples.connectors.mailconnector.ra.inbound");
@@ -61,15 +58,18 @@ public class DeliveryThread  implements Work
         java.util.ResourceBundle.getBundle("samples.connectors.mailconnector.ra.inbound.LocalStrings"); 
 
     private EndpointConsumer  endpointConsumer;
+    private Message msg;
+    private List<WorkContext> workContexts = new ArrayList<WorkContext>();
     
     /**
      * Constructor.
      */
 
-    public DeliveryThread(EndpointConsumer endpointConsumer)
+    public DeliveryThread(EndpointConsumer endpointConsumer, Message msg)
     {
         this.endpointConsumer = endpointConsumer;
-        
+        this.msg = msg;
+        initializeWorkContexts(msg);
         logger.fine("[DeliveryThread::Constructor] Leaving");
 
     }
@@ -93,12 +93,39 @@ public class DeliveryThread  implements Work
                 
         try
 	{
-            endpointConsumer.deliverMessages();
+            endpointConsumer.deliverMessage(msg);
         } catch (Exception te) {
             logger.info("deliveryThread::run got an exception");
             te.printStackTrace();
         }
         
 	logger.fine("[DT] DeliveryThread leaving");
-    }    
+    }
+
+    public List<WorkContext> getWorkContexts() {
+        return workContexts;
+    }
+
+    private void initializeWorkContexts(Message msg) {
+        try {
+            Address[] recepients = msg.getFrom();
+            if(recepients != null && recepients.length > 0){
+                //Let us consider first recepient alone.
+                Address recepient = recepients[0];
+                String recepientId = recepient.toString();
+
+                if(recepientId.indexOf("@") > 0){
+                    recepientId = recepientId.substring(0,recepientId.indexOf("@"));
+                }
+
+                //Assuming that the password is same as username
+                MySecurityContext mysc = new MySecurityContext(recepientId, recepientId, recepientId);
+                getWorkContexts().add(mysc);
+            }
+        } catch (MessagingException ex) {
+            logger.log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }
