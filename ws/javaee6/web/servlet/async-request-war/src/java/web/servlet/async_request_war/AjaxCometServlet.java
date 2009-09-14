@@ -126,6 +126,10 @@ public class AjaxCometServlet extends HttpServlet {
             public void onTimeout(AsyncEvent event) throws IOException {
                 queue.remove(ac);
             }
+
+            public void onError(AsyncEvent event) throws IOException {
+                queue.remove(ac);
+            }
         });
     }
 
