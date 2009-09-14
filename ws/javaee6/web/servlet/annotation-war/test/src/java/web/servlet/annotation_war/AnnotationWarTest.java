@@ -47,7 +47,7 @@ import org.junit.*;
  * @author Shing Wai Chan
  */
 public class AnnotationWarTest {
-    private static final String CONTEXT_PATH = "/annotation_war";
+    private static final String CONTEXT_PATH = "/annotation-war";
 
     private String host = null;
     private int port = 8080;
