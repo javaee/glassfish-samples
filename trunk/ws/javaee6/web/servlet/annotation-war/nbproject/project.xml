@@ -3,8 +3,9 @@
     <type>org.netbeans.modules.web.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
-            <name>annotation_war</name>
+            <name>annotation-war</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
+            <explicit-platform explicit-source-supported="true"/>
             <web-module-libraries/>
             <web-module-additional-libraries/>
             <source-roots>
