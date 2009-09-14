@@ -26,6 +26,7 @@
     <!-- copy in the compiled classes -->
     <copy todir="${jar.build.dir}">
       <fileset dir="${build.classes.dir}"/>
+      <fileset dir="${src.dir}" excludes="**/*.java,**/*.form"/>
     </copy>
 
     <delete file="${app.module}"/>
