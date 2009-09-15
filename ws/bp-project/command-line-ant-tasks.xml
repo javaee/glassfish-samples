@@ -79,6 +79,7 @@
             debuglevel="${javac.debuglevel}"
             destdir="${build.classes.dir}"
             includes="**">
+            <compilerarg value="-Djava.endorsed.dirs=${javaee.endorsed.dir}"/>
             <classpath refid="classpath"/>
         </javac>
     </target>
