@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ $Id$ -->
+
+
+<!-- command-line-ant-tasks.xml: This file defines various targets needed for 
+     command line operation. This file is not meant to be included directly. 
+     @Author: Inderjeet Singh -->
+<project name="command-line-ant-tasks" default="default">
+
+    <import file="${ant.file.command-line-ant-tasks}/../common-properties.xml"/>
+    <import file="${ant.file.command-line-ant-tasks}/../app-server-ant.xml"/>
+
+    <condition property="module-tasks-file" value="${ant.file.command-line-ant-tasks}/../jar-ant.xml">
+        <isset property="is.jar.module"/>
+    </condition>
+    <condition property="module-tasks-file" value="${ant.file.command-line-ant-tasks}/../ejb-jar-ant.xml">
+        <isset property="is.ejb-jar.module"/>
+    </condition>
+    <condition property="module-tasks-file" value="${ant.file.command-line-ant-tasks}/../war-ant.xml">
+        <isset property="is.war.module"/>
+    </condition>
+    <condition property="module-tasks-file" value="${ant.file.command-line-ant-tasks}/../ear-ant.xml">
+        <isset property="is.ear.module"/>
+    </condition>
+    <condition property="module-tasks-file" value="${ant.file.command-line-ant-tasks}/../app-client-ant.xml">
+        <isset property="is.app-client.module"/>
+    </condition>
+    <condition property="module-tasks-file" value="${ant.file.command-line-ant-tasks}/../java-client-ant.xml">
+        <isset property="is.java-client.module"/>
+    </condition>
+
+    <condition property="module-tasks-file" value="${ant.file.command-line-ant-tasks}/../free-form-project-ant.xml">
+        <not>
+            <isset property="module-tasks-file"/>
+        </not>
+    </condition>
+
+    <import file="${module-tasks-file}"/>
+
+    <import file="${ant.file.command-line-ant-tasks}/../persistence-unit-ant.xml"/>
+
+    <!-- Cleans the build directory -->
+    <target name="clean" depends="-pre-clean" 
+        description="removes the generated directories like build and dist">
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+        <delete dir="${client.jar.dir}" />
+    </target>
+
+    <available property="has-java-sources" file="${src.dir}"/>
+
+    <target name="compile" depends="-pre-compile,bpp-actual-compilation,-post-compile" 
+    description="compiles the project"/>
+
+    <dirname property="antfile.dir" file="${ant.file}"/>
+    <path id="classpath">
+        <fileset dir="${javaee.home}" includes="lib/javaee.jar, lib/appserv-rt.jar, lib/appserv-ws.jar"/>
+        <pathelement location="${build.classes.dir}"/>
+        <dirset dir="${antfile.dir}/..">
+            <include name="**/build/classes"/>
+            <!-- netbeans projects get compiled into a directory named build/jar -->
+            <include name="**/build/jar"/>
+        </dirset>
+        <pathelement path="${javac.classpath}"/>
+        <pathelement path="${extra.classpath}"/>
+        <path refid="javaee.classpath" />
+    </path>
+
+    <target name="bpp-actual-compilation" if="has-java-sources">
+        <echo>Compiling ${module.name}</echo>
+        <mkdir dir="${build.classes.dir}"/>
+        <javac srcdir="${src.dir}"
+            source="${default.javac.source}"
+            target="${default.javac.target}"
+            excludes="${javac.excludes}"
+            debug="${javac.debug}"
+            debuglevel="${javac.debuglevel}"
+            destdir="${build.classes.dir}"
+            includes="**">
+            <compilerarg value="-Djava.endorsed.dirs=${javaee.endorsed.dir}"/>
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="javadoc">
+        <javadoc packagenames="${javadoc.packagenames}"
+        sourcepath="src/java"
+        classpathref="classpath"
+        destdir="docs/api"/>
+    </target>
+  
+    <target name="clean-javadoc">
+        <delete dir="docs/api"/>
+    </target>
+  
+    <target name="getBrowser" unless="default.browser">
+  
+        <condition property="browser" value="rundll32">
+            <os family="windows"/>
+        </condition>
+     
+        <condition property="browser" value="/usr/bin/open">
+            <and>
+                <os family="mac"/>
+            </and>
+        </condition>
+
+        <property name="default.browser" value="${browser}"/>
+    </target>
+  
+    <!-- This target launches a browser for the specified URL -->
+    <target name="launch" depends="getBrowser" description="launches the application in a browser">
+      <antcall target="if-can-launch"/>
+      <antcall target="if-can-not-launch"/>
+    </target>
+
+    <target name="if-can-not-launch" unless="default.browser">
+        <property name="run.uri" value="${module.name}"/>
+        <echo>
+        To launch the application, open a Web browser and visit: 
+        http://${javaee.server.name}:${javaee.server.port}/${run.uri}
+
+        To launch the browser automatically on non-windows and non-mac
+        machines, make sure that you have specified valid browser for
+        the property default.browser in
+        bp-project/build.properties. 
+        </echo>
+    </target>
+    <target name="if-can-launch" if="default.browser">
+        <!-- Default the value of run.uri to be module.name -->
+        <property name="run.uri" value="${module.name}"/>
+        <condition property="extra-args" value="url.dll,FileProtocolHandler">
+            <os family="windows"/>
+        </condition>
+        <condition property="extra-args" value="">
+            <not>
+                <os family="windows"/>
+            </not>
+        </condition>
+        <echo>Launching ${run.uri}.</echo>
+        <exec executable="${default.browser}" spawn="true">
+            <arg line ="${extra-args} http://${javaee.server.name}:${javaee.server.port}/${run.uri}" />
+        </exec>
+    </target>
+
+    <!-- Dummy placeholder targets. They can be overridden by application build file -->
+    <target name="init"/>
+    <target name="-pre-compile"/>
+    <target name="-post-compile"/>
+    <target name="-pre-setup" description="pre-setup"/>
+    <target name="-post-unsetup"/>
+
+    <target name="default" depends="default-ear,default-not-ear"
+    description="compiles and packages the archive"/>
+
+    <target name="default-ear" if="is.ear.module" 
+    description="compiles and packages the EAR archive and the EAR's modules">
+        <iterate target="default"/>
+    </target>
+
+    <target name="default-not-ear" unless="is.ear.module" depends="compile,package,bpp-copy-dist"
+    description="compiles and packages the module"/>
+    
+    <target name="bpp-copy-dist">
+        <mkdir dir="${dist.dir}"/>
+        <copy todir="${dist.dir}">
+            <fileset file="${app.module}"/>
+        </copy>
+    </target>
+    <target name="run" depends="default,deploy,launch" description="builds, packages and runs the application"/>
+
+</project>

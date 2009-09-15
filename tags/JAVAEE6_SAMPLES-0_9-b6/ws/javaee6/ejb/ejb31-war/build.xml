@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="ejb-ejb31-war" default="all" basedir=".">
+
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="ejb.ejb31.war"/>
+
+    <import file="../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="run"/>
+    </target>
+
+   <target name="-post-compile">
+    <copy todir="${build.classes.dir}">
+      <fileset dir="src/conf"/>
+    </copy>
+  </target>
+
+
+
+
+</project>
