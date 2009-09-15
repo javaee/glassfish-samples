@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hello-webserviceref-webclient" default="default" basedir=".">
+    <property name="is.war.module" value="true"/>
+    <import file="../../../../bp-project/jaxws.xml"/>
+    <import file="../../../../bp-project/main.xml"/>
+    <target name="jaxws" depends="setup">
+        <!-- wsimport -->
+        <wsimport debug="true" verbose="${verbose}" keep="true" xendorsed="true"
+                  destdir="${build.classes.dir}"
+                  package="enterprise.hello_webserviceref_client1"
+                  wsdl="http://localhost:8080/hello-webserviceref/HelloService?WSDL">
+        </wsimport>
+    </target>
+    <target name="-pre-compile">
+        <antcall target="jaxws"/>
+    </target>
+</project>
