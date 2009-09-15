@@ -12,7 +12,6 @@
   p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
   p.copy {text-align: center}
   </style></head>
-
 <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
 <table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
@@ -69,8 +68,7 @@ The Client is also simple:
 <p><code>import javax.xml.ws.WebServiceRef;<br>import javax.xml.ws.soap.MTOM;<br><br>import enterprise.hello_webserviceref_client.HelloService;<br>import enterprise.hello_webserviceref_client.Hello;<br><br>public class WebServiceRef_AppClient {<br>&nbsp; &nbsp; <span style="font-weight: bold;">@MTOM</span><br style="font-weight: bold;"><span style="font-weight: bold;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;@javax.xml.ws.WebServiceRef(HelloService.class)</span><br style="font-weight: bold;"><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; static Hello port;</span><br style="font-weight: bold;"><br>&nbsp;&nbsp;&nbsp; public static void main(String[] args) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WebServiceRef_AppClient client = new WebServiceRef_AppClient();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; client.doHelloBinary();<br>&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp; public void doHelloBinary() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //HelloService service = new HelloService();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //Hello port = service.getHelloPort();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 byte[] ret =
 port.getHelloBinary(System.getProperty("user.name").getBytes("UTF-8"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Hello result = " + new String(ret,"UTF-8"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catch (Exception e) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e.printStackTrace();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>}<br>
-</code>
+System.out.println("Hello result = " + new String(ret,"UTF-8"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; catch (Exception e) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e.printStackTrace();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>}</code></p><p><b>Note: </b>the use of @WebServiceRef and configuring MTOMFeature on the WebService client, which will be injected by the JavaEE container.
 </p>
 <h2>Running the Client</h2>
 You need to run the client using appclient, See the build.xml for more information
