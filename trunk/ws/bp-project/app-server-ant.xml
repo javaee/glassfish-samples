@@ -52,7 +52,8 @@
   <path id="javaee.classpath">
     <fileset dir="${javaee.home}">
       <include name="modules/*.jar"/>
-    </fileset>
+      <include name="modules/endorsed/*.jar"/>
+    </fileset>                              
     <pathelement location="${javaee.home}/lib/javaee.jar"/>
     <pathelement location="${javaee.home}/lib/jsf-api.jar"/>
     <pathelement location="${javaee.home}/lib/jsf-impl.jar"/>
@@ -62,6 +63,8 @@
     <pathelement location="${javaee.home}/lib/webservices-tools.jar"/>
     <pathelement location="${javaee.home}/bin"/>
   </path>
+
+  <property name="javaee.endorsed.dir" location="${javaee.home}/modules/endorsed"/>
 
   <!-- Construct path to be used for Java DB -->
   <path id="db.classpath">
@@ -476,11 +479,11 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     </condition>
     <property name="failonerror" value="true"/>
     <exec executable="${asadmin}" failonerror="${failonerror}">
-        <arg line=" deploy "/>
         <arg line=" --user ${javaee.server.username}" />
         <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
         <arg line=" --host ${javaee.server.name}" />
         <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" deploy "/>
         <arg line=" --name ${module.name}"/>
         <arg line=" --force=true "/>
         <arg line=" --upload=true "/>
