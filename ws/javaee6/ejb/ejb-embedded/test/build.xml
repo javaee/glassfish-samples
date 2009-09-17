@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="automatic-timer-ejb-test" default="runtest" basedir=".">
+
+
+    <import file="../../../../bp-project/test.xml"/>
+
+    <path id="classpath">
+        <pathelement path="${build.classes.dir}"/>
+        <pathelement path="${build.classes.dir}/../../../build/ejb-embedded.jar"/>
+        <pathelement path="${javaee.home}/lib/embedded/glassfish-embedded-static-shell.jar"/>
+        <path refid="test.classpath"/>
+    </path>
+
+    <target name="runtest" depends="compile">
+	<echo message="Running the sample application..." />
+	<java classname="org.junit.runner.JUnitCore" fork="on">
+		<arg value="sample.ejb.embedded.test.TestClient"/>
+		<classpath refid="classpath"/>
+	</java>
+    </target>
+
+</project>
