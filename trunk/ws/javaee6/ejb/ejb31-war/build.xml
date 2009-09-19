@@ -10,6 +10,8 @@
 
     <target name="all" unless="netbeans.home">
         <antcall target="run"/>
+        <antcall target="undeploy"/>
+        <antcall target="clean"/>
     </target>
 
    <target name="-post-compile">
