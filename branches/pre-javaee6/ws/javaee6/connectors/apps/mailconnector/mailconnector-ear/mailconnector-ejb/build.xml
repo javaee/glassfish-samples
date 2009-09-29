@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="mailconnector-ejb" default="default" basedir=".">
+
+    <property name="is.ejb-jar.module" value="true"/>
+    <property name="extra.classpath" value="../../mailconnector.jar"/>
+
+    <import file="../../../../../../bp-project/main.xml"/>
+
+    <target name="msr">
+        <echo message="build.classes.dir = ${build.classes.dir}"/>
+    </target>
+</project>

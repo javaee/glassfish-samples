@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="security-stateless-ear" default="all" basedir=".">
+
+    <property name="is.ear.module" value="true"/>
+
+    <path id="ear-components">
+        <filelist dir="./security-stateless-ejb" files="build.xml"/>
+        <filelist dir="./security-stateless-appclient" files="build.xml"/>
+    </path>
+
+    <import file="../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="ear"/>
+        <antcall target="deploy"/>
+        <antcall target="client-jar"/>
+        <antcall target="create-file-user"/>
+        <antcall target="run"/>
+        <antcall target="delete-file-user"/>
+    </target>
+
+    <target name="create-file-user">
+        <antcall target="keygen-common">
+            <param name="app.user" value="javaee"/>
+            <param name="app.password" value="javaee"/>
+            <param name="app.groups" value="javaee"/>
+        </antcall>
+    </target>
+
+    <target name="delete-file-user">
+        <antcall target="keydel-common">
+            <param name="app.user" value="javaee"/>
+        </antcall>
+    </target>
+
+    <target name="run">
+        <antcall target="run-ant"/>
+        <antcall target="run-nb"/>
+    </target>
+
+    <target name="run-ant" unless="netbeans.home">
+        <antcall target="create-file-user"/>
+        <subant target="run-app-client">
+            <fileset dir="security-stateless-appclient" includes="build.xml"/>
+        </subant>
+        <antcall target="delete-file-user"/>
+    </target>
+
+    <!--
+    This project assumes that the file-realm user exists before running
+    the sample.
+    One can use asadmin utility to create the file realm user and
+    provide the same when Netbeans IDE prompts for userid and password.
+    If this project is run outside of netbeans IDE, the sample provides
+    ant targets create-file-user and delete-file-user which are automatically
+    run as part of the main target.
+    These targets are not available in netbeans hence these targets
+    have to be executed outside of netbeans on command line.
+    -->
+    <target name="run-nb" if="netbeans.home">
+        <antcall target="init"/>
+        <antcall target="run-deploy"/>
+        <antcall target="run-display-browser"/>
+        <antcall target="run-ac"/>
+    </target>
+
+</project>

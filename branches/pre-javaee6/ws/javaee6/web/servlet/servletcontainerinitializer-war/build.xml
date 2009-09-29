@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="servletcontainerinitializer_war" default="all" basedir=".">
+
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="web.servlet.servletcontainerinitializer_war"/>
+    <property name="run.uri" value="/servletcontainerinitializer_war/SampleServlet"/>
+
+    <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+	<antcall target="stop-domain"/>
+        <javac srcdir="./src/lib"
+                destdir="./src/lib"
+                classpath="${javaee.home}/modules/javax.servlet.jar"
+                debug="on"
+                failonerror="true"/>
+        <jar destfile="${javaee.home}/lib/TestSharedLib1.jar">
+            <fileset dir="./src/lib"/>
+        </jar>
+	<antcall target="start-domain"/>
+        <antcall target="run"/>
+    </target>
+    
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+	<antcall target="stop-domain"/>
+	<delete file="${javaee.home}/lib/TestSharedLib1.jar"/>
+	<antcall target="start-domain"/>
+    </target>
+    
+</project>

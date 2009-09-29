@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="message-board-war" default="default" basedir=".">
+    <property name="is.war.module" value="true"/>
+    <import file="../../../bp-project/main.xml"/>
+
+    <target name="-pre-clean" depends="ant-undeploy" />
+
+    <target name="all" unless="netbeans.home" depends="run" />
+    
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+
+</project>
