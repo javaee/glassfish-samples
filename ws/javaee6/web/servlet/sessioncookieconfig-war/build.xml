@@ -12,6 +12,10 @@
         <antcall target="run"/>
     </target>
     
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
     <target name="ant-undeploy" unless="netbeans.home">
         <antcall target="undeploy"/>
     </target>

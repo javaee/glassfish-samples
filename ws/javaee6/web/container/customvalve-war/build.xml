@@ -16,4 +16,8 @@
         <antcall target="undeploy"/>
     </target>
     
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
 </project>
