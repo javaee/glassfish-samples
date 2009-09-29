@@ -107,7 +107,11 @@
             </and>
         </condition>
 
-        <property name="default.browser" value="${browser}"/>
+        <condition property="default.browser" value="${browser}">
+            <and>
+                <isset property="browser"/>
+            </and>
+        </condition>
     </target>
   
     <!-- This target launches a browser for the specified URL -->
