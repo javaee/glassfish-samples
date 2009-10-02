@@ -18,6 +18,9 @@
 
     <target name="ant-undeploy" unless="netbeans.home">
         <antcall target="undeploy"/>
+        <ant dir="webfragment1" target="clean" inheritAll="false"/>
+        <ant dir="webfragment2" target="clean" inheritAll="false"/>
+        <ant dir="webfragment3" target="clean" inheritAll="false"/>
     </target>
 
     <target name="-pre-compile" unless="netbeans.home">
@@ -33,10 +36,4 @@
             todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
 
-    <target name="-pre-clean" unless="netbeans.home">
-        <ant dir="webfragment1" target="clean" inheritAll="false"/>
-        <ant dir="webfragment2" target="clean" inheritAll="false"/>
-        <ant dir="webfragment3" target="clean" inheritAll="false"/>
-    </target>
-    
 </project>
