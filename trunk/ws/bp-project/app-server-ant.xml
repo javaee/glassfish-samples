@@ -479,11 +479,11 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     </condition>
     <property name="failonerror" value="true"/>
     <exec executable="${asadmin}" failonerror="${failonerror}">
+        <arg line=" deploy "/>
         <arg line=" --user ${javaee.server.username}" />
         <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
         <arg line=" --host ${javaee.server.name}" />
         <arg line=" --port ${javaee.adminserver.port}" />
-        <arg line=" deploy "/>
         <arg line=" --name ${module.name}"/>
         <arg line=" --force=true "/>
         <arg line=" --upload=true "/>
