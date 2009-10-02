@@ -17,13 +17,9 @@
     <antcall target="ear"/>
     <antcall target="deploy"/>
     <antcall target="client-jar"/>
-    <antcall target="run" />
+    <antcall target="run-bp" />
   </target>
 
-  <target name="run">
-    <antcall target="run-bp"/>
-    <antcall target="run-nb"/>
-  </target>
 
    <target name="run-bp" unless="netbeans.home">
     <antcall target="launch"/>
@@ -35,11 +31,5 @@
     </subant>
   </target>
 
-  <target name="run-nb" if="netbeans.home">
-    <antcall target="init"/>
-    <antcall target="run-deploy"/>
-    <antcall target="run-display-browser"/>
-    <antcall target="run-ac"/>
-  </target>
 
 </project>
