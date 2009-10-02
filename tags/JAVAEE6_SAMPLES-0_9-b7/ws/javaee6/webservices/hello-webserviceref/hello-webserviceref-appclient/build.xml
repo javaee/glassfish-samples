@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="hello-webserviceref-appclient" default="run" basedir=".">
+
+    <property name="is.app-client.module" value="true"/>
+
+    <import file="../../../../bp-project/jaxws.xml"/>
+
+    <property name="runjavaclient.class.name"
+        value="client.Client"/>
+
+
+    <!--
+     <path id="classpath">
+        <fileset dir="${javaee.home}/modules">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="${classesdir}"/>
+    </path>
+
+    <import file="../../../../bp-project/jaxws.xml"/> -->
+
+    
+    <target name="jaxws" depends="setup">
+	<!-- wsimport -->
+	<wsimport debug="true" verbose="${verbose}" keep="true" xendorsed="true"
+		destdir="${build.classes.dir}"
+		package="enterprise.hello_webserviceref_client"
+		wsdl="http://localhost:8080/hello-webserviceref/HelloService?WSDL">
+	</wsimport>
+    </target>
+    <target name="run" depends="default">
+        <antcall target="run-app-client">
+            <param name="app.client.jar" value="${app.module}"/>
+            </antcall>
+    </target>
+
+    <target name="-pre-compile">
+        <antcall target="jaxws"/>
+    </target>
+
+</project>

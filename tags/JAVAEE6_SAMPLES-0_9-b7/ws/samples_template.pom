@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.sun.javaee6.samples</groupId>
+  <artifactId>@ARTIFACT_ID@</artifactId>
+  <version>@VERSION@</version>
+  <distributionManagement>
+      <repository>
+          <id>@REPOSITORY_ID@</id>
+          <url>@REPOSITORY_URL@</url>
+      </repository>
+  </distributionManagement>
+</project>

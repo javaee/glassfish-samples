@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ $Id$ -->
+
+
+<!-- ear-ant.xml: contains targets for projects that produce 
+     ear files. This file is not meant to be included in a project directly. 
+     This file should only be included if this project is defining 
+     is.ear.module property.
+     @Author: Inderjeet Singh -->
+
+<project name="ear-ant" default="dummy-default">
+
+    <property name="app.module" value="${build.dir}/${module.name}.ear"/>
+    <property name="ear.build.dir" value="${build.dir}/ear"/>
+
+    <!-- To build ear module the build system  needs to know 
+         the sub modules which make up the ear and is spefied 
+         using path id, in this case ear-components, for example: 
+    <path id="ear-components">
+        <filelist dir="./duke-stateful-ejb" files="build.xml"/>
+        <filelist dir="./duke-stateful-appclient" files="build.xml"/>
+        <filelist dir="./test" files="build.xml"/>
+    </path>
+    -->
+
+    <macrodef name="iterate">
+        <attribute name="target"/>
+        <sequential>
+            <subant target="@{target}" failonerror="false">
+                <buildpath refid="ear-components"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="ear">
+        <iterate target="default"/>
+        <antcall target="default"/>
+    </target>
+
+    <target name="-pre-clean">
+        <iterate target="clean"/>
+    </target>
+
+    <target name="package" depends="-post-compile" description="packages the archive">
+        <echo message="building ear package"/>
+        <!--antcall target="clean"/-->
+        <mkdir dir="${ear.build.dir}"/>
+        <mkdir dir="${ear.build.dir}/META-INF"/>
+        <copy file="${src.conf}/sun-application.xml" todir="${ear.build.dir}/META-INF/" failonerror="false" />       <copy file="${src.conf}/application.xml" todir="${ear.build.dir}/META-INF/" failonerror="false"/>
+        <dirname property="ear.dir" file="${ear.build.dir}/MANIFEST/"/>
+        <subant target="bpp-copy-dist" failonerror="false">
+            <property name="dist.dir" value="${ear.dir}"/>
+            <buildpath refid="ear-components"/>
+        </subant>
+        <delete file="${app.module}"/>
+        <jar jarfile="${app.module}" basedir="${ear.build.dir}" />
+        <delete dir="${ear.build.dir}"/>
+    </target>
+
+    <target name="dummy-default"/>
+
+</project>
