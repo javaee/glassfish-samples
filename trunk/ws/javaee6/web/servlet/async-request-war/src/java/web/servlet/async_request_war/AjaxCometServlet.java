@@ -170,7 +170,9 @@ public class AjaxCometServlet extends HttpServlet {
         try {
             messageQueue.put(cMessage);
         } catch(Exception ex) {
-            throw new IOException(ex);
+            IOException t = new IOException();
+            t.initCause(ex);
+            throw t;
         }
     }
 
