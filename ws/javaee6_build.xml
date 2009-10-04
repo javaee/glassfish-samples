@@ -161,12 +161,11 @@
 
     <target name="check-out-legal">
         <exec dir="${dist.dir}" executable="cvs">
-            <arg line="co samples/javaee5/legal"/>
+            <arg line="co samples/javaee6/legal"/>
         </exec>
-	<move todir="${dist.dir}/javaee5/legal">
-	    <fileset dir="${dist.dir}/samples/javaee5/legal">
-                <include name="**/*.txt"/>
-                <include name="**/*.pdf"/>
+	<move todir="${dist.dir}/javaee6/legal">
+	    <fileset dir="${dist.dir}/samples/javaee6/legal">
+                <include name="**/*"/>
 	    </fileset>
 	</move>
         <delete dir="${dist.dir}/samples"/>
@@ -213,7 +212,7 @@
         <echo file="${manifest.file}" append="false">Main-Class: glassfish_samples_project</echo>
         <installerBuilder
             classFile="${dist.dir}/classes/glassfish_samples_project.class"
-            licenseFile="javaee5/LICENSE"
+            licenseFile="javaee6/LICENSE"
             zipFile="${dist.dir}/${release.dirname}.gf.jar"/>
         <jar jarfile="${dist.dir}/${release.dirname}-installer.jar" 
             basedir="${dist.dir}/classes" manifest ="${manifest.file}"/>
