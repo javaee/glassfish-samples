@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="glassfish-samples" default="all" basedir=".">
+    <description>Builds, tests, and packages the project glassfish-samples.</description>
+
+    <import file="bp-project/main.xml"/>
+
+    <property file="bp-project/test.properties"/>
+    <property file="samples.properties"/>
+
+    <property name="dist.dir" value="dist"/>
+    <property name="test.results.dir" value="test-results"/>
+
+    <target name="init-dist">
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <target name="init-test">
+        <delete dir="${test.results.dir}"/>
+        <mkdir dir="${test.results.dir}"/>
+    </target>
+
+    <patternset id="include.sdk.contents"
+        includes="bp-project/**, docs/**, index.html, javaee5/build.xml, javaee5/docs/**, javaee5/index.html, javaee5/LICENSE, javaee5/webservices/hello-jaxws/**, javaee5/webservices/simple-jaxb/**, javaee5/webservices/ssl-jaxws-ear/**, javaee5/enterprise/lottery-annotation-ear/**, javaee5/enterprise/servlet-stateless-ear/**, javaee5/enterprise/interceptor-stateless-ear/**, javaee5/enterprise/security-stateless-ear/**, javaee5/enterprise/customer-cmp-ear/**, javaee5/enterprise/annotation-override-interceptor-ear/**, javaee5/enterprise/jsf-jpa-war/**, javaee5/enterprise/web-jpa-war/**"
+        excludes="build.xml,bp-project/test.xml,bp-project/build.properties.xyz,bp-project/test.properties,javaee5/docs/DeveloperREADME.html, javaee5/docs/DeveloperTroubleShooting.html, javaee5/docs/sample_doc_template.html,javaee5/docs/sdk_samples_index.html,javaee5/docs/UnitTesting.html,javaee5/enterprise/hello-stateless-ejb/**,javaee5/enterprise/duke-stateful-ear/**,javaee5/**/test/**"/>
+
+    <patternset id="exclude.installer.license"
+        excludes="javaee5/LICENSE"/>
+
+    <target name="package-sdk" depends="init-dist"
+        description="packages the samples into a single jar for SDK">
+        <mkdir dir="${dist.dir}"/>
+	<antcall target="check-out-legal"/>
+        <copy file="javaee5/docs/sdk_samples_index.html" tofile="${dist.dir}/index.html"/>
+        <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
+        <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
+        <zip destfile="${dist.dir}/${release.dirname}.jar">
+            <zipfileset dir="${dist.dir}" 
+                includes="index.html,javaee5/**"/>
+            <zipfileset dir="."> 
+                <patternset refid="include.sdk.contents"/>
+                <patternset refid="exclude.installer.license"/>
+            </zipfileset>
+        </zip>
+        <delete file="${dist.dir}/index.html"/>
+        <delete dir="${dist.dir}/javaee5"/>
+        <move failonerror="false" file="bp-project/build.properties.xyz" tofile="bp-project/build.properties" />
+    </target>
+
+    <target name="package-installer"
+        description="packages the samples into a single jar for installer">
+        <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
+        <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
+        <zip destfile="${dist.dir}/${release.dirname}.gf.jar">
+            <zipfileset dir="."> 
+                <patternset refid="include.sdk.contents"/>
+            </zipfileset>
+        </zip>
+        <move failonerror="false" file="bp-project/build.properties.xyz" tofile="bp-project/build.properties" />
+    </target>
+
+    <target name="clean"
+        description="cleans workspace by removing temporary directories like dist">
+        <delete dir="${dist.dir}"/>
+        <delete dir="${test.results.dir}"/>
+    </target>
+
+    <path id="samples-test-list">
+        <filelist dir="javaee5/enterprise/annotation-override-interceptor-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/customer-cmp-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/interceptor-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/jsf-jpa-war/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/lottery-annotation-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/security-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/servlet-stateless-ear/test" files="build.xml"/>
+        <filelist dir="javaee5/enterprise/web-jpa-war/test" files="build.xml"/>
+        <filelist dir="javaee5/webservices/hello-jaxws/test" files="build.xml"/>
+        <filelist dir="javaee5/webservices/simple-jaxb/test" files="build.xml"/>
+        <filelist dir="javaee5/webservices/ssl-jaxws-ear/test" files="build.xml"/>
+    </path>
+
+    <macrodef name="iterate-tests">
+        <attribute name="target"/>
+        <sequential>
+            <subant target="@{target}" failonerror="false">
+                <buildpath refid="samples-test-list"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="runtest" depends="init-test">
+	<tstamp/>
+	<!--property name="results.file" value="${test.results.dir}/${DSTAMP}_${TSTAMP}_test_results.txt"/-->
+	<property name="results.file" value="${test.results.dir}/test_results.txt"/>
+	<record name="${results.file}" action="start" loglevel="info"/>
+	<iterate-tests target="runtest"/>
+	<record name="${results.file}" action="stop"/>
+    </target>
+
+    <target name="check-out-legal">
+        <exec dir="${dist.dir}" executable="cvs">
+            <arg line="co samples/javaee5/legal"/>
+        </exec>
+	<move todir="${dist.dir}/javaee5/legal">
+	    <fileset dir="${dist.dir}/samples/javaee5/legal">
+                <include name="**/*.txt"/>
+                <include name="**/*.pdf"/>
+	    </fileset>
+	</move>
+        <delete dir="${dist.dir}/samples"/>
+    </target>
+
+    <target name="all">
+	<antcall target="set-perm-size"/>
+	<antcall target="start-domain"/>
+	<antcall target="start-db"/>
+	<echo message="Build and run every sample"/>
+	<subant target="-pre-setup">
+	    <fileset dir="." includes="*/build.xml"/>
+	</subant>
+	<subant target="all">
+	    <fileset dir="." includes="*/build.xml"/>
+	</subant>
+	<echo message="Unit testing"/>
+	<antcall target="runtest"/>
+	<subant target="-post-unsetup">
+	    <fileset dir="." includes="*/build.xml"/>
+	</subant>
+	<subant target="clean">
+	    <fileset dir="." includes="*/build.xml"/>
+	</subant>
+	<echo message="Packaging jar for staging"/>
+	<antcall target="package-sdk"/>
+	<antcall target="create-installer"/>
+	<antcall target="stop-db"/>
+	<antcall target="stop-domain"/>
+    </target>
+
+    <!-- build installer -->
+    <taskdef name="installerBuilder" 
+        classname="com.sun.tools.xjc.installer.builder.BuilderTask">
+        <classpath>
+            <fileset dir="${poormans.installer.home}" includes="*.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="create-installer" depends="package-installer">
+        <!-- generate manifest.mf -->
+        <property name="manifest.file" value="${dist.dir}/manifest.mf"/>
+        <!-- do not format the following echo which is intentional -->
+        <echo file="${manifest.file}" append="false">Main-Class: glassfish_samples_project</echo>
+        <installerBuilder
+            classFile="${dist.dir}/classes/glassfish_samples_project.class"
+            licenseFile="javaee5/LICENSE"
+            zipFile="${dist.dir}/${release.dirname}.gf.jar"/>
+        <jar jarfile="${dist.dir}/${release.dirname}-installer.jar" 
+            basedir="${dist.dir}/classes" manifest ="${manifest.file}"/>
+        <delete file="${dist.dir}/${release.dirname}.gf.jar"/>
+        <delete dir="${dist.dir}/classes"/>
+        <delete file="${manifest.file}"/>
+    </target>
+
+</project>

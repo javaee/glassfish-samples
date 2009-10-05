@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2009 Sun Microsystems, Inc. All rights reserved.-->
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="jpaPU" transaction-type="JTA">
+        <jta-data-source>jdbc/__default</jta-data-source>
+        <properties>
+            <!-- drop and create tables at deployment -->
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <!-- log sqls executed in server.log -->
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <!-- Instruct EclipseLink to not log execeptions it throws. Lets the application decide about it-->
+            <property name="eclipselink.logging.exceptions" value="false"/>
+
+            <!--TODO Need to chase down before checkin why this is required --> 
+            <property name="eclipselink.weaving.changetracking" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>

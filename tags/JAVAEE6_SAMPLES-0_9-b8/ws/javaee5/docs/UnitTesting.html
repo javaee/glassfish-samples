@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <title>Unit Testing for Sample Applications</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ link="#594fbf" vlink="#1005fb" alink="#333366" marginwidth="10">
+<table width="100%" border="0" cellspacing="4" cellpadding="2">
+  <tbody>
+    <tr>
+      <td valign="top" align="right" bgcolor="#587993"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Unit Testing for Sample Applications</h1>
+<p>
+Each sample application needs one or more test cases so that the sample
+applications go through regular testing to notice any regressions and
+for
+the purposes of promoting the samples bundle. Refer to the test
+directory of representative sample <a
+ href="../enterprise/hello-stateless-ejb/test">hello-stateless-ejb</a>
+for an example.<br>
+</p>
+<p>Here are the steps:<br>
+</p>
+<ol>
+  <li>Create a <code>test</code> directory for the sample.</li>
+  <li>Download and install junit4.</li>
+  <li>Update the <code>junit.home</code> property in <a
+ href="../../bp-project/test.properties">bp-project/test.properties</a>
+with the junit4 install location.
+    <p><code> junit.home=/home/junit4.0</code> </p>
+  </li>
+  <li> Create <a
+ href="../enterprise/hello-stateless-ejb/test/build.xml">build.xml</a>
+under test directory whose
+contents will be similar to the following.<br>
+    <p><code>&lt;import file="../../../../bp-project/test.xml"/&gt;<br>
+&lt;target name="runtest" depends="compile"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;echo message="Running
+the sample application test..." /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;java
+classname="org.junit.runner.JUnitCore" fork="on"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;arg
+value="enterprise.hello_stateless_ejb_test.HelloStatelessEjbTest"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;classpath refid="classpath"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/java&gt;<br>
+&lt;/target&gt;</code><br>
+    </p>
+  </li>
+  <li>Create the java code needed for testing under <code>src/java</code>.</li>
+  <li>Perform the test by running ant target <code>runtest.</code></li>
+</ol>
+<!--- Do not modify the rest of the document --><br>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
