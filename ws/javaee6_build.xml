@@ -31,7 +31,7 @@
     <patternset id="web.profile.contents"
         includes="javaee6/index.html, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
                   javaee6/jpa/**, javaee6/ejb/ejb31-war/**, javaee6/web/servlet/**, javaee6/web/jsf/**, javaee6/security/**, javaee6/webbeans/**"
-        excludes="javaee6/**/test/**"/>
+        excludes="javaee6/security/web-security-annotation/**,javaee6/**/test/**"/>
 
     <patternset id="classic.profile.contents"
         includes="javaee6/index.html, javaee6/docs/Components.js, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
@@ -40,7 +40,7 @@
 
     <!-- TODO: use bp, web and classic contents -->
     <patternset id="include.sdk.contents"
-        includes="bp-project/**, docs/**, index.html, javaee6/build.xml, javaee6/docs/**, javaee6/index.html, javaee6/LICENSE, javaee6/connectors/apps/mailconnector/mailconnector-ear/**, javaee6/connectors/apps/mailconnector/mailconnector-ra/**, javaee6/ejb/automatic-timer/**, javaee6/ejb/ejb31-war/**, javaee6/ejb/hello-stateless-ejb/**, javaee6/jpa/locking/**, javaee6/rest/message-board-war/**, javaee6/security/http-method-omission/**, javaee6/security/programmatic-login/**, javaee6/security/web-security-annotation/**, javaee6/web/jsf/basic-ajax/**, javaee6/web/jsf/basic-ezcomp/**, javaee6/web/servlet/annotation-war/**, javaee6/web/servlet/async-request-war/**, javaee6/web/servlet/dynamicregistration-war/**, javaee6/webservices/hello-jaxws2.2/**, javaee6/webservices/hello-singleton-ejb/**"
+        includes="bp-project/**, docs/**, index.html, javaee6/build.xml, javaee6/docs/**, javaee6/index.html, javaee6/LICENSE, javaee6/connectors/apps/mailconnector/mailconnector-ear/**, javaee6/connectors/apps/mailconnector/mailconnector-ra/**, javaee6/ejb/automatic-timer/**, javaee6/ejb/ejb31-war/**, javaee6/ejb/hello-stateless-ejb/**, javaee6/jpa/locking/**, javaee6/rest/message-board-war/**, javaee6/security/http-method-omission/**, javaee6/security/programmatic-login/**, javaee6/web/jsf/basic-ajax/**, javaee6/web/jsf/basic-ezcomp/**, javaee6/web/servlet/annotation-war/**, javaee6/web/servlet/async-request-war/**, javaee6/web/servlet/dynamicregistration-war/**, javaee6/webservices/hello-jaxws2.2/**, javaee6/webservices/hello-singleton-ejb/**"
         excludes="build.xml,bp-project/test.xml,bp-project/build.properties.xyz,bp-project/test.properties,javaee6/docs/DeveloperREADME.html, javaee6/docs/DeveloperTroubleShooting.html, javaee6/docs/sample_doc_template.html,javaee6/docs/sdk_samples_index.html,javaee6/docs/UnitTesting.html,javaee6/**/test/**"/>
 
     <patternset id="exclude.installer.license"
@@ -130,7 +130,8 @@
         <filelist dir="javaee6/rest/message-board-war/test" files="build.xml"/>
         <filelist dir="javaee6/security/http-method-omission/test" files="build.xml"/>
         <filelist dir="javaee6/security/programmatic-login/test" files="build.xml"/>
-        <filelist dir="javaee6/security/web-security-annotation/test" files="build.xml"/>
+        <!-- issue# 9878 -->
+        <!--filelist dir="javaee6/security/web-security-annotation/test" files="build.xml"/-->
         <filelist dir="javaee6/web/jsf/basic-ajax/test" files="build.xml"/>
         <filelist dir="javaee6/web/jsf/basic-ezcomp/test" files="build.xml"/>
         <filelist dir="javaee6/web/jsf/scrumtoys/test" files="build.xml"/>
