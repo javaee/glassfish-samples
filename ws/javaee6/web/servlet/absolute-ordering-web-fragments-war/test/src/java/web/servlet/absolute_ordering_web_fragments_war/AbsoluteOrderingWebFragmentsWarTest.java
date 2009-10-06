@@ -67,7 +67,7 @@ public class AbsoluteOrderingWebFragmentsWarTest {
 
             int code = conn.getResponseCode();
             if (code != 200) {
-                Assert.fail("annotation_war fails with response code: " + code);
+                Assert.fail("absolute-ordering-web-fragments-war fails with response code: " + code);
             } else {
                 input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line = input.readLine();
@@ -75,7 +75,7 @@ public class AbsoluteOrderingWebFragmentsWarTest {
                         "filterMessage=213", line);
             }
         } catch(Exception ex) {
-            Assert.fail("annotation_war fails with exception: " + ex);
+            Assert.fail("absolute-ordering-web-fragments-war fails with exception: " + ex);
         } finally {
             if (input != null) {
                 input.close();
