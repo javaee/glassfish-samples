@@ -55,12 +55,10 @@ import javax.servlet.annotation.WebInitParam;
 public class TestFilter implements Filter {
     String mesg = null;
 
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         mesg = filterConfig.getInitParameter("mesg");
     }   
 
-    @Override
     public void doFilter(ServletRequest req, ServletResponse res,
             FilterChain chain) throws IOException, ServletException {
 
@@ -68,7 +66,6 @@ public class TestFilter implements Filter {
         chain.doFilter(req, res);
     }
 
-    @Override
     public void destroy() {
     }
 }
