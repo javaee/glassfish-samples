@@ -37,7 +37,6 @@ package web.servlet.annotation_war;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
