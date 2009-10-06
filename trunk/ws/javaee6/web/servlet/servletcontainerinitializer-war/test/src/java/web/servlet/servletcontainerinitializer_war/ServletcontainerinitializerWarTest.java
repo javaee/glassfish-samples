@@ -46,7 +46,7 @@ import org.junit.*;
  */
 public class ServletcontainerinitializerWarTest {
 
-    private static final String REQUEST_URI = "/servletcontainerinitializer_war/";
+    private static final String REQUEST_URI = "/servletcontainerinitializer-war/";
 
     private String host = null;
     private int port = 8080;
