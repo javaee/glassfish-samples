@@ -6,7 +6,7 @@
             <extension file="rest-build.xml" id="rest.3"/>
         </buildExtensions>
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
-            <name>message-board-war</name>
+            <name>managed-beans-war</name>
             <minimum-ant-version>1.6</minimum-ant-version>
             <web-module-libraries/>
             <web-module-additional-libraries/>
