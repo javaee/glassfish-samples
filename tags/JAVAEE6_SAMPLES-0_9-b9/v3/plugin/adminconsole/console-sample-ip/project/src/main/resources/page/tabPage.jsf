@@ -1,0 +1,21 @@
+
+<!composition template="/templates/propertySheetTemplate.tpl" 
+              pageTitle="TEST Sample Page Title" 
+              helpText="Shows you what my page looks like"
+              i18nBundle="org.glassfish.admingui.core"
+              >
+ 
+    <!define name="formExtra">
+#include "/appServer/serverInstTabs.inc"
+    </define>
+    
+    <!define name="properties">
+       <sun:property id="prop1"  labelAlign="left" noWrap="#{true}" overlapLabel="#{false}" label="page Name:" >
+            <sun:staticText text="$pageSession{pageName}" > 
+                <!beforeCreate
+                    getRequestValue(key="name" value=>$page{pageName});
+                />
+            </sun:staticText>
+        </sun:property> 
+    </define>
+</composition>

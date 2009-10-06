@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="message-board-test" default="runtest" basedir=".">
+    <import file="../../../../bp-project/test.xml"/>
+    <target name="runtest" depends="compile">
+
+        <echo message="Testing ${module.name} ..."/>
+
+        <junit printsummary="yes" haltonfailure="yes" fork="yes">
+            <jvmarg value="-Dsamples.javaee.serveruri=http://${javaee.server.name}:${javaee.server.port}"/>
+            <classpath>
+                <pathelement location="./build/classes/"/>
+                <fileset dir="${junit.home}/">
+                    <include name="**/junit*.jar"/>
+                </fileset>
+
+                <fileset dir="${javaee.home}">
+                    <include name="**/*.jar"/>
+                    <exclude name="**/*ant*.jar"/>
+                </fileset>
+
+            </classpath>
+
+            <test name="enterprise.rest.test.MessageBoardTest" haltonfailure="yes">
+                <formatter type="xml"/>
+            </test>
+        </junit>
+    </target>
+
+    <target name="-pre-clean">
+        <delete><fileset dir="."><include name="**/TEST-enterprise.rest.test.MessageBoardTest.xml" /></fileset></delete>
+    </target>
+</project>

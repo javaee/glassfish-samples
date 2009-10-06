@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Copyright 2004-2009 Sun Microsystems, Inc.  All rights reserved.
+ Use is subject to license terms.
+-->
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd" version="3.1">
+  <display-name>JavaMailMDB</display-name>
+  <enterprise-beans>
+    <message-driven>
+      <display-name>JavaMailMDB</display-name>
+      <ejb-name>JavaMailMDB</ejb-name>
+      <ejb-class>samples.connectors.mailconnector.ejb.mdb.JavaMailMessageBean</ejb-class>
+      <messaging-type>samples.connectors.mailconnector.api.JavaMailMessageListener</messaging-type>
+      <transaction-type>Container</transaction-type>
+      <activation-config>
+        <activation-config-property>
+	   <activation-config-property-name>serverName</activation-config-property-name>
+	   <activation-config-property-value>localhost</activation-config-property-value>
+        </activation-config-property>
+        <activation-config-property>
+           <activation-config-property-name>userName</activation-config-property-name>
+	   <activation-config-property-value>joe</activation-config-property-value>
+        </activation-config-property>
+        <activation-config-property>
+	   <activation-config-property-name>password</activation-config-property-name>
+	   <activation-config-property-value>joe</activation-config-property-value>
+        </activation-config-property>
+        <activation-config-property>
+          <activation-config-property-name>protocol</activation-config-property-name>
+	  <activation-config-property-value>imap</activation-config-property-value>
+        </activation-config-property>
+        <activation-config-property>
+	  <activation-config-property-name>folderName</activation-config-property-name>
+	  <activation-config-property-value>INBOX</activation-config-property-value>
+        </activation-config-property>
+        <activation-config-property>
+	  <activation-config-property-name>interval</activation-config-property-name>
+	  <activation-config-property-value>30</activation-config-property-value>
+        </activation-config-property>
+      </activation-config>
+      <resource-ref>
+        <res-ref-name>TheMailSession</res-ref-name>
+        <res-type>javax.mail.Session</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+      </resource-ref>
+    </message-driven>   
+  </enterprise-beans>
+  <assembly-descriptor>
+    <container-transaction>
+      <method>
+        <ejb-name>JavaMailMDB</ejb-name>
+        <method-name>onMessage</method-name>
+        <method-params>
+          <method-param>javax.mail.Message</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+</ejb-jar>

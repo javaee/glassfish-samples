@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="customer-cmp-ear-test" default="runtest" basedir=".">
+
+    <import file="../../../../bp-project/test.xml"/>
+    
+    <target name="runtest" depends="compile">
+	<echo message="Testing ${module.name} ..."/>
+	<java classname="org.junit.runner.JUnitCore" fork="on">
+		<arg value="enterprise.customer_cmp_ear_test.CustomerCMPEarTest"/>
+		<classpath refid="classpath"/>
+	</java>
+    </target>
+
+</project>
