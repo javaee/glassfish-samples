@@ -10,6 +10,11 @@
 
   <!-- Define sensible defaults for app-server properties -->
   <property file="${ant.file.app-server-ant}/../app-server.properties"/>
+  <condition property="db.home" value="${javaee.home}/javadb">
+      <available file="${javaee.home}/javadb"/>
+  </condition>
+  <property name="db.home" value="${javaee.home}/../javadb"/>
+  <property name="db.root" value="${db.home}"/>
   
   <!-- This file contains common ant commands that are specific to Java EE
      SDK. To port this application to a different app-server, you will 
