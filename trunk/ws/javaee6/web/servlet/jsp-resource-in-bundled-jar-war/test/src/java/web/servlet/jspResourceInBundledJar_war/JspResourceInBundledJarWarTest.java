@@ -47,7 +47,7 @@ import org.junit.*;
 public class JspResourceInBundledJarWarTest {
 
     private static final String REQUEST_URI =
-        "/jspResourceInBundledJar_war/jsp/helloWorld.jsp";
+        "/jsp-resource-in-bundled-jar-war/jsp/helloWorld.jsp";
 
     private String host = null;
     private int port = 8080;
@@ -69,7 +69,7 @@ public class JspResourceInBundledJarWarTest {
             int code = conn.getResponseCode();
             if (code != 200) {
                 Assert.fail(
-                    "jspResourceInBundledJar_war failed with response code: " +
+                    "jsp-resource-in-bundled-jar-war failed with response code: " +
                     code);
             } else {
                 input = new BufferedReader(new InputStreamReader(
@@ -79,7 +79,7 @@ public class JspResourceInBundledJarWarTest {
                     line);
             }
         } catch(Exception ex) {
-            Assert.fail("jspResourceInBundledJar_war failed with exception: " +
+            Assert.fail("jsp-resource-in-bundled-jar-war failed with exception: " +
                         ex);
         } finally {
             if (input != null) {

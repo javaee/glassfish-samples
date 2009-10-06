@@ -56,18 +56,18 @@ public class SessioncookieconfigWarTest {
 
     @Test
     public void testWebClient() {
-        String url = "http://" + host + ":" + port + "/sessioncookieconfig_war/";
+        String url = "http://" + host + ":" + port + "/sessioncookieconfig-war/";
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection)(new URL(url)).openConnection();
             int code = conn.getResponseCode();
             if (code != 200) {
                 Assert.fail(
-                    "sessioncookieconfig_war failed with response code: " +
+                    "sessioncookieconfig-war failed with response code: " +
                     code);
             }
         } catch(Exception ex) {
-            Assert.fail("sessioncookieconfig_war failed with exception: " +
+            Assert.fail("sessioncookieconfig-war failed with exception: " +
                         ex);
         } finally {
             if (conn != null) {
