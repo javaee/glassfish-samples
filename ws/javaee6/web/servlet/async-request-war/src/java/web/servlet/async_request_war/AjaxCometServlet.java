@@ -115,10 +115,9 @@ public class AjaxCometServlet extends HttpServlet {
         writer.println("<!-- Comet is a programming technique that enables web servers to send data to the client without having any need for the client to request it. -->\n");
         writer.flush();
 
-        req.setAsyncTimeout(10 * 60 * 1000);
         final AsyncContext ac = req.startAsync();
-        queue.add(ac);
-        req.addAsyncListener(new AsyncListener() {
+        ac.setTimeout(10  * 60 * 1000);
+        ac.addListener(new AsyncListener() {
             public void onComplete(AsyncEvent event) throws IOException {
                 queue.remove(ac);
             }
@@ -130,7 +129,11 @@ public class AjaxCometServlet extends HttpServlet {
             public void onError(AsyncEvent event) throws IOException {
                 queue.remove(ac);
             }
+
+            public void onStartAsync(AsyncEvent event) throws IOException {
+            }
         });
+        queue.add(ac);
     }
 
     @Override
