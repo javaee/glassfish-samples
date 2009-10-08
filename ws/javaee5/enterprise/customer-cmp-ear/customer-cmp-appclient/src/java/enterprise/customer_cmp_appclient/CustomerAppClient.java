@@ -43,7 +43,6 @@
 package enterprise.customer_cmp_appclient;
 
 import javax.naming.InitialContext;
-import java.util.List;
 import javax.ejb.EJB;
 import enterprise.customer_cmp_ejb.ejb.session.CustomerSessionRemote;
 import enterprise.customer_cmp_ejb.persistence.*;
