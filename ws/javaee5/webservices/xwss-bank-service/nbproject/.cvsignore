@@ -1,6 +1,5 @@
 private
-ant-deploy.xml 
 build-impl.xml
 genfiles.properties
-jax-ws.xml
 jaxws-build.xml
+ant-deploy.xml
