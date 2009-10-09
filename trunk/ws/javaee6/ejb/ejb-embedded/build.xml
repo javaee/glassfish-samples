@@ -4,7 +4,7 @@
 <project name="ejb-embedded" default="all" basedir=".">
 
     <property name="is.ejb-jar.module" value="true"/>
-    <property name="javadoc.packagenames" value="sample.ejb.embedded"/>
+    <property name="javadoc.packagenames" value="ejb.embedded"/>
 
     <import file="../../../bp-project/main.xml"/>
 

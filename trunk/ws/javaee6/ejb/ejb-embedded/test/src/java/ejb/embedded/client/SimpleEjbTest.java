@@ -33,20 +33,18 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package sample.ejb.embedded.test;
+package ejb.embedded.client;
 
-import sample.ejb.embedded.SimpleEjb;
+import ejb.embedded.SimpleEjb;
 
 import org.junit.*;
 
 import java.util.Map;
 import java.util.HashMap;
-import javax.ejb.*;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
-import javax.naming.NamingException;
 
-public class TestClient {
+public class SimpleEjbTest {
 
     @Test public void test() {
 

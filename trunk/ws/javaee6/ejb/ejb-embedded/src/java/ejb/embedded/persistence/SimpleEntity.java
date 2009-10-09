@@ -40,7 +40,7 @@
  * @author Marina Vatkina
  */
 
-package sample.ejb.embedded.persistence;
+package ejb.embedded.persistence;
 
 import javax.persistence.*;
 import java.util.Date;

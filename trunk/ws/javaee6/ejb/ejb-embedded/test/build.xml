@@ -14,9 +14,9 @@
     </path>
 
     <target name="runtest" depends="compile">
-	<echo message="Running the sample application..." />
+	<echo message="Running the test..." />
 	<java classname="org.junit.runner.JUnitCore" fork="on">
-		<arg value="sample.ejb.embedded.test.TestClient"/>
+		<arg value="ejb.embedded.client.SimpleEjbTest"/>
 		<classpath refid="classpath"/>
 	</java>
     </target>
