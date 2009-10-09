@@ -8,7 +8,7 @@
     <import file="../../../../bp-project/main.xml"/>
 
     <property name="runjavaclient.class.name"
-        value="sample.ejb.embedded.client.TestClient"/>
+        value="ejb.embedded.client.TestClient"/>
 
     <path id="classpath">
         <pathelement path="${build.classes.dir}"/>
@@ -17,7 +17,7 @@
     </path>
 
     <target name="run" depends="default">
-<echo message="build.classes.dir: ${build.classes.dir}"/>
+        <echo message="build.classes.dir: ${build.classes.dir}"/>
         <antcall target="runjavaclient"/>
     </target>
 

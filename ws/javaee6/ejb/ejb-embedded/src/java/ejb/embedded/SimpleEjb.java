@@ -33,19 +33,18 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package sample.ejb.embedded;
+package ejb.embedded;
 
 import java.util.Collection;
 
 import javax.ejb.Stateless;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.DenyAll;
 
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import sample.ejb.embedded.persistence.SimpleEntity;
+import ejb.embedded.persistence.SimpleEntity;
 
 /**
  * @author mvatkina
