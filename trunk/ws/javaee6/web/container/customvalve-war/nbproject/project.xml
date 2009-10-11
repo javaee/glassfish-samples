@@ -5,7 +5,11 @@
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
             <name>customvalve_war</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <web-module-libraries/>
+            <web-module-libraries>
+                <library>
+                    <file>${libs.Java-EE-GlassFish-v3.classpath}</file>
+                </library>
+            </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>
                 <root id="src.dir"/>
