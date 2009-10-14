@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="ejb-embedded-test" default="default" basedir=".">
+
+    <property name="is.java-client.module" value="true"/>
+
+    <import file="../../../../bp-project/main.xml"/>
+
+    <property name="runjavaclient.class.name"
+        value="ejb.embedded.client.TestClient"/>
+
+    <path id="classpath">
+        <pathelement path="${build.classes.dir}"/>
+        <pathelement path="${build.classes.dir}/../../../build/ejb-embedded.jar"/>
+        <pathelement path="${javaee.home}/lib/embedded/glassfish-embedded-static-shell.jar"/>
+    </path>
+
+    <target name="run" depends="default">
+        <echo message="build.classes.dir: ${build.classes.dir}"/>
+        <antcall target="runjavaclient"/>
+    </target>
+
+</project>

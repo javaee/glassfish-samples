@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ $Id$ -->
+
+
+<!-- war-ant.xml: contains targets for projects that produce war files. 
+     This file is not meant to be included in a project directly.
+     This file should only be included if this project is defining 
+     is.war.module property.
+     @Author: Inderjeet Singh -->
+<project name="war-ant" default="dummy-default">
+
+  <property name="app.module" value="${build.dir}/${module.name}.war"/>
+  <property name="web.docbase.dir" value="${home.dir}/web"/>
+  <!-- src.web is deprecated, use web.docbase.dir instead -->
+  <property name="src.web" value="${web.docbase.dir}"/>
+  <property name="war.build.dir" value="${build.dir}/war"/>
+  <property name="build.web.dir" value="${build.dir}/web"/>
+
+  <!-- DEPRECATED: defined for backward compatibility -->
+  <property name="web.build.dir" value="${build.web.dir}"/>
+
+  <target name="-pre-clean">
+  </target>
+
+  <target name="package" depends="-post-compile"
+    description="packages the archive">
+    <mkdir dir="${war.build.dir}"/>
+
+    <antcall target="bp-copy-classes"/>
+
+    <!-- Copy in the content -->
+    <mkdir dir="${build.web.dir}"/>
+    <copy todir="${build.web.dir}" failonerror="false">
+     <fileset dir="${src.web}"/>
+    </copy>
+    <copy todir="${war.build.dir}" failonerror="false">
+     <fileset dir="${build.web.dir}"/>
+    </copy>
+
+    <antcall target="package-persistence-unit">
+      <param name="pu.build.dir" value="${build.web.dir}"/>
+    </antcall>
+
+    <delete file="${app.module}"/>
+    <jar jarfile="${app.module}" basedir="${war.build.dir}"/>
+    <delete dir="${war.build.dir}"/>
+  </target>
+
+  <available property="has-classes" file="${build.classes.dir}"/>
+  <target name="bp-copy-classes" if="has-classes">
+    <!-- Copy in the compiled classes -->
+    <mkdir dir="${war.build.dir}/WEB-INF/classes"/>
+    <copy todir="${war.build.dir}/WEB-INF/classes">
+     <fileset dir="${build.classes.dir}"/>
+    </copy>    
+    <!-- Copy in the xsds-->
+    <copy todir="${war.build.dir}/WEB-INF/classes" failonerror="false">
+        <fileset dir="${src.dir}">
+           <include name="**/*.xsd"/>
+        </fileset>
+    </copy>    
+  </target>
+
+  <target name="dummy-default"/>
+
+</project>

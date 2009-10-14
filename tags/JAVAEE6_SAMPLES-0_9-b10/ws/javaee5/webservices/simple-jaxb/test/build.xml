@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="webservices-simple-jaxb-test" default="runtest" basedir=".">
+
+    <import file="../../../../bp-project/test.xml"/>
+
+    <target name="runtest" depends="compile">
+	<echo message="Testing ${module.name} ..."/>
+	<copy file="../po.xml" tofile="po.xml"/>
+	<java classname="org.junit.runner.JUnitCore" fork="on">
+		<arg value="webservices.simple_jaxb_test.UnmarshalReadTest"/>
+		<classpath refid="classpath"/>
+                <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed" />
+	</java>
+    </target>
+
+    <target name="-pre-clean">
+	<delete file="po.xml"/>
+    </target>
+
+</project>

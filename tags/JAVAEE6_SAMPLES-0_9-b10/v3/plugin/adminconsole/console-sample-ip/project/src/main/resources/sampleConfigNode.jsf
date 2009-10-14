@@ -1,0 +1,7 @@
+<sun:treeNode id="sampleConfigNode"
+        text="Sample Configuration"
+        url="/sample/page/testPage.jsf?name=Sample%20Configuration%20Page"
+        target="main"
+        imageURL="/resource/sample/images/sample.png"
+        >
+</sun:treeNode>

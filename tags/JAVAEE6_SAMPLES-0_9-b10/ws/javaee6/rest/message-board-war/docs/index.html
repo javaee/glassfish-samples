@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>The MessageBoard Sample Application</title>
+  <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+  <style> 
+            .created {color: green}
+            .uniqueId {color: red}
+            .message {color: black}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!--- Do not modify anything above this line, except for the title tag --->
+<p><a href="../../../docs/list.html">Samples Main Page</a></p>
+<h1>The MessageBoard Application</h1>
+<p>This sample demonstrates the possibility to use no-interface EJB
+session beans as
+RESTful resource classes deployed as a servlet.</p>
+<p>MessageBoard represents message boards you may know from aiports or
+train stations.
+It stores messages and every new added message is placed
+on top and gets an unique message id.</p>
+<p>If configured properly, page http://localhost:8080/message-board-war
+will be opened after
+invoking the
+<code>run</code> target. </p>
+<p>The mapping of the URI path space is presented in the following
+table:</p>
+<table border="1">
+  <tbody>
+    <tr>
+      <th>URI path</th>
+      <th>Resource class</th>
+      <th>HTTP method</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>/message-board-war</td>
+      <td>---</td>
+      <td>GET</td>
+      <td>Simple html/ajax client</td>
+    </tr>
+    <tr>
+      <td>/message-board-war/app/messages</td>
+      <td>MessageBoardResourceBean</td>
+      <td>GET</td>
+      <td>Returns first ten messsages</td>
+    </tr>
+    <tr>
+      <td>/message-board-war/app/messages/{id}</td>
+      <td>MessageBoardResourceBean</td>
+      <td>GET</td>
+      <td>Returns message with uniqueId = {id} or returns HTTP 404 if
+message does not exist</td>
+    </tr>
+    <tr>
+      <td>/message-board-war/app/messages/{id}</td>
+      <td>MessageBoardResourceBean</td>
+      <td>DELETE</td>
+      <td>Deletes message with uniqueId = {id} or returns HTTP 404 if
+message does not exist</td>
+    </tr>
+    <tr>
+      <td>/message-board-war/app/messages/<br>
+(with message as request entity)</td>
+      <td>MessageBoardResourceBean</td>
+      <td>POST</td>
+      <td>Creates new message and allocates unique id for it</td>
+    </tr>
+  </tbody>
+</table>
+<h2>Application Structure</h2>
+<p> The application is built and deployed as a WAR file.
+</p>
+<h3>Web Module</h3>
+<p> The web module consists of: </p>
+<ul>
+  <li>An HTML page that represents the view layer of the application </li>
+  <li> A simple class that represents a message </li>
+  <li> Two providers - MessageBodyWriter implementations for Message
+and ListMessage, which are also a stateless EJB
+session or singleton bean. </li>
+  <li> Two no-interface-view session beans that are simulatenously REST
+resources </li>
+  <li> A singleton bean that holds data "persistently" in application
+instance </li>
+</ul>
+The starting point of the application is the main <code>index.html</code>
+page (javascript must be enabled). The application control is
+straightforward:
+<ol>
+  <li> Click the <code>LIST ALL MESSAGES</code> button to see all
+messages. This command is executed automaticaly when you hit the main
+page. </li>
+  <li> Select message number and click the <code>GET MESSAGE</code>
+button to see one particular message. </li>
+  <li> Select message number and click the <code>DELETE MESSAGE</code>
+button to delete one particular message. </li>
+  <li> Fill in message input box and click the <code>ADD MESSAGE</code>
+button to add message. Message will be added as first. </li>
+</ol>
+<h2>Building, Deploying, and Running the Application</h2>
+<p><!-- &lt;replacement for asant procedure&gt;<br> -->
+Perform the following steps to build, deploy, and run the
+application:<br>
+</p>
+<ol>
+  <li> Setup your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee6/rest/message-board-war</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <li>Use the target clean to undeploy the sample application and to
+remove the temporary directories like build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+  </li>
+</ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the
+application using NetBeans IDE:
+</p>
+<ol>
+  <li> Refer to the <a href="../../../docs/UserREADME.html"> common
+build instructions</a> for setting up NetBeans IDE and Sun GlassFish
+Enterprise Server.</li>
+  <li> In the NetBeans IDE, choose File &#8594; Open Project
+(Ctrl-Shift-O) and select <code>message-board-war</code>.</li>
+  <li> Right click <code>message-board-war</code> and
+select Run Project to build, deploy, and run the project.
+If configured properly, the IDE opens the browser with the following
+URL: <code>http://localhost:8080/</code><code>message-board-war</code>.
+    <br>
+Sample output is as follows:<br>
+    <b>NetBeans IDE output</b>
+    <pre>init:<br>deps-module-jar:<br>deps-ear-jar:<br>deps-jar:<br>library-inclusion-in-archive:<br>library-inclusion-in-manifest:<br>compile:<br>compile-jsps:<br>Starting GlassFish v3 Prelude<br>GlassFish v3 Prelude is running.<br>Incrementally deploying message-board-war<br>Completed incremental distribution of message-board-war<br>run-deploy:<br>Browsing: http://localhost:8080/message-board-war/<br>run-display-browser:<br>run:<br>BUILD SUCCESSFUL (total time: 11 seconds)</pre>
+    <b>Browser output</b>
+    <div style="border: 1px solid black; padding: 5px;">
+    <h1>MessageBoard sample</h1>
+    <form name="form0"> <button type="button" name="GET0"
+ onclick="getMessages()">LIST ALL MESSAGES</button> </form>
+    <form name="form0"> <button type="button" name="GET0"
+ onclick="getMessages()">LIST ALL MESSAGES</button> </form>
+    <form name="form1"> Message id#: <input style="width: 4em;"
+ name="messageNumber" type="text"> <button type="button" name="GET1"
+ onclick="getMessage(document.form1.messageNumber.value)">GET MESSAGE</button>
+    </form>
+    <form name="form2"> Message id#: <input style="width: 4em;"
+ name="messageNumber" type="text"> <button type="button" name="GET2"
+ onclick="deleteMessage(document.form2.messageNumber.value)">DELETE
+MESSAGE</button> </form>
+    <form name="form3"> Message: <input name="messageText" type="test">
+      <button type="button" name="GET2"
+ onclick="addMessage(document.form3.messageText.value)">ADD MESSAGE</button>
+    </form>
+    <h2>MessageBoard</h2>
+    <h3>query: </h3>
+    <div id="query" style="font-weight: bold;">GET app/messages</div>
+    <h3>result</h3>
+    <div id="output"
+ style="border: 1px solid black; color: black; height: 18em; width: 100%;">
+    <span class="created">CREATED: Thu Jan 01 01:00:02 CET 1970</span> <span
+ class="uniqueId">ID: 2</span> <span class="message">MESSAGE: msg2</span>
+    <a href=".">link</a><br>
+    <span class="created">CREATED: Thu Jan 01 01:00:01 CET 1970</span> <span
+ class="uniqueId">ID: 1</span> <span class="message">MESSAGE: msg1</span>
+    <a href=".">link</a><br>
+    <span class="created">CREATED: Thu Jan 01 01:00:00 CET 1970</span> <span
+ class="uniqueId">ID: 0</span> <span class="message">MESSAGE: msg0</span>
+    <a href=".">link</a> </div>
+    </div>
+  </li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you run into a problem, refer the <a
+ href="../../../../docs/UserTroubleShooting.html"> troubleshooting
+document</a>.
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a> All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
