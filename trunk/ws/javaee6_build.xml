@@ -30,12 +30,12 @@
 
     <patternset id="web.profile.contents"
         includes="javaee6/index.html, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
-                  javaee6/jpa/**, javaee6/ejb/ejb31-war/**, javaee6/web/servlet/**, javaee6/web/jsf/**, javaee6/security/**, javaee6/webbeans/**"
+                  javaee6/jpa/**, javaee6/ejb/ejb31-war/**, javaee6/web/container/**, javaee6/web/servlet/**, javaee6/web/jsf/**, javaee6/security/**, javaee6/webbeans/**"
         excludes="javaee6/security/web-security-annotation/**,javaee6/**/test/**"/>
 
     <patternset id="classic.profile.contents"
         includes="javaee6/index.html, javaee6/docs/Components.js, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
-                  javaee6/ejb/automatic-timer/**, javaee6/rest/message-board-war/**, javaee6/webservices/**, javaee6/connectors/apps/mailconnector/**"
+                  javaee6/ejb/automatic-timer/**, javaee6/ejb/ejb-embedded/**, javaee6/rest/**, javaee6/webservices/**, javaee6/connectors/apps/**"
         excludes="javaee6/**/test/**"/>
 
     <!-- TODO: use bp, web and classic contents -->
