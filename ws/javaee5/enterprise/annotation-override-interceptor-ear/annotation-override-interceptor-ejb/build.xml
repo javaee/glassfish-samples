@@ -3,8 +3,29 @@
 
 <project name="annotation-override-interceptor-ejb" default="default" basedir=".">
 
-    <property name="is.ejb-jar.module" value="true" />
+  <property name="is.ejb-jar.module" value="true" />
 
-    <import file="../../../../bp-project/main.xml" />
+  <target name="package" depends="-post-compile"
+    description="packages the archive">
+    <mkdir dir="${jar.build.dir}"/>
+    <!-- Copy the descriptors if any -->
+    <mkdir dir="${jar.build.dir}/META-INF"/>
+    <copy file="${src.conf}/ejb-jar.xml" todir="${jar.build.dir}/META-INF/" failonerror="false"/>
+    <copy file="${src.conf}/sun-ejb-jar.xml" todir="${jar.build.dir}/META-INF/" failonerror="false"/>
+    <!-- Copy in the compiled Classes -->
+    <copy todir="${jar.build.dir}">
+      <fileset dir="${build.classes.dir}"/>
+    </copy>
+
+    <antcall target="package-persistence-unit">
+      <param name="pu.build.dir" value="${jar.build.dir}"/>
+    </antcall>
+
+    <delete file="${app.module}"/>
+    <jar jarfile="${app.module}" basedir="${jar.build.dir}" manifest="${src.conf}/MANIFEST.MF"/>
+    <delete dir="${jar.build.dir}"/>
+  </target>
+
+  <import file="../../../../bp-project/main.xml" />
 
 </project>
