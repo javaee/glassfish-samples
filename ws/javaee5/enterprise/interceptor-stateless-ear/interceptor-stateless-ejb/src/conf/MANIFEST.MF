@@ -1,0 +1,1 @@
+Class-Path: interceptor-stateless-jar.jar

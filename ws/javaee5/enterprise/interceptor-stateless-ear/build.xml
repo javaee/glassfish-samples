@@ -6,6 +6,7 @@
     <property name="is.ear.module" value="true" />
 
     <path id="ear-components">
+        <filelist dir="./interceptor-stateless-jar" files="build.xml" />
         <filelist dir="./interceptor-stateless-ejb" files="build.xml" />
         <filelist dir="./interceptor-stateless-appclient" files="build.xml" />
     </path>
