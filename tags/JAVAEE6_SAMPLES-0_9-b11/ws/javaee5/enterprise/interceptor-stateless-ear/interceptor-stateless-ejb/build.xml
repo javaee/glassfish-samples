@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="interceptor-stateless-ejb" default="default" basedir=".">
+
+  <property name="is.ejb-jar.module" value="true" />
+
+  <target name="package" depends="-post-compile"
+    description="packages the archive">
+    <mkdir dir="${jar.build.dir}"/>
+    <copy todir="${jar.build.dir}">
+      <fileset dir="${build.classes.dir}"/>
+    </copy>
+    <delete file="${app.module}"/>
+    <jar jarfile="${app.module}" basedir="${jar.build.dir}" manifest="${src.conf}/MANIFEST.MF"/>
+    <delete dir="${jar.build.dir}"/>
+  </target>
+
+  <import file="../../../../bp-project/main.xml" />
+
+</project>

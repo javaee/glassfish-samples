@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="containerinitializerlibrary" default="default" basedir=".">
+
+    <property name="is.jar.module" value="true"/>
+
+    <import file="../../../../../bp-project/main.xml"/>
+
+</project>

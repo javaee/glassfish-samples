@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="security" default="create-file-user" basedir=".">
+
+    <import file="../../bp-project/main.xml"/>
+
+    <target name="create-file-user" depends="init" unless="user.exists">
+        <antcall target="keygen-common">
+            <param name="app.user" value="javaee6user"/>
+            <param name="app.password" value="abc123"/>
+            <param name="app.groups" value="javaee6user"/>
+        </antcall>
+    </target>
+    <target name="delete-file-user">
+        <antcall target="keydel-common">
+            <param name="app.user" value="javaee6user"/>
+        </antcall>
+    </target>
+
+
+</project>

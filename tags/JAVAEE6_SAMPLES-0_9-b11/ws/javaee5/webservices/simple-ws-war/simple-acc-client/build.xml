@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="simple-acc-client" default="run" basedir=".">
+
+    <property name="is.app-client.module" value="true"/>
+
+    <import file="../../../../bp-project/jaxws.xml"/>
+
+    <target name="jaxws" depends="setup">
+	<!-- wsimport -->
+	<wsimport debug="true" verbose="${verbose}" keep="true" 
+		destdir="${build.classes.dir}" 
+		package="enterprise.simple_acc_client" 
+		wsdl="http://localhost:8080/simple-ws-war/HelloService?wsdl">
+	</wsimport>
+    </target>
+
+    <target name="run" depends="jaxws,compile,tools">
+	    <exec executable="${javaee.home}/bin/appclient${javaee-script-suffix}" dir="${build.classes.dir}">
+		<arg value="enterprise.simple_acc_client.HelloClient"/>
+	    </exec>
+    </target>
+
+</project>
