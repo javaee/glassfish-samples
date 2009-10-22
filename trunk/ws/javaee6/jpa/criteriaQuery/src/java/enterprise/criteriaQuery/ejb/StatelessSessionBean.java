@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.MapJoin;
-import javax.persistence.criteria.QueryBuilder;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Root;
 
 @Stateless
@@ -89,15 +89,15 @@ public class StatelessSessionBean {
 
     private void queryForOrderContainingItem(String itemName, ServletOutputStream outputStream) throws IOException {
         outputStream.println("\n\nQuerying for Order containing item : " + itemName);
-        QueryBuilder qbuilder = em.getEntityManagerFactory().getQueryBuilder();
-        CriteriaQuery<Order> cquery = qbuilder.createQuery(Order.class);
+        CriteriaBuilder criteriaBuilder = em.getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<Order> cquery = criteriaBuilder.createQuery(Order.class);
         Root<Order> order = cquery.from(Order.class);
         MapJoin<Order, Item, LineItem> lineItemsMap = order.joinMap("lineItems");
         cquery.
                 select(order).
                 where(
-                    qbuilder.equal(
-                            lineItemsMap.key().get("name"),qbuilder.parameter(String.class, "name")
+                    criteriaBuilder.equal(
+                            lineItemsMap.key().get("name"),criteriaBuilder.parameter(String.class, "name")
                             )
                     );
         TypedQuery<Order> tq = em.createQuery(cquery);
@@ -111,17 +111,17 @@ public class StatelessSessionBean {
 
     private void queryDataForOrder(int orderId, ServletOutputStream outputStream) throws IOException {
         outputStream.println("\n\nQuerying for Map entries for Order Id : " + orderId);
-        QueryBuilder qbuilder = em.getEntityManagerFactory().getQueryBuilder();
+        CriteriaBuilder criteriaBuilder = em.getEntityManagerFactory().getCriteriaBuilder();
 
-        CriteriaQuery<Map.Entry> cquery = qbuilder.createQuery(Map.Entry.class);
+        CriteriaQuery<Map.Entry> cquery = criteriaBuilder.createQuery(Map.Entry.class);
 
         Root<Order> order = cquery.from(Order.class);
         MapJoin<Order, Item, LineItem> lineItemsMap = order.joinMap("lineItems");
         cquery.
                 select(lineItemsMap.entry()).
                 where(
-                    qbuilder.equal(
-                            order.get("id"),qbuilder.parameter(Integer.class, "id")
+                    criteriaBuilder.equal(
+                            order.get("id"),criteriaBuilder.parameter(Integer.class, "id")
                             )
                     );
         TypedQuery<Map.Entry> tq = em.createQuery(cquery);
