@@ -14,7 +14,7 @@
     <!-- to get the test client to run when the user runs the project from inside NB -->
     <target name="post-run-deploy">
         <subant target="run" verbose="true">
-            <fileset dir="automatic-timer-client" includes="build.xml"/>
+            <fileset dir="ejb-embedded-client" includes="build.xml"/>
         </subant>
     </target>
 
