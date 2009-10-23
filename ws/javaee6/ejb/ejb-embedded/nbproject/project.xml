@@ -6,7 +6,7 @@
             <name>ejb-embedded</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <source-roots>
-                <root id="src.dir"/>
+                <root id="src.dir" name="Source Packages"/>
             </source-roots>
             <test-roots>
                 <root id="test.java.dir" name="Test Packages"/>
