@@ -8,7 +8,11 @@
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
             <name>managed-beans-war</name>
             <minimum-ant-version>1.6</minimum-ant-version>
-            <web-module-libraries/>
+            <web-module-libraries>
+                <library dirs="200">
+                    <file>${libs.restlib_gfv3ee6.classpath}</file>
+                </library>
+            </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>
                 <root id="src.dir"/>
