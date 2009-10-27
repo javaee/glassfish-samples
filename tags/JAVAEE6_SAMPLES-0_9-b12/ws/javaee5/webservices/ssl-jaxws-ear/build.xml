@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="ssl-jaxws-ear" default="all" basedir=".">
+
+    <property name="is.ear.module" value="true" />
+
+    <path id="ear-components">
+        <filelist dir="./ssl-jaxws-war" files="build.xml" />
+    </path>
+
+    <import file="../../../bp-project/main.xml" />
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="ear"/>
+        <antcall target="deploy"/>
+        <antcall target="run" />
+    </target>
+
+    <target name="run">
+        <antcall target="run-ant"/>
+        <antcall target="run-nb"/>
+    </target>
+
+    <target name="run-ant" unless="netbeans.home">
+        <subant target="run-app-client">
+            <fileset dir="ssl-jaxws-appclient" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="run-nb" if="netbeans.home">
+        <antcall target="init"/>
+        <antcall target="run-deploy"/>
+        <antcall target="run-display-browser"/>
+        <antcall target="run-ac"/>
+    </target>
+
+</project>
