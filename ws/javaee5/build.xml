@@ -5,7 +5,6 @@
     <description>Builds, tests, and packages the project glassfish-samples.</description>
 
     <path id="samples-list">
-        <filelist dir="webservices/hello-jaxws" files="build.xml"/>
         <filelist dir="webservices/simple-jaxb" files="build.xml"/>
         <filelist dir="webservices/ssl-jaxws-ear" files="build.xml"/>
         <filelist dir="enterprise/lottery-annotation-ear" files="build.xml"/>
