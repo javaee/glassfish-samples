@@ -17,6 +17,7 @@
     <antcall target="ear"/>
     <antcall target="deploy"/>
     <antcall target="client-jar"/>
+    <antcall target="client-lib"/>
     <antcall target="run-bp" />
   </target>
 
@@ -31,5 +32,9 @@
     </subant>
   </target>
 
+  <target name="client-lib" depends="ear,client-jar">
+      <jar destfile="client-jar/appClient.jar" 
+          basedir="lottery-annotation-ejb/build/classes" update="true"/>
+  </target>
 
 </project>
