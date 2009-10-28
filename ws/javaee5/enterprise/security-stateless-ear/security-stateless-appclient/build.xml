@@ -12,6 +12,8 @@
             <param name="app-client.jar" value="${app.client.jar}"/>
             <param name="file.realm.user.id" value="javaee"/>
             <param name="file.realm.user.password" value="javaee"/>
+            <param name="app-client.name" value="security-stateless-appclient"/>
+            <param name="appclient.application.args" value=""/>
         </antcall>
     </target>
 
