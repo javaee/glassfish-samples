@@ -118,18 +118,18 @@
 	<antcall target="start-db"/>
 	<echo message="Build and run every sample"/>
 	<subant target="-pre-setup">
-	    <fileset dir="." includes="*/build.xml"/>
+	    <fileset dir="." includes="javaee5/build.xml"/>
 	</subant>
 	<subant target="all">
-	    <fileset dir="." includes="*/build.xml"/>
+	    <fileset dir="." includes="javaee5/build.xml"/>
 	</subant>
 	<echo message="Unit testing"/>
 	<antcall target="runtest"/>
 	<subant target="-post-unsetup">
-	    <fileset dir="." includes="*/build.xml"/>
+	    <fileset dir="." includes="javaee5/build.xml"/>
 	</subant>
 	<subant target="clean">
-	    <fileset dir="." includes="*/build.xml"/>
+	    <fileset dir="." includes="javaee5/build.xml"/>
 	</subant>
 	<echo message="Packaging jar for staging"/>
 	<antcall target="package-sdk"/>
