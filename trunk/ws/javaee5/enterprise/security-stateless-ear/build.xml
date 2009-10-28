@@ -16,6 +16,7 @@
         <antcall target="ear"/>
         <antcall target="deploy"/>
         <antcall target="client-jar"/>
+        <antcall target="client-lib"/>
         <antcall target="create-file-user"/>
         <antcall target="run"/>
         <antcall target="delete-file-user"/>
@@ -41,11 +42,9 @@
     </target>
 
     <target name="run-ant" unless="netbeans.home">
-        <antcall target="create-file-user"/>
         <subant target="run-app-client">
             <fileset dir="security-stateless-appclient" includes="build.xml"/>
         </subant>
-        <antcall target="delete-file-user"/>
     </target>
 
     <!--
@@ -64,6 +63,11 @@
         <antcall target="run-deploy"/>
         <antcall target="run-display-browser"/>
         <antcall target="run-ac"/>
+    </target>
+
+    <target name="client-lib" depends="ear,client-jar">
+      <jar destfile="client-jar/security-stateless-earClient/security-stateless-appclient.jar"
+          basedir="security-stateless-ejb/build/classes" update="true"/>
     </target>
 
 </project>
