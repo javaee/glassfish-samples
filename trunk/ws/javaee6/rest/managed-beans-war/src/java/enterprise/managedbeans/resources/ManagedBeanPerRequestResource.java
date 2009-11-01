@@ -43,6 +43,7 @@ import javax.annotation.Resource;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Path;
@@ -56,6 +57,8 @@ public class ManagedBeanPerRequestResource {
     @Resource(name="injectedResource") int injectedResource = 0;
 
     @Context UriInfo ui;
+    
+    @EJB StatelessSessionBean ssb;
     
     public ManagedBeanPerRequestResource() {
         Logger.getLogger(ManagedBeanPerRequestResource.class.getName()).log(Level.INFO, "In constructor " + this);
@@ -81,6 +84,6 @@ public class ManagedBeanPerRequestResource {
          * be able to GET anything else than "1" from this resource.
          */
 
-        return Integer.toString(injectedResource++);
+        return ssb.getMessage() + " " + Integer.toString(injectedResource++);
     }
 }

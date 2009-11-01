@@ -37,50 +37,12 @@
 
 package enterprise.managedbeans.resources;
 
-import com.sun.jersey.spi.resource.Singleton;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.EJB;
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
+import javax.ejb.Stateless;
 
-@Path("/managedbean/singleton")
-@Singleton
-@ManagedBean
-public class ManagedBeanSingletonResource {
-
-    @Resource(name="injectedResource") int injectedResource = 0;
-
-    @Context UriInfo ui;
-
-    @EJB StatelessSessionBean ssb;
-    
-    public ManagedBeanSingletonResource() {
-        Logger.getLogger(ManagedBeanSingletonResource.class.getName()).log(Level.INFO, "In constructor " + this);
-    }
-
-    @PostConstruct
-    public void postConstruct() {
-        Logger.getLogger(ManagedBeanSingletonResource.class.getName()).log(Level.INFO, "In post construct " + this);
-    }
-
-    @PreDestroy
-    public void preDestroy() {
-        Logger.getLogger(ManagedBeanSingletonResource.class.getName()).log(Level.INFO, "In pre destroy " + this);
-    }
-
-    @GET 
-    @Produces("text/plain")
+@Stateless
+public class StatelessSessionBean {
     public String getMessage() {
-        Logger.getLogger(ManagedBeanSingletonResource.class.getName()).log(Level.INFO, "In getMessage " + this + " " + ui);
-
-        return ssb.getMessage() + " " + Integer.toString(injectedResource++);
+        return "message";
     }
 }
+
