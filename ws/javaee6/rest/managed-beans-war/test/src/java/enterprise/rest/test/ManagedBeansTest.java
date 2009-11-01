@@ -72,22 +72,22 @@ public class ManagedBeansTest {
     @Test
     public void testPerRequestResource() throws Exception {
         String responseMsg = baseWebResource.path("app/managedbean/per-request").get(String.class);
-        assertEquals("1", responseMsg);
+        assertEquals("message 1", responseMsg);
 
         responseMsg = baseWebResource.path("app/managedbean/per-request").get(String.class);
-        assertEquals("1", responseMsg);
+        assertEquals("message 1", responseMsg);
     }
 
     @Test
     public void testSingletonResource() throws Exception {
         String responseMsg = baseWebResource.path("app/managedbean/singleton").get(String.class);
-        assertEquals("1", responseMsg);
+        assertEquals("message 1", responseMsg);
 
         responseMsg = baseWebResource.path("app/managedbean/singleton").get(String.class);
-        assertEquals("2", responseMsg);
+        assertEquals("message 2", responseMsg);
 
         responseMsg = baseWebResource.path("app/managedbean/singleton").get(String.class);
-        assertEquals("3", responseMsg);
+        assertEquals("message 3", responseMsg);
     }
 }
 

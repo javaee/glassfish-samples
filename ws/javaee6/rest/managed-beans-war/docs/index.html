@@ -35,8 +35,9 @@
 <!--- Do not modify anything above this line, except for the title tag --->
 <p><a href="../../../docs/list.html">Samples Main Page</a></p>
 <h1>The Managed Beans Application</h1>
-<p>This sample demonstrates the possibility to annotate REST resource class
-    with ManagedBean annotation, thus REST resource can be Managed Bean as well.
+<p>This sample demonstrates the Java EE 6 feature of managed beans. JAX-RS root
+   resource classes are annotated with @ManagedBean, which means EE-related resources
+   may be injected into instances of those classes.
 </p>
 <p>If configured properly, page http://localhost:8080/managed-beans-war
 will be opened after
@@ -79,25 +80,24 @@ table:</p>
 <p> The web module consists of: </p>
 <ul>
   <li>HTML index page </li>
-  <li>Two REST resources whir are simulatenously Managed Beans. One is a session bean
-      and one is a singleton. </li>
+  <li>Two root resource classes that are managed beans and one stateless session bean. One root resource class is managed in the default JAX-RS life-cyle of per-request and the other is managed in the lifecycle of singleton (meaning on instance per web application).</li>
 </ul>
-The starting point of the application is the main <code>index.html</code>
+The starting point of the application is the <code>index.html</code>
 page. The application consists only from two resources
-and main page provides links to them. The output is just single integer value which
-is injected to the Managed Bean from web.xml file:
+and main page provides links to them. Two EE-related artifacts are injected into each root resource class instance.
+            The first is a resource constant defined in the web.xml:
 
 <pre>
-    &lt;env-entry&gt;
-        &lt;env-entry-name&gt;injectedResource&lt;/env-entry-name&gt;
-        &lt;env-entry-type&gt;java.lang.Integer&lt;/env-entry-type&gt;
-        &lt;env-entry-value&gt;<b>1</b>&lt;/env-entry-value&gt;
-    &lt;/env-entry&gt;
+&lt;env-entry&gt;
+    &lt;env-entry-name&gt;injectedResource&lt;/env-entry-name&gt;
+    &lt;env-entry-type&gt;java.lang.Integer&lt;/env-entry-type&gt;
+    &lt;env-entry-value&gt;<b>1</b>&lt;/env-entry-value&gt;
+&lt;/env-entry&gt;
 </pre>
 
-As you can see, injected value is "1" and this is exactly what you get when you hit
-per-request resource. Singleton returns "1" too, but only once - every other hit will
-incerase value of stored property (so you can see that it is really singleton).
+            The second is a stateless session EJB (see class enterprise.managedbeans.resources.StatelessSessionBean).
+
+The output is message provided by injected StatelessSessionBean instance concatenated with injected integer value from web.xml. You can easily test if singleton is really singleton by hitting that resource class more than once - integer value should increment by one every time you hit it. On the other hand, per-request resource will always return "message 1" (the value is incremented too, but same per-request instance wouldn't be hit twice).
 
 <h2>Building, Deploying, and Running the Application</h2>
 <p><!-- &lt;replacement for asant procedure&gt;<br> -->
