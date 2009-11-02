@@ -278,14 +278,7 @@ clean</code> </p>
   </li>
 </ol>
 
-
-<p><span style="font-weight: bold;">Note</span> : 
-This sample application is not supported on Netbeans.&nbsp;
-
-
-
-
-</p><h3>Exercising the Outbound Resource Adapter</h3>
+<h3>Exercising the Outbound Resource Adapter</h3>
 <p>You can test the outbound resource adapter by running the
 MailConnector application.&nbsp;</p><p>eg: http://localhost:8080/mailconnector-war</p><p>Use the menu to access the JSP pages that allow you to send email
 messages to a given email mailbox and also to query the same mailbox
@@ -319,6 +312,10 @@ see log lines similar to the following (with the appropriate values):
 <pre>[EC] Created EndpointConsumer for: username::foldername@mailserver<br><br></pre>By
 default, INFO and above log level related messages are printed. You can
 set FINEST logging for the sample by executing the following command.<br><pre>GF_HOME/bin/asadmin set-log-level --log-level FINEST samples.connectors.mailconnector.ra</pre><pre><br></pre>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>This sample application is not supported on Netbeans.</p>
+
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer to <a href="../../../../docs/UserTroubleShooting.html">
 troubleshooting document</a>.
