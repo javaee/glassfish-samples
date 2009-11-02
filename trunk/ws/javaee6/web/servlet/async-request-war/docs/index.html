@@ -52,22 +52,29 @@ corresponding to <code>AsyncContext</code>. </p>
     </li>
     <li>In <code>doGet</code>, set the timeout to ten minutes,
 start asynchronous, and add <code>AsyncContext</code> to a queue as follows:
-<p> <code>req.setAsyncTimeout(10 * 60 * 1000);<br>
-final AsyncContext ac = req.startAsync();<br>
+<p> <code>final AsyncContext ac = req.startAsync();<br>
+ac.setTimeout(10 * 60 * 1000);<br>
 queue.add(ac);</code><br>
       </p>
-      <p> Registers <code>AsyncListener</code> to the given request.
-In
-this case, only clean up the <code>AsyncContext</code> from the queue. </p>
-      <p><code> req.addAsyncListener(new AsyncListener() {<br>
+      <p> Registers <code>AsyncListener</code> with the <code>AsyncContext</code>. In this case, only clean up the <code>AsyncContext</code> from the queue. </p>
+      <p><code> ac.addListener(new AsyncListener() {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;public void onComplete(AsyncEvent event) throws
 IOException {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
-&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
       <br>
 &nbsp;&nbsp;&nbsp;&nbsp;public void onTimeout(AsyncEvent event) throws
 IOException {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onError(AsyncEvent event) throws
+IOException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onStartAsync(AsyncEvent event) throws
+IOException {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 });</code><br>
       </p>
