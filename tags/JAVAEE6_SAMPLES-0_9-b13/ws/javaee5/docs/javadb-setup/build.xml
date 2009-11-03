@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+<project name="petstore-setup" basedir=".">
+
+  <import file="../../../bp-project/main.xml" />
+
+  <!-- sql scripts for creation/deletion of database -->
+  <property name="db.create.src" value="./sql/create.sql"/>
+  <property name="db.delete.src" value="./sql/delete.sql"/>
+
+  <target name="setup" depends="create-jdbc-resource, create-db" />
+  <target name="unsetup" depends="delete-jdbc-connection-pool, delete-db" />
+  
+  <target name="create-db" depends="delete-db"
+	description="Create database tables and populate database." >
+    <sql driver="${db.driver}"
+         encoding="utf-8"
+         url="${db.url}"
+         userid="${db.user}"
+         password="${db.password}"
+         classpathref="db.classpath"
+         delimiter="${db.delimiter}"
+         autocommit="true"
+         onerror="abort" >
+    	<transaction src="${db.create.src}"/>
+    </sql>
+  </target>
+  
+  <target name="delete-db" description="Deletes the database tables." >
+    <echo>driver=${db.driver}</echo>
+    <echo>url=${db.url}</echo>
+    <echo>user=${db.user}</echo>
+    <echo>password=${db.password}</echo>
+    <sql driver="${db.driver}"
+         encoding="utf-8"
+         url="${db.url}"
+         userid="${db.user}"
+         password="${db.password}"
+         classpathref="db.classpath"
+         delimiter="${db.delimiter}"
+         autocommit="true"
+         onerror="continue" >       
+    	<transaction src="${db.delete.src}"/>
+    </sql>
+  </target>
+  
+  <target name="create-jdbc-connection-pool" depends="tools">
+    <echo message="Registering jdbc-connection-pool SamplesJdbcPool."/>
+    <echo>ds=${db.datasource}</echo>
+    <antcall target="create-jdbc-connection-pool">
+      <param name="pool.name"     value="SamplesJdbcPool" />
+      <param name="db.serverName"   value="${javaee.server.name}" />
+      <param name="ds.class"      value="${db.datasource}" />
+    </antcall>
+ </target>
+
+ <target name="create-jdbc-resource" depends="tools,create-jdbc-connection-pool">
+    <echo message="Registering jdbc resource jdbc/SamplesDB."/>
+    <antcall target="create-jdbc-resource">
+      <param name="pool.name"            value="SamplesJdbcPool" />
+      <param name="jdbc.resource.name"   value="jdbc/SamplesDB" />
+    </antcall>
+ </target>
+
+  <target name="delete-jdbc-resource" depends="tools" >
+    <echo message="Deleting jdbc resource jdbc/SamplesDB"/>
+    <antcall target="delete-jdbc-resource">
+      <param name="jdbc.resource.name" value="jdbc/SamplesDB" />
+    </antcall> 
+ </target>
+
+ <target name="delete-jdbc-iconnection-pool" depends="tools, delete-jdbc-resource">
+    <echo message="Deleting jdbc-connection-pool SamplesJdbcPool."/>
+    <antcall target="delete-jdbc-connection-pool">
+      <param name="pool.name" value="SamplesJdbcPool" />
+    </antcall>
+ </target>
+
+  <property environment="env" />
+</project>
