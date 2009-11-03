@@ -29,7 +29,7 @@
     />
 
     <patternset id="web.profile.contents"
-        includes="javaee6/index.html, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
+        includes="index.html, javaee6/index.html, javaee6/docs/UserREADME.html, javaee6/docs/UserTroubleShooting.html, javaee6/docs/list.html, javaee6/docs/JavaDB.html, javaee6/docs/javadb-setup/**,
                   javaee6/jpa/**, javaee6/ejb/ejb31-war/**, javaee6/web/container/**, javaee6/web/servlet/**, javaee6/web/jsf/**, javaee6/security/**, javaee6/weld/**"
         excludes="javaee6/security/web-security-annotation/**,javaee6/**/test/**"/>
 
@@ -86,11 +86,13 @@
 
     <target name="package-web"
         description="packages the web-profile samples into a single jar for SDK">
+        <copy file="javaee6/docs/sdk_samples_index.html" tofile="index.html"/>
         <zip destfile="${dist.dir}/${release.dirname}-web-profile.jar">
             <zipfileset dir="."> 
                 <patternset refid="web.profile.contents"/>
             </zipfileset>
         </zip>
+        <delete file="index.html"/>
     </target>
 
     <target name="package-classic"
