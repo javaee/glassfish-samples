@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
 
-<project name="http-method-omission" default="all" basedir=".">
+<project name="programmatic-login" default="all" basedir=".">
 
     <property name="javadoc.packagenames" value="enterprise.programmatic_login"/>
     <property name="is.war.module" value="true" />
