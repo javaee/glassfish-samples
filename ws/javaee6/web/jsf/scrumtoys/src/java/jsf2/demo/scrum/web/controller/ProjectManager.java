@@ -1,11 +1,43 @@
+/*
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of either the GNU
+ * General Public License Version 2 only ("GPL") or the Common Development
+ * and Distribution License("CDDL") (collectively, the "License").  You
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
+ * language governing permissions and limitations under the License.
+ *
+ * When distributing the software, include this License Header Notice in each
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
+ *
+ * Contributor(s):
+ *
+ * If you wish your version of this file to be governed by only the CDDL or
+ * only the GPL Version 2, indicate your decision by adding "[Contributor]
+ * elects to include this software in this distribution under the [CDDL or GPL
+ * Version 2] license."  If you don't indicate a single choice of license, a
+ * recipient has the option to distribute your version of this file under
+ * either the CDDL, the GPL Version 2 or to extend the choice of license to
+ * its licensees as provided above.  However, if you add GPL Version 2 code
+ * and therefore, elected the GPL Version 2 license, then the option applies
+ * only if the new code is made subject to such option by the copyright
+ * holder.
+ */
+
 package jsf2.demo.scrum.web.controller;
 
-import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jsf2.demo.scrum.model.entities.Project;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
@@ -19,11 +51,13 @@ import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import jsf2.demo.scrum.model.entities.Project;
-import jsf2.demo.scrum.web.event.CurrentProjectChangeEvent;
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
  * @author Dr. Spock (spock at dev.java.net)
  */
 @ManagedBean(name = "projectManager")
@@ -45,25 +79,36 @@ public class ProjectManager extends AbstractManager implements Serializable {
 
     @PreDestroy
     public void destroy() {
+	projects = null;
+	if (null != projectItems) {
+	    projectItems.clear();
+	    projectItems = null;
+	}
+	if (null != projectList) {
+	    projectList.clear();
+	    projectList = null;
+	}
+	currentProject = null;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("projectManager");
     }
 
     public void init() {
         try {
-            projectList = doInTransaction(new PersistenceAction<List<Project>>() {
+            setProjectList(doInTransaction(new PersistenceAction<List<Project>>() {
 
                 public List<Project> execute(EntityManager em) {
                     Query query = em.createNamedQuery("project.getAll");
                     return (List<Project>) query.getResultList();
                 }
-            });
+            }));
         } catch (ManagerException ex) {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         projectItems = new LinkedList<SelectItem>();
         projectItems.add(new SelectItem(new Project(), "-- Select one project --"));
-        if (projectList != null) {
-            projects = new ListDataModel<Project>(projectList);
-            for (Project p : projectList) {
+        if (getProjectList() != null) {
+            projects = new ListDataModel<Project>(getProjectList());
+            for (Project p : getProjectList()) {
                 projectItems.add(new SelectItem(p, p.getName()));
             }
         }
@@ -76,31 +121,31 @@ public class ProjectManager extends AbstractManager implements Serializable {
     }
 
     public String save() {
-        if (currentProject != null) {
+        if (getCurrentProject() != null) {
             try {
                 Project merged = doInTransaction(new PersistenceAction<Project>() {
 
                     public Project execute(EntityManager em) {
-                        if (currentProject.isNew()) {
-                            em.persist(currentProject);
+                        if (getCurrentProject().isNew()) {
+                            em.persist(getCurrentProject());
                         } else if (!em.contains(currentProject)) {
-                            return em.merge(currentProject);
+                            return em.merge(getCurrentProject());
                         }
-                        return currentProject;
+                        return getCurrentProject();
                     }
                 });
                 if (!currentProject.equals(merged)) {
                     setCurrentProject(merged);
-                    int idx = projectList.indexOf(currentProject);
+                    int idx = getProjectList().indexOf(getCurrentProject());
                     if (idx != -1) {
-                        projectList.set(idx, merged);
+                        getProjectList().set(idx, merged);
                     }
                 }
                 if (!projectList.contains(merged)) {
-                    projectList.add(merged);
+                    getProjectList().add(merged);
                 }
             } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to save Project: " + currentProject, e);
+                getLogger(getClass()).log(Level.SEVERE, "Error on try to save Project: " + getCurrentProject(), e);
                 addMessage("Error on try to save Project", FacesMessage.SEVERITY_ERROR);
                 return null;
             }
@@ -111,6 +156,7 @@ public class ProjectManager extends AbstractManager implements Serializable {
 
     public String edit() {
         setCurrentProject(projects.getRowData());
+        // Using implicity navigation, this request come from /projects/show.xhtml and directs to /project/edit.xhtml
         return "edit";
     }
 
@@ -128,14 +174,16 @@ public class ProjectManager extends AbstractManager implements Serializable {
                         }
                     }
                 });
-                projectList.remove(project);
+                getProjectList().remove(project);
             } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Project: " + currentProject, e);
+                getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Project: " + getCurrentProject(), e);
                 addMessage("Error on try to remove Project", FacesMessage.SEVERITY_ERROR);
                 return null;
             }
         }
         init();
+        // Using implicity navigation, this request come from /projects/show.xhtml and directs to /project/show.xhtml
+        // could be null instead
         return "show";
     }
 
@@ -145,10 +193,10 @@ public class ProjectManager extends AbstractManager implements Serializable {
             Long count = doInTransaction(new PersistenceAction<Long>() {
 
                 public Long execute(EntityManager em) {
-                    Query query = em.createNamedQuery((currentProject.isNew()) ? "project.new.countByName" : "project.countByName");
+                    Query query = em.createNamedQuery((getCurrentProject().isNew()) ? "project.new.countByName" : "project.countByName");
                     query.setParameter("name", newName);
                     if (!currentProject.isNew()) {
-                        query.setParameter("currentProject", currentProject);
+                        query.setParameter("currentProject", getCurrentProject());
                     }
                     return (Long) query.getSingleResult();
                 }
@@ -162,11 +210,13 @@ public class ProjectManager extends AbstractManager implements Serializable {
     }
 
     public String cancelEdit() {
+        // Implicity navigation, this request come from /projects/edit.xhtml and directs to /project/show.xhtml
         return "show";
     }
 
     public String showSprints() {
         setCurrentProject(projects.getRowData());
+        // Implicity navigation, this request come from /projects/show.xhtml and directs to /project/showSprints.xhtml
         return "showSprints";
     }
 
@@ -176,7 +226,6 @@ public class ProjectManager extends AbstractManager implements Serializable {
 
     public void setCurrentProject(Project currentProject) {
         this.currentProject = currentProject;
-        publishEvent(CurrentProjectChangeEvent.class, currentProject);
     }
 
     public DataModel<Project> getProjects() {
@@ -194,4 +243,24 @@ public class ProjectManager extends AbstractManager implements Serializable {
     public void setProjectItems(List<SelectItem> projectItems) {
         this.projectItems = projectItems;
     }
+
+    /**
+     * @return the projectList
+     */
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    /**
+     * @param projectList the projectList to set
+     */
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
+    }
+
+    public String viewSprints() {
+        return "/sprint/show";
+    }
+
+
 }

@@ -1,12 +1,44 @@
+/*
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of either the GNU
+ * General Public License Version 2 only ("GPL") or the Common Development
+ * and Distribution License("CDDL") (collectively, the "License").  You
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
+ * language governing permissions and limitations under the License.
+ *
+ * When distributing the software, include this License Header Notice in each
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
+ *
+ * Contributor(s):
+ *
+ * If you wish your version of this file to be governed by only the CDDL or
+ * only the GPL Version 2, indicate your decision by adding "[Contributor]
+ * elects to include this software in this distribution under the [CDDL or GPL
+ * Version 2] license."  If you don't indicate a single choice of license, a
+ * recipient has the option to distribute your version of this file under
+ * either the CDDL, the GPL Version 2 or to extend the choice of license to
+ * its licensees as provided above.  However, if you add GPL Version 2 code
+ * and therefore, elected the GPL Version 2 license, then the option applies
+ * only if the new code is made subject to such option by the copyright
+ * holder.
+ */
+
 package jsf2.demo.scrum.web.controller;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jsf2.demo.scrum.model.entities.Project;
+import jsf2.demo.scrum.model.entities.Sprint;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
@@ -15,21 +47,19 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import jsf2.demo.scrum.model.entities.Project;
-import jsf2.demo.scrum.model.entities.Sprint;
-import jsf2.demo.scrum.web.event.CurrentProjectChangeEvent;
-import jsf2.demo.scrum.web.event.CurrentSprintChangeEvent;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
  * @author Dr. Spock (spock at dev.java.net)
  */
 @ManagedBean(name = "sprintManager")
@@ -40,28 +70,35 @@ public class SprintManager extends AbstractManager implements Serializable {
     private Sprint currentSprint;
     private DataModel<Sprint> sprints;
     private List<Sprint> sprintList;
-    @ManagedProperty("#{projectManager.currentProject}")
-    private Project project;
-    private SystemEventListener projectChangeListener;
+    @ManagedProperty("#{projectManager}")
+    private ProjectManager projectManager;
+    private Project currentProject;
 
     @PostConstruct
     public void construct() {
-        projectChangeListener = new ProjectChangeListener();
-        subscribeToEvent(CurrentProjectChangeEvent.class, projectChangeListener);
         init();
     }
 
     @PreDestroy
     public void destroy() {
-        unsubscribeFromEvent(CurrentProjectChangeEvent.class, projectChangeListener);
+	sprints = null;
+	if (null != sprintList) {
+	    sprintList.clear();
+	    sprintList = null;
+	}
+	projectManager = null;
+	currentProject = null;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("sprintManager");
+
     }
 
     public void init() {
         Sprint sprint = new Sprint();
-        sprint.setProject(project);
+        Project pmCurrentProject = getProjectManager().getCurrentProject();
+        sprint.setProject(pmCurrentProject);
         setCurrentSprint(sprint);
-        if (project != null) {
-            sprintList = new LinkedList<Sprint>(project.getSprints());
+        if (pmCurrentProject != null) {
+            sprintList = new LinkedList<Sprint>(pmCurrentProject.getSprints());
         } else {
             sprintList = Collections.emptyList();
         }
@@ -70,7 +107,7 @@ public class SprintManager extends AbstractManager implements Serializable {
 
     public String create() {
         Sprint sprint = new Sprint();
-        sprint.setProject(project);
+        sprint.setProject(getProjectManager().getCurrentProject());
         setCurrentSprint(sprint);
         return "create";
     }
@@ -96,7 +133,7 @@ public class SprintManager extends AbstractManager implements Serializable {
                         sprintList.set(idx, merged);
                     }
                 }
-                project.addSprint(merged);
+                getProjectManager().getCurrentProject().addSprint(merged);
                 if (!sprintList.contains(merged)) {
                     sprintList.add(merged);
                 }
@@ -128,7 +165,7 @@ public class SprintManager extends AbstractManager implements Serializable {
                         }
                     }
                 });
-                project.removeSpring(sprint);
+                getProjectManager().getCurrentProject().removeSpring(sprint);
                 sprintList.remove(sprint);
             } catch (Exception e) {
                 getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Sprint: " + currentSprint, e);
@@ -138,35 +175,35 @@ public class SprintManager extends AbstractManager implements Serializable {
         }
         return "show";
     }
-    
+
     /*
-     * This method can be pointed to by a validator methodExpression, such as:
-     * 
-     * <h:inputText id="itName" value="#{sprintManager.currentSprint.name}" required="true"
-     *   requiredMessage="#{i18n['sprint.form.label.name.required']}" maxLength="30" size="30"
-     *   validator="#{sprintManager.checkUniqueSprintName}" />
-     */
+    * This method can be pointed to by a validator methodExpression, such as:
+    *
+    * <h:inputText id="itName" value="#{sprintManager.currentSprint.name}" required="true"
+    *   requiredMessage="#{i18n['sprint.form.label.name.required']}" maxLength="30" size="30"
+    *   validator="#{sprintManager.checkUniqueSprintName}" />
+    */
 
     public void checkUniqueSprintNameFacesValidatorMethod(FacesContext context, UIComponent component, Object newValue) {
-        
+
         final String newName = (String) newValue;
         String message = checkUniqueSprintNameApplicationValidatorMethod(newName);
         if (null != message) {
             throw new ValidatorException(getFacesMessageForKey("sprint.form.label.name.unique"));
         }
     }
-    
-    
+
+
     /*
-     * This method is called by the JSR-303 SprintNameUniquenessConstraintValidator.
-     * If it returns non-null, the result must be interpreted as the localized
-     * validation message.
-     * 
-     */
-    
+    * This method is called by the JSR-303 SprintNameUniquenessConstraintValidator.
+    * If it returns non-null, the result must be interpreted as the localized
+    * validation message.
+    *
+    */
+
     public String checkUniqueSprintNameApplicationValidatorMethod(String newValue) {
         String message = null;
-        
+
         final String newName = (String) newValue;
         try {
             Long count = doInTransaction(new PersistenceAction<Long>() {
@@ -174,7 +211,7 @@ public class SprintManager extends AbstractManager implements Serializable {
                 public Long execute(EntityManager em) {
                     Query query = em.createNamedQuery((currentSprint.isNew()) ? "sprint.new.countByNameAndProject" : "sprint.countByNameAndProject");
                     query.setParameter("name", newName);
-                    query.setParameter("project", project);
+                    query.setParameter("project", getProjectManager().getCurrentProject());
                     if (!currentSprint.isNew()) {
                         query.setParameter("currentSprint", currentSprint);
                     }
@@ -187,7 +224,7 @@ public class SprintManager extends AbstractManager implements Serializable {
         } catch (ManagerException ex) {
             Logger.getLogger(SprintManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return message;
     }
 
@@ -211,34 +248,41 @@ public class SprintManager extends AbstractManager implements Serializable {
 
     public void setCurrentSprint(Sprint currentSprint) {
         this.currentSprint = currentSprint;
-        publishEvent(CurrentSprintChangeEvent.class, currentSprint);
     }
 
     public DataModel<Sprint> getSprints() {
-        return sprints;
+        this.sprints = new ListDataModel(projectManager.getCurrentProject().getSprints());
+        return this.sprints;
     }
 
     public void setSprints(DataModel<Sprint> sprints) {
         this.sprints = sprints;
     }
 
+    public ProjectManager getProjectManager() {
+        return projectManager;
+    }
+
+    public void setProjectManager(ProjectManager projectManager) {
+        this.projectManager = projectManager;
+    }
+
     public Project getProject() {
-        return project;
+        Project pmCurrentProject = projectManager.getCurrentProject();
+        // Verify if the currentProject is out of date
+        // If there is a new CurrentProject we need to update sprintList and set currentSprint to null and tell user he/she needs to select a Sprint
+        if (pmCurrentProject != currentProject) {
+            this.setCurrentSprint(null);
+            this.sprintList = pmCurrentProject.getSprints();
+            this.sprints = new ListDataModel<Sprint>(sprintList);
+            this.currentProject = pmCurrentProject;
+        }
+        return currentProject;
     }
 
     public void setProject(Project project) {
-        this.project = project;
+        projectManager.setCurrentProject(project);
     }
 
-    private class ProjectChangeListener implements SystemEventListener, Serializable {
 
-        public void processEvent(SystemEvent event) throws AbortProcessingException {
-            project = (Project) event.getSource();
-            init();
-        }
-
-        public boolean isListenerForSource(Object source) {
-            return (source instanceof Project);
-        }
-    }
 }
