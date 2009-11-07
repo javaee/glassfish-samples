@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  * 
- * Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ * Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
  * 
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -54,10 +54,9 @@ public class SprintNameUniquenessConstraintValidator implements ConstraintValida
                 checkUniqueSprintNameApplicationValidatorMethod(value);
         if (null != message) {
             result = false;
-	    ConstraintValidatorContext.ErrorBuilder builder = 
-		ctx.buildErrorWithMessageTemplate(message);
-	    builder.addError();
-            ctx.disableDefaultError();
+	    ConstraintValidatorContext.ConstraintViolationBuilder builder =
+		ctx.buildConstraintViolationWithTemplate(message);
+	    builder.addConstraintViolation();
         }
 
         

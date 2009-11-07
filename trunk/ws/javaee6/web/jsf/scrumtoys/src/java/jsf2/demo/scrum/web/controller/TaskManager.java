@@ -1,75 +1,102 @@
+/*
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of either the GNU
+ * General Public License Version 2 only ("GPL") or the Common Development
+ * and Distribution License("CDDL") (collectively, the "License").  You
+ * may not use this file except in compliance with the License. You can obtain
+ * a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+ * or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
+ * language governing permissions and limitations under the License.
+ *
+ * When distributing the software, include this License Header Notice in each
+ * file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+ * Sun designates this particular file as subject to the "Classpath" exception
+ * as provided by Sun in the GPL Version 2 section of the License file that
+ * accompanied this code.  If applicable, add the following below the License
+ * Header, with the fields enclosed by brackets [] replaced by your own
+ * identifying information: "Portions Copyrighted [year]
+ * [name of copyright owner]"
+ *
+ * Contributor(s):
+ *
+ * If you wish your version of this file to be governed by only the CDDL or
+ * only the GPL Version 2, indicate your decision by adding "[Contributor]
+ * elects to include this software in this distribution under the [CDDL or GPL
+ * Version 2] license."  If you don't indicate a single choice of license, a
+ * recipient has the option to distribute your version of this file under
+ * either the CDDL, the GPL Version 2 or to extend the choice of license to
+ * its licensees as provided above.  However, if you add GPL Version 2 code
+ * and therefore, elected the GPL Version 2 license, then the option applies
+ * only if the new code is made subject to such option by the copyright
+ * holder.
+ */
+
 package jsf2.demo.scrum.web.controller;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jsf2.demo.scrum.model.entities.Story;
+import jsf2.demo.scrum.model.entities.Task;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import jsf2.demo.scrum.model.entities.Story;
-import jsf2.demo.scrum.model.entities.Task;
-import jsf2.demo.scrum.web.event.CurrentStoryChangeEvent;
-import jsf2.demo.scrum.web.event.CurrentTaskChangeEvent;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PreDestroy;
+import javax.faces.bean.CustomScoped;
+import jsf2.demo.scrum.web.scope.TaskScopeResolver;
 
 /**
- *
  * @author Dr. Spock (spock at dev.java.net)
  */
 @ManagedBean(name = "taskManager")
-@SessionScoped
+@CustomScoped(value="#{taskScope}")
 public class TaskManager extends AbstractManager implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Task currentTask;
     private DataModel<Task> tasks;
     private List<Task> taskList;
-    @ManagedProperty("#{storyManager.currentStory}")
-    private Story story;
-    private SystemEventListener storyChangeListener;
+    @ManagedProperty("#{storyManager}")
+    private StoryManager storyManager;
 
     @PostConstruct
     public void construct() {
-        storyChangeListener = new StoryChangeListener();
-        subscribeToEvent(CurrentStoryChangeEvent.class, storyChangeListener);
+        getLogger(getClass()).log(Level.INFO, "new intance of taskManager in taskScope");
         init();
-    }
-
-    @PreDestroy
-    public void destroy() {
-        unsubscribeFromEvent(CurrentStoryChangeEvent.class, storyChangeListener);
     }
 
     public void init() {
         Task task = new Task();
-        task.setStory(story);
+        Story currentStory = storyManager.getCurrentStory();
+        task.setStory(currentStory);
         setCurrentTask(task);
-        if (story != null) {
-            taskList = new LinkedList<Task>(story.getTasks());
+        if (currentStory != null) {
+            taskList = new LinkedList<Task>(currentStory.getTasks());
         } else {
-            taskList = Collections.emptyList();
+            taskList = new ArrayList<Task>();
         }
         tasks = new ListDataModel<Task>(taskList);
     }
 
     public String create() {
         Task task = new Task();
-        task.setStory(story);
+        task.setStory(storyManager.getCurrentStory());
         setCurrentTask(task);
         return "create";
     }
@@ -95,7 +122,7 @@ public class TaskManager extends AbstractManager implements Serializable {
                         taskList.set(idx, merged);
                     }
                 }
-                story.addTask(merged);
+                storyManager.getCurrentStory().addTask(merged);
                 if (!taskList.contains(merged)) {
                     taskList.add(merged);
                 }
@@ -127,7 +154,7 @@ public class TaskManager extends AbstractManager implements Serializable {
                         }
                     }
                 });
-                story.removeTask(task);
+                storyManager.getCurrentStory().removeTask(task);
                 taskList.remove(task);
             } catch (Exception e) {
                 getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Task: " + currentTask, e);
@@ -146,7 +173,7 @@ public class TaskManager extends AbstractManager implements Serializable {
                 public Long execute(EntityManager em) {
                     Query query = em.createNamedQuery((currentTask.isNew()) ? "task.new.countByNameAndStory" : "task.countByNameAndStory");
                     query.setParameter("name", newName);
-                    query.setParameter("story", story);
+                    query.setParameter("story", storyManager.getCurrentStory());
                     if (!currentTask.isNew()) {
                         query.setParameter("currentTask", (!currentTask.isNew()) ? currentTask : null);
                     }
@@ -171,10 +198,10 @@ public class TaskManager extends AbstractManager implements Serializable {
 
     public void setCurrentTask(Task currentTask) {
         this.currentTask = currentTask;
-        publishEvent(CurrentTaskChangeEvent.class, currentTask);
     }
 
     public DataModel<Task> getTasks() {
+        this.tasks = new ListDataModel(storyManager.getCurrentStory().getTasks());
         return tasks;
     }
 
@@ -183,22 +210,40 @@ public class TaskManager extends AbstractManager implements Serializable {
     }
 
     public Story getStory() {
-        return story;
+        return storyManager.getCurrentStory();
     }
 
     public void setStory(Story story) {
-        this.story = story;
+        storyManager.setCurrentStory(story);
     }
 
-    private class StoryChangeListener implements SystemEventListener, Serializable {
-
-        public void processEvent(SystemEvent event) throws AbortProcessingException {
-            story = (Story) event.getSource();
-            init();
-        }
-
-        public boolean isListenerForSource(Object source) {
-            return (source instanceof Story);
-        }
+    public StoryManager getStoryManager() {
+        return storyManager;
     }
+
+    public void setStoryManager(StoryManager storyManager) {
+        this.storyManager = storyManager;
+    }
+
+    public String showStories() {
+        endScope();
+        return "/story/show";
+    }
+
+    private void endScope() {
+        TaskScopeResolver.destroyScope();
+    }
+
+    @PreDestroy
+    public void destroy() {
+        getLogger(getClass()).log(Level.INFO, "destroy intance of taskManager in taskScope");
+	currentTask = null;
+	tasks = null;
+	if (null != taskList) {
+	    taskList.clear();
+	    taskList = null;
+	}
+	storyManager = null;
+    }
+
 }
