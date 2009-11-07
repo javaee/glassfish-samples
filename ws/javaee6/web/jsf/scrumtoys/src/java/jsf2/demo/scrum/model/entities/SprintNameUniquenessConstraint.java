@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  * 
- * Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ * Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
  * 
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -42,7 +42,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
-import javax.validation.ConstraintPayload;
+import javax.validation.Payload;
 
 @Documented
 @Constraint(validatedBy = SprintNameUniquenessConstraintValidator.class)
@@ -54,7 +54,7 @@ public @interface SprintNameUniquenessConstraint {
 
 	Class<?>[] groups() default {};
 
-    Class<? extends ConstraintPayload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
     
 
 }
