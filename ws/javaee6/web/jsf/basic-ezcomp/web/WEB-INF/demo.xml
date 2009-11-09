@@ -3,7 +3,7 @@
 
  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
- Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
 
  The contents of this file are subject to the terms of either the GNU
  General Public License Version 2 only ("GPL") or the Common Development
@@ -78,16 +78,16 @@
     <!-- =================================================================== -->
 
     <demo>
-        <name>Simple Controller Usage</name>
-        <page>controller.jsf</page>
+        <name>Simple Contract Usage</name>
+        <page>contract.jsf</page>
         <sources>
             <source>
                 <label>Using Page</label>
-                <path>/controller.xhtml</path>
+                <path>/contract.xhtml</path>
             </source>
             <source>
                 <label>Composite Component</label>
-                <path>/resources/simplecontroller/double.xhtml</path>
+                <path>/resources/simplecontract/double.xhtml</path>
             </source>
             <source>
                 <label>Managed Bean</label>
@@ -165,7 +165,7 @@
         </source>
         <source>
             <label>Managed Bean</label>
-            <path>/sources/MultiNumberHolder.java.source</path>
+            <path>/sources/NumberHolder.java.source</path>
         </source>
     </sources>
 </demo>
@@ -195,5 +195,25 @@
     </sources>
 </demo>
 
+    <!-- =================================================================== -->
+
+<demo>
+    <name>Action Listener</name>
+    <page>actionListener.jsf</page>
+    <sources>
+        <source>
+            <label>Initial Using Page</label>
+            <path>/actionListener.xhtml</path>
+        </source>
+        <source>
+            <label>Composite Component</label>
+            <path>/resources/action/actionButton.xhtml</path>
+        </source>
+        <source>
+            <label>Action Listener</label>
+            <path>/sources/ActionCaller.java.source</path>
+        </source>
+    </sources>
+</demo>
 
 </demo-info>

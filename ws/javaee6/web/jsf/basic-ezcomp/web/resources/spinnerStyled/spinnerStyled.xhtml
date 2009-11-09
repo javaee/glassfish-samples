@@ -36,20 +36,27 @@
 
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:composite="http://java.sun.com/jsf/composite">
-<head>
-    <title>This will not be present in rendered output</title>
-</head>
-<body>
-<composite:interface>
-    <composite:attribute name="action" targets="navbutton" required="true" method-signature="String f1()" /> 
-</composite:interface>
-
-<composite:implementation>
-   <h:commandButton id="navbutton" action="#{cc.attrs.action}" value="NavButton" type="submit" />
-</composite:implementation>
-</body>
+      xmlns:ez="http://java.sun.com/jsf/composite/spinnerStyled">
+<h:head>
+    <title>Spinner Example</title>
+</h:head>
+<h:body><h1>Spinner Example</h1>
+    <h:outputStylesheet name="css/spinnerStyled.css"/>
+        <h:form id="form1" prependId="false">
+            <ez:spinner value="#{number.number}" increment="10" id="spinner" />
+            <br/>
+            <h:outputText value="Last number submitted: #{number.number}" />
+            <br/>
+                <h:commandButton value="reload" type="submit"/>
+            <h:messages/>
+        </h:form>
+    <p>
+    <h:outputLink value="http://weblogs.java.net/blog/driscoll/archive/2008/11/jsf_20_adding_s_1.html">
+        Blog discussing this example</h:outputLink>
+    </p>
+    
+</h:body>
 </html>

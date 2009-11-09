@@ -35,21 +35,35 @@
  holder.
 
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:composite="http://java.sun.com/jsf/composite">
-<head>
-    <title>This will not be present in rendered output</title>
-</head>
-<body>
-<composite:interface>
-    <composite:attribute name="action" targets="navbutton" required="true" method-signature="String f1()" /> 
-</composite:interface>
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ez="http://java.sun.com/jsf/composite/action">
+<h:head>
+<title>Sample from webtier forum 20081125</title>
+<style type="text/css">
+.grayBox { padding: 8px; margin: 10px 0; border: 1px solid #CCC; background-color: #f9f9f9;  }
+</style>
 
-<composite:implementation>
-   <h:commandButton id="navbutton" action="#{cc.attrs.action}" value="NavButton" type="submit" />
-</composite:implementation>
-</body>
+</h:head>
+
+<h:body>
+
+<h:form>
+
+  <div id="cc" class="grayBox" style="border: 1px solid #090;">
+
+    <ez:actionButton id="loginPanelInConsumingPage">
+      <f:actionListener for="abutton" binding="#{actionBean.listener}"/>
+    </ez:actionButton>
+
+   <p>actionCalled: #{actionCalled}</p>
+
+  </div>
+
+</h:form>
+
+</h:body>
+
 </html>
