@@ -2,7 +2,7 @@
 
  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
- Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
 
  The contents of this file are subject to the terms of either the GNU
  General Public License Version 2 only ("GPL") or the Common Development
@@ -36,36 +36,38 @@
 
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:cc="http://java.sun.com/jsf/composite">
+      xmlns:ez="http://java.sun.com/jsf/composite/simplecontract">
 <head>
-
-<title>This will not be present in rendered output</title>
-
+    <title>Should Be Ignored</title>
 </head>
-
 <body>
 
-<cc:interface name="double"
-                     displayName="Very Basic Output Component"
-                     shortDescription="A basic example of the composite component feature">
-   <cc:attribute name="controller" required="true">
-        <cc:attribute name="number1" required="true"/>
-        <cc:attribute name="number2" required="true"/>
-   </cc:attribute>
-</cc:interface>
+<ui:composition template="/WEB-INF/demotemplate.xhtml">
+    <ui:param name="title" value="Basic Composite Component - Contract"/>
+    <ui:define name="content">
 
-<cc:implementation>
-    <h:inputText value="#{cc.attrs.controller.number1}"/>
-    <br/>
-    <h:inputText value="#{cc.attrs.controller.number2}"/>
-    <br/>
-</cc:implementation>
+        <h2>${title}</h2>
+
+        <h:form>
+
+            <div id="cc" class="grayBox" style="border: 1px solid #090;">
+                <!-- begin composite component usage -->
+
+                <ez:double contract="#{multinumber}"/>
+
+                <!-- end composite component usage -->
+            </div>
+
+            <p><h:commandButton value="reload" action="contract"/></p>
+            <h:messages/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
 
 </body>
-
 </html>

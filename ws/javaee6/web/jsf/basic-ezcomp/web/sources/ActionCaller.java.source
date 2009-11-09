@@ -36,56 +36,25 @@
 
 package ezcomp;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.io.Serializable;
-
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-
-/**
- * Managed Bean for the inout composite component demo.
- */
-
-@ManagedBean(name = "inout")
-@SessionScoped
-public class InOutBean implements Serializable {
-
-    private static final long serialVersionUID = -5980327949241062555L;
-
-    private static final Logger LOGGER =
-          Logger.getLogger(InOutBean.class.getName());
-
-    private String value = "Hello World!";
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 
 
-    // ---------------------------------------------------------- Public Methods
+@ManagedBean(name="actionBean")
+@RequestScoped
+public class ActionCaller implements ActionListener {
 
-
-    public void setValue(String value) {
-
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO,
-                       "[InOutBean::setValue]: {0}",
-                       value);
-        }
-
-        this.value = value;
-
+    public ActionListener getListener() {
+        return new ActionCaller();
     }
 
-    
-    public String getValue() {
-
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO,
-                       "[InOutBean::getValue]: {0}",
-                       value);
-        }
-
-        return value;
-
+    public void processAction(ActionEvent e) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getRequestMap().put("actionCalled",
+                Boolean.TRUE.toString());
     }
-
 
 }
