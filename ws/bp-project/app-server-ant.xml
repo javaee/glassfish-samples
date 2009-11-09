@@ -497,6 +497,33 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     </exec>
     <antcall target="deploy-url-message"/>
   </target>
+  
+  <target name="deploy-v2" depends="tools,-pre-deploy"
+    description="deploys the application">
+    <echo message="v2 compatibility deployment..."/>
+    <fail unless="app.module" message="app.module must be set before invoking this target. Otherwise there is no application to deploy."/>
+    <fail unless="module.name" message="app.name must be set before invoking this target. Otherwise there is no application to deploy."/>
+    <condition property="app.url" value="http://${javaee.server.name}:${javaee.server.port}/${run.uri}">
+      <not>
+        <isset property="app.endpointuri"/>
+      </not>
+    </condition>
+    <property name="failonerror" value="true"/>
+    <exec executable="${asadmin}" failonerror="${failonerror}">
+        <arg line=" deploy "/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --name ${module.name}"/>
+        <arg line=" --force=true "/>
+        <arg line=" --upload=true "/>
+        <arg line=" --dbvendorname ${db.vendorname}"/>
+        <arg line=" --property compatibility=v2"/>
+        <arg line="${app.module}" />
+    </exec>
+    <antcall target="deploy-url-message"/>
+  </target>
 
   <target name="deploy-url-message" if="app.url">
    <echo message="Application Deployed at: ${app.url}"/>
