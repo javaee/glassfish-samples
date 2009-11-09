@@ -2,7 +2,7 @@
 
  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
- Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
 
  The contents of this file are subject to the terms of either the GNU
  General Public License Version 2 only ("GPL") or the Common Development
@@ -49,11 +49,13 @@
 <h:body>
     <h:form id="form1" prependId="false">
         <h:outputScript name="jsf.js" library="javax.faces" target="head"/>
-        <h:outputStylesheet name="stylesheet.css"/>
 
         <h2>Show / Hide based on backing bean</h2>
+        <!-- Note we're using a PanelGroup - this is because if rendered=false,
+             ajax renders will *fail*, since the unrendered component will
+             not be in page -->
         <h:panelGroup id="pg1">
-        <h:outputText id="out1" value="Show" rendered="#{hidenshow.render}"/>
+            <h:outputText id="out1" value="Show" rendered="#{hidenshow.render}"/>
         </h:panelGroup>
         <br/>
         <h:commandButton id="button1" value="Show/Hide"

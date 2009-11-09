@@ -2,7 +2,7 @@
 
  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
- Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
 
  The contents of this file are subject to the terms of either the GNU
  General Public License Version 2 only ("GPL") or the Common Development
@@ -38,19 +38,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-<f:view contentType="text/html"/>
+      xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Ajax</title>
+    <title>Ajax Echo</title>
 </h:head>
 <h:body>
     <h:form id="form1">    <!-- Note that unlike previous examples, prependid='true' -->
         <h:outputScript name="jsf.js" library="javax.faces" target="head"/>
         <h:outputScript name="javascript/echo1.js" target="head"/>
-        <h:outputStylesheet name="stylesheet.css"/>
 
         Output: <h:outputText id="out1" value="#{echo.str}"/>
         <br/>
@@ -60,6 +55,10 @@
         <h:commandButton id="button1" value="Echo"
                          onclick="return buttonpush('form1:out1 form1:in1', 'form1:button1 form1:in1', this, event);"/>
         <br/>
+        <!-- Resets the string, refreshes the form, but not the page -->
+        <h:commandButton id="reset" value="reset"
+                            onclick="return resetpush(this, event);"
+                            actionListener="#{echo.reset}"/>
         <!-- Reloads the page, doesn't reset the string -->
         <h:commandButton id="reload" value="reload"/>
         <h:messages/>
