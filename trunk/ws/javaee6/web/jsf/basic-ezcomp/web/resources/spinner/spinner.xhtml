@@ -3,7 +3,7 @@
 
  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
- Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
 
  The contents of this file are subject to the terms of either the GNU
  General Public License Version 2 only ("GPL") or the Common Development
@@ -48,6 +48,7 @@
     <composite:attribute name="increment" required="false" type="Integer"/>
 </composite:interface>
 <composite:implementation>
+    <span id="#{cc.clientId}">
     <script type="text/javascript">
         function changeNumber(amount) {
             var increment = Number("#{cc.attrs.increment}");
@@ -64,6 +65,7 @@
     <h:commandButton id="back" value="&lt;" onclick="return changeNumber(-1);"/>
     <h:commandButton id="forward" value="&gt;" onclick="return changeNumber(1);"/>
     <h:commandButton id="bigforward" value="&gt;&gt;" onclick="return changeNumber(10);"/>
+    </span>
 </composite:implementation>
 </body>
 </html>
