@@ -36,64 +36,38 @@
 
 package basicajax;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+@ManagedBean(name="listenBean")
+@ViewScoped
+public class ListenerBean {
 
-/**
- * EL Functions.
- */
-public class Functions {
+    private String hello = "Hello";
 
-    private static final Logger LOGGER = Logger.getLogger(Functions.class.getName());
+    private int length = hello.length();
 
+    private int eventCount = 0;
 
-    // ---------------------------------------------------------- Public Methods
+    public String getHello() {
+        return hello;
+    }
 
+    public void setHello(String hello) {
+        this.hello = hello;
+    }
 
-    /**
-     * <p>
-     * Write the file content to the current ResponseWriter.
-     * </p>
-     *
-     * @param ctx the <code>FacesContext</code> for the current request
-     * @param file the file to display
-     */
-    public static void writeSource(FacesContext ctx, String file) {
+    public int getLength() {
+        return length;
+    }
 
-        // PENDING - add logic to colorize key words/XML elements?
-        // PENDING - add logic to strip licence header
+    public int getEventCount() {
+        return eventCount;
+    }
 
-        ExternalContext extCtx = ctx.getExternalContext();
-        BufferedReader r =
-              new BufferedReader(
-                    new InputStreamReader(extCtx.getResourceAsStream(file)));
-        StringWriter w = new StringWriter();
-        PrintWriter pw = new PrintWriter(w);
-
-        try {
-            int lineNumber = 1;
-            for (String s = r.readLine(); s != null; s = r.readLine()) {
-                pw.format("%3s", Integer.toString(lineNumber++));
-                pw.write(": ");
-                pw.write(s);
-                pw.write('\n');
-            }
-            ctx.getResponseWriter().writeText(w.toString(), null);
-        } catch (IOException ioe) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE,
-                           ioe.toString(),
-                           ioe);
-            }
-        }
-
+    public void update(AjaxBehaviorEvent event) {
+        length = hello.length();
+        eventCount++;
     }
 }
