@@ -1,8 +1,7 @@
-<!--
-
+/*
  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
- Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
 
  The contents of this file are subject to the terms of either the GNU
  General Public License Version 2 only ("GPL") or the Common Development
@@ -33,41 +32,30 @@
  and therefore, elected the GPL Version 2 license, then the option applies
  only if the new code is made subject to such option by the copyright
  holder.
+*/
 
--->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+var increment = 1000; //  1 sec timeout, only to show results.  Should be more like 50ms
+var token;
+function aggregate(target, element) {
+    window.clearTimeout(token);
+    addStatusMessage("cleared request, requeued");
+    var send = function send() {
+        jsf.ajax.request(element, null, {render: target});
+    };
+    token = window.setTimeout(send, increment);
+}
 
+function addStatusMessage(message) {
+    var statusElement = document.getElementById("status");
+    var status = statusElement.value;
+    var now = new Date();
+    var timestamp = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+    status = timestamp + ' ' + message + '\n' + status;
+    statusElement.value = status;
+}
 
-<f:view contentType="text/html"/>
-
-
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Ajax</title>
-</h:head>
-
-
-<h:body>
-    <h:form id="form1" prependId="false">
-        <h:outputScript name="javascript/countinpage.js" target="head"/>
-        <h:outputStylesheet name="stylesheet.css"/>
-
-        <h1>Count In Page</h1>
-        <span id="out1">0</span>
-        <br/>
-        <h:commandButton id="_0" value="Count"
-                         onclick="return buttonpush();"/>
-        <br/>
-        <h:commandButton value="reload"/>
-
-        <h:messages/>
-    </h:form>
-
-</h:body>
-</html>
-
+jsf.ajax.addOnEvent(function(data) {
+    if (data.status === "begin") {
+        addStatusMessage("request sent");
+    }
+});

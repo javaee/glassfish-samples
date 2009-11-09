@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ * Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -36,20 +36,25 @@
 
 package basicajax;
 
-import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import java.io.Serializable;
 
 @ManagedBean(name = "hidenshow")
 @SessionScoped
 public class HideNShow implements Serializable {
-    Boolean render = false;
 
+
+    private static final long serialVersionUID = -7299773608161438216L;
+
+    Boolean render = false;
+    
     public Boolean getRender() {
         return render;
     }
 
+    @SuppressWarnings({"UnusedDeclaration"})
     public void toggle(ActionEvent ae) {
         render = !render;
     }

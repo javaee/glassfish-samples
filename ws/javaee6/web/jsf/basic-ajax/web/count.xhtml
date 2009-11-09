@@ -2,7 +2,7 @@
 
  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
- Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
 
  The contents of this file are subject to the terms of either the GNU
  General Public License Version 2 only ("GPL") or the Common Development
@@ -46,16 +46,15 @@
 <h:body>
     <h:form id="form1" prependId="false">
         <h:outputScript name="jsf.js" library="javax.faces" target="head"/>
-        <h:outputStylesheet name="stylesheet.css"/>
         <h:outputText id="out1" value="#{count.count}"/>
         <br/>
         <!-- Increment the counter on the server, and the client -->
         <h:commandButton id="button1" value="Count"
-                         onclick="jsf.ajax.request(this, event, {execute: this.id, render: 'out1'}); return false;"/>
+                         onclick="jsf.ajax.request(this.id, event, {execute: this.id, render: 'out1'}); return false;"/>
         <br/>
         <!-- Resets the counter, doesn't refresh the page -->
         <h:commandButton id="reset" value="reset"
-                            onclick="jsf.ajax.request(this, event, {execute:'reset', render: 'out1'}); return false;"
+                            onclick="jsf.ajax.request(this.id, event, {execute:'reset', render: 'out1'}); return false;"
                             actionListener="#{count.reset}"/>
         <h:messages/>
     </h:form>

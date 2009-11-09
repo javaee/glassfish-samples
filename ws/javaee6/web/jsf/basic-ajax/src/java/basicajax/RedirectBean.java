@@ -36,64 +36,46 @@
 
 package basicajax;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.faces.context.ExternalContext;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ExternalContext;
+import javax.faces.FacesException;
+import javax.faces.application.ViewHandler;
+import javax.faces.event.ValueChangeEvent;
+import java.io.IOException;
 
-/**
- * EL Functions.
- */
-public class Functions {
+@ManagedBean
+@RequestScoped
+public class RedirectBean {
 
-    private static final Logger LOGGER = Logger.getLogger(Functions.class.getName());
+    public String redirect() {
 
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext extContext = ctx.getExternalContext();
+        String url = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/redirecttarget1.xhtml"));
+        try {
+            extContext.redirect(url);
+        } catch (IOException ioe) {
+            throw new FacesException(ioe);
+        }
+        return null;
+    }
 
-    // ---------------------------------------------------------- Public Methods
+    public void redirectPage(ValueChangeEvent evt) {
 
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext extContext = ctx.getExternalContext();
+        ViewHandler viewHandler =  ctx.getApplication().getViewHandler();
+                
+        String newurl = (String) evt.getNewValue();
 
-    /**
-     * <p>
-     * Write the file content to the current ResponseWriter.
-     * </p>
-     *
-     * @param ctx the <code>FacesContext</code> for the current request
-     * @param file the file to display
-     */
-    public static void writeSource(FacesContext ctx, String file) {
-
-        // PENDING - add logic to colorize key words/XML elements?
-        // PENDING - add logic to strip licence header
-
-        ExternalContext extCtx = ctx.getExternalContext();
-        BufferedReader r =
-              new BufferedReader(
-                    new InputStreamReader(extCtx.getResourceAsStream(file)));
-        StringWriter w = new StringWriter();
-        PrintWriter pw = new PrintWriter(w);
+        String url = viewHandler.getActionURL(ctx, newurl);
 
         try {
-            int lineNumber = 1;
-            for (String s = r.readLine(); s != null; s = r.readLine()) {
-                pw.format("%3s", Integer.toString(lineNumber++));
-                pw.write(": ");
-                pw.write(s);
-                pw.write('\n');
-            }
-            ctx.getResponseWriter().writeText(w.toString(), null);
+            extContext.redirect(url);
         } catch (IOException ioe) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE,
-                           ioe.toString(),
-                           ioe);
-            }
+            throw new FacesException(ioe);
         }
-
     }
 }

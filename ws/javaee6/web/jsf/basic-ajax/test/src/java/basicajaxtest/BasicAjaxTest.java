@@ -50,27 +50,12 @@ public class BasicAjaxTest {
     }
 
     @Test
-    public void checkInPage() throws Exception {
-        final WebClient webClient = new WebClient();
-        webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basic-ajax/home.jsf");
-        HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
-        HtmlTableCell cell = table.getCellAt(1,2);
-        HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
-        HtmlPage demopage = link.click();
-        Assert.assertEquals("0",demopage.getHtmlElementById("out1").getTextContent());
-        HtmlSubmitInput button = demopage.getHtmlElementById("_0");
-        demopage = button.click();
-        Assert.assertEquals("1",demopage.getHtmlElementById("out1").getTextContent());
-    }
-
-    @Test
     public void checkSimpleCount() throws Exception {
         final WebClient webClient = new WebClient();
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
         final HtmlPage homepage = webClient.getPage("http://localhost:8080/basic-ajax/home.jsf");
         HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
-        HtmlTableCell cell = table.getCellAt(2,2);
+        HtmlTableCell cell = table.getCellAt(1,2);
         HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
         HtmlPage demopage = link.click();
         Assert.assertEquals("0",demopage.getHtmlElementById("out1").getTextContent());
@@ -85,7 +70,7 @@ public class BasicAjaxTest {
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
         final HtmlPage homepage = webClient.getPage("http://localhost:8080/basic-ajax/home.jsf");
         HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
-        HtmlTableCell cell = table.getCellAt(5,2);
+        HtmlTableCell cell = table.getCellAt(4,2);
         HtmlAnchor link =  (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
         HtmlPage demopage = link.click();
         Assert.assertEquals("hello",demopage.getHtmlElementById("form1:out1").getTextContent());

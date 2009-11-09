@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright 1997-2008 Sun Microsystems, Inc. All rights reserved.
+ * Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -43,7 +43,12 @@ import java.io.Serializable;
 @ManagedBean(name = "echo")
 @SessionScoped
 public class Echo implements Serializable {
+
+
+    private static final long serialVersionUID = 8301865434469950945L;
+
     String str = "hello";
+    
 
     public String getStr() {
         return str;
@@ -53,6 +58,7 @@ public class Echo implements Serializable {
         this.str = str;
     }
 
+    @SuppressWarnings({"UnusedDeclaration"})
     public void reset(ActionEvent ae) {
         str = "";
     }
