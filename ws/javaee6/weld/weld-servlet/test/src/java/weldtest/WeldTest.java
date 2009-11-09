@@ -40,7 +40,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class WebBeansTest {
+public class WeldTest {
 
     @Test
     public void homePage() throws Exception {

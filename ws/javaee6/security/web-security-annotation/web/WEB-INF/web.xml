@@ -11,9 +11,13 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
-        </welcome-file-list>
-   <login-config>
+    </welcome-file-list>
+    <login-config>
         <auth-method>BASIC</auth-method>
-        <realm-name/>
-        </login-config>
-    </web-app>
+        <realm-name>default</realm-name>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>javaee6user</role-name>
+    </security-role>
+</web-app>

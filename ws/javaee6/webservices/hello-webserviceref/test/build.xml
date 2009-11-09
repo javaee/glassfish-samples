@@ -2,7 +2,7 @@
 <!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
 
 <project name="hello-webserviceref-test" default="runtest" basedir=".">
-    <!--
+    
     <property name="classesdir" value="../build"/>
     <property file="../../../../bp-project/build.properties"/>
     <property file="../../../../bp-project/app-server.properties"/>
@@ -14,7 +14,18 @@
     </path>
 
     <target name="runtime">
-        <ant dir=".." inheritAll="false" target="run-client"/>
+        <subant target="default" verbose="true">
+            <fileset dir=".." includes="build.xml"/>
+        </subant>
+        <subant target="deploy" verbose="true">
+            <fileset dir=".." includes="build.xml"/>
+        </subant>
+        <subant target="default" verbose="true">
+            <fileset dir="../hello-webserviceref-webclient" includes="build.xml"/>
+        </subant>
+        <subant target="deploy" verbose="true">
+            <fileset dir="../hello-webserviceref-webclient" includes="build.xml"/>
+        </subant>
     </target>
 
     <target name="compile" depends="runtime">
@@ -23,19 +34,6 @@
         </javac>
     </target>
 
-
-    <target name="runtest" depends="compile">
-        <echo message="Testing ${module.name} ..."/>
-        <echo message="Running the unit test for hello-webserviceref"/>
-        <java classname="test.Hello_jaxws_test" fork="on">
-            <arg value="${javaee.home}"/>
-            <arg value="${classesdir}"/>
-            <classpath refid="classpath"/>
-            <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed"/>
-        </java>
-        <ant dir=".." inheritAll="false" target="restore"/>
-    </target>
-    -->
     <import file="../../../../bp-project/test.xml"/>
     <target name="runtest" depends="compile">
         <echo message="Testing ${module.name} ..."/>

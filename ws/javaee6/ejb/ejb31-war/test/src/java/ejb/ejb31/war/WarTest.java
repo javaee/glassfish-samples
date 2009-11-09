@@ -57,6 +57,7 @@ public class WarTest {
 
     @Test public void testWebClient() throws Exception {
         String url = "http://" + host + ":" + port + CONTEXT_PATH;
+        System.out.println(url);
         HttpURLConnection conn = null;
         BufferedReader input = null;
         try {
@@ -68,8 +69,8 @@ public class WarTest {
             } else {
                 input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line = input.readLine();
-                //Assert.assertEquals("Invalid return message",
-		//"Hello, my servlet, my filter, my listener.", line);
+                Assert.assertEquals("Invalid return message",
+		"ejb31-war Servlet", line);
             }
         } catch(Exception ex) {
             Assert.fail("ejb31-war failed with exception: " + ex);

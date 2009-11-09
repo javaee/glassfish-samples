@@ -45,14 +45,14 @@ public class BasicEzcompTest {
     @Test
     public void homePage() throws Exception {
         final WebClient webClient = new WebClient();
-        final HtmlPage page = webClient.getPage("http://localhost:8080/basicezcomp/index.jsf");
+        final HtmlPage page = webClient.getPage("http://localhost:8080/basic-ezcomp/index.jsf");
         Assert.assertEquals("JavaServer Faces 2.0 Composite Component Demo", page.getTitleText());
     }
 
     @Test
     public void checkInPage() throws Exception {
         final WebClient webClient = new WebClient();
-        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basicezcomp/index.jsf");
+        final HtmlPage homepage = webClient.getPage("http://localhost:8080/basic-ezcomp/index.jsf");
         HtmlTable table = (HtmlTable) homepage.getElementById("demo-table");
         HtmlTableCell cell = table.getCellAt(1,2);
         HtmlAnchor link = (HtmlAnchor) cell.getHtmlElementsByTagName("a").get(0);
