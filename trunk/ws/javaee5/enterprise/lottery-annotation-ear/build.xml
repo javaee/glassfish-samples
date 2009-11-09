@@ -15,9 +15,8 @@
 
   <target name="all" unless="netbeans.home">
     <antcall target="ear"/>
-    <antcall target="deploy"/>
+    <antcall target="deploy-v2"/>
     <antcall target="client-jar"/>
-    <antcall target="client-lib"/>
     <antcall target="run-bp" />
   </target>
 
