@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
 
-<project name=ejb-ejb31-war-test" default="runtest" basedir=".">
+<project name="ejb-ejb31-war-test" default="runtest" basedir=".">
 
-    <import file="../../../../../bp-project/test.xml"/>
+    <import file="../../../../bp-project/test.xml"/>
 
     <target name="runtest" depends="compile">
+        <subant target="default" verbose="true">
+            <fileset dir=".." includes="build.xml"/>
+        </subant>
+        <subant target="deploy" verbose="true">
+            <fileset dir=".." includes="build.xml"/>
+        </subant>
         <echo message="Testing ${module.name} ..."/>
         <java classname="org.junit.runner.JUnitCore" fork="on">
             <sysproperty key="javaee.server.name" value="${javaee.server.name}"/>
