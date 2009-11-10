@@ -274,7 +274,7 @@ public class JsfJpaTest {
         if (null == list) {
             list = new ArrayList<HtmlElement>();
         }
-        Iterator iter = root.getAllHtmlChildElements();
+        Iterator iter = root.getAllHtmlChildElements().iterator();
         while (iter.hasNext()) {
             getAllElementsOfGivenClass((HtmlElement) iter.next(), list,
                                        matchClass);
