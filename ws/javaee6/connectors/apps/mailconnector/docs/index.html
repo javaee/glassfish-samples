@@ -35,7 +35,6 @@
   a:visited{color:#96C}
   a:hover {text-decoration:underline}
   </style></head>
-
 <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
 <br><table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
@@ -274,8 +273,27 @@ undeploy</code> </p>
   <li>Use the target <code>clean</code> to remove the temporary
 directories, such as <code>build</code> and <code>dist</code>.
     <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant
-clean</code> </p>
-  </li>
+clean</code><br></p></li></ol><p><span style="font-weight: bold;">Note</span> : Alternately, you can
+use Netbeans IDE to open the pre
+configured projects for mailconnector-ear and mailconnector-ra. Once
+they are opened, <br>
+    </p><ol><li>
+configure the mailconnector-ra's dependencies to use javax.mail.jar,
+javax.resource.jar, javax.security.auth.message.jar and common-util.jar from GlassFish installation. <br>
+<p>
+(<i>Right click</i> the mailconnector-ra project, select <i>Properties</i>
+&gt; <i>Java Sources Classpath</i> and resolve the dependencies to use
+the <i>javax.mail.jar, javax.resource.jar, javax.security.auth.message.jar and common-util.jar&nbsp;</i> in GlassFish
+Installation's <i>modules</i> directory)<br>
+</p>
+</li><li>
+build and deploy mailconnector-ra 
+</li><li>[In the command prompt] Change directory to <code><i>ear_dir</i></code><i> and <code>ant setup</code>
+    will create necessary connector resource, pool and javamail resource. Use <code>ant unsetup</code>
+    to delete these resources later.
+</i></li><li>
+<i>build, deploy, run mailconnector-ear
+</i></li></ol><ol>
 </ol>
 
 <h3>Exercising the Outbound Resource Adapter</h3>
