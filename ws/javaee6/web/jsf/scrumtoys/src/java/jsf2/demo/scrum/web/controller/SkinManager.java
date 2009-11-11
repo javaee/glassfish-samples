@@ -55,6 +55,7 @@ public class SkinManager extends AbstractManager implements Serializable {
     private String selectedSkin;
     @ManagedProperty(value="#{skinValuesManager}")
     private SkinValuesManager skinValuesManager;
+    private static final long serialVersionUID = 2936693632616580209L;
 
     @PostConstruct
     public void construct() {
