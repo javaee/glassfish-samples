@@ -79,16 +79,16 @@ public class ProjectManager extends AbstractManager implements Serializable {
 
     @PreDestroy
     public void destroy() {
-	projects = null;
-	if (null != projectItems) {
-	    projectItems.clear();
-	    projectItems = null;
-	}
-	if (null != projectList) {
-	    projectList.clear();
-	    projectList = null;
-	}
-	currentProject = null;
+        projects = null;
+        if (projectItems != null) {
+            projectItems.clear();
+            projectItems = null;
+        }
+        if (projectList != null) {
+            projectList.clear();
+            projectList = null;
+        }
+        currentProject = null;
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("projectManager");
     }
 
@@ -96,6 +96,7 @@ public class ProjectManager extends AbstractManager implements Serializable {
         try {
             setProjectList(doInTransaction(new PersistenceAction<List<Project>>() {
 
+                @SuppressWarnings({"unchecked"}) 
                 public List<Project> execute(EntityManager em) {
                     Query query = em.createNamedQuery("project.getAll");
                     return (List<Project>) query.getResultList();

@@ -78,13 +78,13 @@ public class StoryManager extends AbstractManager implements Serializable {
 
     @PreDestroy
     public void destroy() {
-	sprintManager = null;
-	currentStory = null;
-	stories = null;
-	if (null != storyList) {
-	    storyList.clear();
-	    storyList = null;
-	}
+        sprintManager = null;
+        currentStory = null;
+        stories = null;
+        if (null != storyList) {
+            storyList.clear();
+            storyList = null;
+        }
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("storyManager");
 
     }
@@ -217,7 +217,7 @@ public class StoryManager extends AbstractManager implements Serializable {
 
     public DataModel<Story> getStories() {
         if (sprintManager.getCurrentSprint() != null) {
-            this.stories = new ListDataModel(sprintManager.getCurrentSprint().getStories());
+            this.stories = new ListDataModel<Story>(sprintManager.getCurrentSprint().getStories());
             return stories;
         } else {
             return new ListDataModel<Story>();

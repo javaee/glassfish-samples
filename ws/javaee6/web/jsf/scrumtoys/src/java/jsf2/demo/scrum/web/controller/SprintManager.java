@@ -81,13 +81,13 @@ public class SprintManager extends AbstractManager implements Serializable {
 
     @PreDestroy
     public void destroy() {
-	sprints = null;
-	if (null != sprintList) {
-	    sprintList.clear();
-	    sprintList = null;
-	}
-	projectManager = null;
-	currentProject = null;
+        sprints = null;
+        if (null != sprintList) {
+            sprintList.clear();
+            sprintList = null;
+        }
+        projectManager = null;
+        currentProject = null;
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("sprintManager");
 
     }
@@ -204,7 +204,7 @@ public class SprintManager extends AbstractManager implements Serializable {
     public String checkUniqueSprintNameApplicationValidatorMethod(String newValue) {
         String message = null;
 
-        final String newName = (String) newValue;
+        final String newName = newValue;
         try {
             Long count = doInTransaction(new PersistenceAction<Long>() {
 
@@ -251,7 +251,7 @@ public class SprintManager extends AbstractManager implements Serializable {
     }
 
     public DataModel<Sprint> getSprints() {
-        this.sprints = new ListDataModel(projectManager.getCurrentProject().getSprints());
+        this.sprints = new ListDataModel<Sprint>(projectManager.getCurrentProject().getSprints());
         return this.sprints;
     }
 
