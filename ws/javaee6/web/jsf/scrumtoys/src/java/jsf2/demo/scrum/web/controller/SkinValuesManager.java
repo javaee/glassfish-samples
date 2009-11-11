@@ -60,7 +60,8 @@ public class SkinValuesManager implements Serializable {
     private Map<String, String> values;
 
     private String defaultSkin = "blue";
-    
+    private static final long serialVersionUID = 2238251086172648511L;
+
     @PostConstruct
     public void construct() {
         values = new LinkedHashMap<String, String>();
