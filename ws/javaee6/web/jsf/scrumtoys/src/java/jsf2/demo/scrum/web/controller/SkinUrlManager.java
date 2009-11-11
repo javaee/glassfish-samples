@@ -65,7 +65,7 @@ public class SkinUrlManager extends AbstractManager implements Serializable {
     }
 
     public void update() {
-        if (skin == null ||"".equals(skin))
+        if (skin == null || "".equals(skin))
             return;
         String skinCss = skinValuesManager.getSkinCss(skin.toLowerCase());
         skinManager.setSelectedSkin(skinCss);
