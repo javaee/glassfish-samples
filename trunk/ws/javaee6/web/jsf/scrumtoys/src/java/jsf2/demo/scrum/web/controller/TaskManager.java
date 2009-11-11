@@ -201,7 +201,7 @@ public class TaskManager extends AbstractManager implements Serializable {
     }
 
     public DataModel<Task> getTasks() {
-        this.tasks = new ListDataModel(storyManager.getCurrentStory().getTasks());
+        this.tasks = new ListDataModel<Task>(storyManager.getCurrentStory().getTasks());
         return tasks;
     }
 
