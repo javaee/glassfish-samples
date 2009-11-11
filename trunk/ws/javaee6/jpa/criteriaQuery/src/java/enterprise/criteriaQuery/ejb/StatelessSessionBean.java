@@ -81,8 +81,7 @@ public class StatelessSessionBean {
     }
 
     public void queryData(ServletOutputStream outputStream) throws IOException {
-        // Commented out as EclipseLink does not yet implement MapJoin.Key().
-        //queryForOrderContainingItem("ItemName1", outputStream);
+        queryForOrderContainingItem("ItemName1", outputStream);
         queryDataForOrder(1, outputStream);
 
     }
