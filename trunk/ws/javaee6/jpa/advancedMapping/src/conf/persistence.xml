@@ -13,8 +13,6 @@
             <!-- Instruct EclipseLink to not log execeptions it throws. Lets the application decide about it-->
             <property name="eclipselink.logging.exceptions" value="false"/>
 
-            <!--Workaround for EclipseLink issue 289147--> 
-            <property name="eclipselink.weaving.changetracking" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>
