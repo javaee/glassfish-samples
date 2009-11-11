@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="ejb-embedded" default="all" basedir=".">
+
+    <property name="is.ejb-jar.module" value="true"/>
+    <property name="javadoc.packagenames" value="ejb.embedded"/>
+
+    <import file="../../../bp-project/main.xml"/>
+
+    <target name="deploy"/>
+    <target name="undeploy"/>
+
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="post-run-deploy">
+        <subant target="run" verbose="true">
+            <fileset dir="ejb-embedded-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- to get the test client to run when the user runs the project from ant -->
+    <target name="launch">
+        <subant target="run">
+            <fileset dir="ejb-embedded-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="all" depends="run"/>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean">
+        <subant target="clean">
+            <fileset dir="ejb-embedded-client" includes="build.xml"/>
+        </subant>
+    </target>
+    
+    <!-- clean up subproject from NB (undeploy is not needed) -->
+    <target name="-post-clean">
+        <subant target="clean">
+            <fileset dir="ejb-embedded-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+</project>

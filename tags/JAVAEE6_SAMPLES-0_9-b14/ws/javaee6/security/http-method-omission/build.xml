@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="http-method-omission" default="all" basedir=".">
+
+    <property name="javadoc.packagenames" value="enterprise.http_method_omission"/>
+    <property name="is.war.module" value="true" />
+
+    <import file="../build.xml"/>
+
+    <target name="all" depends="default,ant-deploy">
+        <antcall target="create-file-user"/>
+        <antcall target="run-bp"/>
+    </target>
+
+    <target name="ant-deploy" unless="hetbeans.home">
+        <antcall target="deploy"/>
+    </target>
+
+    <target name="-pre-clean" depends="ant-undeploy">
+        <antcall target="delete-file-user"/>
+        <delete file="${javaee.server.passwordfile.foo}" failonerror="false"/>
+    </target>
+    <target name="-post-clean">
+        <antcall target="delete-file-user"/>
+        <delete file="${javaee.server.passwordfile.foo}" failonerror="false"/>
+    </target>
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+    <!--
+    <target name="run">
+        <antcall target="run-bp"/>
+    </target>
+-->
+    <target name="run-bp" unless="netbeans.home">
+        <sleep seconds="5"/>
+        <antcall target="launch"/>
+    </target>
+
+    <target name="run-java-client">
+        <subant target="run">
+            <fileset dir="http-method-omission-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="-post-run-deploy">
+        <antcall target="create-file-user"/>
+        <delete file="${javaee.server.passwordfile.foo}" failonerror="false"/>
+    </target>
+
+</project>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="simple-ws-war" default="all" basedir=".">
+
+    <property name="is.war.module" value="true" />
+    <property name="run.uri" value="simple-ws-war/HelloService?Tester"/>
+
+    <import file="../../../bp-project/jaxws.xml" />
+
+    <target name="setup">
+        <mkdir dir="web"/>
+    </target>
+
+    <target name="jaxws">
+	<!-- apt -->
+	<apt fork="true" debug="true" verbose="${verbose}" destdir="${build.classes.dir}" sourcedestdir="${build.classes.dir}"
+		sourcepath="${src.dir}">
+		<classpath>
+			<path refid="classpath"/>
+			<pathelement location="${src.dir}"/>
+		</classpath>
+		<option key="r" value="${build.dir}"/>
+		<source dir="${src.dir}">
+			<include name="**/*.java"/>
+		</source>
+	</apt>
+    </target>
+
+    <target name="all" depends="setup,jaxws" unless="netbeans.home">
+        <antcall target="run" />
+    </target>
+
+</project>

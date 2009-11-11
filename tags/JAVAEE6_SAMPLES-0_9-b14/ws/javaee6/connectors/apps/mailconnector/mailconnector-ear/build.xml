@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="mailconnector-ear" default="all" basedir=".">
+
+    <property name="is.ear.module" value="true"/>
+
+    <path id="ear-components">
+        <filelist dir="./mailconnector-ejb" files="build.xml"/>
+        <filelist dir="./mailconnector-war" files="build.xml"/>
+    </path>
+
+    <property name="run.uri" value="mailconnector-war"/>
+
+    <import file="../../../../../bp-project/main.xml"/>
+
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="clean"/>
+        <antcall target="clean-rar"/>
+        <antcall target="rar"/>
+        <antcall target="ear"/>
+        <antcall target="deploy"/>
+        <antcall target="launch"/>
+    </target>
+
+    <!-- =================== targets to setup/unsetup the application ========= -->
+
+    <target name="-pre-setup" unless="netbeans.home">
+        <subant target="create-db">
+            <fileset dir="setup" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="deploy">
+        <antcall target="deploy-rar"/>
+        <antcall target="setup"/>
+        <ant antfile="../../../../../bp-project/main.xml" target="deploy"/>
+    </target>
+
+    <target name="undeploy">
+        <ant antfile="../../../../../bp-project/main.xml" target="undeploy"/>
+        <antcall target="unsetup"/>
+        <antcall target="undeploy-rar"/>
+    </target>
+
+    <target name="-post-unsetup" unless="netbeans.home">
+        <antcall target="unsetup"/>
+        <subant target="delete-db">
+            <fileset dir="setup" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="setup" unless="netbeans.home">
+        <subant target="setup">
+            <fileset dir="setup" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="unsetup" unless="netbeans.home">
+        <subant target="unsetup">
+            <fileset dir="setup" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- =================== targets to launch the application ========= -->
+
+    <target name="run">
+        <antcall target="run-bp"/>
+        <antcall target="run-nb"/>
+    </target>
+
+    <target name="run-bp" unless="netbeans.home">
+        <antcall target="launch"/>
+    </target>
+
+    <target name="run-nb" if="netbeans.home">
+        <antcall target="init"/>
+        <antcall target="run-deploy"/>
+        <antcall target="run-display-browser"/>
+        <antcall target="run-ac"/>
+    </target>
+
+    <!-- =================== JavaMail Connector RAR specific targets ========= -->
+
+    <target name="clean-rar">
+        <ant dir="../mailconnector-ra" target="clean_rar_common" antfile="build.xml"/>
+    </target>
+
+    <target name="rar">
+        <ant dir="../mailconnector-ra" target="assemble_rar" antfile="build.xml"/>
+    </target>
+
+    <target name="deploy-rar" depends="rar">
+        <ant dir="../mailconnector-ra" target="deploy_rar" antfile="build.xml"/>
+    </target>
+
+    <target name="undeploy-rar">
+        <ant dir="../mailconnector-ra" target="undeploy_rar" antfile="build.xml"/>
+    </target>
+
+
+</project>

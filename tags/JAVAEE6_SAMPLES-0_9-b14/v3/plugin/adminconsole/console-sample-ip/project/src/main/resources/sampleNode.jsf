@@ -1,0 +1,13 @@
+<sun:treeNode id="treeNode1"
+        text="SampleTop"
+        url="/sample/page/testPage.jsf?name=SampleTop"
+        target="main"
+        imageURL="resource/sample/images/sample.png"
+        >
+        <sun:treeNode id="treeNodeBB"
+        text="SampleBB"
+        url="/sample/page/testPage.jsf?name=SampleBB"
+        target="main"
+        imageURL="resource/sample/images/sample.png"
+        />
+</sun:treeNode>
