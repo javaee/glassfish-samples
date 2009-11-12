@@ -95,7 +95,7 @@ public class DashboardManager extends AbstractManager implements Serializable {
         storyManager.setStories(stories);
     }
 
-    public ListDataModel getToDoTasks() {
+    public ListDataModel<Task> getToDoTasks() {
         List<Task> toDoTasksList = new ArrayList<Task>();
         if (sprintManager.getCurrentSprint() == null) {
             return new ListDataModel<Task>(toDoTasksList);
@@ -107,7 +107,7 @@ public class DashboardManager extends AbstractManager implements Serializable {
         return toDoTasks;
     }
 
-    public ListDataModel getWorkingTasks() {
+    public ListDataModel<Task> getWorkingTasks() {
         List<Task> workingTasksList = new ArrayList<Task>();
         if (sprintManager.getCurrentSprint() == null) {
             return new ListDataModel<Task>(workingTasksList);
@@ -119,7 +119,7 @@ public class DashboardManager extends AbstractManager implements Serializable {
         return workingTasks;
     }
 
-    public ListDataModel getDoneTasks() {
+    public ListDataModel<Task> getDoneTasks() {
         List<Task> doneTasksList = new ArrayList<Task>();
         if (sprintManager.getCurrentSprint() == null) {
             return new ListDataModel<Task>(doneTasksList);
