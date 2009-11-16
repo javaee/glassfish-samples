@@ -10,7 +10,11 @@
     <import file="../../../../bp-project/main.xml"/>
 
     <target name="all" unless="netbeans.home">
-        <antcall target="stop-domain"/>
+        <antcall target="run"/>
+    </target>
+
+    <target name="shared-lib">
+            <antcall target="stop-domain"/>
         <mkdir dir="./containerinitializerlibrary/build" />
         <javac srcdir="./containerinitializerlibrary/src"
                 destdir="./containerinitializerlibrary/build"
@@ -22,9 +26,8 @@
             <fileset dir="./containerinitializerlibrary/src" includes="META-INF/**"/>
         </jar>
         <antcall target="start-domain"/>
-        <antcall target="run"/>
     </target>
-
+    
     <loadfile srcFile="./nbproject/private/private.properties" property="javaee.home.foo" quiet="true">
         <filterchain >
             <linecontains >
@@ -66,6 +69,10 @@
         <!-- <antcall target="stop-domain-nb"/> -->
         <get src="http://${host.and.port}/__asadmin/stop-domain" dest="./dist/tmp" ignoreerrors="true"/>
         <sleep seconds="5"/>
+    </target>
+
+    <target name="-pre-deploy">
+        <antcall target="shared-lib"/>
     </target>
 
     <target name="-post-clean" if="netbeans.home">
