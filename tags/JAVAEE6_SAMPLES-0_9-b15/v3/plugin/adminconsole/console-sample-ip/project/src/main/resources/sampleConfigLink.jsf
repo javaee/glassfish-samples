@@ -1,0 +1,10 @@
+<sun:property>
+    <sun:hyperlink 
+        toolTip="Sample Config" 
+        url="/sample/page/testPage.jsf?name=Sample%20Configuration%20Page" 
+     >
+        <sun:image url="/resource/sample/images/sample.png" />
+        <sun:staticText text="Sample Configuration" />
+    </sun:hyperlink>
+
+</sun:property>
