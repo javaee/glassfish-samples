@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="glassfish-samples" default="all" basedir=".">
+    <description>Builds, tests, and packages the project glassfish-samples.</description>
+
+    <path id="samples-list">
+        <filelist dir="connectors/apps/mailconnector/mailconnector-ear" files="build.xml"/>
+        <filelist dir="connectors/apps/mailconnector/mailconnector-ra" files="build.xml"/>
+        <filelist dir="ejb/automatic-timer" files="build.xml"/>
+        <filelist dir="ejb/ejb31-embedded" files="build.xml"/>
+        <filelist dir="ejb/ejb31-war" files="build.xml"/>
+        <filelist dir="ejb/hello-stateless-ejb" files="build.xml"/>
+        <filelist dir="jpa/advancedMapping" files="build.xml"/>
+        <filelist dir="jpa/locking" files="build.xml"/>
+        <filelist dir="rest/message-board-war" files="build.xml"/>
+        <filelist dir="security/http-method-omission" files="build.xml"/>
+        <filelist dir="security/programmatic-login" files="build.xml"/>
+        <filelist dir="security/web-security-annotation" files="build.xml"/>
+        <filelist dir="web/jsf/basic-ajax" files="build.xml"/>
+        <filelist dir="web/container/customvalve-war" files="build.xml"/>
+        <filelist dir="web/jsf/basic-ezcomp" files="build.xml"/>
+        <filelist dir="web/jsf/scrumtoys" files="build.xml"/>
+        <filelist dir="web/servlet/absolute-ordering-web-fragments-war" files="build.xml"/>
+        <filelist dir="web/servlet/annotation-war" files="build.xml"/>
+        <filelist dir="web/servlet/async-request-war" files="build.xml"/>
+        <filelist dir="web/servlet/dynamicregistration-war" files="build.xml"/>
+        <filelist dir="web/servlet/jsp-resource-in-bundled-jar-war" files="build.xml"/>
+        <filelist dir="web/servlet/multipart-war" files="build.xml"/>
+        <filelist dir="web/servlet/servletcontainerinitializer-war" files="build.xml"/>
+        <filelist dir="web/servlet/sessioncookieconfig-war" files="build.xml"/>
+        <filelist dir="webbeans/webbeans-guess" files="build.xml"/>
+        <filelist dir="webbeans/webbeans-servlet" files="build.xml"/>
+        <filelist dir="webservices/hello-jaxws2.2" files="build.xml"/>
+        <filelist dir="webservices/hello-singleton-ejb" files="build.xml"/>
+        <filelist dir="webservices/hello-webserviceref" files="build.xml"/>
+    </path>
+
+    <macrodef name="iterate">
+        <attribute name="target"/>
+        <sequential>
+            <subant target="@{target}" failonerror="false">
+                <buildpath refid="samples-list"/>
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <target name="all" depends="clean"
+        description="iterates thru all the sample applications to compile, package and run">
+        <iterate target="all"/>
+    </target>
+
+    <target name="clean"
+        description="cleans workspace by removing temporary directories like dist">
+        <iterate target="clean"/>
+    </target>
+
+    <target name="-pre-setup">
+        <iterate target="-pre-setup"/>
+    </target>
+
+    <target name="-post-unsetup">
+        <iterate target="-post-unsetup"/>
+    </target>
+
+</project>

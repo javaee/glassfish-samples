@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="lottery-annotation-ear" default="all" basedir=".">
+
+  <property name="is.ear.module" value="true"/>
+
+  <path id="ear-components">
+    <filelist dir="./lottery-annotation-ejb" files="build.xml"/>
+    <filelist dir="./lottery-annotation-war" files="build.xml"/>
+    <filelist dir="./lottery-annotation-appclient" files="build.xml"/>
+  </path>
+
+  <import file="../../../bp-project/main.xml"/>
+
+  <target name="all" unless="netbeans.home">
+    <antcall target="ear"/>
+    <antcall target="deploy-v2"/>
+    <antcall target="client-jar"/>
+    <antcall target="run-bp" />
+  </target>
+
+
+   <target name="run-bp" unless="netbeans.home">
+    <antcall target="launch"/>
+  </target>
+  
+  <target name="run-client" unless="netbeans.home">
+    <subant target="run">
+      <fileset dir="lottery-annotation-appclient" includes="build.xml"/>
+    </subant>
+  </target>
+
+  <target name="client-lib" depends="ear,client-jar">
+      <jar destfile="client-jar/appClient.jar" 
+          basedir="lottery-annotation-ejb/build/classes" update="true"/>
+  </target>
+
+</project>

@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <title>The Servlet 3.0 Asynchronous Request Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../../docs/list.html">Samples Main Page<br>
+</a></p>
+<h1>The Servlet 3.0 Asynchronous Sample Application</h1>
+This is a simple Servlet 3.0 application using asychronous API.
+<p><b>Servlet</b>
+</p>
+<p>The servlet is responsible for asynchronous request processing.
+</p>
+<blockquote>
+  <ul>
+    <li>In the <code>init</code> method, start a thread to read
+message from the <code>messageQueue</code> and then process the
+message for each <code>AsyncContext</code>
+in
+the queue as follows:
+      <p> <code>PrintWriter acWriter = ac.getResponse().getWriter();<br>
+acWriter.println(cMessage);<br>
+acWriter.flush();</code><br>
+      </p>
+      <p> The preceding code writes a message to each asynchronous
+request
+corresponding to <code>AsyncContext</code>. </p>
+      <p> </p>
+    </li>
+    <li>In <code>doGet</code>, set the timeout to ten minutes,
+start asynchronous, and add <code>AsyncContext</code> to a queue as follows:
+<p> <code>final AsyncContext ac = req.startAsync();<br>
+ac.setTimeout(10 * 60 * 1000);<br>
+queue.add(ac);</code><br>
+      </p>
+      <p> Registers <code>AsyncListener</code> with the <code>AsyncContext</code>. In this case, only clean up the <code>AsyncContext</code> from the queue. </p>
+      <p><code> ac.addListener(new AsyncListener() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onComplete(AsyncEvent event) throws
+IOException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onTimeout(AsyncEvent event) throws
+IOException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onError(AsyncEvent event) throws
+IOException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      <br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void onStartAsync(AsyncEvent event) throws
+IOException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+});</code><br>
+      </p>
+    </li>
+    <li>In <code>doPost</code>, put a message to the
+messageQueue. This message is picked up in the thread that starts in
+the <code>init</code>
+method. </li>
+  </ul>
+</blockquote>
+<b>Deployment Descriptor</b><br>
+<br>
+The good news is the deployment descriptor is no longer
+required!<br>
+<br>
+<b>Sun GlassFish Enterprise Server Specific Deployment Configuration</b><br>
+<br>
+There is no need to define any Sun GlassFish Enterprise Server specific
+deployment descrpitor (<code>sun-web.xml</code>) for this
+example.
+<br>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+</p>
+<p>
+Perform the following steps to build, deploy, and run the
+application:
+</p>
+<ol>
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee6/web/servlet/async-request-war</code></li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <li>To run this chat application, you need two browsers, say
+Browser A and Browser B.&nbsp;
+    <ul>
+      <li>In Browser A, open
+http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/async-request-war.
+Repeat this step for Browser B also. </li>
+      <li>In Browser A, input user name, say "userA", in the text box.
+Click the Login button. The following message is displayed in Browser A
+and Browser B:
+        <p><code>System Message:<br>
+userA has joined.</code> </p>
+        <p>Similarly, login as "userB" in Browser B. </p>
+      </li>
+      <li>Now, you are ready to chat. In Browser A,type "Hello", in
+text box and click the Post Message button. You will see the following
+message in both Browser A and Browser
+B:
+        <p><code>userA:<br>
+Hello</code> </p>
+        <p>Try the same step in Browser B also. </p>
+      </li>
+    </ul>
+  </li>
+  <li>Use the target <code>undeploy</code> to undeploy the application.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+undeploy</code> </p>
+  </li>
+  <li>Use the target <code>clean</code> to remove the temporary directories
+  like build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+  </li>
+</ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+<ol>
+<li> Refer to the <a href="../../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Sun GlassFish Enterprise Server.</li>
+<li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee6/web/servlet/</code> directory, select <code>async-request-war</code>, and click Open Project.</li>
+<li> In the Projects tab, right click <code>async-request-war</code> and select Run to build, deploy, and run the project.</li>
+</ol>
+
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the <a
+ href="../../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+&nbsp;
+<p><!--- Do not modify the rest of the document --></p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
