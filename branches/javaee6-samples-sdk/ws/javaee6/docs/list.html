@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+	<title>List of Sample Applications</title>
+	<style type="text/css">
+		body,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li {
+			font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+			font-size:10pt
+		}
+		h1 {font-size:18pt}
+		h2 {font-size:14pt}
+		h3 {font-size:12pt}
+		code,kbd,tt,pre {
+			font-family:monaco,courier,"courier new";
+			font-size:10pt;
+		}
+		li {padding-bottom: 8px}
+		p.copy, p.copy a {
+			font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+			font-size:8pt
+		}
+		p.copy {text-align: center}
+		table.grey1,tr.grey1,td.grey1{background:#f1f1f1}
+		th {
+			color:#ffffff;
+			font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+			font-size:12pt
+		}
+		td.insidehead {
+			font-weight:bold;
+			background:white;
+			text-align: left;
+		}
+		a{text-decoration:none}
+		a:visited{color:#96C}
+		a:hover {text-decoration:underline}
+	</style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"  alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<!-- specifies whether it is web or classic -->
+<script type="text/javascript" language="JavaScript1.1" src="Components.js"></script>
+<table border="0" cellpadding="2" cellspacing="4" width="100%"><tbody>
+	<tr>
+		<td align="right" bgcolor="#587993" valign="top"><font  color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;</td>
+	</tr>
+</tbody></table>
+<h2> Index of Sample Applications</h2>
+<p>Click the sample application to learn about the sample and the procedure to build and run. Some of the sample applications require you to configure resources (such as a database, JDBC, Connector, JMS or JavaMail). If so, the individual sample documentation will explain the necessary steps.</p>
+<br>
+<table align="center" border="1" bordercolor="#ffffff" cellpadding="5" cellspacing="0" width="95%"><tbody>
+
+<tr color="#ffffff" bgcolor="#587993" valign="middle"><th>Sample Application</th><th>Description</th></tr>
+
+<tr><td colspan="2" class="insidehead"> <a name="EJB"></a>Enterprise Java Beans</td></tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../ejb/ejb31-war/docs/index.html">EJB 3.1 WAR-based Application</a><br></td>
+<td class="grey1" height="19" width="78%"><p>An EJB application that shows the use of WAR-based packaging , the no-interface Local view, Singleton session beans, and startup/shutdown callbacks. </p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../ejb/ejb-embedded/docs/index.html">EJB 3.1 Embeddable API</a><br></td>
+<td class="grey1" height="19" width="78%"><p>A very simple EJB Stateless Session Bean with a no-interface view and a POJO Entity that demonstrates EJB 3.1 Embeddable API usage.</p></td>
+</tr>
+
+<script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true) {
+document.write('<tr>');
+document.write('<td class="grey1" height="19" width="22%"> <a href="../ejb/automatic-timer/docs/index.html">EJB 3.1 Automatic Timer</a><br></td>');
+document.write('<td class="grey1" height="19" width="78%"><p>An EJB Stateless Session Bean with a Remote business interface and a POJO Entity that demonstrates EJB 3.1 automatic timer feature. </p></td>');
+document.write('</tr>');
+}
+document.close();
+</script>
+
+<tr><td colspan="2" class="insidehead"> <a name="Servlet"></a>Servlet 3.0<br></td></tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"> <a href="..//web/servlet/annotation-war/docs/index.html">Servlet 3.0 Annotations Application</a><br></td>
+<td class="grey1" height="19" width="78%"><p>A Servlet 3.0 application using annotations for servlet, filter, and content listener.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../web/servlet/async-request-war/docs/index.html">Servlet 3.0 Asynchronous Application</a><br></td>
+<td class="grey1" height="19" width="78%"><p>A Servlet 3.0 application using asychronous API.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../web/servlet/dynamicregistration-war/docs/index.html">Servlet 3.0 Dynamic Registration of Servlets and Filters Application</a><br></td>
+<td class="grey1" height="19" width="78%"><p>A Servlet 3.0 application that features the dynamic registration of Servlets and Filters from a ServletContextListener.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../web/servlet/multipart-war/docs/index.html">Servlet 3.0 Multipart Application</a><br></td>
+<td class="grey1" height="19" width="78%"><p>A Servlet 3.0 application that demonstrates multipart (a.k.a. file upload) support.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../web/servlet/absolute-ordering-web-fragments-war/docs/index.html">Servlet 3.0 Absolute Ordering Web Fragments Sample</a><br></td>
+<td class="grey1" height="19" width="78%"><p>A Servlet 3.0 application that demonstrates web fragments with absolute ordering.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../web/servlet/jsp-resource-in-bundled-jar-war/docs/index.html">Access JAR-Bundled JSP Resource Sample</a><br></td>
+<td class="grey1" height="19" width="78%"><p>An application that demonstrates how dynamic and static resources bundled inside the <tt>META-INF/resources</tt> directory of a JAR file inside the application's <tt>WEB-INF/lib</tt> directory may be accessed in the same way as if they had been placed in the application's document root.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../web/servlet/servletcontainerinitializer-war/docs/index.html">Servlet 3.0 ServletContainerInitializer Sample</a><br></td>
+<td class="grey1" height="19" width="78%"><p>An application that demonstrates how the ServletContainerInitializer feature can be used by libraries to register interest in certain types of applications and take whatever action as the library sees fit.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="19" width="22%"><a href="../web/servlet/sessioncookieconfig-war/docs/index.html">Programmatic Configuration of HTTP Session Cookies Sample</a><br></td>
+<td class="grey1" height="19" width="78%"><p>An application that demonstrates the new programmatic configuration support for session cookies available with Servlet 3.0.</p></td>
+</tr>
+
+<script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true) {
+document.write('<tr><td colspan="2" class="insidehead"><a name="webservices"></a>Metro Web Services </td></tr>');
+
+document.write('<tr>');
+document.write('<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../webservices/hello-jaxws2.2/docs/index.html">Hello JAXWS Application</a><br></td>');
+document.write('<td class="grey1" height="24" width="78%">An that application demonstrates how JAXWS 2.2 can generate artifacts dynamically and no use of wsgen is required when bundling and packing the artifacts. </td>');
+document.write('</tr>');
+
+document.write('<tr>');
+document.write('<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../webservices/hello-singleton-ejb/docs/index.html">EJB 3.1 Singleton Web Services Application</a><br></td>');
+document.write('<td class="grey1" height="24" width="78%">An application that demonstrates a singleton EJB web service. It shows how easy it is to annotate a web service with @Singleton and develop clients for it. </td>');
+document.write('</tr>');
+
+document.write('<tr>');
+document.write('<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../webservices/hello-webserviceref/docs/index.html">Hello-WebServiceRef Application</a><br></td>');
+document.write('<td class="grey1" height="24" width="78%">A JAX-WS Web Services sample that demonstrates the injecton of Web Service Client by the container through the use of @WebServiceRef and configuring WebService features like MTOM, addressing on such injected resource.</td>');
+document.write('</tr>');
+}
+document.close();
+</script>
+
+<script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true) {
+document.write('<tr><td colspan="2" class="insidehead"><a name="rest"></a> Java API for RESTful Web Services<code></code> </td> </tr>');
+
+document.write('<tr>');
+document.write('<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../rest/message-board-war/docs/index.html">Message Board Application</a><br></td>');
+document.write('<td class="grey1" height="24" width="78%">An application that demonstrates the possibility to use no-interface EJB session beans as RESTful resource classes deployed as a servlet.</td>');
+document.write('</tr>');
+
+document.write('<tr>');
+document.write('<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../rest/managed-beans-war/docs/index.html">Managed Beans Application</a><br></td>');
+document.write('<td class="grey1" height="24" width="78%">An application that demonstrates the possibility to annotate REST resource class with ManagedBean annotation, thus REST resource can be Managed Bean as well.</td>');
+document.write('</tr>');
+}
+document.close();
+</script>
+
+<tr><td colspan="2" class="insidehead"><a name="JSF"></a>JSF 2.0</td></tr>
+
+<tr>
+<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../web/jsf/basic-ajax/docs/index.html">Basic AJAX Application</a><br></td>
+<td class="grey1" height="24" width="78%">A series of simple programs intended to illustrate some of the new Ajax features that are contained in JSF 2.0.&nbsp; </td>
+</tr>
+
+<tr>
+<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../web/jsf/basic-ezcomp/docs/index.html">AJAX Basic Composite Component Application</a><br></td>
+<td class="grey1" height="24" width="78%">A series of simple programs intended to illustrate some of the new Composite Component features that are contained in JSF 2.0. </td>
+</tr>
+
+<tr>
+<td class="grey1" style="text-align: left;" height="24" width="22%"><a href="../web/jsf/scrumtoys/docs/index.html">AJAX Complete Application</a><br></td>
+<td class="grey1" height="24" width="78%">A series of simple programs intended to illustrate some of the new Ajax features that are contained in JSF 2.0. </td>
+</tr>
+
+<tr><td colspan="2" class="insidehead"><a name="weld"></a>Weld</td></tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../weld/weld-guess/docs/index.html">JSF 2.0 Weld Application<br></a></p></td>
+<td class="grey1" height="25" width="78%"><p>An application that demonstrates the use of Weld with JSF 2.0.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../weld/weld-servlet/docs/index.html">Weld Servlet Application<br></a></p></td>
+<td class="grey1" height="25" width="78%"><p>An application that illustrates the injection of Weld into a servlet.</p></td>
+</tr>
+
+<tr><td colspan="2" class="insidehead"><a name="SECURITY"></a>Security</td></tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../security/programmatic-login/docs/index.html">Programmatic Login Application<br></a></p></td>
+<td class="grey1" height="25" width="78%"><p>A web application that demonstrates the programmatic security (login/logout) feature in Servlets 3.0.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../security/http-method-omission/docs/index.html">HTTP Method Omissions Application<br></a></p></td>
+<td class="grey1" height="25" width="78%"><p>A web application that demonstrates the use of http-method-omission feature of Servlet 3.0&nbsp; to restrict the set of supported HTTP methods to just GET and POST.</p></td>
+</tr>
+
+<script type="text/javascript" language="JavaScript1.1">
+document.open();
+if (classic==true) {
+document.write('<tr><td colspan="2" class="insidehead"><a name="Connector">Java EE Connector Architecture 1.6 </a></td></tr>');
+
+document.write('<tr>');
+document.write('<td class="grey1" height="25" width="22%"><p><a href="../connectors/apps/mailconnector/docs/index.html"> MailConnector Resource Adapter Sample Application<br></a></p></td>');
+document.write('<td class="grey1" height="25" width="78%"><p> An application using the mail-connector resource-adapter to retrieve e-mails. Demonstrates how to use new annotations introduced in Java EE Connector Architecture 1.6 specification. The mail connector resource adapter is completely built by specifying annotations. No deployment descriptor is used.</p></td>');
+document.write('</tr>');
+}
+document.close();
+</script>
+
+<tr><td colspan="2" class="insidehead"><a name="jpa">Java Persistence API 2.0<br></a></td></tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../jpa/locking/docs/index.html">JPA Pessimistic Locking Application</a><br></p></td>
+<td class="grey1" height="25" width="78%"><p>An application that demonstrates the use of locking with Java Persistence APIs.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../jpa/advancedMapping/docs/index.html">JPA Advanced Mapping Sample</a><br></p></td>
+<td class="grey1" height="25" width="78%"><p>An application that demonstrates the use of Derived Identities and Maps.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../jpa/criteriaQuery/docs/index.html">JPA Criteria Query Sample</a><br></p></td>
+<td class="grey1" height="25" width="78%"><p>An application that demonstrates the use of Criteria Queries.</p></td>
+</tr>
+
+<tr><td colspan="2" class="insidehead"><a name="jpa">Container Features<br></a></td></tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../web/container/customvalve-war/docs/index.html">Custom Valve Application</a><br></p></td>
+<td class="grey1" height="25" width="78%"><p>An application that demonstrates the custom valve facilities available in GlassFish v3.</p></td>
+</tr>
+
+<tr>
+<td class="grey1" height="25" width="22%"><p><a href="../web/container/mod_jk/docs/index.html">mod_jk Sample</a><br></p></td>
+<td class="grey1" height="25" width="78%"><p>A sample that demonstrates running GlassFish v3 with Apache httpd.</p></td>
+</tr>
+
+</tbody></table>
+<br>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2009 <a href="http://sun.com">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

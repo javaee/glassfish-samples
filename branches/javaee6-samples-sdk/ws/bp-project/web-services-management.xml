@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.
+ $Id$ -->
+
+
+<!-- app-client-ant.xml: contains targets for projects that produce 
+     application client module. This file is not meant to be included 
+     in a project directly.
+     This file should only be included if this project is defining 
+     is.app-client.module property.
+     @Author Inderjeet Singh  -->
+
+<project name="web-services-management" default="dummy-default">
+
+  <!-- include app-server-ant.xml -->
+  <import file="${ant.file.web-services-management.xml}/../common-properties.xml"/>
+  <import file="${ant.file.web-services-management.xml}/../app-server-ant.xml"/>
+
+  <target name="enable-monitoring" depends="tools"
+    description="set the monitoring level">
+    <exec executable="${asadmin}">
+        <arg line=" configure-webservice-management"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --monitoring ${monitoring.level}" />
+        <arg line=" ${webservice.endpoint}"/>
+   </exec>
+  </target>
+
+  <target name="get-monitoring-stats" depends="tools"
+    description="get the monitoring statistics">
+    <exec executable="${asadmin}">
+        <arg line=" get " />
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" -m " />
+        <arg line=" ${dotted.name}" />
+   </exec>
+  </target>
+
+  <target name="add-request-transformation-rule" depends="tools"
+    description="adds the request transformation rule">
+    <exec executable="${asadmin}">
+        <arg line=" create-transformation-rule "/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --webservicename ${webservice.endpoint}" />
+        <arg line=" --rulefilelocation ${rulefile}" />
+        <arg line=" ${transformation.rulename}" />
+   </exec>
+  </target>
+
+  <target name="delete-request-transformation-rule" depends="tools"
+    description="deletes the request transformation rule">
+    <exec executable="${asadmin}">
+        <arg line=" delete-transformation-rule "/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --webservicename ${webservice.endpoint}" />
+        <arg line=" ${transformation.rulename}" />
+   </exec>
+  </target>
+
+  <target name="list-request-transformation-rules" depends="tools"
+    description="lists the request transformation rules">
+    <exec executable="${asadmin}">
+        <arg line=" list-transformation-rules "/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile ${javaee.server.passwordfile}" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --webservicename ${webservice.endpoint}" />
+   </exec>
+  </target>
+
+  <target name="dummy-default"/>
+
+</project>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+<project name="hello-webserviceref" default="all" basedir=".">
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="endpoint"/>
+    <import file="../../../bp-project/main.xml"/>
+
+    <target name="all" depends="default,run"/>
+
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="-post-run-deploy">
+        <subant target="run" verbose="true">
+            <fileset dir="hello-webserviceref-appclient" includes="build.xml"/>
+            <fileset dir="hello-webserviceref-webclient" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- to get the test client to run when the user runs the project from ant -->
+    <target name="launch">
+        <subant target="run">
+            <fileset dir="hello-webserviceref-appclient" includes="build.xml"/>
+            <fileset dir="hello-webserviceref-webclient" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+        <subant target="clean">
+            <fileset dir="hello-webserviceref-appclient" includes="build.xml"/>
+            <fileset dir="hello-webserviceref-webclient" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- clean up subproject from NB (undeploy is handled automatically) -->
+    <target name="-post-clean">
+        <subant target="clean">
+            <fileset dir="hello-webserviceref-appclient" includes="build.xml"/>
+            <fileset dir="hello-webserviceref-webclient" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+        <subant target="undeploy">
+            <fileset dir="hello-webserviceref-webclient" includes="build.xml"/>
+        </subant>
+    </target>
+
+</project>
