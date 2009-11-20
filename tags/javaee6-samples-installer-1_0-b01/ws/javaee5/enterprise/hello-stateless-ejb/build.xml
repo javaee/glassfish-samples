@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="hello-stateless-ejb" default="all" basedir=".">
+
+    <property name="is.ejb-jar.module" value="true"/>
+    <property name="javadoc.packagenames" value="enterprise.hello_stateless_ejb"/>
+
+    <import file="../../../bp-project/main.xml"/>
+
+    <target name="all" depends="default,deploy,run">
+        <subant target="default">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+        <antcall target="run"/>
+    </target>
+
+    <target name="-pre-clean" depends="undeploy">
+        <subant target="clean">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="run">
+        <subant target="run">
+            <fileset dir="hello-stateless-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+</project>

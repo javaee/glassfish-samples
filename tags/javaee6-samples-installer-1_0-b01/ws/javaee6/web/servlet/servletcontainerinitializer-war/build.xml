@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="servletcontainerinitializer-war" default="all" basedir=".">
+
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="web.servlet.servletcontainerinitializer_war"/>
+    <property name="run.uri" value="/servletcontainerinitializer-war/SampleServlet"/>
+
+    <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="run"/>
+    </target>
+
+    <target name="shared-lib">
+            <antcall target="stop-domain"/>
+        <mkdir dir="./containerinitializerlibrary/build" />
+        <javac srcdir="./containerinitializerlibrary/src"
+                destdir="./containerinitializerlibrary/build"
+                classpath="${javaee.home}/modules/javax.servlet.jar"
+                debug="on"
+                failonerror="true"/>
+        <jar destfile="${javaee.home}/lib/TestSharedLib1.jar">
+            <fileset dir="./containerinitializerlibrary/build"/>
+            <fileset dir="./containerinitializerlibrary/src" includes="META-INF/**"/>
+        </jar>
+        <antcall target="start-domain"/>
+    </target>
+    
+    <loadfile srcFile="./nbproject/private/private.properties" property="javaee.home.foo" quiet="true">
+        <filterchain >
+            <linecontains >
+                <contains value="j2ee.server.instance=["/>
+            </linecontains>
+            <tokenfilter>
+                <replaceregex pattern="\].*[0-9]" replace=""/>
+            </tokenfilter>
+            <tokenfilter>
+                <replaceregex pattern="j2ee\.server\.instance=\[" replace=""/>
+            </tokenfilter>
+            <striplinebreaks/>
+        </filterchain>
+    </loadfile>
+    <condition property="javaee.home" value="${javaee.home.foo}">
+        <not>
+            <isset  property="javaee.home"/>
+        </not>
+    </condition>
+    
+
+    <loadfile srcFile="./nbproject/private/private.properties" property="host.and.port" quiet="true">
+        <filterchain>
+            <linecontains >
+                <contains value="j2ee.server.instance=["/>
+            </linecontains>
+            <tokenfilter>
+                <replaceregex pattern="j2ee\.server\.instance=\[.*\]deployer\:gfv3ee6:" replace=""/>
+            </tokenfilter>
+            <striplinebreaks/>
+        </filterchain>
+    </loadfile>
+    <property name="host.and.port" value="localhost:4848"/>
+
+
+    <target name="-pre-run-deploy" if="netbeans.home">
+        <copy  file="./containerinitializerlibrary/dist/containerinitializerlibrary.jar"
+            tofile="${javaee.home}/lib/TestSharedLib1.jar"/>
+        <!-- <antcall target="stop-domain-nb"/> -->
+        <get src="http://${host.and.port}/__asadmin/stop-domain" dest="./dist/tmp" ignoreerrors="true"/>
+        <sleep seconds="5"/>
+    </target>
+
+    <target name="-pre-deploy">
+        <antcall target="shared-lib"/>
+    </target>
+
+    <target name="-post-clean" if="netbeans.home">
+        <get src="http://${host.and.port}/__asadmin/stop-domain" dest="./dist/tmp" ignoreerrors="true"/>
+        <delete file="${javaee.home}/lib/TestSharedLib1.jar"/>
+    </target>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+        <antcall target="stop-domain"/>
+        <delete file="${javaee.home}/lib/TestSharedLib1.jar"/>
+        <antcall target="start-domain"/>
+    </target>
+    
+</project>

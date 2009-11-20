@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+<project name="mailconnector-ear" basedir=".">
+
+    <import file="../../../../../../bp-project/main.xml"/>
+
+    <!-- Deployment configuration properties -->
+
+    <property name="sample.name" value="mailconnector"/>
+    <property name="connector.name" value="${sample.name}"/>
+    <property name="connector.pool.name" value="${sample.name}.pool"/>
+    <property name="connector.resource.name" value="eis/JavaMailConnectionFactory"/>
+    <property name="connectiondefinition.name" value="samples.connectors.mailconnector.api.JavaMailConnectionFactory"/>
+
+    <property name="javamail.resource.name" value="mail/MySession"/>
+
+    <property name="src.conf" value="../src/conf"/>
+    <property file="../src/conf/mail.properties"/>
+
+    <!-- ======================================================= -->
+    <!--                   Setup  / Unsetup                      -->
+    <!-- ======================================================= -->
+
+    <target name="setup"
+            depends="create-javamail-resource-local, create-connector-connection-pool-local, create-connector-resource-local, create-users-local"/>
+
+    <target name="unsetup"
+            depends="delete-javamail-resource-local, delete-users-local, delete-connector-resource-local, delete-connector-connection-pool-local"/>
+
+
+    <!-- mail properties to be read from properties file -->
+
+
+    <target name="save_mail_properties">
+        <propertyfile file="./mail.properties">
+            <entry key="mailhost" value="${mailhost}"/>
+            <entry key="fromaddress" value="${fromaddress}"/>
+            <entry key="mailuser" value="${mailuser}"/>
+            <entry key="debug" value="${debug}"/>
+            <entry key="enabled" value="${enabled}"/>
+        </propertyfile>
+    </target>
+
+    <target name="create-users-local">
+       <antcall target="keygen-common">
+          <param name="app.user" value="leo"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+       <antcall target="keygen-common">
+          <param name="app.user" value="tom"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+       <antcall target="keygen-common">
+          <param name="app.user" value="mike"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+       <antcall target="keygen-common">
+          <param name="app.user" value="george"/>
+          <param name="app.groups" value="employee"/>
+       </antcall>
+    </target>
+
+
+    <target name="delete-users-local">
+       <antcall target="keydel-common">
+          <param name="app.user" value="leo"/>
+       </antcall>
+       <antcall target="keydel-common">
+          <param name="app.user" value="tom"/>
+       </antcall>
+       <antcall target="keydel-common">
+          <param name="app.user" value="mike"/>
+       </antcall>
+       <antcall target="keydel-common">
+          <param name="app.user" value="george"/>
+       </antcall>
+    </target>
+
+
+    <target name="create-connector-connection-pool-local" description="creates connector connection pool">
+        <antcall target="create-connector-connection-pool">
+            <param name="ra.name" value="${connector.name}"/>
+            <param name="connectiondefinition.name" value="${connectiondefinition.name}"/>
+            <param name="optional.attributes" value=" --steadypoolsize 2 " />
+            <param name="connector.pool.name" value="${connector.pool.name}"/>
+        </antcall>
+    </target>
+
+    <target name="create-connector-resource-local" description="creates connector resource">
+        <antcall target="create-connector-resource">
+            <param name="connector.pool.name" value="${connector.pool.name}"/>
+            <param name="connector.resource.name" value="${connector.resource.name}"/>
+        </antcall>
+    </target>
+
+
+    <target name="create-javamail-resource-local" description="creates javamail resource">
+        <antcall target="create-javamail-resource">
+            <param name="mail.host" value="${mailhost}"/>
+            <param name="mail.fromaddress" value="${fromaddress}"/>
+            <param name="mail.username" value="${mailuser}"/>
+            <param name="mail.storeprotocolclass" value="${storeprotocolclass}"/>
+            <param name="mail.storeprotocol" value="${storeprotocol}"/>
+            <param name="mail.transportprotocolclass" value="${transportprotocolclass}"/>
+            <param name="mail.transportprotocol" value="${transportprotocol}"/>
+            <param name="javamail.resource.name" value="${javamail.resource.name}"/>
+        </antcall>
+    </target>
+
+
+    <target name="delete-javamail-resource-local" description="deletes javamail resource">
+        <antcall target="delete-javamail-resource">
+            <param name="javamail.resource.name" value="${javamail.resource.name}"/>
+        </antcall>
+    </target>
+
+    <target name="delete-connector-connection-pool-local" description="deletes connector connection pool">
+        <antcall target="delete-connector-connection-pool">
+            <param name="connector.pool.name" value="${connector.pool.name}"/>
+        </antcall>
+    </target>
+
+    <target name="delete-connector-resource-local" description="deletes connector resource">
+        <antcall target="delete-connector-resource">
+            <param name="connector.resource.name" value="${connector.resource.name}"/>
+        </antcall>
+    </target>
+
+</project>

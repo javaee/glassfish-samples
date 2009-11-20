@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="webfragment3" default="default" basedir=".">
+
+    <property name="is.jar.module" value="true"/>
+
+    <import file="../../../../../bp-project/main.xml"/>
+
+</project>

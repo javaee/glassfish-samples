@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="hello-jaxws-client" default="run" basedir=".">
+
+    <property name="is.java-client.module" value="true"/>
+
+    <import file="../../../../bp-project/jaxws.xml"/>
+
+    <property name="runjavaclient.class.name"
+        value="client.Client"/>
+
+
+    <!--
+     <path id="classpath">
+        <fileset dir="${javaee.home}/modules">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="${classesdir}"/>
+    </path>
+
+    <import file="../../../../bp-project/jaxws.xml"/> -->
+
+    
+    <target name="jaxws" depends="setup">
+	<!-- wsimport -->
+	<wsimport debug="true" verbose="${verbose}" keep="true" xendorsed="true"
+		destdir="${build.classes.dir}"
+		package="endpoint"
+		wsdl="http://localhost:8080/hello-jaxws2.2/HelloService?WSDL">
+	</wsimport>
+    </target>
+
+    <target name="run" depends="jaxws,default">
+        <antcall target="runjavaclient"/>
+    </target>
+
+</project>

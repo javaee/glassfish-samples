@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright 2004-2009 Sun Microsystems, Inc.  All rights reserved.
+ Use is subject to license terms.
+-->
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <display-name>WebApp</display-name>
+    <distributable/>
+    <servlet>
+        <servlet-name>MailServlet</servlet-name>
+        <servlet-class>samples.connectors.mailconnector.servlet.SendMailServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>MailBrowserServlet</servlet-name>
+        <servlet-class>samples.connectors.mailconnector.servlet.MailBrowserServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MailServlet</servlet-name>
+        <url-pattern>/mail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MailBrowserServlet</servlet-name>
+        <url-pattern>/browse</url-pattern>
+    </servlet-mapping>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    <resource-ref>
+        <res-ref-name>eis/MyConnectionFactory</res-ref-name>
+        <res-type>samples.connectors.mailconnector.api.JavaMailConnectionFactory</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+      </resource-ref>
+    <resource-ref>
+        <res-ref-name>TheMailSession</res-ref-name>
+        <res-type>javax.mail.Session</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+</web-app>
