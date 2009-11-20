@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="customvalve_war" default="all" basedir=".">
+
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="web.container.customvalve_war"/>
+
+    <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="run"/>
+    </target>
+    
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+    
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
+</project>

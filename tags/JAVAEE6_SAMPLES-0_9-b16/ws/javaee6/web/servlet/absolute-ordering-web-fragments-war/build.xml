@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="absolute-ordering-web-fragments-war" default="all" basedir=".">
+
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="web.servlet.absolute_ordering_web_fragments_war"/>
+
+    <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="run"/>
+    </target>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+        <ant dir="webfragment1" target="clean" inheritAll="false"/>
+        <ant dir="webfragment2" target="clean" inheritAll="false"/>
+        <ant dir="webfragment3" target="clean" inheritAll="false"/>
+    </target>
+
+    <target name="-pre-compile" unless="netbeans.home">
+        <ant dir="webfragment1" inheritAll="false"/>
+        <ant dir="webfragment2" inheritAll="false"/>
+        <ant dir="webfragment3" inheritAll="false"/>
+        <mkdir dir="${build.web.dir}/WEB-INF/lib"/>
+        <copy file="webfragment1/dist/webfragment1.jar"
+            todir="${build.web.dir}/WEB-INF/lib"/>
+        <copy file="webfragment2/dist/webfragment2.jar"
+            todir="${build.web.dir}/WEB-INF/lib"/>
+        <copy file="webfragment3/dist/webfragment3.jar"
+            todir="${build.web.dir}/WEB-INF/lib"/>
+    </target>
+
+</project>

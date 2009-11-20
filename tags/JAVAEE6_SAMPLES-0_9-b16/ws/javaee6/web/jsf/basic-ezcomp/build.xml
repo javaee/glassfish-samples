@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="basic-ezcomp" default="default" basedir=".">
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="basicezcomp"/>
+    <import file="../../../../bp-project/main.xml"/>
+
+    <target name="all" depends="default,run"/>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+
+</project>

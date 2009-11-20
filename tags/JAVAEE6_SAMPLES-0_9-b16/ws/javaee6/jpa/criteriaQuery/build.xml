@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="criteriaQuery" default="all" basedir=".">
+
+    <property name="is.war.module" value="true"/>
+    <property name="javadoc.packagenames" value="enterprise.criteriaquery"/>  <!-- TODO -->
+
+    <import file="../../../bp-project/main.xml"/>
+
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="-post-run-deploy">
+        <subant target="run" verbose="true">
+            <fileset dir="criteriaQuery_client" includes="build.xml"/>
+            <property name="javac.classpath" value="../../build/classes"/>
+        </subant>
+    </target>
+
+    <target name="all" depends="run"/>
+
+    <!-- to get the test client to run when the user runs the project from ant -->
+    <target name="launch">
+        <subant target="run">
+            <fileset dir="criteriaQuery_client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="-pre-clean" depends="ant-undeploy">
+        <subant target="clean">
+            <fileset dir="criteriaQuery_client" includes="build.xml"/>
+        </subant>
+    </target>
+    
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+    
+    
+</project>
