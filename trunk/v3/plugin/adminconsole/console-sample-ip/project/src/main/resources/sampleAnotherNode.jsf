@@ -1,7 +1,5 @@
 <sun:treeNode id="another"
         text="Another"
         url="/sample/page/testPage.jsf?name=Another"
-        target="main"
-        imageURL="resource/sample/images/sample.png"
-        >
+        imageURL="/resource/sample/images/sample.png">
 </sun:treeNode>

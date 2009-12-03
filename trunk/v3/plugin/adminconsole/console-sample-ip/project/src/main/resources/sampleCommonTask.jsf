@@ -2,7 +2,5 @@
 <sun:commonTask
         text="Sample Application Page"
         toolTip="Sample Application Page"
-        infoLinkUrl="/com_sun_webui_jsf/help/helpwindow.jsf?&windowTitle=Help+Window&helpFile=applications.html" 
-        onClick="admingui.nav.selectTreeNodeById('form:tree:deployment:ejb'); 
-        parent.location='#{facesContext.externalContext.requestContextPath}/sample/page/testPage.jsf?name=Sample%20Application%20Page'; return false;">
+        onClick="return admingui.woodstock.commonTaskHandler('treeForm:tree:applications:ejb', '#{request.contextPath}/sample/page/testPage.jsf?name=Sample%20Application%20Page');">
 </sun:commonTask>
