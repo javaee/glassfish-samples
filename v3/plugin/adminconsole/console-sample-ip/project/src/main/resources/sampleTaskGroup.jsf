@@ -1,16 +1,12 @@
 <sun:commonTasksGroup title="My Own Sample Group">
     <sun:commonTask
-        text="Go To Sample Resource"
-        toolTip="Go To Sample Resource"
-        infoLinkUrl="/com_sun_webui_jsf/help/helpwindow.jsf?&windowTitle=Help+Window&helpFile=jdbcconnectionpoolnew1.html" 
-        onClick="admingui.nav.selectTreeNodeById('form:tree:resources:treeNode1'); 
-        parent.location='#{facesContext.externalContext.requestContextPath}/sample/page/testPage.jsf?name=name=Sample%20Resource%20Page'; return false;">
+	    text="Go To Sample Resource"
+	    toolTip="Go To Sample Resource"
+	    onClick="return admingui.woodstock.commonTaskHandler('form:tree:resources:treeNode1', '#{request.contextPath}/sample/page/testPage.jsf?name=Sample%20Resource%20Page');">
     </sun:commonTask>
     <sun:commonTask
-        text="Sample Configuration"
-        toolTip="Go To Sample Configuration"
-        infoLinkUrl="/com_sun_webui_jsf/help/helpwindow.jsf?&windowTitle=Help+Window&helpFile=jdbcconnectionpoolnew1.html" 
-        onClick="admingui.nav.selectTreeNodeById('form:tree:configuration:sampleConfigNode'); 
-        parent.location='#{facesContext.externalContext.requestContextPath}/sample/page/testPage.jsf?name=Sample%20Configuration%20Page'; return false;">
+	    text="Sample Configuration"
+	    toolTip="Go To Sample Configuration"
+	    onClick="return admingui.woodstock.commonTaskHandler('form:tree:configuration:sampleConfigNode', '#{request.contextPath}/sample/page/testPage.jsf?name=Sample%20Configuration%20Page');">
     </sun:commonTask>
-</sun:commonTasksGroup> 
+</sun:commonTasksGroup>

@@ -2,6 +2,6 @@
 <sun:tab id="sampleTab" immediate="true" text="Sample First Tab">
     <!command
         setSessionAttribute(key="serverInstTabs" value="sampleTab");
-        redirect(page="#{request.contextPath}/page/tabPage.jsf?name=Sample%20First%20Tab");
+        gf.redirect(page="#{request.contextPath}/sample/page/tabPage.jsf?name=Sample%20First%20Tab");
     />
 </sun:tab>

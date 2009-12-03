@@ -1,15 +1,20 @@
-<!composition template="/templates/propertySheetTemplate.tpl" 
-              pageTitle="TEST Sample Page Title" 
-              helpText="Shows you what my page looks like"
-              >
- 
-    <!define name="properties">
-       <sun:property id="prop1"  labelAlign="left" noWrap="#{true}" overlapLabel="#{false}" label="page Name:" >
-            <sun:staticText text="$pageSession{pageName}" > 
+<!composition template="/templates/default.layout" guiTitle="TEST Sample Page Title">
+<!define name="content">
+<sun:form id="propertyForm">
+
+<sun:propertySheet id="propertySheet">
+    <sun:propertySheetSection id="propertySection">
+       <sun:property id="prop1"  labelAlign="left" noWrap="true" overlapLabel="false" label="Test Page Name:" >
+            <sun:staticText text="$pageSession{pageName}" >
                 <!beforeCreate
                     getRequestValue(key="name" value=>$page{pageName});
                 />
             </sun:staticText>
-        </sun:property> 
-    </define>
+        </sun:property>
+    </sun:propertySheetSection>
+</sun:propertySheet>
+<sun:hidden id="helpKey" value="" />
+
+</sun:form>
+</define>
 </composition>

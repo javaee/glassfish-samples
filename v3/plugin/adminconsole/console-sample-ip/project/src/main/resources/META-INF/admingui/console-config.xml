@@ -35,7 +35,9 @@
  holder.
  -->
 
-<!-- This is console config file that adds integration point to the Admin console. The goal is to keep this
+<!--
+
+     This is console config file that adds integration point to the Admin console. The goal is to keep this
      file up-to-date and add test to it as we allows more integration point to the console.
      A list of valid point and more information can be found in
      
@@ -46,7 +48,7 @@
 <console-config id="sample">
     
      <!-- ================================================================= -->        
-        <!-- Tree Node plugin testing   type= org.glassfish.admingui:treeNode  -->
+        <!-- Tree Node plugin testing   type= org.glassfish.admingui:navNode  -->
         <!-- To add a tree node to the left navigation tree.
              Top Level tree node:       id = tree
              under Registration:        id = registration
@@ -57,7 +59,7 @@
          -->
         <integration-point 
                 id="sampleNode" 
-                type="org.glassfish.admingui:treeNode" 
+                type="org.glassfish.admingui:navNode" 
                 priority="200" 
                 parentId="tree" 
                 content="sampleNode.jsf" 
@@ -68,14 +70,14 @@
          -->
         <integration-point 
                 id="sampleResource" 
-                type="org.glassfish.admingui:treeNode" 
+                type="org.glassfish.admingui:navNode" 
                 priority="400" 
                 parentId="resources" 
                 content="sampleResourceNode.jsf" 
         />
         <integration-point 
                 id="sampleResource-2" 
-                type="org.glassfish.admingui:treeNode" 
+                type="org.glassfish.admingui:navNode" 
                 priority="200" 
                 parentId="resources" 
                 content="sampleAnotherNode.jsf" 
@@ -84,7 +86,7 @@
         <!-- add one more tree node under Applications -->
         <integration-point 
                 id="ejbNode" 
-                type="org.glassfish.admingui:treeNode" 
+                type="org.glassfish.admingui:navNode" 
                 priority="100" 
                 parentId="applications" 
                 content="sampleEarNode.jsf" 
@@ -93,7 +95,7 @@
         <!-- add one more tree node under Configuration -->
         <integration-point 
                 id="ejbNode" 
-                type="org.glassfish.admingui:treeNode" 
+                type="org.glassfish.admingui:navNode" 
                 priority="100" 
                 parentId="configuration" 
                 content="sampleConfigNode.jsf" 
@@ -200,7 +202,4 @@
                 parentId="propSheetSection"
                 content="sampleConfigLink.jsf"
         />
-        
-       
-        
 </console-config>
