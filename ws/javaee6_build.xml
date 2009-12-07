@@ -104,7 +104,7 @@
         </zip>
     </target>
 
-    <target name="package-installer"
+    <target name="package-installer" depends="init-dist"
         description="packages the samples into a single jar for installer">
         <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
         <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
@@ -202,7 +202,7 @@
 
     <!-- build installer -->
     <taskdef name="installerBuilder" 
-        classname="com.sun.tools.xjc.installer.builder.BuilderTask">
+        classname="org.jvnet.poormans_installer.builder.BuilderTask">
         <classpath>
             <fileset dir="${poormans.installer.home}" includes="*.jar"/>
         </classpath>
