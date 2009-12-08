@@ -40,7 +40,7 @@
 
     <!-- TODO: use bp, web and classic contents -->
     <patternset id="include.sdk.contents"
-        includes="bp-project/**, docs/**, index.html, javaee6/build.xml, javaee6/docs/**, javaee6/index.html, javaee6/LICENSE, javaee6/connectors/apps/mailconnector/mailconnector-ear/**, javaee6/connectors/apps/mailconnector/mailconnector-ra/**, javaee6/ejb/automatic-timer/**, javaee6/ejb/ejb31-war/**, javaee6/ejb/hello-stateless-ejb/**, javaee6/jpa/locking/**, javaee6/rest/message-board-war/**, javaee6/security/http-method-omission/**, javaee6/security/programmatic-login/**, javaee6/web/jsf/basic-ajax/**, javaee6/web/jsf/basic-ezcomp/**, javaee6/web/servlet/annotation-war/**, javaee6/web/servlet/async-request-war/**, javaee6/web/servlet/dynamicregistration-war/**, javaee6/webservices/hello-jaxws2.2/**, javaee6/webservices/hello-singleton-ejb/**"
+        includes="bp-project/**, docs/**, index.html, javaee6/build.xml, javaee6/docs/**, javaee6/index.html, javaee6/LICENSE, javaee6/connectors/apps/mailconnector/mailconnector-ear/**, javaee6/connectors/apps/mailconnector/mailconnector-ra/**, javaee6/ejb/automatic-timer/**, javaee6/ejb/ejb31-war/**, javaee6/ejb/hello-stateless-ejb/**, javaee6/ejb/ejb-embedded/**, javaee6/jpa/locking/**, javaee6/rest/message-board-war/**, javaee6/security/http-method-omission/**, javaee6/security/programmatic-login/**, javaee6/web/jsf/basic-ajax/**, javaee6/web/jsf/basic-ezcomp/**, javaee6/web/servlet/annotation-war/**, javaee6/web/servlet/async-request-war/**, javaee6/web/servlet/dynamicregistration-war/**, javaee6/web/servlet/multipart-war/**, javaee6/web/servlet/absolute-ordering-web-fragments-war/**, javaee6/web/servlet/jsp-resource-in-bundled-jar-war/**, javaee6/web/servlet/servletcontainerinitializer-war/**, javaee6/web/servlet/sessioncookieconfig-war/**, javaee6/webservices/hello-jaxws2.2/**, javaee6/webservices/hello-singleton-ejb/**, javaee6/webservices/hello-webserviceref/**, javaee6/rest/managed-beans-war/**, javaee6/web/jsf/scrumtoys/**, javaee6/weld/weld-guess/**, javaee6/weld/weld-servlet/**, javaee6/connectors/apps/mailconnector/**, javaee6/jpa/advancedMapping/**, javaee6/jpa/criteriaQuery/**, javaee6/web/container/customvalve-war/**, javaee6/web/container/mod_jk/**"
         excludes="build.xml,bp-project/test.xml,bp-project/build.properties.xyz,bp-project/test.properties,javaee6/docs/DeveloperREADME.html, javaee6/docs/DeveloperTroubleShooting.html, javaee6/docs/sample_doc_template.html,javaee6/docs/sdk_samples_index.html,javaee6/docs/UnitTesting.html,javaee6/**/test/**"/>
 
     <patternset id="exclude.installer.license"
@@ -104,7 +104,7 @@
         </zip>
     </target>
 
-    <target name="package-installer"
+    <target name="package-installer" depends="init-dist"
         description="packages the samples into a single jar for installer">
         <move failonerror="false" file="bp-project/build.properties" tofile="bp-project/build.properties.xyz" />
         <copy file="bp-project/build.properties.sample" tofile="bp-project/build.properties"/>
@@ -202,7 +202,7 @@
 
     <!-- build installer -->
     <taskdef name="installerBuilder" 
-        classname="com.sun.tools.xjc.installer.builder.BuilderTask">
+        classname="org.jvnet.poormans_installer.builder.BuilderTask">
         <classpath>
             <fileset dir="${poormans.installer.home}" includes="*.jar"/>
         </classpath>
