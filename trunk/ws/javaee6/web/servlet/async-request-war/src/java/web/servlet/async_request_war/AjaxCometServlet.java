@@ -72,6 +72,10 @@ public class AjaxCometServlet extends HttpServlet {
 
     private static final long serialVersionUID = -2919167206889576860L;
 
+    private static final String JUNK = "<!-- Comet is a programming technique that enables web " +
+            "servers to send data to the client without having any need " +
+            "for the client to request it. -->\n";
+
     private Thread notifierThread = null;
 
     @Override
@@ -111,8 +115,10 @@ public class AjaxCometServlet extends HttpServlet {
         res.setHeader("Pragma", "no-cache");
         
         PrintWriter writer = res.getWriter();
-        // for IE
-        writer.println("<!-- Comet is a programming technique that enables web servers to send data to the client without having any need for the client to request it. -->\n");
+        // for Safari, Chrome, IE and Opera
+        for (int i = 0; i < 10; i++) {
+            writer.write(JUNK);
+        }
         writer.flush();
 
         final AsyncContext ac = req.startAsync();
