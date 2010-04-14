@@ -80,6 +80,7 @@ public class AjaxCometServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         Runnable notifierRunnable = new Runnable() {
             public void run() {
                 boolean done = false;
