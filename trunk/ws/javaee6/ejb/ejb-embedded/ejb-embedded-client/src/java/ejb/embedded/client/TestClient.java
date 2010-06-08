@@ -37,8 +37,6 @@ package ejb.embedded.client;
 
 import ejb.embedded.SimpleEjb;
 
-import java.util.Map;
-import java.util.HashMap;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 
@@ -54,15 +52,12 @@ public class TestClient {
 
     private void test() throws Exception {
 
-        Map<String, Object> p = new HashMap<String, Object>();
-        p.put(EJBContainer.APP_NAME, "sample");
-
         EJBContainer c = null;
         try {
-            c = EJBContainer.createEJBContainer(p);
+            c = EJBContainer.createEJBContainer();
             Context ic = c.getContext();
             System.out.println("Looking up EJB...");
-            SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/sample/SimpleEjb");
+            SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/ejb-embedded/SimpleEjb");
             System.out.println("Invoking EJB...");
             System.out.println("Inserting entities...");
             ejb.insert(5);
