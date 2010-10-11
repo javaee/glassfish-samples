@@ -112,11 +112,10 @@ em.persist(e);<br>
 </blockquote>
 <b>JNDI Lookup</b>
 <blockquote>The global JNDI name used for lookup of the Stateless
-Session Bean is : <code>java:global/sample/SimpleEjb.</code>The
-application name <span style="color: rgb(102, 102, 102);">"sample"</span>
-is defined by <span style="color: rgb(102, 102, 102);">EJBContainer.APP_NAME
-  </span>specified by the client code when creating the embeddable EJB
-container
+Session Bean is : <code>java:global/ejb-embedded/SimpleEjb.</code>The
+EJB module name <span style="color: rgb(102, 102, 102);">"ejb-embedded"</span>
+is defined by <span style="color: rgb(102, 102, 102);">the unqualified jar name
+  </span>when the example is built.
 </blockquote>
 <h2>Building, Deploying, and Running the Application</h2>
 Perform the following steps to build, and run the

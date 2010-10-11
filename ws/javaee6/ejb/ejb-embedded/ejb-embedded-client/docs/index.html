@@ -57,10 +57,7 @@ javax.naming.Context javax.ejb.EJBContainer getContext()</span></li>
  style="color: rgb(102, 102, 102);">ejb-embedded.jar</span> is located
 in the JVM classpath.<br>
 <br>
-</span></span>A property <span style="color: rgb(102, 102, 102);">javax.ejb.embeddable.EJBContainer.APP_NAME<span
- style="color: rgb(0, 0, 0);"> is used to define the name of the
-deployed EJB module.</span></span><br>
-<b><br>
+<br>
 </b><b>Standalone Java Client</b> <br>
 <br>
 <span style="color: rgb(102, 102, 102);">public class TestClient {</span><br
@@ -86,18 +83,11 @@ void test() throws Exception {</span><br
  style="color: rgb(102, 102, 102);">
 <br style="color: rgb(102, 102, 102);">
 <span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Map&lt;String, Object&gt; p = new HashMap&lt;String, Object&gt;();</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-p.put(EJBContainer.APP_NAME, "sample");</span><br
- style="color: rgb(102, 102, 102);">
-<br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 EJBContainer c = null;</span><br style="color: rgb(102, 102, 102);">
 <span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 try {</span><br style="color: rgb(102, 102, 102);">
 <span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-c = EJBContainer.createEJBContainer(p);</span><br
+c = EJBContainer.createEJBContainer();</span><br
  style="color: rgb(102, 102, 102);">
 <span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 Context ic = c.getContext();</span><br
@@ -106,7 +96,7 @@ Context ic = c.getContext();</span><br
 System.out.println("Looking up EJB...");</span><br
  style="color: rgb(102, 102, 102);">
 <span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/sample/SimpleEjb");</span><br
+SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/ejb-embedded/SimpleEjb");</span><br
  style="color: rgb(102, 102, 102);">
 <span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 System.out.println("Invoking EJB...");</span><br
