@@ -47,19 +47,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This Servlet class demonstrates Weld injection.
+ * This Servlet class demonstrates use of request
+ * scoped and session scoped CDI beans.
  */
 @WebServlet(name="LoginServlet", urlPatterns={"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
 
-    // Inject Weld Bean Manager.
-    @Inject BeanManager m;
-
-    // Inject The Credentials Weld bean.
+    // Inject the Credentials request-scoped bean.
     @Inject Credentials credentials;
 
-    // Inject the Login Weld bean.
-    @Inject Login login;
+    // Inject the Login session-scoped bean.
+    @Inject LoginHandler login;
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -70,17 +68,21 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
+        //populate the credentials request scoped beans with
+        //the user provided username and password
         credentials.setUsername(request.getParameter("username"));
         credentials.setPassword(request.getParameter("password"));
 
-        login.login();
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
 
         try {
+            //attempt to login using the provided credentials
+            login.login();
+
+            //Print appropriate logged in status message
             if (login.isLoggedIn()) {
-                out.println("Successfully Logged In As: " + credentials.getUsername());
+                out.println("Successfully Logged In as: " + credentials.getUsername());
             } else {
                 out.println("Login Failed: Check username and/or password.");
             }
@@ -114,14 +116,4 @@ public class LoginServlet extends HttpServlet {
     throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
-
 }
