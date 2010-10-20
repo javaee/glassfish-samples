@@ -39,27 +39,25 @@ package weldservlet;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Default;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
- * A simple Weld Bean that performs a login operation with user's 
- * credentials. 
+ * A Session Scoped Bean that performs a
+ * login operation with user provided credentials.
  */
-@Named
 @SessionScoped
-@Default
-public class Login implements Serializable {
+public class LoginHandler implements Serializable {
 
+    //Get the request scoped Credentials associated
+    //with this user.
     @Inject Credentials credentials;
 
     private boolean loggedIn = false;
 
-    /**
-     * This is where you could potentially access a database.
-     */
     public void login() {
+        //For this sample, just check whether a
+        //non-empty username and password is provided
+        //and allow successful login
         if ((credentials.getUsername() != null &&
             credentials.getUsername().trim().length() > 0) &&
             (credentials.getPassword() != null &&
@@ -72,4 +70,7 @@ public class Login implements Serializable {
         return loggedIn;
     }
 
+    public void logout() {
+        loggedIn = false;
+    }
 }

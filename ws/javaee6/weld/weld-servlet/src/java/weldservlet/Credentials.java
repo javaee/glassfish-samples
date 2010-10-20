@@ -36,20 +36,14 @@
 
 package weldservlet;
 
-import java.io.Serializable;
-
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Default;
-import javax.inject.Named;
 
 /**
- * This is just a simple container class Weld bean for the username 
- * and password entry values.
+ * A request scoped bean to capture the  provided
+ * username and password.
  */
-@Named 
 @RequestScoped
-@Default
-public class Credentials implements Serializable {
+public class Credentials {
 
     private String username = null;
 
