@@ -202,7 +202,10 @@
 
     <!-- build installer -->
     <taskdef name="installerBuilder" 
+        classname="com.sun.tools.xjc.installer.builder.BuilderTask">
+	<!--
         classname="org.jvnet.poormans_installer.builder.BuilderTask">
+	-->
         <classpath>
             <fileset dir="${poormans.installer.home}" includes="*.jar"/>
         </classpath>
