@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="automatic-timer-ejb" default="all" basedir=".">
+
+    <property name="is.ejb-jar.module" value="true"/>
+    <property name="javadoc.packagenames" value="enterprise.automatic_timer_ejb"/>
+
+    <import file="../../../bp-project/main.xml"/>
+
+    <!-- to get the test client to run when the user runs the project from inside NB -->
+    <target name="post-run-deploy">
+        <subant target="run" verbose="true">
+            <fileset dir="automatic-timer-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!-- to get the test client to run when the user runs the project from ant -->
+    <target name="launch">
+        <subant target="run">
+            <fileset dir="automatic-timer-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="all" depends="run"/>
+
+    <!-- clean up subproject and undeploy from ant -->
+    <target name="-pre-clean" depends="ant-undeploy">
+        <subant target="clean">
+            <fileset dir="automatic-timer-client" includes="build.xml"/>
+        </subant>
+    </target>
+    
+    <!-- clean up subproject from NB (undeploy is handled automatically) -->
+    <target name="-post-clean">
+        <subant target="clean">
+            <fileset dir="automatic-timer-client" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <target name="ant-undeploy" unless="netbeans.home">
+        <antcall target="undeploy"/>
+    </target>
+
+</project>

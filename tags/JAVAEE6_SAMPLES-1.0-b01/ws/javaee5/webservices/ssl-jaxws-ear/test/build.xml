@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="ssl-jaxws-ear-test" default="runtest" basedir=".">
+
+    <import file="../../../../bp-project/test.xml"/>
+
+    <target name="runtest" depends="compile">
+	<echo message="Testing ${module.name} ..."/>
+        <java classname="org.junit.runner.JUnitCore" fork="on">
+            <arg value="webservices.ssl_jaxws_ear.SSLJaxWSTest"/>
+            <sysproperty key="javax.net.ssl.trustStore" value="${javaee.domaindir}/config/cacerts.jks"/>
+            <sysproperty key="java.endorsed.dirs" value="${javaee.home}/lib/endorsed" />
+            <classpath refid="classpath"/>
+        </java>
+    </target>
+
+    <target name="-pre-compile" depends="get-artifacts">
+        <replace 
+            file="./src/java/webservices/ssl_jaxws_ear/SSLJaxWSTest.java" 
+            token="localhost:8080" 
+            value="${javaee.server.name}:${javaee.server.port}"/>
+    </target>
+
+    <target name="get-artifacts" depends="tools">
+        <mkdir dir="${build.classes.dir}"/>
+        <exec executable="${wsimport}">
+            <env key="VMARGS" value="-Djavax.net.ssl.trustStore=${javaee.domaindir}/config/cacerts.jks"/>
+            <arg line="-keep -d ${build.classes.dir} http://${javaee.server.name}:${javaee.server.port}/ssl-jaxws-war/TaxService?wsdl"/>
+        </exec>
+    </target>
+
+</project>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="security" default="create-file-user" basedir=".">
+
+    <import file="../../bp-project/main.xml"/>
+
+    <!-- attempt to calculate a value for javaee.home -->
+    <loadfile srcFile="./nbproject/private/private.properties" property="javaee.home.foo" quiet="true">
+        <filterchain >
+            <linecontains >
+                <contains value="j2ee.server.instance=["/>
+            </linecontains>
+            <tokenfilter>
+                <replaceregex pattern="\].*[0-9]" replace=""/>
+            </tokenfilter>
+            <tokenfilter>
+                <replaceregex pattern="j2ee\.server\.instance=\[" replace=""/>
+            </tokenfilter>
+            <striplinebreaks/>
+        </filterchain>
+    </loadfile>
+    <condition property="javaee.home" value="${javaee.home.foo}">
+        <not>
+            <isset  property="javaee.home"/>
+        </not>
+    </condition>
+
+    <!-- create a password file if one is not defined -->
+    <property name="javaee.server.passwordfile.foo" value="foopassword.txt"/>
+    <delete file="${javaee.server.passwordfile.foo}" failonerror="false"/>
+
+    <!-- do not format the following echo which is intentional -->
+    <echo file="${javaee.server.passwordfile.foo}" append="false">AS_ADMIN_PASSWORD=</echo>
+    <condition property="javaee.server.passwordfile" value="${javaee.server.passwordfile.foo}">
+        <not>
+            <isset  property="javaee.server.passwordfile"/>
+        </not>
+    </condition>
+    <import file="../../bp-project/app-server-ant.xml"/>
+
+    <target name="create-file-user" depends="init" unless="user.exists">
+        <antcall target="keygen-common">
+            <param name="app.user" value="javaee6user"/>
+            <param name="app.password" value="abc123"/>
+            <param name="app.groups" value="javaee6user"/>
+        </antcall>
+    </target>
+    <target name="delete-file-user">
+        <antcall target="keydel-common">
+            <param name="app.user" value="javaee6user"/>
+        </antcall>
+    </target>
+
+
+</project>
