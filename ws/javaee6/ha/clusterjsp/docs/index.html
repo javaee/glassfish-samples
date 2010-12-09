@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The cluster JSP Sample Application</title>
+  <style TYPE="text/css">
+  body,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li {
+    font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+    font-size:10pt
+  }
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {
+    font-family:monaco,courier,"courier new";
+    font-size:10pt;
+  }
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {
+    font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+    font-size:8pt
+    }
+  p.copy {text-align: center}
+
+  table.grey1,tr.grey1,td.grey1{background:#f1f1f1}
+  th {
+    color:#ffffff;
+    font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+    font-size:12pt
+  }
+  td.insidehead {
+    font-weight:bold;
+    background:white;
+    text-align: left;
+  }
+  a{text-decoration:none}
+  a:visited{color:#96C}
+  a:hover {text-decoration:underline}
+  </style>
+</head>
+
+  <body text="#000000" link="#594fbf" vlink="#1005fb" alink="#333366"  bgcolor="#ffffff" marginwidth="10">
+
+<table width="100%" border="0" cellspacing="4" cellpadding="2">
+  <tbody>
+    <tr>
+      <td valign="top" align="right" bgcolor="#587993">
+       <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="../../../../../docs/list.html">Samples Index</a></p>
+<!---- Don't modify anything above this line, except for the title tag -------->
+
+<h1>!!!!! TO BE MODIFIED FOR 3.1 The Cluster JSP Sample Application!!!!</h1>
+
+<p>
+The cluster JSP sample application demonstrates how a request to a JSP is shared
+or load balanced between all server instances in a cluster, with the HttpSession
+or "shopping cart" information surviving an abnormal condition in any server
+in a cluster.&nbsp; Simulated outages will demonstrate both failover and
+high availability.&nbsp; The Load Balancer will distribute requests to
+all instances in the cluster. It has the ability to forward a request to
+a healthy instance if it detects that the target instance is unavailable.
+
+<h2>Building, Deploying, and Running the Application</h2>
+
+<p>
+The general instructions for building, deploying, and running sample applications are provided in
+<a href="../../../../../docs/common-procedures.html">Building, Deploying, and Running Sample Applications</a>.
+In reading this document, use the following application-specific variables for this application:
+</p>
+
+<ul>
+  <li><code><i>install_dir</i></code> is the directory where Application Server is installed.
+  <li><code><i>app_dir</i></code> is the application base directory:
+    <code><i>install_dir</i>/samples/ee-samples/highavailability/apps/clusterjsp</code>.
+  <li><i>appname</i> is the application name: clusterjsp.
+  <li>The prebuilt EAR file is <code>clusterjsp.ear</code>.
+</ul>
+
+<p>
+Follow this general procedure:
+<ol>
+    <li>Follow the instructions in <a href="../../../../ee-setup.html">Setting Up Enterprise Edition Sample Applications</a>
+    to configure the load balancer and HADB for an Application Server cluster.
+    <li><a href="../../../../../docs/common-procedures.html#build">Build the Application</a>.
+      The build file, <code>build.xml</code>, is in the <code><i>app_dir</i></code> directory.
+    <li><a href="../../../../../docs/common-procedures.html#deploy">Deploy the Application</a>
+      The EAR file is
+      <code><i>install_dir</i>/samples/ee-samples/highavailability/apps/clusterjsp/clusterjsp.ear</code>.
+<br>
+      <b>Note</b>: The first time you run <code>asant deploy</code>, it will prompt you for
+       your Application Server host name, administration port, administration user and password
+       and cluster name. The script will save these values in a properties file, and running it
+       subsequently will get this information from the file.
+    <li>Run the application, as described below.
+</ol>
+
+
+<h2>Running the Sample Application</h2>
+
+<p>
+After you have built and deployed the application, run it by entering the
+following URL in your web browser:
+<pre>
+http://<i>ws-host</i>:<i>ws-port</i>/clusterJSP
+</pre>
+
+<p>
+Where <i>ws-host</i> is the hostname of web server with the load balancer plugin
+and <i>ws-port</i> is the port one which the web server is running.
+Then, follow these instructions to use the application to demonstrate clustering:
+
+
+<p>The images from running the application:
+<p><img SRC="images/cluster-sample.jpg" height=819 width=705>
+
+<p>Now, stop the instance that served the request.  For instructions no how to stop an instance,
+see <a href="../../../../ee-setup.html#stop-instance">Stopping an Application Server Instance</a>.
+After the instance is shut down completely, add another sesion attribute.
+You will see that the session attributes stored earlier will also be retreived and displayed.
+</p>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2010 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
