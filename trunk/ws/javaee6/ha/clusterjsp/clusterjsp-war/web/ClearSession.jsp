@@ -1,11 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en">
-<head>
-<!--
+<%--
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2006-2010 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -41,38 +38,27 @@
     only if the new code is made subject to such option by the copyright
     holder.
 
--->
+--%>
 
-  <title>Java Platform, Enterprise Edition (Java EE) 6 Samples</title>
-  <style type="text/css">
-  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
-  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
-  h1 {font-size:18pt}
-  h2 {font-size:14pt}
-  h3 {font-size:12pt}
-  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
-  li {padding-bottom: 8px}
-  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
-  p.copy {text-align: center}
-  </style>
-</head>
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
- alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
-<table border="0" cellpadding="2" cellspacing="4" width="100%">
-  <tbody>
-    <tr>
-      <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Java EE 6 SDK</b></font>&nbsp;
-      </td>
-    </tr>
-  </tbody>
-</table>
-<!---- Don't modify anything above this line, except for the title tag --------><!--- Do not modify the rest of the document --><br>
-<h1>Java Platform, Enterprise Edition (Java EE) 6 Samples</h1>
-<p>The Java EE 6 samples demonstrate the features and technologies of Java EE&nbsp;6, and include detailed instructions to build and run them. For more information, click <a href="./javaee6/index.html">here</a></p>
-<!--- Do not modify the rest of the document -->
-<hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 1997-2010 Oracle and/or its affiliates. All rights reserved. </p>
-<!--  end copyright  -->
-</body>
-</html>
+<HTML>
+<HEAD><TITLE>Cluster - Ha JSP Sample </TITLE></HEAD>
+<BODY>
+
+<% String action = request.getParameter("action");
+   System.out.println("ClearSession.jsp: invalidating session");
+   if (action != null && action.equals("CLEAR SESSION")) {
+        session.invalidate();
+   }
+%>
+<BR><BR><BR>
+Served From Server: <b><%= request.getServerName() %></b>
+
+<BR><BR>
+<B>Instruction</B>
+<UL>
+<LI>Click on START NEW SESSION to start a new session</LI>
+</UL>
+<BR>
+<A HREF="HaJsp.jsp" NAME="Link3">START NEW SESSION</A>
+</BODY>
+</HTML>
