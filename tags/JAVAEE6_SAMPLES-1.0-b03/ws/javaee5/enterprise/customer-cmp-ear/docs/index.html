@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The Java Persistence Sample Application</title>
+  <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>The Java Persistence Sample Application</h1>
+<p>This sample demonstrates the use of Java Persistence APIs based on
+the new Java Persistence specification.
+It interacts with a relational database to store and display
+information about customer subscriptions to periodicals.
+</p>
+<p>If you are familiar with EJB 2.1 persistence, you will notice a lot
+of changes in this example based on the new Java Persistence
+specification. Although this application provides the same
+functionality as a corresponding EJB 2.1 implementation, it is much
+simpler: </p>
+<ul>
+  <li>There are no complex and arcane deployment descriptors. All
+metadata information is specified by annotations and you do not have to
+implement any EJBLocalObject or EJBObject interfaces. </li>
+  <li>You can rely a great deal on defaults, so you code for the
+exceptional cases. This significantly reduces turnaround time for
+implementations. </li>
+  <li>Most importantly, you can switch your persistence implementation
+to any vendor that supports the Java Persistence specification. </li>
+</ul>
+<p></p>
+<h2>Application Structure</h2>
+<p>
+The application is built and deployed as an EAR file. It consists of
+two modules: the web module and
+the EJB module.
+</p>
+<h3>Web Module</h3>
+<p>
+The web module consists of JSP files that contain the presentation
+logic for the sample.
+The starting point of the application is the main<code>index.html</code>
+page,
+from which you can navigate to different
+pages to perform tasks such as creating a customer, searching for a
+customer, searching for an address,
+creating more subscriptions, and editing a customer profile. Each of
+these pages has
+a [HOME] link, that returns you to the main page.
+</p>
+<h3>EJB Module</h3>
+<p>
+The EJB module consists of a stateless session bean, the persistence
+unit and some supporting classes.
+The JSP files look up the CustomerSession stateless session bean and,
+based on the client inputs,
+invoke its business methods.
+</p>
+<p>The CustomerSession stateless session bean uses resource injection
+to get access to an EntityManager.
+It uses the entity manager for all persistence related operations, such
+as inserts, updates and lookups.
+The entity classes are Address, Customer and Subscription. These are
+plain old Java objects (POJOs) with
+metadata annotations that describe their database mappings,
+associations with other entities, and fetch
+strategy.
+</p>
+<p>The persistence classes are archived in <code>customer-cmp-ejb.jar</code>
+along with a
+<code>persistence.xml</code>, that defines
+the EntityManager provider class and the database connection
+information for the persistence unit.
+</p>
+<h2>Application archive</h2>
+<p>
+The web-module and ejb-module are archived in <code>customer-cmp-ear.ear</code>.
+</p>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>Follow these steps to build, deploy, and run the application.</p>
+<ol>
+  <li> Set up your build environment and Configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html"> common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>install_dir</i>/samples/ws/javaee5/enterprise/customer-cmp-ear</code></li>
+  <li>Change directory to <code><i>app_dir.</i></code></li>
+  <li>
+    <p>Make sure the JavaDB database is started. If not, refer to <a
+ href="../../../docs/UserREADME.html"> common build instructions.</a> </p>
+  </li>
+  <li>Create database
+    <p>Change directory to <code><i>app_dir/setup </i></code></p>
+    <p><code><i>app_dir/setup&gt; </i>ant create-db </code></p>
+  </li>
+  <li>Set up JDBC resources, Compile, Deploy and Run the sample
+application using the target all:
+    <p>Change directory to <code><i>app_dir </i></code></p>
+    <p><code><i>app_dir&gt; </i> ant all</code> </p>
+  </li>
+  <li>It is possible to do the above separately by issuing separate
+commands: <br>
+    <code><i>app_dir&gt; </i>ant setup</code> creates jdbc-resources <br>
+    <code><i>app_dir&gt; </i>ant default</code> compiles and packages
+the application <br>
+    <code><i>app_dir&gt; </i>ant deploy</code> deploys it to
+application server <br>
+    <code><i>app_dir&gt; </i>ant run</code> runs the sample from a
+browser using the URL <code>http://[<i>hostname</i>]:8080/customer-cmp-war/index.html</code>
+  </li>
+  <li>Remove the database resources:
+    <p><i>app_dir&gt; </i><code>ant unsetup </code></p>
+  </li>
+  <li>Use the target clean to remove the temporary directories like
+build and dist
+    <p><code><i>app_dir&gt; </i>ant clean</code> </p>
+  </li>
+</ol>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Follow these instructions to build, deploy, and run
+this sample application using NetBeans IDE.
+</p>
+<ol>
+  <li> Refer to  <a href="../../../docs/UserREADME.html"> common build instructions.</a>
+       for setting up NetBeans IDE and the application server with which the IDE will use.</li>
+  <li> In NetBeans IDE, select File->OpenProject and select 
+<code><i>samples_install_dir</i>/javaee5/enterprise/customer-cmp-ear</code> as the project.</li>
+  <li> Right click on <code>customer-cmp-ear</code> and select <code>Run Project</code> which will build, deploy and run the project. If configured properly, the IDE will open the browser with the url <code>http://localhost:8080/customer-cmp-war</code>. Sample output is given below. </li>
+  <b>NetBeans IDE output</b>
+  <pre>
+  post-init:
+  init-check:
+  init:
+  run-ac:
+  BUILD SUCCESSFUL (total time: 22 seconds)
+  </pre>
+  <b>Browser output</b>
+  <pre>
+  http://localhost:8080/customer-cmp-war/
+
+  Simple CMP Example -- Customer
+
+  Create New Customer
+  Search For Customer
+  Create New Subscription
+  Search For Subscription
+  Search For Address 
+  </pre>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to <a
+ href="../../../docs/UserTroubleShooting.html"> troubleshooting document</a>.
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a> All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

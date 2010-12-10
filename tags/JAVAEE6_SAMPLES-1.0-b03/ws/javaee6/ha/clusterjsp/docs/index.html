@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>The cluster JSP Sample Application</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Sathyan Catari">
+	<META NAME="CHANGED" CONTENT="20101209;16044000">
+	<META NAME="CHANGEDBY" CONTENT="Sathyan Catari">
+	<META NAME="CHANGEDBY" CONTENT="Sathyan Catari">
+	<STYLE TYPE="text/css">
+	<!--
+		TD P { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 10pt }
+		H1 { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 18pt }
+		P { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 10pt }
+		H2 { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 14pt }
+		P.copy { font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 8pt; text-align: center }
+		DD { color: #000000; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 10pt }
+		A:link { color: #594fbf; font-family: "geneva", "helvetica", "arial", "lucida sans", sans-serif; font-size: 10pt; text-decoration: none }
+		CODE { font-family: "monaco", "courier", "courier new"; font-size: 10pt }
+		A:visited { color: #1005fb }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#594fbf" VLINK="#1005fb" BGCOLOR="#ffffff" DIR="LTR">
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=4 STYLE="page-break-before: always">
+	<TR>
+		<TD VALIGN=TOP BGCOLOR="#587993">
+			<P ALIGN=RIGHT><FONT COLOR="#ffffff"><FONT SIZE=2><B>Java EE 6
+			SDK</B></FONT></FONT>&nbsp; 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<H1>The Cluster JSP Sample Application.</H1>
+<P>The cluster JSP sample application demonstrates how a request to a
+JSP is shared in all of server instances in a GlassFish cluster.</P>
+<H2>Building and Deploying the Application</H2>
+<P>This version of Java EE 6 SDK only includes a pre-built clusterjsp
+application and does not provide the mechanism to build it. The
+application ear file, clusterjsp.ear is bundled and available under
+<I>install_dir</I>/samples/javaee6/ha/clusterjsp. 
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><CODE><I>install_dir</I></CODE> is
+	the the directory by name “glassfish” that is created under the
+	path chosen during installation. 
+	</P>
+</UL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">NOTE: The instructions here only apply
+to creating local instances on a single machine.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P>Follow this procedure to setup the necessary environment and
+deploy clusterjsp: 
+</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in">For this exercise you may use the
+	domain created by installer. If you have elected not to create the
+	domain during installation, then create your own domain by running
+	'<B>asadmin create-domain</B>' command. 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Verify that the domain is running
+	by using the command '<B>asadmin list-domains</B>'. Start the domain
+	by running '<B>asadmin start-domain</B>' command if it has not been
+	already started.</P>
+	<LI><P STYLE="margin-bottom: 0in">Verify if “multicast” is
+	enabled on your network by running '<B>asadmin validate-multicast</B>'
+	command on two terminal windows. The output should show messages
+	being sent and received between the two terminals and ensure that
+	basic multicast support exists on your network.</P>
+	<LI><P STYLE="margin-bottom: 0in">Create the cluster by running
+	command '<B>asadmin create-cluster</B>'.</P>
+	<LI><P STYLE="margin-bottom: 0in">Create local instances and add
+	them to the newly created cluster by running command '<B>asadmin
+	create-local-instance</B>' with '<B>--cluster &lt;clustername&gt;</B>'
+	option. For this exercise at the least two instances are needed, so
+	you will be running this command at the least two times. Scan the
+	output of this command and note down the value of HTTP_LISTENER_PORT
+	for each run. You will be using this port to connect to the instance
+	and launch the clusterjsp application later. 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Start the cluster by running
+	'<B>asadmin start-cluster</B>'. This also starts the instances that
+	are part of the cluster. To verify run '<B>asadmin list-instances</B>'.</P>
+	<LI><P STYLE="margin-bottom: 0in">Now deploy the clusterjsp to the
+	cluster by running '<B>asadmin deploy –availabilityenabled=true
+	–target &lt;clustername&gt; &lt;application path&gt;/clusterjsp.ear</B>'.
+		</P>
+	<LI><P>Run the application, as described below. 
+	</P>
+</OL>
+<P>An example sequence of setup commands including the output to
+create the cluster 'cluster1' (in a pre-existing domain by name
+'domain1') with two instances 'instance1' and 'instance2' and deploys
+the application.</P>
+<DL>
+	<DD>$ ./asadmin list-domains</DD><DD>
+	domain1 running</DD><DD>
+	Command list-domains executed successfully.</DD><DD>
+	<BR>
+	</DD><DD>
+	$ ./asadmin create-cluster cluster1</DD><DD>
+	Command create-cluster executed successfully.</DD><DD>
+	<BR>
+	</DD><DD>
+	$ ./asadmin create-local-instance --cluster cluster1 instance1</DD><DD>
+	Rendezvoused with DAS on localhost:4848.</DD><DD>
+	Port Assignments for server instance instance1: 
+	</DD><DD>
+	JMX_SYSTEM_CONNECTOR_PORT=28686</DD><DD>
+	JMS_PROVIDER_PORT=27676</DD><DD>
+	<B>HTTP_LISTENER_PORT=28080</B></DD><DD>
+	ASADMIN_LISTENER_PORT=24848</DD><DD>
+	JAVA_DEBUGGER_PORT=29009</DD><DD>
+	IIOP_SSL_LISTENER_PORT=23820</DD><DD>
+	IIOP_LISTENER_PORT=23700</DD><DD>
+	OSGI_SHELL_TELNET_PORT=26666</DD><DD>
+	HTTP_SSL_LISTENER_PORT=28181</DD><DD>
+	IIOP_SSL_MUTUALAUTH_PORT=23920</DD><DD>
+	Command create-local-instance executed successfully.</DD><DD>
+	<BR>
+	</DD><DD>
+	$ ./asadmin create-local-instance --cluster cluster1 instance2</DD><DD>
+	Using DAS host localhost and port 4848 from existing das.properties
+	for node</DD><DD>
+	localhost. To use a different DAS, create a new node using
+	create-node-ssh or</DD><DD>
+	create-node-config. Create the instance with the new node and
+	correct</DD><DD>
+	host and port:</DD><DD>
+	asadmin --host das_host --port das_port create-local-instance --node
+	node_name instance_name.</DD><DD>
+	Rendezvoused with DAS on localhost:4848.</DD><DD>
+	Port Assignments for server instance instance2: 
+	</DD><DD>
+	JMX_SYSTEM_CONNECTOR_PORT=28687</DD><DD>
+	JMS_PROVIDER_PORT=27677</DD><DD>
+	<B>HTTP_LISTENER_PORT=28081</B></DD><DD>
+	ASADMIN_LISTENER_PORT=24849</DD><DD>
+	JAVA_DEBUGGER_PORT=29010</DD><DD>
+	IIOP_SSL_LISTENER_PORT=23821</DD><DD>
+	IIOP_LISTENER_PORT=23701</DD><DD>
+	OSGI_SHELL_TELNET_PORT=26667</DD><DD>
+	HTTP_SSL_LISTENER_PORT=28182</DD><DD>
+	IIOP_SSL_MUTUALAUTH_PORT=23921</DD><DD>
+	WARNING: Instance instance1 seems to be offline; command
+	_register-instance-at-instance was not replicated to that instance</DD><DD>
+	Command create-local-instance executed successfully.</DD><DD>
+	<BR>
+	</DD><DD>
+	$ ./asadmin start-cluster cluster1</DD><DD>
+	Command start-cluster executed successfully.</DD><DD>
+	<BR>
+	</DD><DD>
+	$ ./asadmin list-instances</DD><DD>
+	instance1 running 
+	</DD><DD>
+	instance2 running 
+	</DD><DD>
+	Command list-instances executed successfully.</DD><DD>
+	<BR>
+	</DD><DD>
+	$ ./asadmin deploy --availabilityenabled=true --target cluster1
+	/tmp/clusterjsp.ear</DD><DD>
+	Application deployed with name clusterjsp.</DD><DD STYLE="margin-bottom: 0.2in">
+	Command deploy executed successfully.</DD></DL>
+<H2>
+Running the Sample Application</H2>
+<P>The objective of this run is to demonstrate clustering and
+replication of session information across instances in a cluster. We
+achieve this by doing the following</P>
+<OL>
+	<LI><P>Access the clusterjsp application through instance1 by
+	launching a web browser and entering the URL
+	http://&lt;hostname&gt;:&lt;Instance1HTTPPort&gt;/clusterjsp</P>
+	<LI><P>Add session data by entering the session attribute name and
+	value and clicking 'ADD SESSION DATA' button in the web page.</P>
+	<LI><P>Stop instance1 by running 'asadmin stop-instance instance1'
+	command from command line.</P>
+	<LI><P>Access the clusterjsp application through instance2 by
+	entering the URL http://&lt;hostname&gt;:&lt;Instance1HTTPPort&gt;/clusterjsp
+	on the same browser window opened in step 1.</P>
+	<LI><P>Verify that the session data generated from the application
+	accessed through instance1 is automatically persisted and is visible
+	when the application is accessed through instance2 of the cluster.
+	You will be able to see the session attribute name and values
+	persisted from instance1.</P>
+</OL>
+<P><BR><BR>
+</P>
+<P><B>Please see the image below for a sample output of running steps
+1 and 2 from above.</B></P>
+<P><IMG SRC="images/instance1.jpg" NAME="graphics1" ALIGN=LEFT WIDTH=905 HEIGHT=567 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P><B>Please see the image below for a sample output of running steps
+4 and 5 from above.</B></P>
+<P><IMG SRC="images/instance2.jpg" NAME="graphics2" ALIGN=LEFT WIDTH=905 HEIGHT=567 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="border-top: none; border-bottom: 1px solid #808080; border-left: none; border-right: none; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0in; padding-right: 0in">
+<!--- Do not modify the rest of the document --><BR><BR>
+</P>
+<P CLASS="copy"><!-- start copyright -->Copyright © 1997-2010 Oracle
+and/or its affiliates. All rights reserved. 
+</P>
+<P><!-- end copyright --><BR><BR>
+</P>
+</BODY>
+</HTML>

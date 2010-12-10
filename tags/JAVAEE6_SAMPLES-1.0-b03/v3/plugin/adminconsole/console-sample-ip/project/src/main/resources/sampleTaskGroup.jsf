@@ -1,0 +1,12 @@
+<sun:commonTasksGroup title="My Own Sample Group">
+    <sun:commonTask
+	    text="Go To Sample Resource"
+	    toolTip="Go To Sample Resource"
+	    onClick="return admingui.woodstock.commonTaskHandler('form:tree:resources:treeNode1', '#{request.contextPath}/sample/page/testPage.jsf?name=Sample%20Resource%20Page');">
+    </sun:commonTask>
+    <sun:commonTask
+	    text="Sample Configuration"
+	    toolTip="Go To Sample Configuration"
+	    onClick="return admingui.woodstock.commonTaskHandler('form:tree:configuration:sampleConfigNode', '#{request.contextPath}/sample/page/testPage.jsf?name=Sample%20Configuration%20Page');">
+    </sun:commonTask>
+</sun:commonTasksGroup>
