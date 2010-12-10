@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en"><head><title>The Secure Bank Account Web Service Sample Application</title>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style></head>
+
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p>
+<h1>A Secure X.509 Based WebService Sample Application</h1>
+This sample demonstrates how to:
+<ul>
+<li>Write a Secure Webservice
+<li>Compile and deploy the Webservice
+</ul>
+<h2> Configuration</h2>
+The build script is designed to be easily moved anywhere else and modified.  To keep things as simple as possible it is <i>not</i> dependent on the
+build framework in the Samples hierarchy.
+<p>You do, however, have to setup some variables for Ant.  The easiest way to do this is to add 
+these variables to <your-home>/build.properties (they are populated with sample values)
+<p><code>
+javaee.home=/as9<br>
+javaee.server.name=localhost<br>
+javaee.server.port=8080<br>
+javaee.domaindir=/as9/domains/domain1<br>
+</code>
+<h2>How to use the build script</h2>
+<ul>
+<li>Start the App Server and make sure you have <home>/build.properties setup correctly.
+<li>To do everything, simply run ant with no arguments
+<li><b>ant compile-deploy-service</b> compiles and deploys the Webservice
+</ul>
+<h2>The Web Service</h2>
+This is an example of  a secure web service.
+In this example, a bank account JAX-WS webservice is sent securely using SOAP Message Security.
+This is a scenario using X509 Mutual Authentication.
+<br>
+Client and Server are authenticated and messages integrity and 
+confidentiality are provided by using Asymmetric Binding. 
+The server X509 certificate is used as Recepient Token and the 
+client X509 certificate is used as the Initiator Token.
+<br>
+All communication uses SOAP messages.
+<br>
+SignedParts and EncryptedParts assertions are present in the 
+corresponding policy, indicating that the headers and Body of the message 
+must be signed and encrypted. 
+
+<p>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Follow these instructions to build, deploy, and run
+this sample application using NetBeans IDE.
+</p>
+<ol>
+      <li> Refer to  <a href="../../../docs/UserREADME.html"> common build instructions.</a>
+       for setting up NetBeans IDE and the application server with which the IDE will use.</li>
+  <li> Make sure that you have defined the appropriate values in build.properties based on above
+       common build instructions which is a pre-requisite for this sample.
+  <li> In NetBeans IDE, select File->OpenProject and select 
+<code><i>samples_install_dir</i>/javaee5/webservices/xwss-bank-service</code> as the project.</li>
+  <li> Right click on <code>xwss-bank-service</code> and select <code>Run Project</code> which will build, deploy and run the project.</li>
+</ol>
+<p>
+You can verify the Webservice is active by entering this in a browser (example server host and port):
+<p><code>
+http://localhost:8080/xwss-bank-service/BankAccountService?wsdl
+</code>
+
+<p>
+The corresponding client code is in the xwss-bank-client project.
+
+</body>
+</html>

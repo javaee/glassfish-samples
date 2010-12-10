@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The WAR-based EJB 3.1 Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Java EE 6 SDK</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Main Page</a></p>
+<h1>A Simple WAR-based EJB 3.1 Application<br>
+</h1>
+This is a simple EJB 3.1 application that shows the use of WAR-based
+packaging , the no-interface Local view, Singleton session beans, and
+startup/shutdown callbacks.<br>
+<br>
+<span style="font-weight: bold;">Overview<br>
+<br>
+</span>The application is composed of a Servlet, a
+Singleton session bean, and a Stateless session bean.&nbsp; Each
+session bean exposes a no-interface view.&nbsp; The Singleton defines a
+callback that is called by the container during application
+initialization.&nbsp; Both the Servlet and Stateless bean use the
+Singleton to access common application configuration info. When the
+Servlet is accessed, it invokes the session beans and prints some
+messages containing the return values.&nbsp;&nbsp; <br>
+<br>
+The entire application is packaged within a <code>.war</code> file,
+without any <code>.xml</code>
+files.&nbsp;&nbsp; <br>
+<br>
+<b>No-interface view<br>
+<br>
+</b>Each session bean exposes a no-interface Local
+view.&nbsp; This client view has the same semantics as the EJB 3.0
+Local business interface, except that it does not require a separate
+interface.&nbsp; All public methods of the bean class are automatically
+exposed to the caller.&nbsp;&nbsp; By default, any session bean that
+has an empty implements clause and does not define any other
+Local/Remote client views exposes a no-interface client view:<br>
+<br>
+<code>&nbsp;&nbsp;&nbsp; @Stateless<br>
+&nbsp;&nbsp;&nbsp; public class HelloBean {<br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public String sayHello() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String message
+= propertiesBean.getProperty("hello.message");<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return message;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; }</code><br>
+<br>
+A client of the no-interface view always acquires an
+ejb reference, either through injection or JNDI lookup.&nbsp; The java
+type of the ejb reference is the bean class.&nbsp; The client never
+uses the <code>new()</code> operator to explicitly instantiate the
+bean
+class.&nbsp;&nbsp; <br>
+<br>
+<code>&nbsp;&nbsp;&nbsp; @EJB <br>
+&nbsp;&nbsp;&nbsp; private HelloBean helloBean;<br>
+<br>
+&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp; String msg = helloBean.sayHello();<br>
+</code><b><br>
+<br>
+Singleton bean</b><br>
+<br>
+A Singleton bean is a new kind of session bean component
+that is guaranteed to be instantiated once per application in a
+particular JVM.&nbsp;&nbsp; A Singleton bean is defined using the
+@Singleton component-defining annotation.<br>
+<br>
+By default, the container decides when to instantiate the Singleton
+bean instance.&nbsp; However, the developer can force the container to
+instantiate the Singleton bean instance during application
+initialization by using the <code>@Startup</code>
+annotation.&nbsp;&nbsp; This
+allows the bean to define a <code>@PostConstruct</code> method that is
+guaranteed to
+be called during startup time.&nbsp;&nbsp; In addition, regardless of
+eager vs. lazy instantiation, any Singleton <code>@PostDestroy</code>
+method is
+guaranteed to be called when the application is shutting down.<br>
+<blockquote> <br>
+  <code>@Singleton<br>
+@Startup<br>
+public class PropertiesBean {<br>
+  <br>
+  <br>
+&nbsp;&nbsp;&nbsp; @PostConstruct<br>
+&nbsp;&nbsp;&nbsp; private void startup() { ... }<br>
+  <br>
+&nbsp;&nbsp;&nbsp; @PreDestroy<br>
+&nbsp;&nbsp;&nbsp; private void shutdown() { ... }<br>
+  <br>
+&nbsp;&nbsp;&nbsp; ...<br>
+  <br>
+}</code><br>
+  <br>
+</blockquote>
+<b>Deployment Descriptor</b><br>
+<br>
+No deployment descriptors are needed, even for the
+Servlet.&nbsp; All metadata is either defaulted or specified using
+annotations.&nbsp; <br>
+<span style="font-weight: bold;"><br>
+Packaging<br>
+<br>
+</span>The entire
+application is packaged in a single <code>.war</code> file.&nbsp; The
+EJB 3.1
+specification allows any enterprise bean classes to be packaged
+directly in <code><span style="font-style: italic;">WEB-INF/classes</span></code>
+(or in a <code>.jar</code> in <code><span style="font-style: italic;">WEB-INF/lib</span></code>)
+, just like
+other <code>.war</code> classes.&nbsp; <br>
+<br>
+&nbsp;&nbsp;&nbsp;<code><span style="font-style: italic;">
+app_dir/dist&gt;</span>; jar tvf ejb-ejb31-war.war</code> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/</span></code><br>
+&nbsp;&nbsp; &nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/ejb/</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/</span></code>&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/HelloBean.class</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/PropertiesBean.class</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<code><span style="font-style: italic;">WEB-INF/classes/ejb/ejb31/war/TestServlet.class</span></code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code><span style="font-style: italic;">WEB-INF/classes/app.properties</span></code><br>
+<br>
+<br>
+<span style="font-weight: bold;">Deployment</span><br>
+<br>
+After
+deployment, the test servlet can be accessed at
+http://&lt;host&gt;:&lt;http-port&gt;/ejb-ejb31-war/<br>
+<br>
+<h2>Building, Deploying, and Running the Application</h2>
+Perform the following steps to build, deploy, and run the
+application:<br>
+<br>
+<ol>
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee6/ejb/ejb31-war</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application. </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server. </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> runs the test java client. </p>
+  <li>Use the target clean to undeploy the sample application and to
+remove the temporary directories like build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+  </li>
+</ol>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+<ol>
+<li> Refer to the <a href="../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 6 SDK.</li>
+<li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee6/ejb/</code> directory, select <code>ejb-war</code>, and click Open Project.</li>
+<li> In the Projects tab, right click <code>ejb-war</code> and select Run to build, deploy, and run the project.</li>
+</ol>
+
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the <a
+ href="../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2010 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
