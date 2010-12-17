@@ -55,7 +55,7 @@ public class SimpleEjbTest {
             EJBContainer c = EJBContainer.createEJBContainer();
             Context ic = c.getContext();
             System.out.println("Looking up EJB...");
-            SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/ejb-embedded/SimpleEjb");
+            SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/jar/SimpleEjb");
             System.out.println("Invoking EJB...");
             System.out.println("Inserting entities...");
             ejb.insert(5);
