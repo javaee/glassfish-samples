@@ -32,12 +32,12 @@ to create submenus.
 <!--    <ul>  -->
 <!-- menubar for the main site -->
       <ul id="main-menubar">
-        <li><a href="http://glassfish-theme.java.net" match="/|/sub.html">Overview</a></li>
-        <li><a href="http://java.net/downloads/glassfish-theme/">Downloads</a></li>
-		<li><a href="http://java.net/projects/glassfish-theme/watch">Watch</a></li>
+        <li><a href="http://glassfish-samples.java.net" match="/|/sub.html">Overview</a></li>
+        <li><a href="http://java.net/downloads/glassfish-samples/">Downloads</a></li>
+		<li><a href="http://java.net/projects/glassfish-samples/watch">Watch</a></li>
 		<li><a href="mailto:users@glassfish-samples.java.net">Send us feedback</a></li>
-        <li><a href="http://java.net/projects/glassfish-theme/lists/announce/archive">Announcements</a></li>
-        <li><a href="http://java.net/projects/glassfish-theme/lists/">Mailing lists</a></li>
+        <li><a href="http://java.net/projects/glassfish-samples/lists/announce/archive">Announcements</a></li>
+        <li><a href="http://java.net/projects/glassfish-samples/lists/">Mailing lists</a></li>
 		<li><a href="http://java.net/projects/glassfish-samples/sources"Source code - SVN</a></li>
         <li><a href="http://java.net/jira/browse/GLASSFISH_SAMPLES">Issues</a></li>
 		<!-- TODO
