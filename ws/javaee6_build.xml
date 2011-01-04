@@ -277,7 +277,7 @@
         <path id="maven-ant-tasks.classpath" path="${dist.dir}/maven-ant-tasks-2.0.9.jar" />
         <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant"
                  classpathref="maven-ant-tasks.classpath" />
-        <artifact:install-provider artifactId="wagon-svn" groupId="org.jvnet.wagon-svn" version="1.7">
+        <artifact:install-provider artifactId="wagon-svn" groupId="org.jvnet.wagon-svn" version="1.11">
         <artifact:remoteRepository id="java.net.maven2.repository" url="http://download.java.net/maven/2/" />
         <artifact:localRepository path="${maven.repo.local}"/>
         </artifact:install-provider>
@@ -289,7 +289,7 @@
                 <filter token="ARTIFACT_ID" value="${artifact}"/>
                 <filter token="VERSION" value="${release.version}"/>
                 <filter token="REPOSITORY_ID" value="java.net-maven2-repository"/>
-                <filter token="REPOSITORY_URL" value="svn:https://svn.java.net/svn/maven2-repository~svn/trunk/repository"/>
+                <filter token="REPOSITORY_URL" value="svn:https://svn.java.net/svn/maven2-repository~svn/trunk/repository/"/>
             </filterset>
         </copy>
     </target>
