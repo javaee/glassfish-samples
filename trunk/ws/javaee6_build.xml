@@ -289,7 +289,7 @@
                 <filter token="ARTIFACT_ID" value="${artifact}"/>
                 <filter token="VERSION" value="${release.version}"/>
                 <filter token="REPOSITORY_ID" value="java.net-maven2-repository"/>
-                <filter token="REPOSITORY_URL" value="java-net:/maven2-repository/trunk/repository/"/>
+                <filter token="REPOSITORY_URL" value="svn:https://svn.java.net/svn/maven2-repository~svn/trunk/repository"/>
             </filterset>
         </copy>
     </target>
