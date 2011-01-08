@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>Monitoring Web Services</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Monitoring Web Services</h1>
+<p>One can track operational statistics for web services, and can
+display
+messages sent and received by web services.</p>
+<p>To enable monitoring for a web service, use the ant task <span
+ style="font-style: italic;">enable-monitoring</span> in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample<span style="font-style: italic;"></span></p>
+<p>Within the ant task, set the monitoring level:</p>
+<ul>
+  <li> LOW: Monitors response time, throughput, total number of
+requests,
+faults, and monitoring of number of requests per second, average
+response time, and
+throughput attributes for the web service. </li>
+  <li> HIGH: In addition to the metrics monitored at LOW level, also
+monitors
+SOAP request and response messages. </li>
+  <li> OFF: Disables monitoring. </li>
+</ul>
+<p>You can also configure web service monitoring with the <a
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hmte?a=view">configure-webservice-management(1)</a>
+command.</p>
+<a name="gbsda"></a>
+<h2 class="sol">Viewing Web Service Statistics</h2>
+<p>Application Server 9.0 provides capabilities to track the
+operational statistics of a web service.</p>
+<p>View monitoring statistics using the ant task <span
+ style="font-style: italic;">'get-stats'</span> in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample.
+The statistics available are:</p>
+<ul>
+  <li> Response time in milliseconds on any successful or unsuccessful
+operation
+(maximum, minimum, and average).
+    <hr><b>Note &#8211; </b> Response time is the time the sever took to
+process the web
+service request,
+not including any network transmission time.
+    <hr> </li>
+  <li> Throughput </li>
+  <li> Total number of requests </li>
+  <li> Total number of faults, including URI of the endpoint where the
+fault originated </li>
+</ul>
+<h2>Transforming Messages with XSLT Filters</h2>
+<p>You can apply XSLT transformation rules to a web service end point.
+This enables
+fine grained control of web service requests and responses. You can
+apply multiple
+XSLT rules to a web service end point method, and you can configure the
+order in which
+you apply the transformations.</p>
+<p>You can apply <font color="#c00000"><b>transformation rule</b></font>
+to a SOAP request or response.</p>
+<p>Before revising an application to apply transformation rules,
+evaluate the pros
+and cons of doing so: Applying XSLT can lengthen processing time for a
+web service.
+In other cases, XSLT makes sense, for example if a web service is
+exposed to partners
+with different XML data exchange formats or different security
+requirements. In such
+cases, transformation rules can act as a proxy for the web service and
+be advantageous.</p>
+<p>To add a <font color="#c00000"><b>transformation rule</b></font> to
+apply to a web service operation use the ant task <span
+ style="font-style: italic;">'add-transformation-rule'</span> in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample </p>
+<p>If you add multiple transformation rules for a web service endpoint,
+the transformation
+rules are applied in the order in which they are added. </p>
+<p>To remove a <font color="#c00000"><b>transformation rule</b></font>,
+use the ant task <span style="font-style: italic;">'delete-transformation-rule'</span>
+in the <a href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample.
+This removes the <font color="#c00000"><b>transformation
+rule</b></font> from the list and removes the corresponding XSLT file.<br>
+</p>
+<p>To list the <font color="#c00000"><b>transformation rules</b></font>,
+use the ant task 'list-transformation-rules' in the <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>
+sample.<br>
+</p>
+<p>Additionally, you can create, delete, and list transformation rules
+with the
+following <kbd>asadmin</kbd> commands:</p>
+<ul>
+  <li> <a
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hmug?a=view">create-transformation-rule(1)</a>
+  </li>
+  <li> <a
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hmvi?a=view">delete-transformation-rule(1)</a>
+  </li>
+  <li> <a
+ href="http://docs.sun.com/app/docs/doc/819-3662/6n5s9hn1m?a=view">list-transformation-rules(1)</a>
+  </li>
+</ul>
+<h2>Support for Web Services Monitoring</h2>
+<p>
+The samples build infrastructure provides the following ant targets to
+perform the above mentioned monitoring services.&nbsp; </p>
+<ul>
+  <li> enable-monitoring </li>
+  <li> get-monitoring-stats </li>
+  <li> add-request-transformation-rule </li>
+  <li> delete-request-transformation-rule </li>
+  <li> list-request-transformation-rules </li>
+</ul>
+<h2>Web Services Monitoring Example</h2>
+<p>
+This example is based on the sample application <a
+ href="../webservices/hello-jaxws/docs/index.html">hello-jaxws</a>.
+Make sure that the <code>hello-jaxws</code> sample builds and runs
+before working on this example.
+</p>
+<ul>
+  <li> copy <a href="./webservices-mgmt/web-services-mgmt.xml">web-services-mgmt.xml</a>
+and <a href="./webservices-mgmt/req.xsl">req.xsl</a> to <code>webservices/hello-jaxws</code>
+directory </li>
+  <li> cd to <code>webservices/hello-jaxws</code> directory </li>
+  <li> <code>ant -f web-services-mgmt.xml set-monitoring-level</code>
+to set the monitoring level to HIGH </li>
+  <li> <code>ant -f web-services-mgmt.xml get-stats</code> to view the
+monitoring statistics </li>
+  <li> <code>ant -f web-services-mgmt.xml add-transformation-rule</code>
+to add a transformation rule </li>
+  <li> <code>ant -f web-services-mgmt.xml delete-transformation-rule</code>
+to delete a transformation rule<code></code><br>
+  </li>
+  <li><code>ant -f web-services-mgmt.xml list-transformation-rules</code>
+to list transformation rules </li>
+  <li><code>ant undeploy</code>
+to undeploy hello-jaxws sample</li>
+</ul>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
