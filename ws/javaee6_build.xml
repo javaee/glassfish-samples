@@ -344,4 +344,57 @@
         </artifact:mvn>
     </target>
 
+
+    <!-- before this, update project version (both build.xml and pom.xml) from SNAPSHOT to RELEASE -->
+    <target name="release.maven" depends="initialize.maven" description="deploy release version to Maven staging repository">
+
+        <antcall target="create.pom.file" >
+           <param name="artifact" value="bp-project"/>
+           <param name="sample.name" value="BP Project"/>
+        </antcall>
+        <!-- sign and deploy the bp-project zip artifact -->
+        <artifact:mvn>
+            <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Durl=${maven-staging-repository-url}" />
+            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-DpomFile=${dist.dir}/pom-bp-project.xml" />
+            <arg value="-Dfile=${dist.dir}/${release.dirname}-bp-project.zip" />
+            <arg value="${mvn.https.proxy.host}" />
+            <arg value="${mvn.https.proxy.port}" />
+            <arg value="-Pgpg" />
+        </artifact:mvn>
+
+        <!-- sign and deploy the web-profile zip artifact -->
+        <antcall target="create.pom.file" >
+           <param name="artifact" value="web-profile"/>
+           <param name="sample.name" value="Web Profile"/>
+        </antcall>
+        <artifact:mvn>
+            <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Durl=${maven-staging-repository-url}" />
+            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-DpomFile=${dist.dir}/pom-web-profile.xml" />
+            <arg value="-Dfile=${dist.dir}/${release.dirname}-web-profile.zip" />
+            <arg value="${mvn.https.proxy.host}" />
+            <arg value="${mvn.https.proxy.port}" />
+            <arg value="-Pgpg" />
+        </artifact:mvn>
+
+        <!-- sign and deploy the classic-profile zip artifact -->
+        <antcall target="create.pom.file" >
+           <param name="artifact" value="classic-profile"/>
+           <param name="sample.name" value="Classic Profile"/>
+        </antcall>
+        <artifact:mvn>
+            <arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+            <arg value="-Durl=${maven-staging-repository-url}" />
+            <arg value="-DrepositoryId=${maven-staging-repository-id}" />
+            <arg value="-DpomFile=${dist.dir}/pom-classic-profile.xml" />
+            <arg value="-Dfile=${dist.dir}/${release.dirname}-classic-profile.zip" />
+            <arg value="${mvn.https.proxy.host}" />
+            <arg value="${mvn.https.proxy.port}" />
+            <arg value="-Pgpg" />
+        </artifact:mvn>
+    </target>
+
 </project>
