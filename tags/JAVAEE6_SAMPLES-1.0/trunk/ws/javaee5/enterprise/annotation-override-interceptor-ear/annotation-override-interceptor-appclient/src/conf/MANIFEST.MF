@@ -1,2 +1,0 @@
-Class-Path: annotation-override-interceptor-jar.jar
-Main-Class: enterprise.annotation_override_interceptor_appclient.StatelessSessionAppClient
