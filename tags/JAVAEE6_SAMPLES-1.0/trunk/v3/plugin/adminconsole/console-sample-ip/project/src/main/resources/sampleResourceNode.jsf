@@ -1,0 +1,6 @@
+<sun:treeNode
+	id="treeNode-1"
+        text="Sample Resource"
+        url="/sample/page/testPage.jsf?name=Sample%20Resource%20Page"
+        imageURL="/resource/sample/images/sample.png">
+</sun:treeNode>

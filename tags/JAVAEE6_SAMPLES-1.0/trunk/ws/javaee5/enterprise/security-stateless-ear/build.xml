@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<!-- Copyright 1997-2007 Sun Microsystems, Inc. All rights reserved.-->
+
+<project name="security-stateless-ear" default="all" basedir=".">
+
+    <property name="is.ear.module" value="true"/>
+
+    <path id="ear-components">
+        <filelist dir="./security-stateless-ejb" files="build.xml"/>
+        <filelist dir="./security-stateless-appclient" files="build.xml"/>
+    </path>
+
+    <import file="../../../bp-project/main.xml"/>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="ear"/>
+        <antcall target="deploy-v2"/>
+        <antcall target="client-jar"/>
+        <antcall target="create-file-user"/>
+        <antcall target="run"/>
+        <antcall target="delete-file-user"/>
+    </target>
+
+    <target name="create-file-user">
+        <antcall target="keygen-common">
+            <param name="app.user" value="javaee"/>
+            <param name="app.password" value="javaee"/>
+            <param name="app.groups" value="javaee"/>
+        </antcall>
+    </target>
+
+    <target name="delete-file-user">
+        <antcall target="keydel-common">
+            <param name="app.user" value="javaee"/>
+        </antcall>
+    </target>
+
+    <target name="run">
+        <antcall target="run-ant"/>
+        <antcall target="run-nb"/>
+    </target>
+
+    <target name="run-ant" unless="netbeans.home">
+        <subant target="run-app-client">
+            <fileset dir="security-stateless-appclient" includes="build.xml"/>
+        </subant>
+    </target>
+
+    <!--
+    This project assumes that the file-realm user exists before running
+    the sample.
+    One can use asadmin utility to create the file realm user and
+    provide the same when Netbeans IDE prompts for userid and password.
+    If this project is run outside of netbeans IDE, the sample provides
+    ant targets create-file-user and delete-file-user which are automatically
+    run as part of the main target.
+    These targets are not available in netbeans hence these targets
+    have to be executed outside of netbeans on command line.
+    -->
+    <target name="run-nb" if="netbeans.home">
+        <antcall target="init"/>
+        <antcall target="run-deploy"/>
+        <antcall target="run-display-browser"/>
+        <antcall target="run-ac"/>
+    </target>
+
+
+</project>

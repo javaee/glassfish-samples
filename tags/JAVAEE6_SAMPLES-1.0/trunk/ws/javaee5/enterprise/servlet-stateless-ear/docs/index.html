@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The Servlet-Stateless Session Bean Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Sun Java System Application Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Index</a></p>
+<h1>The Servlet-Stateless Session Bean Sample Application</h1>
+<p>
+This is a simple EJB 3.0 stateless session bean with a local
+business interface that is invoked from a servlet. This sample
+demonstrates the concept of dependency injection - one of the new
+features of Java EE 5.0.
+
+<h2>Business Interface</h2>
+<p>The stateless session bean has a local business interface
+with a single business method.
+
+<pre>
+package enterprise.servlet_stateless_ejb;
+
+public interface StatelessSession {
+    public String sayHello(String name);
+}
+</pre>
+
+  <p>
+The lack of any annotation here implies that the StatelessSession is a
+local interface. To be more explicit, the javax.ejb.Local annotation
+can be used.
+
+
+<h2>Stateless Session Bean Class</h2>
+<p>The bean implementation is:
+<pre>
+package enterprise.servlet_stateless_ejb;
+
+import javax.ejb.Stateless;
+
+@Stateless
+public class StatelessSessionBean
+    implements StatelessSession {
+
+    public String sayHello(String name) {
+        return "Hello, " + name + "!\n";
+    }
+</pre>
+
+<h2>Servlet class</h2>
+<p>
+The servlet presents a text box to the user where
+the user can type a name. When the user clicks the submit button, the
+servlet greets the user whose name was typed in the text box.
+Internally, the servlet invokes the sayHello method of the stateless
+session bean passing the user name as the argument. 
+
+<p> 
+The servlet declares an instance variable whose type
+is same as the business interface of the session bean. Traditionally,
+the servlet would have looked up the bean's home interface from the
+component's environment and then would have created an instance using
+the create method of the home interface. However, with Java EE 5.0, the
+servlet can just declare its dependency on the bean by just annotating
+the instance variable with the @EJB annotation. At runtime, when the
+servlet instance is created, the container injects (or provides) an
+instance of an object that implements the business interface. <br>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+</p>
+<p>Follow these instructions to build, deploy, and run
+this sample application. 
+</p>
+<ol>
+  <li> Setup your build environment and Configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee5/enterprise/servlet-stateless-ear</code></li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, Deploy and run the sample application using the target all<code></code></li>
+  <p><code><i>app_dir&gt;</i></code>ant
+all</p>
+  <li>The sample can be run by pointing your browser to the following
+URL: <a href="http://localhost:8080/servlet-stateless-war/servlet">http://localhost:8080/servlet-stateless-war/servlet</a>
+Or by calling ant run target<br>
+  </li>
+  <li>Use the targets "undeploy"&nbsp; and "clean"to undeploy the
+sample application and to
+remove the temporary directories like build and dist.
+    <p><code><i>app_dir&gt; </i>ant
+undeploy clean</code> </p>
+  </li>
+</ol>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>
+Follow these instructions to build, deploy, and run
+this sample application using NetBeans IDE.
+</p>
+<ol>
+  <li> Refer to  <a href="../../../docs/UserREADME.html"> common build instructions.</a>
+       for setting up NetBeans IDE and the application server with which the IDE will use.</li>
+  <li> In NetBeans IDE, select File->OpenProject and select 
+<code><i>samples_install_dir</i>/javaee5/enterprise/servlet-stateless-ear</code> as the project.</li>
+  <li> Right click on <code>servlet-stateless-ear</code> and select <code>Run Project</code> which will build, deploy and run the project. If configured properly, the IDE will open the browser with appropriate url. Sample output is given below. </li>
+  <b>NetBeans IDE output</b>
+  <pre>
+  All operations completed successfully
+  post-run-deploy:
+  run-deploy:
+  Browsing: http://localhost:8080/servlet-stateless-war/
+  run-display-browser:
+  run-ac:
+  run:
+  BUILD SUCCESSFUL (total time: 6 seconds)
+  </pre>
+  <b>Browser output</b>
+  <pre>
+  http://localhost:8080/servlet-stateless-war/
+
+  Servlet2Stateless:: Please enter your name
+
+  Name:
+  SubmitQuery
+  </pre>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to <a
+ href="../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+&nbsp;
+<p><!--- Do not modify the rest of the document --></p>
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 2006 <a href="http://sun.com/">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
