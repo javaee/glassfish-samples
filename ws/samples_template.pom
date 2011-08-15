@@ -46,7 +46,8 @@
     <artifactId>@ARTIFACT_ID@</artifactId>
     <version>@VERSION@</version>
     <packaging>zip</packaging>                                                                                
-    <name>JavaEE Samples @SAMPLE_NAME@</name>
+    <name>Java EE Samples @SAMPLE_NAME@</name>
+    <description>GlassFish Java EE Samples @SAMPLE_NAME@</description>    
 
     <developers>                                                                                              
         <developer>                                                                                           
