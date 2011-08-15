@@ -3,7 +3,7 @@
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2010-2011 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -41,14 +41,52 @@
 
 -->
 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.sun.javaee6.samples</groupId>
-  <artifactId>@ARTIFACT_ID@</artifactId>
-  <version>@VERSION@</version>
-  <distributionManagement>
-      <repository>
-          <id>@REPOSITORY_ID@</id>
-          <url>@REPOSITORY_URL@</url>
-      </repository>
-  </distributionManagement>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.glassfish.samples</groupId>
+    <artifactId>@ARTIFACT_ID@</artifactId>
+    <version>@VERSION@</version>
+    <packaging>zip</packaging>                                                                                
+    <name>JavaEE Samples @SAMPLE_NAME@</name>
+
+    <developers>                                                                                              
+        <developer>                                                                                           
+            <id>scatari</id>
+            <name>Sathyan Catari</name>
+            <url>http://blogs.oracle.com/sathyan</url>
+            <organization>Oracle Corporation</organization>                                                   
+            <roles>                                                                                           
+                <role>lead</role>                                                                             
+            </roles>                                                                                          
+        </developer>                                                                                          
+    </developers>                                                                                             
+
+    <url>http://glassfish-samples.java.net</url>
+    <organization>
+        <name>GlassFish Community</name>
+        <url>http://glassfish.org</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>CDDL + GPLv2 with classpath exception</name>
+            <url>https://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>jira</system>
+        <url>http://java.net/jira/browse/GLASSFISH_SAMPLES</url>
+    </issueManagement>
+    <mailingLists>
+        <mailingList>
+            <name>GlassFish Samples Developer</name>
+          <archive>dev@glassfish-samples.java.net</archive>
+        </mailingList>
+    </mailingLists>
+    <scm>
+        <connection>scm:svn:https://svn.java.net/svn/glassfish-samples~svn/trunk</connection>
+        <developerConnection>scm:svn:https://svn.java.net/svn/glassfish-samples~svn/trunk</developerConnection>
+        <url>http://java.net/projects/glassfish-samples/sources/svn/show</url>
+    </scm>
+
 </project>
