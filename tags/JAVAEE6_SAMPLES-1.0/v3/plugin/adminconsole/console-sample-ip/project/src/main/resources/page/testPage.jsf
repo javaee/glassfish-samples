@@ -1,0 +1,20 @@
+<!composition template="/templates/default.layout" guiTitle="TEST Sample Page Title">
+<!define name="content">
+<sun:form id="propertyForm">
+
+<sun:propertySheet id="propertySheet">
+    <sun:propertySheetSection id="propertySection">
+       <sun:property id="prop1"  labelAlign="left" noWrap="true" overlapLabel="false" label="Test Page Name:" >
+            <sun:staticText text="$pageSession{pageName}" >
+                <!beforeCreate
+                    getRequestValue(key="name" value=>$page{pageName});
+                />
+            </sun:staticText>
+        </sun:property>
+    </sun:propertySheetSection>
+</sun:propertySheet>
+<sun:hidden id="helpKey" value="" />
+
+</sun:form>
+</define>
+</composition>

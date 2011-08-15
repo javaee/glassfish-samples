@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>Sample Application Development</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Java EE 6 SDK</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Sample Applications Development Process<br>
+</h1>
+The process for checking out workspace, developing,
+testing, documenting, and checking in the sample application into
+glassfish-samples project is as follows: <br>
+<br>
+<ol>
+  <li>Get developer access to <a
+ href="https://glassfish-samples.java.net/">glassfish-samples</a>
+project
+by sending email to <a href="mailto:dev@glassfish-samples.java.net">dev@glassfish-samples.java.net</a>
+with your GlassFish user id. Once you are granted the developer access,
+you will be able to check out from and check in to the samples
+workspace.</li>
+  <li>Check out the glassfish-samples project of java.net with a Subversion client using the following command. Note: replace the last username with your own username.<br>
+    <code>svn checkout https://glassfish-samples.java.net/svn/glassfish-samples/trunk glassfish-samples --username username</code></li>
+  <li>There are separate directories for each version of Java EE. The
+samples for Java EE 6 are under the <code>javaee6</code> directory
+and the samples for Java EE 5 are under the <code>javaee5</code>
+directory.<br>
+  </li>
+  <li>All the samples follow blueprints <a
+ href="http://java.sun.com/blueprints/code/projectconventions.html">project
+conventions</a> for directory structure and <a
+ href="http://java.sun.com/blueprints/code/namingconventions.html">naming</a>.<br>
+  </li>
+  <li>The sample applications use the blue prints build infrastructure
+called <code>bp-project</code>, which is at the top level of samples
+directory so that it can be shared by many sample applications. The
+bp-project is part of blueprints java.net project on <a
+ href="https://conventions.dev.java.net/">conventions</a>.<br>
+  </li>
+  <li>It is important that each sample application is provided with
+appropriate documentation and test code. </li>
+  <li>Refer to the existing representative sample <code></code><code>hello-stateless-ejb</code>&nbsp;
+under the <code>javaee6</code> directory to understand the directory
+structure, build scripts, test code, documentation.<br>
+  </li>
+  <ul>
+    <li><code>hello-stateless-ejb</code> shows how to build an ejb
+module, provide test
+code using a java client<br>
+    </li>
+    <li>For better user experience, the number of ant targets to be
+executed by
+the developer need to be kept to a minimum. Basically, the default ant
+target should be able to build, deploy and run the sample. All of the
+representative samples do this by using the ant target 'all'.</li>
+    <li>To understand how the entire build infrastructure works and
+what are various
+targets, refer to <a href="../../bp-project/docs/DeveloperREADME.html">build
+infrastructure
+documentation</a>. <br>
+    </li>
+  </ul>
+  <li>For guidelines
+on documenting the sample, refer to the representative
+sample <code>hello-stateless-ejb</code>, which is documented using the
+    <a
+ href="http://wiki.glassfish.java.net/attach/JavaEE6Samples/index.html">sample
+application
+documentation
+template</a>.<br>
+  </li>
+  <li>Each sample application needs one or more test cases so that the
+sample applications go through some regular testing like glassfish to
+notice any regressions and for the purposes of promoting the samples
+bundle. Refer to the test directory of representative sample <code>hello-stateless-ejb</code>
+for information.<br>
+    <br>
+Refer to documentation on <a href="../../javaee5/docs/UnitTesting.html">developing
+unit
+tests</a> for detailed information. </li>
+  <li>For setup of database and usage of JDBC resources, refer to <a
+ href="../../javaee5/docs/JavaDB.html">Using Java DB with Sample
+applications.</a></li>
+  <li>Make sure that the sample works with Netbeans IDE.<br>
+  </li>
+  <li>Once the sample application development, testing and
+documentation is complete, get it reviewed by a domain expert or a
+colleague before checking it in.<br>
+  </li>
+</ol>
+<span style="font-weight: bold;"></span>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2010 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

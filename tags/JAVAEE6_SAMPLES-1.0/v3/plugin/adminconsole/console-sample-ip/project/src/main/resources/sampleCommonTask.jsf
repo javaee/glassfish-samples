@@ -1,0 +1,6 @@
+
+<sun:commonTask
+        text="Sample Application Page"
+        toolTip="Sample Application Page"
+        onClick="return admingui.woodstock.commonTaskHandler('treeForm:tree:applications:ejb', '#{request.contextPath}/sample/page/testPage.jsf?name=Sample%20Application%20Page');">
+</sun:commonTask>
