@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en"><head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>MailConnector Sample Application</title><style type="text/css">
+  body,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li {
+    font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+    font-size:10pt
+  }
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {
+    font-family:monaco,courier,"courier new";
+    font-size:10pt;color:#666
+  }
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {
+    font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+    font-size:8pt
+    }
+  p.copy {text-align: center}
+
+  table.grey1,tr.grey1,td.grey1{background:#f1f1f1}
+  th {
+    color:#ffffff;
+    font-family:geneva,helvetica,arial,"lucida sans",sans-serif;
+    font-size:12pt
+  }
+  td.insidehead {
+    font-weight:bold;
+    background:white;
+    text-align: left;
+  }
+  a{text-decoration:none}
+  a:visited{color:#96C}
+  a:hover {text-decoration:underline}
+  </style></head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<br><table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font color="#ffffff" size="-1"><b>Sun GlassFish Enterprise Server</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="../../../../docs/list.html">Samples Main Page<br>
+</a></p>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>MailConnector Resource Adapter and Sample Application</h1>
+<p>The MailConnector sample application demonstrates:
+</p>
+<ul>
+  <li>How to create a resource adapter (RA) according to the Java EE
+Connector Architecture 1.6 Specification by annotating the resource
+adapter artifacts </li>
+  <li>How to deploy such RAs to the Application Server. </li>
+  <li>How RAs interact with other Java EE application components.</li><li>How to use resouce adapter's (RA) outbound artifacts</li><li>How to use resource adapter's (RA) inbound artifacts</li><li>How
+to use WorkContext (eg: SecurityContext) features introduced in Java EE
+Connector Architecture 1.6 Specification to flow in contextual
+information from external systems (aka. EIS) to the application server
+(applications). </li>
+</ul>
+<p>
+This document uses the following variables:
+</p>
+<ul>
+  <li><code><i>install_dir</i></code> or <span style="font-style: italic;">GF_HOME</span> is the directory where the
+application server is installed. </li>
+  <li><code><i>app_dir</i></code> is the application base directory: <code><i>samples_install_dir</i>/javaee6/connectors/apps/mailconnector</code>.
+  </li>
+  <li><code><i>ear_dir</i></code> is the <code>ear</code> base
+directory: <code><i>samples_install_dir</i>/javaee6/connectors/apps/mailconnector</code>.
+  </li>
+  <li><i>appname</i> is the application name: mailconnector-ear. The
+resource adapter connector module is
+mailconnector. </li>
+  <li>The prebuilt EAR file is <code>mailconnector-ear.ear</code> </li>
+  <li>The prebuilt RAR file is <code>mailconnector.rar</code> </li>
+</ul>
+<h2>Overview</h2>
+<p>This sample application consists of: </p>
+<ul>
+  <li><a href="#ra">MailConnector Resource Adapter</a> </li>
+  <li><a href="#app">MailConnector application</a> that contains a
+message-driven bean (MDB) and a Web application. </li>
+</ul>
+<p>The MailConnector Resource Adapter enables the MDB to receive email
+messages that are delivered to a specific mailbox folder on a given
+mail server. It also provides connection factory objects that clients
+can use to obtain connection objects that allow them to synchronously
+query email servers for new messages on a given mailbox folder. </p>
+<p>The <code>onMessage()</code> method of the MDB uses the JavaMail
+API to send a reply acknowledging the receipt of the message, which
+verifies that the process is working. This code has been commented out
+to avoid sending undesired replies when you are testing with a busy
+mailbox. Instead, relevant information about the received message is
+dumped to the standard output and you can see it in the server logs.
+<a name="ra"></a></p>
+<h3>The MailConnector Resource Adapter&nbsp;</h3>
+<p>The components of the resource adapter are archived into a file
+named <code>mailconnector.rar</code> that contains Java classes and
+error message files</p>
+<ul>
+</ul>
+<p>Because this is a annotated .rar, it does not have connector
+descriptor file (ra.xml).
+It is also possible to have ra.xml along with annotated .rar</p>
+<h4>MailConnector RAR File</h4>
+<p>The <code>mailconnector.rar</code> file contains the Java
+interfaces, classes, error message and resource files that make up the
+resource adapter . You can modify the resource
+file, <code>LocalStrings.properties</code>, for localization.
+</p>
+<p>The source code for these components is in <code><i>app_dir</i>/mailconnector-ra/src/java/samples/connectors/mailconnector</code>,
+in the following sub-directories: </p>
+<ul>
+  <li><code>ra</code>: the base class of the MailConnector RA. </li>
+  <li><code>ra/inbound</code>: classes that implement the inbound part
+of the MailConnector. </li>
+  <li><code>ra/outbound</code>: classes implement the outbound part of
+the MailConnector. </li>
+  <li><code>api</code>: interfaces that MDBs associated with this RA
+are required to implement and the <code>Connection</code> and <code>ConnectionFactory</code>
+interfaces provided by the outbound resource adapter. </li>
+</ul>
+<h4>Annotated Resource-Adapter Artifacts</h4>
+<p>The following resource-adapter classes are annotated to represent
+various artifacts of the resource-adapter:<br>
+<br>
+<table border="1" cellpadding="5" cellspacing="0">
+  <tbody>
+    <tr align="center">
+      <td> Resource Adapter Class </td>
+      <td> Annotation used </td>
+    </tr>
+    <tr>
+      <td> <code>samples.connectors.mailconnector.ra.ResourceAdapterImpl</code>
+      </td>
+      <td> <code>@Connector</code> annotation to represent the
+resource-adapter.<br>
+      <code>@AuthenticationMechanism</code> annotation to provide the
+authentication mechanism requirement.<br>
+      <code>@SecurityPermission</code> annotation to provide security
+permission requirement. </td>
+    </tr>
+    <tr>
+      <td> <code>samples.connectors.mailconnector.ra.outbound.ManagedConnectionFactoryImpl</code>
+      </td>
+      <td> <code>@ConnectionDefinition</code> annotation to represent
+a connection definition with managed-connection-factory,
+connection-factory artifact details. </td>
+    </tr>
+    <tr>
+      <td> <code>samples.connectors.mailconnector.ra.inbound.ActivationSpecImpl</code>
+      </td>
+      <td> <code>@Activation</code> annotation to represent the
+activation-spec and the message-listener artifact details. </td>
+    </tr>
+    <tr>
+      <td> <code>All of annotated classes</code> </td>
+      <td> <code>@ConfigProperty</code> annotation to represent config
+properties of the Java Bean </td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<h4>The Polling Thread of the Inbound Connector</h4>
+<p>When the MailConnector resource adapter is deployed, it uses the
+Work Management facilities available to resource adapters to start a
+thread that monitors mailbox folders for new messages. When a new
+message arrives to a folder, the PollingThread instantiates a
+DeliveryThread that forwards the message to the appropriate
+message-driven bean. </p>
+<p>The information needed by the PollingThread to monitor a specific
+folder (username, password, server name, and folder name) is specified
+by the MDB assembler via the the activation config properties of the
+MDB deployment descriptor. When an MDB is deployed, the Application
+Server passes the MDB's activation config spec information to the
+MailConnector resource adapter, which in turn forwards it to the
+PollingThread. When the MDB is undeployed, the Application Server
+notifies the RA, and then the MailConnector RA notifies the
+PollingThread, so that it stops monitoring the the mail folder
+associated with the MDB being undeployed. When the RA is undeployed,
+the PollingThread is terminated.
+</p>
+<p>The PollingThread source code is located at <code><i>app_dir</i>/mailconnector-ra/src/java/samples/connectors/mailconnector/ra/inbound</code>
+<a name="app"></a></p>
+<h3>The MailConnector Application</h3>
+<p>The MailConnector application contains a message-driven bean that
+exercises the Inbound connector. The sample application also contains a
+Web application that enables the user to send email messages (any mail
+client can be used for this purpose), and it also allows the user to
+query for new messages on a given mailbox folder by means of a
+JSP/Servlet pair that uses the synchronous features of the
+MailConnector to perform this task. </p>
+<p>The source code for these components is in <code><i>ear_dir</i></code>
+in the following sub-directories: </p>
+<ul>
+  <li><code>mailconnector-ejb/src/conf</code> application deployment
+descriptor files. </li>
+  <li><code>mailconnector-ejb/src/java/samples/connectors/mailconnector/ejb/mdb</code>:
+contains source code for the MDB. The onMessage method of this MDB
+consumes email messages sent to the mailbox folder described in the
+activation config spec properties of the MDB deployment descriptor <code>ejb-jar.xml</code>.
+  </li>
+  <li><code>mailconnector-war/src/java</code>: contains the <code>SendMailServlet<code>
+and the <code>MailBrowserServlet<code> servlets. </code></code></code></code></li>
+  <li><code>mailconnector-war/web</code>: contains the main HTML page
+of the Web application and two JSP pages. The JSP pages enable users to
+send email messages to a given mailbox folder and query for new
+messages in a mail folder using the connection interfaces provided
+through the MailConnector resource adapter. </li>
+</ul>
+<h2>Mail Server</h2><ul><li>For this sample, a mock JavaMail implementation is used. &nbsp;(https://mock-javamail.dev.java.net/)</li><ul><li>the mock JavaMail implementation does not talk to any mail server, instead it simulates a mail server with in-memory mailbox.</li></ul><li>source code can be downloaded as follows :</li><ul><li>svn checkout https://mock-javamail.dev.java.net/svn/mock-javamail/trunk mock-javamail</li></ul><li>binary can be built as follows :</li><ul><li>mvn clean install</li></ul><li>mock-javamail binary (.jar) will be generated at&nbsp;<span style="font-style: italic; font-weight: bold;">target/mock-javamail-&lt;SNAPSHOT&gt;.jar</span></li><li>Copy the binary (.jar) to <span style="font-style: italic; font-weight: bold;">installDir/lib</span> directory and restart GlassFish</li></ul><h2>Configuration</h2>
+<p><b>Note</b>:The pre-built EAR file provided with this sample
+contains an MDB with generic property values that&nbsp;corresponds to the email folder of user <span style="font-style: italic;"><span style="font-weight: bold;">joe</span></span>. If you intend to change the user, rebuild the EAR file before deploying this application.&nbsp;
+</p>
+<p>Follow these steps:
+</p>
+<ol>
+  <li>The <code><i>ear_dir</i>/mailconnector-ejb/src/conf/ejb-jar.xml</code>
+file will have the following properties for the MDB:
+    <ul>
+      <li>serverName: localhost </li>
+      <li>userName: joe </li>
+      <li>password: joe </li>
+      <li>folderName: name of the mail folder associated with the MDB
+(Inbox by default) </li>
+      <li>protocol: must be "imap" </li>
+    </ul>
+  </li>
+  <li>If you wish, edit the file <code>mail.properties</code>,
+specifying
+the same property values as you did in the ejb-jar.xml
+file. These properties enable the MDB to send email
+messages.&nbsp; </li>
+</ol>
+<h2>Building, Deploying, and Running the Application</h2>
+<p> </p>
+<p>
+Perform the following steps to build, deploy, and run the
+application:<br>
+</p>
+<ol>
+  <li> Setup your build environment and configure the application
+server with which the build system has to work by following the <a href="../../../../../javaee5/docs/UserREADME.html"> common build
+instructions.</a></li>
+  <li><code><i>ear_dir</i></code> is the sample application base
+directory</li>
+  <li><code></code><code></code>Change directory to <code><i>ear_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.</li>
+  <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant
+all </code></p>
+  <li>It is possible to do the above separately by issuing separate
+commands as given below.</li>
+  <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant rar</code>
+compiles and packages the resource-adapter</p>
+  <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant ear</code>
+compiles and packages the ear</p>
+  <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant
+deploy</code> deploys the resource-adapter, creates necessary resources
+(javamail, connector), necessary users and credentials in GlassFish and deploys the .ear to application server </p>
+  <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant run</code>
+will launch the web application in the default browser </p>
+  <li>Use the target undeploy to undeploy the application, delete the
+resources (javamail, connector), deletes users and undeploy the resource-adapter
+    <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant
+undeploy</code> </p>
+  </li>
+  <li>Use the target <code>clean</code> to remove the temporary
+directories, such as <code>build</code> and <code>dist</code>.
+    <p><code><span style="font-style: italic;">ear_dir&gt; </span>ant
+clean</code><br></p></li></ol><p><span style="font-weight: bold;">Note</span> : Alternately, you can
+use Netbeans IDE to open the pre
+configured projects for mailconnector-ear and mailconnector-ra. Once
+they are opened, <br>
+    </p><ol><li>
+configure the mailconnector-ra's dependencies to use javax.mail.jar,
+javax.resource.jar, javax.security.auth.message.jar and common-util.jar from GlassFish installation. <br>
+<p>
+(<i>Right click</i> the mailconnector-ra project, select <i>Properties</i>
+&gt; <i>Java Sources Classpath</i> and resolve the dependencies to use
+the <i>javax.mail.jar, javax.resource.jar, javax.security.auth.message.jar and common-util.jar&nbsp;</i> in GlassFish
+Installation's <i>modules</i> directory)<br>
+</p>
+</li><li>
+build and deploy mailconnector-ra 
+</li><li>[In the command prompt] Change directory to <code><i>ear_dir</i></code><i> and <code>ant setup</code>
+    will create necessary connector resource, pool and javamail resource. Use <code>ant unsetup</code>
+    to delete these resources later.
+</i></li><li>
+<i>build, deploy, run mailconnector-ear
+</i></li></ol><ol>
+</ol>
+
+<h3>Exercising the Outbound Resource Adapter</h3>
+<p>You can test the outbound resource adapter by running the
+MailConnector application.&nbsp;</p><p>eg: http://localhost:8080/mailconnector-war</p><p>Use the menu to access the JSP pages that allow you to send email
+messages to a given email mailbox and also to query the same mailbox
+for new messages arrived. These JSPs use servlets to accomplish these
+tasks.</p><p>Querying the mailbox is accomplished using the outbound resource adapter features. </p>
+<h3>Exercising the Inbound Resource Adapter&nbsp;(SecurityContext)</h3><ul><li>Access the URL : http://localhost:8080/mailconnector-war</li><li>Click : Send an email message</li><ul><li>set the From field to <span style="font-style: italic;">tom@localhost</span></li></ul><ul><li>set the To field to <span style="font-style: italic;">joe@localhost</span></li></ul><ul><li>Edit the subject and message</li></ul><ul><li>Press send</li></ul><li>The message will be sent to <span style="font-style: italic;">joe's</span> mail box.&nbsp;</li><li>The deployed resource-adapter has a polling thread that will poll the user's (<span style="font-style: italic;">joe's</span>) mailbox periodically (every 30 seconds).</li><ul><li>It queries for any new messages. If new messages are found they will be scheduled for delivery.</li></ul><ul><li>Delivery is scheduled with the <span style="font-style: italic;">SecurityContext</span> ie., in the context of the sender's identity.</li></ul><ul><li>Resource Adapter will create and submit a <span style="font-style: italic;">SecurityContext</span>
+representing the sender's identity. For simplicity we have created the
+users and credentials in GlassFish's domain with credentials (password)
+same as username. List of users are <span style="font-style: italic;">tom, mike, leo, george</span>.&nbsp;</li><li>For every received message, resource-adapter will schedule a delivery of message to MDB by submitting a <span style="font-style: italic;">work</span> instance.&nbsp;</li><ul><li>The SecurityContext will be set with sender's id. The SecurityContext in this sample will create a&nbsp;<span style="font-style: italic;">PasswordValidationCallback</span> with sender's id and credentials(password)</li></ul><ul><li>If the sender's id is a configured user in GlassFish, <span style="font-style: italic;">context setup</span> in GlassFish will succeed ie., <span style="font-style: italic;">PasswordValidationCallback</span> will succeed and message will be delivered to MDB.</li><li>If the sender's id is not configured, <span style="font-style: italic;">context setup</span> in GlassFish will fail thereby not delivering the message to MDB.</li></ul><li>When the message is delivered to MDB, MDB will print the <span style="font-style: italic;">caller-principal</span> &nbsp;of the delivered message using MDBContext.getCallerPrincipal()</li></ul></ul><ul><li>The
+MDB logs the receipt of the message in the application server log file
+with entries similar to these:
+</li></ul>
+<div style="margin-left: 40px;"><pre>&lt;MDB&gt; In JavaMailMessageBean.JavaMailMessageBean()</pre><pre>&lt;MDB&gt; In JavaMailMessageBean.setMessageDrivenContext()</pre><pre>&lt;MDB&gt; In JavaMailMessageBean.ejbCreate()</pre><pre>[PT] scheduling a delivery FROM: joe::INBOX@localhost</pre><pre>[SC] Password validation callback succeded for user : tom</pre><pre>&lt;MDB&gt; ---- Got a message </pre><pre>&lt;MDB&gt; SUBJECT: What's up</pre><pre>&lt;MDB&gt; SENDER : tom@localhost</pre><pre>&lt;MDB&gt; getCallerPrincipal() : tom</pre></div><p>You can also check the server log file and verify that the RA has
+started PollingThread and that it has received the information
+corresponding to the deployed MDB. </p>
+<ul>
+  <li> The PollingThread logs are preceded by <code>[PT]</code> </li>
+  <li> The PollingThread helper class EndpointConsumer logs are
+preceded by <code>[EC]</code> </li>
+  <li> Resource adapter logs are preceded by <code>[RA]</code></li><li>SecurityContext created per message delivery related logs are preceded by <code>[SC]</code></li>
+  <li>The MDB logs are preceded by <code>[MDB]</code> </li>
+</ul>
+<br>
+After deploying the RA, you should see the following lines (along with
+other log lines from the application server):
+<pre>[PT] WorkManager started polling thread</pre>
+<p>After deploying the EAR file containing the MDB, if there are no
+problems opening the mail folder associated with the MDB, you should
+see log lines similar to the following (with the appropriate values):
+</p>
+<pre>[EC] Created EndpointConsumer for: username::foldername@mailserver<br><br></pre>By
+default, INFO and above log level related messages are printed. You can
+set FINEST logging for the sample by executing the following command.<br><pre>GF_HOME/bin/asadmin set-log-level --log-level FINEST samples.connectors.mailconnector.ra</pre><pre><br></pre>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>This sample application is not supported on Netbeans.</p>
+
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to <a href="../../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>.
+</p>
+<br>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright © 2009 <a href="http://sun.com">Sun
+Microsystems, Inc.</a>
+All rights reserved. </p>
+<!--  end copyright  -->
+</body></html>
