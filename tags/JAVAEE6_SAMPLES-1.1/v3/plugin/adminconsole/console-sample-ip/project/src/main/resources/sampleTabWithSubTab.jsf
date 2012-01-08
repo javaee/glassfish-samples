@@ -1,0 +1,7 @@
+
+<sun:tab id="sampleTabWithSubTab" immediate="true" text="Sample With SubTab">
+    <!command
+        setSessionAttribute(key="serverInstTabs" value="sampleTabWithSubTab");
+        gf.redirect(page="#{request.contextPath}/sample/page/tabPage.jsf?name=Sample%20Tab%20With%20SubTab");
+    />
+</sun:tab>
