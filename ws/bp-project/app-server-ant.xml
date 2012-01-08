@@ -496,15 +496,91 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     </exec>
   </target>
 
+  <target name="create-local-instance"
+    description="creates a local instance" depends="tools">
+     <exec executable="${asadmin}">
+        <arg line="create-local-instance"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+				<arg line="	--cluster ${cluster.name}" />
+        <arg line=" ${instance.name}" />
+    </exec>
+  </target>
+
+  <target name="delete-local-instance"
+    description="deletes the local instance" depends="tools">
+     <exec executable="${asadmin}">
+        <arg line="delete-local-instance"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --node ${javaee.server.name}-domain1"/>
+        <arg line=" ${instance.name}" />
+    </exec>
+  </target>
+
+  <target name="create-cluster"
+    description="creates the cluster" depends="tools">
+     <exec executable="${asadmin}">
+        <arg line="create-cluster"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" ${cluster.name}" />
+    </exec>
+  </target>
+
+  <target name="delete-cluster"
+    description="deletes the cluster" depends="tools">
+     <exec executable="${asadmin}">
+        <arg line="delete-cluster"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" ${cluster.name}" />
+    </exec>
+  </target>
+
+  <target name="start-cluster"
+    description="starts the cluster" depends="tools">
+     <exec executable="${asadmin}">
+        <arg line="start-cluster"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" ${cluster.name}" />
+    </exec>
+  </target>
+
+  <target name="stop-cluster"
+    description="stops the cluster" depends="tools">
+     <exec executable="${asadmin}">
+        <arg line="stop-cluster"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" ${cluster.name}" />
+    </exec>
+  </target>
+
   <target name="undeploy" depends="tools"
     description="undeploys the application">
     <echo message="Undeploying ${module.name}." />
+    <property name="deployment.target" value="domain"/>
     <exec executable="${asadmin}">
         <arg line="undeploy"/>
         <arg line=" --user ${javaee.server.username}" />
         <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
         <arg line=" --host ${javaee.server.name}" />
         <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" --target ${deployment.target}" />
         <arg line=" ${module.name} " />
     </exec> 
   </target>
@@ -524,6 +600,8 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
       </not>
     </condition>
     <property name="failonerror" value="true"/>
+    <property name="deployment.target" value="domain"/>
+    <property name="availabilityenabled" value="false"/>
     <exec executable="${asadmin}" failonerror="${failonerror}">
         <arg line=" deploy "/>
         <arg line=" --user ${javaee.server.username}" />
@@ -534,6 +612,8 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
         <arg line=" --force=true "/>
         <arg line=" --upload=true "/>
         <arg line=" --dbvendorname ${db.vendorname}"/>
+        <arg line=" --availabilityenabled=${availabilityenabled}" />
+        <arg line=" --target ${deployment.target}" />
         <arg line="${app.module}" />
     </exec>
     <antcall target="deploy-url-message"/>
@@ -550,6 +630,8 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
       </not>
     </condition>
     <property name="failonerror" value="true"/>
+    <property name="deployment.target" value="domain"/>
+    <property name="availabilityenabled" value="false"/>
     <exec executable="${asadmin}" failonerror="${failonerror}">
         <arg line=" deploy "/>
         <arg line=" --user ${javaee.server.username}" />
@@ -560,6 +642,8 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
         <arg line=" --force=true "/>
         <arg line=" --upload=true "/>
         <arg line=" --dbvendorname ${db.vendorname}"/>
+        <arg line=" --availabilityenabled=${availabilityenabled}" />
+        <arg line=" --target ${deployment.target}" />
         <arg line=" --property compatibility=v2"/>
         <arg line="${app.module}" />
     </exec>
