@@ -163,9 +163,11 @@
 
     <target name="if-can-not-launch" unless="default.browser">
         <property name="run.uri" value="${module.name}"/>
+        <property name="launch.url"
+            value="http://${javaee.server.name}:${javaee.server.port}/${run.uri}"/>
         <echo>
         To launch the application, open a Web browser and visit: 
-        http://${javaee.server.name}:${javaee.server.port}/${run.uri}
+        ${launch.url}
 
         To launch the browser automatically on non-windows and non-mac
         machines, make sure that you have specified valid browser for

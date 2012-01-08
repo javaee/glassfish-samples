@@ -41,14 +41,91 @@
 
 -->
 
-<!--
-	NOOP for 3.1 release. 
--->
+<project name="clusterjsp" default="all" basedir=".">
 
-<project name="clusterhajsp" default="noop" basedir=".">
+    <property name="cluster.name" value="cluster"/>
+    <property name="deployment.target" value="${cluster.name}"/>
+    <property name="availabilityenabled" value="true"/>
 
-  <target name="noop">
-	<echo message="Current release does not support building this sample."/>
-	<echo message="Please use the pre-built 'clusterjsp.ear' file available under ${basedir}"/>
-  </target>
+    <property name="is.ear.module" value="true" />
+    <property name="bp-project.dir" value="../../../bp-project"/>
+
+    <import file="${bp-project.dir}/main.xml"/>
+
+    <path id="ear-components">
+        <filelist dir="./clusterjsp-war" files="build.xml" />
+    </path>
+
+    <target name="-pre-setup">
+        <antcall target="create-cluster"/>
+        <antcall target="create-local-instance">
+            <param name="instance.name" value="instance1"/>
+        </antcall>
+        <antcall target="create-local-instance">
+            <param name="instance.name" value="instance2"/>
+        </antcall>
+        <antcall target="start-cluster" />
+    </target>
+
+    <target name="setup">
+        <antcall target="start-domain"/>
+        <antcall target="-pre-setup"/>
+    </target>
+
+    <target name="-post-unsetup">
+        <antcall target="stop-cluster"/>
+        <antcall target="delete-local-instance">
+            <param name="instance.name" value="instance1"/>
+        </antcall>
+        <antcall target="delete-local-instance">
+            <param name="instance.name" value="instance2"/>
+        </antcall>
+        <antcall target="delete-cluster" />
+    </target>
+
+    <target name="unsetup">
+        <antcall target="-post-unsetup"/>
+        <antcall target="stop-domain"/>
+    </target>
+
+    <macrodef name="asadmin-get">
+        <attribute name="pattern"/>
+        <attribute name="result"/>
+        <sequential>
+            <exec executable="${asadmin}" output="asadmin-get-output">
+                <arg line="get"/>
+                <arg line=" --user ${javaee.server.username}" />
+                <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+                <arg line=" --host ${javaee.server.name}" />
+                <arg line=" --port ${javaee.adminserver.port}" />
+                <arg line=" @{pattern}" />
+            </exec>
+            <replaceregexp file="asadmin-get-output"
+                   match="(.*)=(.*)"
+                   replace="@{result}=\2"
+                   byline="true" />
+            <loadproperties srcfile="asadmin-get-output"/>
+            <delete file="asadmin-get-output"/>
+        </sequential>
+    </macrodef>
+
+    <target name="-pre-deploy">
+        <asadmin-get result="http-port-1"
+            pattern="instance1.system-property.HTTP_LISTENER_PORT.value"/>
+        <property name="launch.url-1"
+            value="http://${javaee.server.name}:${http-port-1}/${run.uri}"/>
+        <asadmin-get result="http-port-2"
+            pattern="instance2.system-property.HTTP_LISTENER_PORT.value" />
+        <property name="launch.url-2"
+            value="http://${javaee.server.name}:${http-port-2}/${run.uri}"/>
+        <property name="launch.url" 
+            value="${launch.url-1} or ${launch.url-2}" />
+        <property name="app.url" 
+            value="${launch.url-1} and ${launch.url-2}" />
+    </target>
+
+    <target name="all" unless="netbeans.home">
+        <antcall target="run"/>
+    </target>
+
 </project>
