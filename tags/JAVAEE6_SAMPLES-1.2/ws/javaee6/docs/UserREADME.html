@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010-2011 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>Common Build Instructions for Sample Applications</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Java EE 6 SDK</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Common Build Instructions for Sample Applications</h1>
+<p>The sample applications depend on the following software:</p>
+<ul>
+<li>Java SE Development Kit (JDK) version 1.6.0_16.</li>
+<li>The Java Blueprints build system included in the Java&nbsp;EE SDK, 
+which in turn depends on Apache Ant version 1.7.1.</li>
+<li>The Java&nbsp;DB database included in the Java&nbsp;EE SDK.</li>
+</ul>
+
+<p>Due to these dependencies, you must perform some one-time setup tasks 
+before building and running the individual samples.</p>
+
+<h3>One-Time Setup Tasks</h3>
+<p><b>Note:</b> In the following instructions, <code><i>&lt;javee.home&gt;</i></code> refers to the directory where the Java&nbsp;EE SDK is installed; for example, <code>C:\glassfish3</code>.</p>
+<ol><li><b>Download and install JDK version 1.6.0_16, if necessary.</b>
+<p>If JDK version 1.6.0_16 is not already on your system, you must 
+download and install it. The download is available at the 
+<a href="http://java.sun.com/javase/downloads/index.jsp">Java SE Downloads</a> 
+page.</li>
+<li><b>Download and install Apache Ant version 1.7.1, if necessary.</b>
+<p>If Apache Ant version 1.7.1 is not already installed on your system, you 
+can download and install it as an add-on using the Update Tool utility 
+included in the Java&nbsp;EE SDK. For instructions about using Update Tool, 
+see <a href="http://docs.sun.com/doc/820-7692/ghapp">Extending Enterprise
+Server</a> in <i>Sun GlassFish Enterprise Server v3 Administration 
+Guide</i>.</li>
+<li><b>Configure the Java Blueprints build system.</b>
+<p>The configuration file for the Java Blueprints build system used by the samples is:
+<p><code><i>&lt;javee.home&gt;</i>/samples/bp-project/build.properties</code>.
+<p>Edit the properties in this file to reflect your installation:
+<p><table border="1" cellpadding="5" cellspacing="0" width="100%">
+<tbody><tr>
+	<th nowrap="1">Property Name</th>
+	<th width="100%">Description</th>
+	<th nowrap="1">Examples</th>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>javaee.home</code></td>
+	<td valign="top">The directory where the Java EE 6 SDK/application 
+	server is installed.</td>
+	<td nowrap="1" valign="top"><code>C:\glassfish3</code></td>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>javaee.server.name</code></td>
+	<td valign="top">Host name of system where Java EE 6 SDK/application 
+	server is installed.</td>
+	<td nowrap="1" valign="top"><code>localhost</code></td>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>javaee.server.port</code></td>
+	<td valign="top">The port number of the application server.</td>
+	<td nowrap="1" valign="top"><code>8080</code></td>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>javaee.server.username</code></td>
+	<td valign="top">The administrator username specified for the 
+	application server. If no username is specified, use the value 
+	<code>anonymous</code>.</td>
+	<td nowrap="1" valign="top"><code>admin</code></td>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>javaee.server.passwordfile</code></td>
+	<td valign="top">The path to a file containing the admin password 
+	for the Java EE 6 SDK. The password file needs to be in the following 
+	format:
+	<p><code>AS_ADMIN_PASSWORD=<i>&lt;admin-password&gt;</i></code>
+	<p>Replace <i>&lt;admin-password&gt;</i> with the admin password of 
+	the application server. For <code>anonymous</code> user the password 
+	should be blank:
+	<p><code>AS_ADMIN_PASSWORD=""</code></td>
+	<td nowrap="1" valign="top"><code>C:\glassfish3\glassfish\samples\<br>
+	&nbsp;&nbsp;bp-project\passwordfile</code></td>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>javaee.adminserver.port</code></td>
+	<td valign="top">The port number for admin server.</td>
+	<td nowrap="1" valign="top"><code>4848</code></td>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>proxy.host</code></td>
+	<td valign="top">The host name of your HTTP proxy server, if the 
+	system running Java EE 6 SDK is behind a firewall. Leave blank 
+	otherwise.</td>
+	<td nowrap="1" valign="top"><code>myproxy.mydomain</code></td>
+</tr><tr>
+	<td nowrap="1" valign="top"><code>proxy.port</code></td>
+	<td valign="top">The port number of your HTTP proxy server, if the 
+	server running Java EE 6 SDK is behind a firewall. Leave blank 
+	otherwise.</td>
+	<td nowrap="1" valign="top"><code>9090</code></td>
+</tr>
+</tbody>
+</table>
+<br/>
+If you are not running the samples under Mac OS X or Windows, you will need to define the property 'default.browser' in the build.properties file.
+</li>
+<li><b>Configure the built-in Java&nbsp;DB database.</b>
+<p>See <a href="JavaDB.html">Using Java DB with Sample applications</a>
+for information on configuring the built-in Java DB database and
+corresponding JDBC resources.</li>
+</ol>
+
+<h3>Building and Running a Sample Application</h3>
+
+<p>After performing the one-time setup tasks, you can build and run a 
+sample application as follows:</p>
+
+<ol><li>Add the JDK 1.6.0_16 home and bin directories to your PATH 
+environment variable. For example:
+<p><code>set PATH=C:\Program Files\Java\jdk1.6.0_16;%PATH%<br>
+set PATH=C:\Program Files\Java\jdk1.6.0_16\bin;%PATH%</code></li>
+<li>Add the Ant 1.7.1 home and bin directories to your PATH environment 
+variable. For example:
+<p><code>set PATH=C:\glassfish3\ant;%PATH%<br>
+set PATH=C:\glassfish3\ant\bin;%PATH%</code></li>
+</li>
+<li>Navigate to the <code><i>&lt;javee.home&gt;</i>\bin</code> directory 
+and then use the <code>asadmin</code> utility to start the application server 
+and the Java&nbsp;DB database:
+<p><code>asadmin start-domain<br>
+asaadmin start-database</code></li>
+<li>Follow the instructions for the specific sample to build and run it. 
+Note that many of the samples use the following common Ant build targets:
+<p><ul>
+<li><b>all</b>: compiles, packages the archive, deploys the application and run the sample</li>
+<li><b>compile</b>: compiles the sample application</li>
+<li><b>package</b>: packages the archive</li>
+<li><b>default</b>: compiles, packages the archive</li>
+<li><b>run</b>: runs the sample application </li>
+<li><b>clean</b>: undeploys the application, removes the generated directories like build and dist</li>
+</ul></li>
+</ol>
+
+<h3>Sample Applications as NetBeans 6.8 Projects</h3>
+
+<p>You can open the sample applications as projects in the NetBeans 6.8 IDE. 
+To do so, follow these steps after downloading and installing 
+NetBeans&nbsp;6.8 from the 
+<a href="http://www.netbeans.org/downloads/index.html">NetBeans Download</a> 
+page:</p>
+<ol>
+<li>Set JDK 1.6.0_16 as the default Java platform by changing the 
+<code>netbeans_jdkhome</code> property in the 
+<code><i>&lt;netbeans.home&gt;</i>\etc\netbeans.conf</code> file.</li>
+<li>Configure the browser that the NetBeans IDE will use by
+selecting Tools-&gt;Options-&gt;General-&gt;WebBrowser.</li>
+<li>Configure the GlassFish v3 server to use JDK 1.6.0_16 by selecting 
+Tools-&gt;Servers and then clicking the Java tab for GlassFish v3 Domain.</li>
+<li>Install the GlassFish v3 Enabler plugin from the Tools-&gt;Plugin 
+window's Available Plugins tab. After installation, restart NetBeans.</li>
+<li>Start the GlassFish server:
+<p><ol>
+<li>Choose Windows-&gt;Services.</li>
+<li>Expand the Servers group.</li>
+<li>Right-click the GlassFish v3 domain and choose Start from the context menu.</li>
+</ol></li>
+<li>Open one of the sample applications:
+<p><ol>
+<li>Choose File-&gt;Open Project.</li>
+<li>Navigate to the <code><i>&lt;javaee.home&gt;</i>\glassfish\samples\javaee6</code> directory and then to the appropriate sample project.</li>
+<li>Select the sample project.</li>
+<li>After NetBeans scans the project, select "Open Required Projects" if projects appear in the box below the option, and then click Open Project.</li> 
+</ol></li>
+<li>Check the sample's docs/index.html file for any special prerequisites or build instructions.</li>
+<li>Right-click the sample project and execute one of the Ant targets; for example, <code>Run</code>.</li>
+</ol>
+<p><b>Note</b>: It is possible that the sample may not work correctly
+because of NetBeans caching. In that case, perform the following steps:
+</p>
+<ol>
+<li>Close NetBeans IDE and remove the .netbeans directory from
+your home directory just to make sure nothing is cached. You may want
+to rename instead of deleting.
+<li>Start NetBeans IDE and GlassFish Server.
+<li>Open the specific sample project. Select the Open
+Required Projects option to avoid a File Not Found
+exception.
+<li>Run the create-file-user command using ant, if required.
+<li>Right-click the main sample project and select Run.
+</ol>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2011 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

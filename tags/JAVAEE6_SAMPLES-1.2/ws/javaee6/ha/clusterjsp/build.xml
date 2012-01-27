@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<project name="clusterjsp" default="all" basedir=".">
+
+    <property name="cluster.name" value="cluster"/>
+    <property name="deployment.target" value="${cluster.name}"/>
+    <property name="availabilityenabled" value="true"/>
+
+    <property name="is.ear.module" value="true" />
+    <property name="bp-project.dir" value="../../../bp-project"/>
+
+    <import file="${bp-project.dir}/main.xml"/>
+
+    <path id="ear-components">
+        <filelist dir="./clusterjsp-war" files="build.xml" />
+    </path>
+
+    <target name="setup">
+        <antcall target="create-cluster"/>
+        <antcall target="create-local-instance">
+            <param name="instance.name" value="instance1"/>
+        </antcall>
+        <antcall target="create-local-instance">
+            <param name="instance.name" value="instance2"/>
+        </antcall>
+        <antcall target="start-cluster" />
+    </target>
+
+    <target name="unsetup">
+        <antcall target="stop-cluster"/>
+        <antcall target="delete-local-instance">
+            <param name="instance.name" value="instance1"/>
+        </antcall>
+        <antcall target="delete-local-instance">
+            <param name="instance.name" value="instance2"/>
+        </antcall>
+        <antcall target="delete-cluster" />
+    </target>
+
+    <target name="stop-instance1">
+				<antcall target="stop-instance">
+		          <param name="instance.name" value="instance1"/>
+		    </antcall>
+    </target>
+
+    <macrodef name="asadmin-get">
+        <attribute name="pattern"/>
+        <attribute name="result"/>
+        <sequential>
+            <exec executable="${asadmin}" output="asadmin-get-output">
+                <arg line="get"/>
+                <arg line=" --user ${javaee.server.username}" />
+                <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+                <arg line=" --host ${javaee.server.name}" />
+                <arg line=" --port ${javaee.adminserver.port}" />
+                <arg line=" @{pattern}" />
+            </exec>
+            <replaceregexp file="asadmin-get-output"
+                   match="(.*)=(.*)"
+                   replace="@{result}=\2"
+                   byline="true" />
+            <loadproperties srcfile="asadmin-get-output"/>
+            <delete file="asadmin-get-output"/>
+        </sequential>
+    </macrodef>
+
+    <target name="-pre-deploy">
+        <asadmin-get result="http-port-1"
+            pattern="instance1.system-property.HTTP_LISTENER_PORT.value"/>
+        <property name="launch.url-1"
+            value="http://${javaee.server.name}:${http-port-1}/${run.uri}"/>
+        <asadmin-get result="http-port-2"
+            pattern="instance2.system-property.HTTP_LISTENER_PORT.value" />
+        <property name="launch.url-2"
+            value="http://${javaee.server.name}:${http-port-2}/${run.uri}"/>
+        <property name="launch.url" 
+            value="${launch.url-1} or ${launch.url-2}" />
+        <property name="app.url" 
+            value="${launch.url-1} and ${launch.url-2}" />
+    </target>
+
+    <target name="all" unless="netbeans.home">
+				<antcall target="setup"/>
+				<antcall target="default"/>
+        <antcall target="deploy"/>
+    </target>
+
+</project>

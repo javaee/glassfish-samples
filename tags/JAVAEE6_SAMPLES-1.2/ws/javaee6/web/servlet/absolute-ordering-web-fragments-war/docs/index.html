@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The absolute-ordering-web-fragements-war Sample Application</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Java EE 6 SDK</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../../docs/list.html">Samples Main Page<br>
+</a></p>
+<h1>The Servlet 3.0 Absolute Ordering Web Fragments Sample Application</h1>
+This is a simple Servlet 3.0 application using web fragments with absolute ordering.<br>
+<br>
+<b>Servlet</b><br>
+<br>
+The servlet reads the initial parameter, a request attribute and a
+context attribute and provides the result.
+<blockquote><br>
+  <code>@WebServlet("/")<br>
+public class TestServlet extends HttpServlet {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void service(HttpServletRequest
+req, HttpServletResponse res) throws IOException, ServletException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String message = "filterMessage=" + req.getAttribute("filterMessage");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res.getWriter().println(message);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}</code><br>
+</blockquote>
+<p><code>@javax.servlet.annotation.WebServlet</code> is an annotation
+specifying
+the metadata for given servlet.
+In this case, it specifies the url pattern. <b>Note</b>:You
+need to extend <code>javax.servlet.http.HttpServlet</code>. </p>
+<b>Web Fragments</b><br>
+<p>
+In this sample, there are three web fragment jar. Each jar has a filter.
+The information of web fragments are summarized in the following table:
+<table border="1">
+  <tr><th>jar name<th>web-fragment.xml<th>filter class<th>@WebFilter<th>filter action
+  <tr><td>webfragment1.jar<td>&nbsp;<td>Wf1TestFilter.java<td>present<td>append "1" to request attribute "filterMessage"
+  <tr><td>webfragment2.jar<td>with name A and meta-data for filters<td>Wf2TestFilter.java<td>no<td>append "2" to request attribute "filterMessage"
+  <tr><td>webfragment3.jar<td>with name B<td>Wf3TestFilter.java<td>present<td>append "3" to request attribute "filterMessage"
+</table>
+<p>
+The source codes of filters are similar.
+For instance, Wf1TestFilter.java is as follows:
+<blockquote><code><br>
+@WebFilter(urlPatterns={"/"}, dispatcherTypes= { DispatcherType.REQUEST })<br>
+public class Wf1TestFilter implements Filter {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void init(FilterConfig filterConfig)
+throws ServletException {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void doFilter(ServletRequest req,
+ServletResponse res, FilterChain chain) throws IOException,
+ServletException {<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String filterMessage = (String)req.getAttribute("filterMessage");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (filterMessage == null) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filterMessage = "";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filterMessage += "1";<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;req.setAttribute("filterMessage", filterMessage);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chain.doFilter(req, res);<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void destroy() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+  </code></blockquote>
+<p><code>javax.servlet.annotation.WebFilter</code> is an annotation
+specifying the
+meta-data for given filter.
+In this case, it specifies the url pattern and dispatcherTypes. <b>Note</b>:You
+need to extend <code>javax.servlet.Filter</code>.
+<p>
+<b>Deployment Descriptor</b><br>
+<br>
+The deployment descriptor has information specifying the ordering of web fragment being processed as follows:
+<blockquote><code>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;absolute-ordering&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;A&lt;name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;others/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;B&lt;name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;absolute-ordering&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/web-app&gt;
+<br></code></blockquote>
+<p>
+With this absolute ordering, one will process the web fragment jars in the following order: webfragment2.jar, webfragment1.jar, webfragment3.jar.
+<p>
+<b>Sun GlassFish Enterprise Server Specific Deployment Configuration<br>
+<br>
+</b>There is no need to define any Sun GlassFish Enterprise
+Server-specific
+deployment descriptor (<code>sun-web.xml</code>) for this
+example.
+<br>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>
+</p>
+<p>Following are the instructions for building, deploying, and running
+this sample application. <br>
+<br>
+</p>
+<ol>
+  <li> Set up your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee6/web/servlet/absolute-ordering-web-fragments-war</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target:<code></code></li>
+  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can replace the <code>ant
+all</code> command with the
+following set of
+commands:<br>
+  </p>
+  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; app_dir&gt; </span>ant
+run</code> runs the test java client </p>
+  <li><span style="font-weight: bold;">Note</span>: You can run the
+test in one of the following ways:<br>
+    <br>
+    <ul>
+      <li>Use the browser to access
+http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/absolute_ordering_web_fragments_war
+        <br>
+The expected message in the browser is as follows: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code>filterMessage=213</code>
+      </li>
+      <li><code><span style="font-style: italic;">app_dir&gt; </span>ant
+run</code> </li>
+    </ul>
+  </li>
+  <li>Use the target <code>undeploy</code> to undeploy the application.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+undeploy</code> </p>
+  </li>
+  <li>Use the target <code>clean</code> to remove the temporary directories
+  like build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+  </li>
+</ol>
+
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+<ol>
+<li> Refer to the <a href="../../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 6 SDK.</li>
+<li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee6/web/servlet/</code> directory, select <code>absolute-ordering-web-fragments-war</code>, select Open Required Projects, and click Open Project.</li>
+<li> In the Projects tab, right click <code>absolute-ordering-web-fragments-war</code> and select Run to build, deploy, and run the project.</li>
+</ol>
+
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the <a
+ href="../../../../docs/UserTroubleShooting.html">
+troubleshooting document</a>. </p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2010 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

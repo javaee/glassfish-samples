@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>The Managed Beans Sample Application</title>
+  <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+  <style> 
+            .created {color: green}
+            .uniqueId {color: red}
+            .message {color: black}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Java EE 6 SDK</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!--- Do not modify anything above this line, except for the title tag --->
+<p><a href="../../../docs/list.html">Samples Main Page</a></p>
+<h1>The Managed Beans Application</h1>
+<p>This sample demonstrates the Java EE 6 feature of managed beans. JAX-RS root
+   resource classes are annotated with @ManagedBean, which means EE-related resources
+   may be injected into instances of those classes.
+</p>
+<p>If configured properly, page http://localhost:8080/managed-beans-war
+will be opened after
+invoking the
+<code>run</code> target. </p>
+<p>The mapping of the URI path space is presented in the following
+table:</p>
+<table border="1">
+  <tbody>
+    <tr>
+      <th>URI path</th>
+      <th>Resource class</th>
+      <th>HTTP method</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>/managed-beans-war</td>
+      <td>---</td>
+      <td>GET</td>
+      <td>index page</td>
+    </tr>
+    <tr>
+      <td>/managed-beans-war/app/managedbean/per-request</td>
+      <td>ManagedBeanPerRequestResource</td>
+      <td>GET</td>
+      <td>Returns injected value and increments it</td>
+    </tr>
+    <tr>
+      <td>/managed-beans-war/app/managedbean/singleton</td>
+      <td>ManagedBeanSingletonResource</td>
+      <td>GET</td>
+      <td>Returns injected value and increments it</td>
+    </tr>
+  </tbody>
+</table>
+<h2>Application Structure</h2>
+<p> The application is built and deployed as a WAR file.
+</p>
+<h3>Web Module</h3>
+<p> The web module consists of: </p>
+<ul>
+  <li>HTML index page </li>
+  <li>Two root resource classes that are managed beans and one stateless session bean. One root resource class is managed in the default JAX-RS life-cyle of per-request and the other is managed in the lifecycle of singleton (meaning on instance per web application).</li>
+</ul>
+The starting point of the application is the <code>index.html</code>
+page. The application consists only from two resources
+and main page provides links to them. Two EE-related artifacts are injected into each root resource class instance.
+            The first is a resource constant defined in the web.xml:
+
+<pre>
+&lt;env-entry&gt;
+    &lt;env-entry-name&gt;injectedResource&lt;/env-entry-name&gt;
+    &lt;env-entry-type&gt;java.lang.Integer&lt;/env-entry-type&gt;
+    &lt;env-entry-value&gt;<b>1</b>&lt;/env-entry-value&gt;
+&lt;/env-entry&gt;
+</pre>
+
+            The second is a stateless session EJB (see class enterprise.managedbeans.resources.StatelessSessionBean).
+
+The output is message provided by injected StatelessSessionBean instance concatenated with injected integer value from web.xml. You can easily test if singleton is really singleton by hitting that resource class more than once - integer value should increment by one every time you hit it. On the other hand, per-request resource will always return "message 1" (the value is incremented too, but same per-request instance wouldn't be hit twice).
+
+<h2>Building, Deploying, and Running the Application</h2>
+<p><!-- &lt;replacement for asant procedure&gt;<br> -->
+Perform the following steps to build, deploy, and run the
+application:<br>
+</p>
+<ol>
+  <li> Setup your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee6/rest/managed-beans-war</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+  <li>Build, deploy, and run the sample application using the <code>all</code>
+target.<code></code></li>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br>
+  </p>
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br>
+  </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p>
+  <li>Use the target clean to undeploy the sample application and to
+remove the temporary directories like build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p>
+  </li>
+</ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the
+application using NetBeans IDE:
+</p>
+<ol>
+  <li> Refer to the <a href="../../../docs/UserREADME.html"> common
+build instructions</a> for setting up NetBeans IDE and Java EE 6 SDK.</li>
+  <li> In the NetBeans IDE, choose File &#8594; Open Project
+(Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee6/rest/</code> directory, select <code>managed-beans-war</code>, and click Open Project.</li>
+  <li> In the Projects tab, right click <code>managed-beans-war</code> and
+select Run to build, deploy, and run the project.<br>
+If configured properly, the IDE opens the browser with the following
+URL: <code>http://localhost:8080/managed-beans-war</code>.
+    <br>
+Sample output is as follows:<br>
+    <b>NetBeans IDE output</b>
+    <pre>init:<br>deps-module-jar:<br>deps-ear-jar:<br>deps-jar:<br>library-inclusion-in-archive:<br>library-inclusion-in-manifest:<br>compile:<br>compile-jsps:<br>Starting GlassFish v3 Prelude<br>GlassFish v3 Prelude is running.<br>Incrementally deploying managed-beans-war<br>Completed incremental distribution of managed-beans-war<br>run-deploy:<br>Browsing: http://localhost:8080/managed-beans-war/<br>run-display-browser:<br>run:<br>BUILD SUCCESSFUL (total time: 11 seconds)</pre>
+    <b>Browser output</b>
+    <div style="border: 1px solid black; padding: 5px;">
+
+        <h1>ManagedBeans sample</h1>
+
+        <p><a href="./app/managedbean/per-request">Per-request Managed Bean</a></p>
+        <p><a href="./app/managedbean/singleton">Singleton Managed Bean</a></p>
+
+    </div>
+  </li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you run into a problem, refer the <a
+ href="../../../../docs/UserTroubleShooting.html"> troubleshooting
+document</a>.
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2010 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

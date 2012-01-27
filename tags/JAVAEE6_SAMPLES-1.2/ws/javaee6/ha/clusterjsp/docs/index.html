@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>The cluster JSP Sample Application</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Sathyan Catari">
+	<META NAME="CHANGED" CONTENT="20101209;16044000">
+	<META NAME="CHANGEDBY" CONTENT="Sathyan Catari">
+	<META NAME="CHANGEDBY" CONTENT="Sathyan Catari">
+	<STYLE TYPE="text/css">
+	body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+	{font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+	h1 {font-size:18pt}
+	h2 {font-size:14pt}
+	h3 {font-size:12pt}
+	code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+	li {padding-bottom: 8px}
+	p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+	p.copy {text-align: center}
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#594fbf" VLINK="#1005fb" BGCOLOR="#ffffff" DIR="LTR">
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=4 STYLE="page-break-before: always">
+	<TR>
+		<TD VALIGN=TOP BGCOLOR="#587993">
+			<P ALIGN=RIGHT><FONT COLOR="#ffffff"><FONT SIZE=2><B>Java EE 6
+			SDK</B></FONT></FONT>&nbsp; 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<H1>The Cluster JSP Sample Application.</H1>
+<P>The cluster JSP sample application demonstrates how a request to a
+JSP is shared in all of server instances in a GlassFish cluster.</P>
+<H2>Building and Deploying the Application</H2>
+Perform the following steps to build, and deploy the
+application:
+<ol> 
+  <li> Setup your build environment and configure the application
+server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html"> 
+common build instructions.</a></li> 
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee6/ha/clusterjsp</code>.</li> 
+  <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li> 
+  <li>Setup the server environment, build, and deploy the sample application using the <code>all</code> 
+target.<code></code></li> 
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+all</code><br> 
+  </p> 
+  <p>You can replace the <code>ant all</code> command with the
+following set of
+commands:<br> 
+  </p> 
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+setup</code> creates and starts a cluster with two instances </p>
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+default</code> compiles and packages the application </p> 
+  <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+deploy</code> deploys it to application server </p> 
+  <p><span style="font-weight: bold;">Note</span>: The <code>deploy</code> target will eventually display the URLs of the two instances as follow: </p>
+  <blockquote>
+    <code>[echo] Application Deployed at: http://localhost:<b>28082</b>/clusterjsp and http://localhost:<b>28083</b>/clusterjsp</code>
+  </blockquote>
+  <p>Remember the port numbers, for instance in this example <code>Instance1HTTPPort=<b>20802</b></code> and <code>Instance2HTTPPort=<b>28083</b></code></p>       
+  <li>Use the target <code>undeploy</code> to undeploy the application.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+undeploy</code> </p> 
+  </li> 
+  <li>Use the target <code>unsetup</code> to stop and delete the cluster and its two instances.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+unsetup</code> </p>
+  <li>Use the target <code>clean</code> to remove the temporary directories
+  like build and dist.
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
+clean</code> </p> 
+  </li> 
+</ol> 
+ 
+<H2>Running the Sample Application</H2>
+<P>The objective of this run is to demonstrate clustering and
+replication of session information across instances in a cluster. We
+achieve this by doing the following</P>
+<OL>
+	<LI>Access the clusterjsp application through instance1 by
+	launching a web browser and entering the URL
+	http://&lt;hostname&gt;:&lt;Instance1HTTPPort&gt;/clusterjsp</LI>
+	<LI>Add session data by entering the session attribute name and
+	value and clicking 'ADD SESSION DATA' button in the web page.</LI>
+	<LI>Stop instance1 using the <code>stop-instance1</code> target.</LI>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>ant stop-instance1</code><br></p>
+	<LI>Access the clusterjsp application through instance2 by
+	entering the URL http://&lt;hostname&gt;:&lt;Instance1HTTPPort&gt;/clusterjsp
+	on the same browser window opened in step 1.</LI>
+	<LI>Verify that the session data generated from the application
+	accessed through instance1 is automatically persisted and is visible
+	when the application is accessed through instance2 of the cluster.
+	You will be able to see the session attribute name and values
+	persisted from instance1.</LI>
+</OL>
+<P><BR><BR>
+</P>
+<P><B>Please see the image below for a sample output of running steps
+1 and 2 from above.</B></P>
+<P><IMG SRC="images/instance1.jpg" NAME="graphics1" ALIGN=LEFT WIDTH=905 HEIGHT=567 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P><B>Please see the image below for a sample output of running steps
+4 and 5 from above.</B></P>
+<P><IMG SRC="images/instance2.jpg" NAME="graphics2" ALIGN=LEFT WIDTH=905 HEIGHT=567 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="border-top: none; border-bottom: 1px solid #808080; border-left: none; border-right: none; padding-top: 0in; padding-bottom: 0.02in; padding-left: 0in; padding-right: 0in">
+<!--- Do not modify the rest of the document --><BR><BR>
+</P>
+<P CLASS="copy"><!-- start copyright -->Copyright © 1997-2010 Oracle
+and/or its affiliates. All rights reserved. 
+</P>
+<P><!-- end copyright --><BR><BR>
+</P>
+</BODY>
+</HTML>

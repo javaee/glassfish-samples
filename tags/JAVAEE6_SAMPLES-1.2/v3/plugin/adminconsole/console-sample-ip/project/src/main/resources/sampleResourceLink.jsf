@@ -1,0 +1,17 @@
+<sun:property>
+    <sun:hyperlink 
+	    toolTip="Sample Resource" 
+	    url="/sample/page/testPage.jsf?name=Sample%20Resource%20Page">
+        <sun:image url="/resource/sample/images/sample.png" />
+        <sun:staticText text="Sample Resource" />
+    </sun:hyperlink>
+</sun:property>
+
+<sun:property>
+    <sun:hyperlink 
+	    toolTip="Another" 
+	    url="/sample/page/testPage.jsf?name=Another">
+        <sun:image url="/resource/sample/images/sample.png" />
+        <sun:staticText text="Another" />
+    </sun:hyperlink>
+</sun:property>

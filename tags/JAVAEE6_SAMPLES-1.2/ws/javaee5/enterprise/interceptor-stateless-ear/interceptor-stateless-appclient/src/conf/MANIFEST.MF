@@ -1,0 +1,2 @@
+Class-Path: interceptor-stateless-jar.jar
+Main-Class: enterprise.interceptor_stateless_appclient.StatelessSessionAppClient
