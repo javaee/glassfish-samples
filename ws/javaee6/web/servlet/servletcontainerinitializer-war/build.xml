@@ -60,7 +60,7 @@
         <mkdir dir="./containerinitializerlibrary/build" />
         <javac srcdir="./containerinitializerlibrary/src"
                 destdir="./containerinitializerlibrary/build"
-                classpath="${javaee.home}/modules/javax.servlet.jar"
+                classpath="${javaee.home}/lib/javaee.jar"
                 debug="on"
                 failonerror="true"/>
         <jar destfile="${javaee.home}/lib/TestSharedLib1.jar">
