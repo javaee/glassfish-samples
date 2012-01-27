@@ -56,7 +56,7 @@
         <filelist dir="./clusterjsp-war" files="build.xml" />
     </path>
 
-    <target name="-pre-setup">
+    <target name="setup">
         <antcall target="create-cluster"/>
         <antcall target="create-local-instance">
             <param name="instance.name" value="instance1"/>
@@ -67,12 +67,7 @@
         <antcall target="start-cluster" />
     </target>
 
-    <target name="setup">
-        <antcall target="start-domain"/>
-        <antcall target="-pre-setup"/>
-    </target>
-
-    <target name="-post-unsetup">
+    <target name="unsetup">
         <antcall target="stop-cluster"/>
         <antcall target="delete-local-instance">
             <param name="instance.name" value="instance1"/>
@@ -83,9 +78,10 @@
         <antcall target="delete-cluster" />
     </target>
 
-    <target name="unsetup">
-        <antcall target="-post-unsetup"/>
-        <antcall target="stop-domain"/>
+    <target name="stop-instance1">
+				<antcall target="stop-instance">
+		          <param name="instance.name" value="instance1"/>
+		    </antcall>
     </target>
 
     <macrodef name="asadmin-get">
@@ -125,7 +121,9 @@
     </target>
 
     <target name="all" unless="netbeans.home">
-        <antcall target="run"/>
+				<antcall target="setup"/>
+				<antcall target="default"/>
+        <antcall target="deploy"/>
     </target>
 
 </project>
