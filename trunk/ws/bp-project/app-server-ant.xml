@@ -509,6 +509,18 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
     </exec>
   </target>
 
+  <target name="stop-instance"
+    description="stops an instance" depends="tools">
+     <exec executable="${asadmin}">
+        <arg line="stop-instance"/>
+        <arg line=" --user ${javaee.server.username}" />
+        <arg line=" --passwordfile '${javaee.server.passwordfile}'" />
+        <arg line=" --host ${javaee.server.name}" />
+        <arg line=" --port ${javaee.adminserver.port}" />
+        <arg line=" ${instance.name}" />
+    </exec>
+  </target>
+
   <target name="delete-local-instance"
     description="deletes the local instance" depends="tools">
      <exec executable="${asadmin}">
