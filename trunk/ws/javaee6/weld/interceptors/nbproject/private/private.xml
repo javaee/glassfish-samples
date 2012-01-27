@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/Users/arungup/code/workspaces/glassfish-samples/ws/javaee6/weld/interceptors/web/index.jsp</file>
+        <file>file:/Users/arungup/code/workspaces/glassfish-samples/ws/javaee6/weld/interceptors/src/java/logging/LoggingInterceptorSimple.java</file>
+        <file>file:/Users/arungup/code/workspaces/glassfish-samples/ws/javaee6/weld/interceptors/src/java/logging/ShoppingCart.java</file>
+        <file>file:/Users/arungup/code/workspaces/glassfish-samples/ws/javaee6/weld/interceptors/src/java/logging/LoggingInterceptor.java</file>
+        <file>file:/Users/arungup/code/workspaces/glassfish-samples/ws/javaee6/weld/interceptors/web/WEB-INF/beans.xml</file>
+        <file>file:/Users/arungup/code/workspaces/glassfish-samples/ws/javaee6/weld/interceptors/src/java/logging/ShoppingServlet.java</file>
+        <file>file:/Users/arungup/code/workspaces/glassfish-samples/ws/javaee6/weld/interceptors/src/java/logging/LoggingInterceptorDetail.java</file>
+    </open-files>
+</project-private>
