@@ -600,7 +600,7 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
       </not>
     </condition>
     <property name="failonerror" value="true"/>
-    <property name="deployment.target" value="domain"/>
+    <property name="deployment.target" value="server"/>
     <property name="availabilityenabled" value="false"/>
     <exec executable="${asadmin}" failonerror="${failonerror}">
         <arg line=" deploy "/>
@@ -630,7 +630,7 @@ AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}</echo>
       </not>
     </condition>
     <property name="failonerror" value="true"/>
-    <property name="deployment.target" value="domain"/>
+    <property name="deployment.target" value="server"/>
     <property name="availabilityenabled" value="false"/>
     <exec executable="${asadmin}" failonerror="${failonerror}">
         <arg line=" deploy "/>
