@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author arungup
  */
-@WebServlet(name = "ShoppingServlet", urlPatterns = {"/ShoppingServlet"})
+@WebServlet(name = "ShoppingServlet", urlPatterns = {"/"})
 public class ShoppingServlet extends HttpServlet {
     
     @Inject ShoppingCart cart;
