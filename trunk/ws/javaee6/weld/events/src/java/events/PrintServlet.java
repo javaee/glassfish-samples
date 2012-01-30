@@ -76,6 +76,7 @@ public class PrintServlet extends HttpServlet {
             out.println("<h1>Print service at " + request.getContextPath() + "</h1>");
             int[] pages = {1, 5, 10, 8, 20, 34 };
             for (int p : pages) {
+                out.println("Printing " + p + " page(s)<br>");
                 bean.print(p);
             }
             out.println();
