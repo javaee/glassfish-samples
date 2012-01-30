@@ -127,6 +127,7 @@ public void onPrint(@Observes @Default PrintEvent event) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Printing " + event.getPages() + " pages");<br>
 }<br>
 </code>
+<p>
 
 <h2>Building, Deploying, and Running the Application</h2>
 
@@ -160,6 +161,8 @@ deploy</code> deploys it to application server </p>
   <p><code><span style="font-style: italic;">app_dir&gt;&nbsp;</span></code>
 To run the sample, deploy the application using the instructions below
 and visit the URL <a href="http://localhost:8080/events">http://localhost:8080/events</a> </p>
+Look for log messages in the server log to indicate that events are produced and consumed.
+
   <li>Use the target clean to undeploy the sample application and to
 remove the temporary directories such as build and dist.
     <p><code><span style="font-style: italic;">app_dir&gt; </span>ant
