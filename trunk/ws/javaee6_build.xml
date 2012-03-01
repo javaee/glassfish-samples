@@ -277,7 +277,7 @@
 
     <target name="initialize.maven">
         <get
-           src="http://maven.glassfish.org/content/repositories/maven.central/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar"
+           src="http://repo1.maven.org/maven2/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar"
            dest="${dist.dir}/maven-ant-tasks-2.1.3.jar"
            verbose="true"
            usetimestamp="true"/>
