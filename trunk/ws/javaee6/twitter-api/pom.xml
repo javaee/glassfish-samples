@@ -15,6 +15,34 @@
     <packaging>jar</packaging>
 
     <name>twitter-api</name>
+    <description>A Java EE 6 sample application that exposes a Twitter API</description>
+    <url>http://java.net/projects/glassfish-samples/sources/svn/show/trunk/ws/javaee6/twitter-api </url>
+    <licenses>
+        <license>
+            <name>CDDL + GPLv2 with classpath exception</name>
+            <url>http://glassfish.java.net/nonav/public/CDDL+GPL_1_1.html</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses> 
+
+    <scm>
+      <connection>scm:svn:https://svn.java.net/svn/glassfish-samples~svn/trunk/ws/javaee6/twitter-api</connection>
+      <developerConnection>scm:svn:https://svn.java.net/svn/glassfish-samples~svn/trunk/ws/javaee6/twitter-api</developerConnection>
+      <url>https://svn.java.net/svn/glassfish-samples~svn/trunk/ws/javaee6/twitter-api</url>
+    </scm>
+    
+    <developers>
+        <developer>
+            <id>arungupta</id>
+            <name>Arun Gupta</name>
+            <url>https://blogs.oracle.com/arungupta/</url>
+            <organization>Oracle Corporation</organization>
+            <roles>
+                <role>lead</role>
+            </roles>
+        </developer>
+    </developers>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
