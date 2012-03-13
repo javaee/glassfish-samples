@@ -93,6 +93,7 @@ public class TwitterClient implements Serializable {
     
     long[] friends;
     long[] followers;
+    Tweet[] homeTimeline;
 
     public TwitterClient() {
         ClientConfig config = new DefaultClientConfig();
@@ -319,24 +320,55 @@ public class TwitterClient implements Serializable {
         return res;
     }
     
+    /**
+     * This method returns the first 800 or less stauses from the user home 
+     * timeline. <code>home/timeline</code> cannot return more than 800 statuses.
+     * 
+     * @return 
+     */
     public Tweet[] getHomeTimeline() {
-        WebResource webResource = client.resource(API_URI).path("/statuses/home_timeline.json");
-
         System.out.println("Getting timeline for " + screen_name);
-        webResource = webResource.queryParam("include_entities", "true")
-            .queryParam("include_rts", "true")
-            .queryParam("screen_name", screen_name)
-            .queryParam("count", "10");
 
-        // Add filters to the resource
-//        webResource.addFilter(new LoggingFilter());
-        webResource.addFilter(getOAuthFilter());
-
-        Tweet[] res = webResource.get(Tweet[].class);
+        long tweetCount = user.getStatuses_count();
+        int maxTweets = tweetCount > 800 ? 800: (int)tweetCount;
         
-        return res;
+        int totalLoops = maxTweets/200 + ((maxTweets % 200 == 0) ? 0 : 1);
+
+        List<Tweet> list = new ArrayList<Tweet>();
+        for (int i=0; i < totalLoops; i++) {
+            WebResource webResource = client.resource(API_URI).path("/statuses/home_timeline.json");
+            System.out.println("Getting " + (200*(i+1)) + " tweets");
+
+            webResource = webResource.queryParam("include_entities", "true")
+                .queryParam("include_rts", "true")
+                .queryParam("screen_name", screen_name)
+                .queryParam("count", "200");
+
+            webResource.addFilter(getOAuthFilter());
+            
+            list.addAll(Arrays.asList(webResource.get(Tweet[].class)));
+        }
+        return list.toArray(new Tweet[0]);
     }
 
+    /**
+     * Returns the list of statues on home timeline from <code>first</code> to 
+     * <code>pageSize</code>. The <code>statuses/home_timeline</code> can return 
+     * up to a maximum of 800 statuses. The statuses are fetched during the first access.
+     * A fresh fetch can be requested by sending "-1" for <code>first</code> parameter.
+     * 
+     * @param first Index of the first status
+     * @param pageSize Total number of statuses to be returned
+     * @return List of statuses
+     */
+    public Tweet[] getHomeTimeline(int first, int pageSize) {
+        if (first == -1 || homeTimeline == null) {
+            homeTimeline = getHomeTimeline();
+        }
+
+        return Arrays.copyOfRange(homeTimeline, first, first + pageSize);
+    }
+    
     private OAuthClientFilter getOAuthFilter() {
         OAuthParameters params = new OAuthParameters().
                 consumerKey(CONSUMER_KEY).
@@ -421,10 +453,6 @@ public class TwitterClient implements Serializable {
         return getFF(friends, first, pageSize);
     }
     
-//    public User[] getFriends() {
-//        return getFF("/friends/ids.json");
-//    }
-//    
     private User[] getFF(long[] ff, int first, int pageSize) {
         if (pageSize > 100) {
             System.out.println("Specified page size is \"" + pageSize + "\", defaulting to 100.");
@@ -468,7 +496,14 @@ public class TwitterClient implements Serializable {
         
         return response;
     }
+            
+    public User[] getFriends() {
+        return getFF("/friends/ids.json");
+    }
     
+    public User[] getFollowers() {
+        return getFF("/followers/ids.json");
+    }
     
     private User[] getFF(String resource) {
         
@@ -486,18 +521,6 @@ public class TwitterClient implements Serializable {
         
         System.out.println("Number of followers/friends: " + ff.getIds().length);
 
-        // Return the first 100 or less, whatever comes first
-//        StringBuilder ids = new StringBuilder();
-//        for (int i=0; ff.getIds().length<100 || i<100; i++) {
-////        for (int i=0; i<ff.getIds().length; i++) {
-//            if (ids.length() != 0) {
-//                ids.append(",");
-//            }
-//            ids.append(ff.getIds()[i]);
-//        }
-//        webResource2 = webResource2.queryParam("user_id", ids.toString());
-//        return webResource2.post(User[].class);
-        
         List<User> list = new ArrayList<User>();
         StringBuilder ids = new StringBuilder();
         int totalLoops = (ff.getIds().length % 100 == 0) ? ff.getIds().length/100 : ff.getIds().length/100 + 1;
@@ -516,24 +539,11 @@ public class TwitterClient implements Serializable {
                 }
                 ids.append(ff.getIds()[j]);
             }
-//            System.out.println("ids: " + ids.toString());
             wr2 = wr2.queryParam("user_id", ids.toString());
             list.addAll(Arrays.asList(wr2.get(User[].class)));
             ids.setLength(0);
         }
         return list.toArray(new User[0]);
-
-        // Get the response using POST
-//        StringBuilder ids = new StringBuilder();
-//        ids.append("\"user_id=");
-//        for (int i=0; i<ff.getIds().length; i++) {
-//            if (i != 0) {
-//                ids.append(",");
-//            }
-//            ids.append(ff.getIds()[i]);
-//        }
-//        ids.append("\"");
-//        return webResource2.post(User[].class, ids.toString());
     }
     
     public User[] getSuggestions() {
