@@ -51,8 +51,10 @@ import com.sun.jersey.oauth.signature.OAuthSecrets;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,8 +66,9 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Arun Gupta
  */
-@Model
-public class TwitterClient {
+@Named
+@SessionScoped
+public class TwitterClient implements Serializable {
 
     private static String CONSUMER_SECRET;
     private static String CONSUMER_KEY;
@@ -87,6 +90,9 @@ public class TwitterClient {
     
     Client client;
     User user;
+    
+    long[] friends;
+    long[] followers;
 
     public TwitterClient() {
         ClientConfig config = new DefaultClientConfig();
@@ -368,65 +374,99 @@ public class TwitterClient {
     /**
      * Returns the list of followers from <code>first</code> to <code>pageSize</code>.
      * The maximum permitted <code>pageSize</code> is 100 as this is restricted
-     * by the REST APIs of Twitter.
+     * by the REST APIs of Twitter. The followers are fetched during the first access.
+     * A fresh fetch can be requested by sending "-1" for <code>first</code> parameter.
      * 
      * @param first Index of the first follower
      * @param pageSize Total number of followers to be returned
      * @return List of followers
      */
     public User[] getFollowers(int first, int pageSize) {
-        return getFF("/followers/ids.json", first, pageSize);
+        if (first == -1 || followers == null) {
+            WebResource webResource = client.resource(API_URI).path("/followers/ids.json");
+
+            // Add filters to the resource
+//            webResource.addFilter(new LoggingFilter());
+            webResource.addFilter(getOAuthFilter());
+            followers = webResource.get(FriendsAndFollowers.class).getIds();
+            System.out.println("Initializing followers ...");
+        }
+        
+
+        return getFF(followers, first, pageSize);
     }
     
     /**
      * Returns the list of friends from <code>first</code> to <code>pageSize</code>.
      * The maximum permitted <code>pageSize</code> is 100 as this is restricted
-     * by the REST APIs of Twitter.
+     * by the REST APIs of Twitter. The friends are fetched during the first access.
+     * A fresh fetch can be requested by sending "-1" for <code>first</code> parameter.
      * 
      * @param first Index of the first friend
      * @param pageSize Total number of friends to be returned
      * @return List of friends
      */
     public User[] getFriends(int first, int pageSize) {
-        return getFF("/friends/ids.json", first, pageSize);
+        if (first == -1 || friends == null) {
+            WebResource webResource = client.resource(API_URI).path("/friends/ids.json");
+
+            // Add filters to the resource
+//            webResource.addFilter(new LoggingFilter());
+            webResource.addFilter(getOAuthFilter());
+            friends = webResource.get(FriendsAndFollowers.class).getIds();
+            System.out.println("Initializing friends ...");
+        }
+        
+
+        return getFF(friends, first, pageSize);
     }
     
-    public User[] getFriends() {
-        return getFF("/friends/ids.json");
-    }
-    
-    private User[] getFF(String resource, int first, int pageSize) {
+//    public User[] getFriends() {
+//        return getFF("/friends/ids.json");
+//    }
+//    
+    private User[] getFF(long[] ff, int first, int pageSize) {
         if (pageSize > 100) {
             System.out.println("Specified page size is \"" + pageSize + "\", defaulting to 100.");
             pageSize = 100;
         }
         
-        WebResource webResource = client.resource(API_URI).path(resource);
-        
-        // Add filters to the resource
-//        webResource.addFilter(new LoggingFilter());
-        webResource.addFilter(getOAuthFilter());
-
-        FriendsAndFollowers ff = webResource.get(FriendsAndFollowers.class);
+        // a non-negative index will set it to the first one
+        if (first < 0) {
+            first = 0;
+        }
         
         WebResource webResource2 = client.resource(API_URI).path("/users/lookup.json");
 //        webResource2.addFilter(new LoggingFilter());
         webResource2.addFilter(getOAuthFilter());
         
-        System.out.println("Returning followers/friends from " + first + " to " + (first + pageSize));
-
         StringBuilder ids = new StringBuilder();
         int endIndex = first + pageSize;
-        if (ff.getIds().length < first + pageSize)
-            endIndex = ff.getIds().length;
+        if (ff.length < (first + pageSize))
+            endIndex = ff.length;
+        System.out.println("Returning followers/friends from " + first + " to " + endIndex);
         for (int i=first; i<endIndex; i++) {
             if (ids.length() != 0) {
                 ids.append(",");
             }
-            ids.append(ff.getIds()[i]);
+            ids.append(ff[i]);
         }
         webResource2 = webResource2.queryParam("user_id", ids.toString());
-        return webResource2.get(User[].class);
+        User[] response = webResource2.get(User[].class);
+
+        // Sort the response as users/lookup return random order
+        Arrays.sort(response, new Comparator() {
+
+            @Override
+            public int compare(Object t, Object t1) {
+                User u = (User)t;
+                User u1 = (User)t1;
+                return (int)(u.getId() - u1.getId());
+            }
+            
+        });
+        
+        return response;
     }
     
     
