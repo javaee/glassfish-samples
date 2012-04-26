@@ -68,7 +68,7 @@ import javax.servlet.http.HttpSession;
  */
 @Named
 @SessionScoped
-public class TwitterClient implements Serializable {
+public class Twitter implements Serializable {
 
     private static String CONSUMER_SECRET;
     private static String CONSUMER_KEY;
@@ -87,6 +87,7 @@ public class TwitterClient implements Serializable {
 //    private static String host = "glassfish.jelastic.servint.net";
     private static String host;
     private static String contextRoot;
+    private static String mainDisplayPage;
     
     Client client;
     User user;
@@ -95,17 +96,33 @@ public class TwitterClient implements Serializable {
     long[] followers;
     Tweet[] homeTimeline;
 
-    public TwitterClient() {
+    public Twitter() {
         ClientConfig config = new DefaultClientConfig();
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         client = Client.create(config);
     }
     
+    public Twitter(String consumerSecret, String consumerKey) {
+        CONSUMER_SECRET = consumerSecret;
+        CONSUMER_KEY = consumerKey;
+    }
+    
+    public void setOAuthConsumer(String consumerSecret, String consumerKey) {
+        CONSUMER_SECRET = consumerSecret;
+        CONSUMER_KEY = consumerKey;
+    }
+    
     private static void readTwitterProperties(String host, int port, String contextPath) {
         
-        TwitterClient.host = host + ":" + port;
-        TwitterClient.contextRoot = contextPath;
+        Twitter.host = host + ":" + port;
+        Twitter.contextRoot = contextPath;
+        mainDisplayPage = "/" + contextRoot + "/faces/index.xhtml";
         
+        if (!((CONSUMER_SECRET == null || CONSUMER_SECRET.equals("")) &&
+            (CONSUMER_KEY == null || CONSUMER_KEY.equals(""))))
+                return;
+        
+        // Secret and Key has not been set, try to read from the local filesystem
         FileInputStream fis = null;
         String propsFileName = System.getProperty("user.home") + System.getProperty("file.separator") + ".tvitterclone";
         Properties props = new Properties();
@@ -115,7 +132,7 @@ public class TwitterClient implements Serializable {
             fis = new FileInputStream(propsFileName);
             props.load(fis);
         } catch (FileNotFoundException e) {
-            System.err.println(propsFileName + " not found, using defaults.");
+            System.err.println(propsFileName + " not found.");
             return;
         } catch (IOException e) {
             // ignore
@@ -191,7 +208,7 @@ public class TwitterClient implements Serializable {
     }
     
 
-    @WebServlet(urlPatterns = "/OAuthLogin")
+    @WebServlet(urlPatterns = "/login")
     public static class OAuthLoginServlet extends HttpServlet {
 
         @Override
@@ -258,7 +275,7 @@ public class TwitterClient implements Serializable {
                 out.println("<body>");
                 out.println("<h1>OAuth Callback Servlet at " + request.getContextPath() + "</h1>");
                                 
-                response.sendRedirect("/" + contextRoot + "/faces/index.xhtml");
+                response.sendRedirect(mainDisplayPage);
 
                 out.println("</body>");
                 out.println("</html>");
