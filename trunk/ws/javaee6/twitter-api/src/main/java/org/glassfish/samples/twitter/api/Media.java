@@ -57,6 +57,8 @@ public class Media {
     private String media_url_https;
     private String id;
     private String url;
+    private long source_status_id;
+    private String source_status_id_str;
 
     public String getDisplay_url() {
         return display_url;
@@ -136,6 +138,22 @@ public class Media {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public long getSource_status_id() {
+        return source_status_id;
+    }
+
+    public void setSource_status_id(long source_status_id) {
+        this.source_status_id = source_status_id;
+    }
+
+    public String getSource_status_id_str() {
+        return source_status_id_str;
+    }
+
+    public void setSource_status_id_str(String source_status_id_str) {
+        this.source_status_id_str = source_status_id_str;
     }
     
     
