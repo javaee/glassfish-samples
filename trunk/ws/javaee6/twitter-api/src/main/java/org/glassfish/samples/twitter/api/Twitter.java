@@ -48,12 +48,12 @@ import com.sun.jersey.api.representation.Form;
 import com.sun.jersey.oauth.client.OAuthClientFilter;
 import com.sun.jersey.oauth.signature.OAuthParameters;
 import com.sun.jersey.oauth.signature.OAuthSecrets;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.*;
-import javax.enterprise.context.SessionScoped;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,7 +67,7 @@ import javax.servlet.http.HttpSession;
  * @author Arun Gupta
  */
 @Named
-@SessionScoped
+@ApplicationScoped
 public class Twitter implements Serializable {
 
     private static String CONSUMER_SECRET;
@@ -80,6 +80,7 @@ public class Twitter implements Serializable {
     private static final String REQUEST_TOKEN_URI = OAUTH_BASE_URI + "/request_token";
     private static final String ACCESS_TOKEN_URI = OAUTH_BASE_URI + "/access_token";
     private static final String AUTHORIZE_TOKEN_URI = OAUTH_BASE_URI + "/authorize";
+    private static final String SEARCH_URI = "http://search.twitter.com/search.json?";
     
     private static String oauth_token;
     private static String oauth_token_secret;
@@ -88,7 +89,7 @@ public class Twitter implements Serializable {
     private static String host;
     private static String contextRoot;
     private static String mainDisplayPage;
-    
+
     Client client;
     User user;
     
@@ -107,16 +108,44 @@ public class Twitter implements Serializable {
         CONSUMER_KEY = consumerKey;
     }
     
+    public void authenticate(HttpServletRequest request, HttpServletResponse response) {
+        if (mainDisplayPage != null) {
+            return;
+        }
+        
+        System.out.println("Authenticating ...");
+        String uri = "http://" + 
+                request.getServerName() +
+                ":" + 
+                request.getServerPort() +
+//                "/" +
+                request.getContextPath() +
+                "/login";
+        try {
+            //        WebResource r = client.resource(uri);
+            System.out.println("Sending redirect: " + uri);
+                    response.sendRedirect(uri);
+//                    System.out.println("Redirected");
+            //        System.out.println("URI: " + r.getURI());
+            //        System.out.println("Response: " + res);
+            //        System.out.println("Response: " + res);
+        } catch (IOException ex) {
+            Logger.getLogger(Twitter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void setOAuthConsumer(String consumerSecret, String consumerKey) {
         CONSUMER_SECRET = consumerSecret;
         CONSUMER_KEY = consumerKey;
     }
     
-    private static void readTwitterProperties(String host, int port, String contextPath) {
+    private static void readTwitterProperties(String host, int port, String contextPath, String requestURI, String queryString) {
         
+        System.out.println("readTwitterProperties");
         Twitter.host = host + ":" + port;
         Twitter.contextRoot = contextPath;
-        mainDisplayPage = "/" + contextRoot + "/faces/index.xhtml";
+        
+        mainDisplayPage = getMainDisplayPage(requestURI, queryString);
         
         if (!((CONSUMER_SECRET == null || CONSUMER_SECRET.equals("")) &&
             (CONSUMER_KEY == null || CONSUMER_KEY.equals(""))))
@@ -153,6 +182,22 @@ public class Twitter implements Serializable {
 
         CONSUMER_SECRET = props.getProperty(CONSUMER_SECRET_PROPERTY);
         CONSUMER_KEY = props.getProperty(CONSUMER_KEY_PROPERTY);
+    }
+    
+    private static String getMainDisplayPage(String requestURI, String queryString) {
+        if (queryString == null) {
+            return "/" + contextRoot + "/faces/index.xhtml";
+        }
+        
+        StringTokenizer tokens = new StringTokenizer(queryString, "&");
+        while (tokens.hasMoreTokens()) {
+            String token = tokens.nextToken();
+            if (token.startsWith("display"))
+                return "/" + contextRoot + token.substring(token.indexOf("=")+1, token.length());
+        }
+        
+//        return requestURI;
+        return "/" + contextRoot + "/faces/index.xhtml";
     }
     
     private static Form getRequestToken() {
@@ -214,7 +259,8 @@ public class Twitter implements Serializable {
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
-            readTwitterProperties(request.getServerName(), request.getServerPort(), request.getContextPath());
+            
+            readTwitterProperties(request.getServerName(), request.getServerPort(), request.getContextPath(), request.getRequestURI(), request.getQueryString());
             java.io.PrintWriter out = response.getWriter();
             try {
                 Form requestTokenResponse = getRequestToken();
@@ -292,7 +338,7 @@ public class Twitter implements Serializable {
         }
         
         // Authenticated user
-        WebResource webResource = Client.create().resource(API_URI).path("/account/verify_credentials.json");
+        WebResource webResource = client.resource(API_URI).path("/account/verify_credentials.json");
 
 //        // Unauthenticated user
 //        WebResource webResource = client
@@ -362,6 +408,7 @@ public class Twitter implements Serializable {
                 .queryParam("count", "200");
 
             webResource.addFilter(getOAuthFilter());
+//            webResource.addFilter(new LoggingFilter());
             
             list.addAll(Arrays.asList(webResource.get(Tweet[].class)));
         }
@@ -655,5 +702,24 @@ public class Twitter implements Serializable {
         // clearing up the text
 //        input.setTweetText("");
         
+    }
+    
+    public SearchResults search(String searchString) {
+        
+        WebResource webResource;
+        try {
+            System.out.println("Searching on " + searchString);
+            System.out.println("Searching on " + URLEncoder.encode(searchString, "UTF-8"));
+            webResource = client.resource(SEARCH_URI);
+            
+            webResource = webResource.queryParam("q", URLEncoder.encode(searchString, "UTF-8"));
+            System.out.println("URI: " + webResource.getURI());
+            webResource.addFilter(new LoggingFilter());
+            return (SearchResults)webResource.get(SearchResults.class);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Twitter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
 }
