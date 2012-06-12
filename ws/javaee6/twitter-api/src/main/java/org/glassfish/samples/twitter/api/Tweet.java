@@ -299,7 +299,7 @@ public class Tweet {
     public void setAnnotations(String annotations) {
         this.annotations = annotations;
     }
-    
+
     @Override
     public String toString() {
         return "From " + user + ": " + text.substring(0, 40);
