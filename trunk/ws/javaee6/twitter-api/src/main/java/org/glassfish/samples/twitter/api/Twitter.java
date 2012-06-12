@@ -704,16 +704,40 @@ public class Twitter implements Serializable {
         
     }
     
+    /**
+     * Unauthenticated search results beginning at page 1 and 20 results in the page.
+     * 
+     * @param searchString String to be searched
+     * @return Results of search
+     */
     public SearchResults search(String searchString) {
+        
+        return search(searchString, 1, 20);
+    }
+    
+    /**
+     * Unauethenticated search results
+     * 
+     * @param searchString String to be searched
+     * @param page Page number to return (starting at 1)
+     * @param rpp Number of tweets to return per page
+     * @return Results of search
+     */
+    public SearchResults search(String searchString, int page, int rpp) {
+        
+        if (rpp < 0 || rpp > 100)
+            rpp = 100;
+        
+        if (page < 1 || page > rpp)
+            page = 1;
         
         WebResource webResource;
         try {
-            System.out.println("Searching on " + searchString);
-            System.out.println("Searching on " + URLEncoder.encode(searchString, "UTF-8"));
             webResource = client.resource(SEARCH_URI);
+            webResource = webResource.queryParam("q", URLEncoder.encode(searchString, "UTF-8"))
+                    .queryParam("page", String.valueOf(page))
+                    .queryParam("rpp", String.valueOf(rpp));
             
-            webResource = webResource.queryParam("q", URLEncoder.encode(searchString, "UTF-8"));
-            System.out.println("URI: " + webResource.getURI());
             webResource.addFilter(new LoggingFilter());
             return (SearchResults)webResource.get(SearchResults.class);
         } catch (UnsupportedEncodingException ex) {

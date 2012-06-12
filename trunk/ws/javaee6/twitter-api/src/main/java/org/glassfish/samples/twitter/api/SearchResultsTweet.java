@@ -61,7 +61,7 @@ public class SearchResultsTweet {
     private String profile_image_url_https;
     private String source;
     private String text;
-    private long to_user;
+    private String to_user;
     private long to_user_id;
     private String to_user_id_str;
     private String to_user_name;
@@ -178,11 +178,11 @@ public class SearchResultsTweet {
         this.text = text;
     }
 
-    public long getTo_user() {
+    public String getTo_user() {
         return to_user;
     }
 
-    public void setTo_user(long to_user) {
+    public void setTo_user(String to_user) {
         this.to_user = to_user;
     }
 
