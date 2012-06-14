@@ -61,6 +61,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
 
 
 /**
@@ -710,10 +711,13 @@ public class Twitter implements Serializable {
      * @param searchString String to be searched
      * @return Results of search
      */
-    public SearchResults search(String searchString) {
-        
-        return search(searchString, 1, 20);
+    public <T> T search(String searchString, Class clazz) {
+        return (T)search(searchString, 1, 20, clazz);
     }
+    
+//    public String searchJSON(String searchString) {
+//        return searchJSON(searchString, 1, 20);
+//    }
     
     /**
      * Unauethenticated search results
@@ -723,7 +727,7 @@ public class Twitter implements Serializable {
      * @param rpp Number of tweets to return per page
      * @return Results of search
      */
-    public SearchResults search(String searchString, int page, int rpp) {
+    public <T> T search(String searchString, int page, int rpp, Class clazz) {
         
         if (rpp < 0 || rpp > 100)
             rpp = 100;
@@ -736,14 +740,56 @@ public class Twitter implements Serializable {
             webResource = client.resource(SEARCH_URI);
             webResource = webResource.queryParam("q", URLEncoder.encode(searchString, "UTF-8"))
                     .queryParam("page", String.valueOf(page))
-                    .queryParam("rpp", String.valueOf(rpp));
+                    .queryParam("rpp", String.valueOf(rpp))
+                    .queryParam("result_type", "mixed");
             
-            webResource.addFilter(new LoggingFilter());
-            return (SearchResults)webResource.get(SearchResults.class);
+//            webResource.addFilter(new LoggingFilter());
+            return (T)webResource.get(clazz);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Twitter.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
+    }
+    
+//    /**
+//     * Can use search and then convert SearchResults to JSON. But this will 
+//     * provide one less layer of conversion.
+//     * 
+//     * @param searchString
+//     * @param page
+//     * @param rpp
+//     * @return 
+//     */
+//    public String searchJSON(String searchString, int page, int rpp) {
+//        if (rpp < 0 || rpp > 100)
+//            rpp = 100;
+//        
+//        if (page < 1 || page > rpp)
+//            page = 1;
+//        
+//        WebResource webResource;
+//        try {
+//            webResource = client.resource(SEARCH_URI);
+////            webResource.accept(MediaType.APPLICATION_JSON);
+//            webResource = webResource.queryParam("q", URLEncoder.encode(searchString, "UTF-8"))
+//                    .queryParam("page", String.valueOf(page))
+//                    .queryParam("rpp", String.valueOf(rpp));
+//            
+////            webResource.addFilter(new LoggingFilter());
+//            return webResource.get(String.class);
+//        } catch (UnsupportedEncodingException ex) {
+//            Logger.getLogger(Twitter.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        return null;
+//    }
+    
+    public Trends[] getTrends(String woeid) {
+        WebResource webResource;
+        webResource = client.resource(API_URI).path("/trends/" + woeid + ".json");
+
+//        webResource.addFilter(new LoggingFilter());
+        return webResource.get(Trends[].class);
     }
 }
