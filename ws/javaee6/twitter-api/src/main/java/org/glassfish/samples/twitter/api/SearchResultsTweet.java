@@ -65,6 +65,8 @@ public class SearchResultsTweet {
     private long to_user_id;
     private String to_user_id_str;
     private String to_user_name;
+    private String in_reply_to_status_id;
+    private String in_reply_to_status_id_str;
 
     public String getCreated_at() {
         return created_at;
@@ -209,6 +211,20 @@ public class SearchResultsTweet {
     public void setTo_user_name(String to_user_name) {
         this.to_user_name = to_user_name;
     }
-    
-    
+
+    public String getIn_reply_to_status_id() {
+        return in_reply_to_status_id;
+    }
+
+    public void setIn_reply_to_status_id(String in_reply_to_status_id) {
+        this.in_reply_to_status_id = in_reply_to_status_id;
+    }
+
+    public String getIn_reply_to_status_id_str() {
+        return in_reply_to_status_id_str;
+    }
+
+    public void setIn_reply_to_status_id_str(String in_reply_to_status_id_str) {
+        this.in_reply_to_status_id_str = in_reply_to_status_id_str;
+    }
 }
