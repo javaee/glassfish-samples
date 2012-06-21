@@ -43,10 +43,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * @author Arun Gupta
  */
- @XmlRootElement
- @Named
+@XmlRootElement
+@Named
 public class Metadata {
     private String result_type;
+    private int recent_retweets;
 
     public String getResult_type() {
         return result_type;
@@ -54,6 +55,14 @@ public class Metadata {
 
     public void setResult_type(String result_type) {
         this.result_type = result_type;
+    }
+
+    public int getRecent_retweets() {
+        return recent_retweets;
+    }
+
+    public void setRecent_retweets(int recent_retweets) {
+        this.recent_retweets = recent_retweets;
     }
     
 }
