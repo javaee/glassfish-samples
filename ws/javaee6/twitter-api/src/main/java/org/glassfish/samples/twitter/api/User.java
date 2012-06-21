@@ -412,8 +412,9 @@ public class User {
         this.profile_banner_url = profile_banner_url;
     }
     
+    @Override
     public String toString() {
         return name;
     }
-
+    
 }
