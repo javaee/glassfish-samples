@@ -146,30 +146,43 @@ public class Twitter implements Serializable {
             String requestURI, 
             String queryString) {
         
-        logger.log(Level.INFO, "readTwitterProperties({0}, {1}, {2}, {3}, {4}, {5})",
+        logger.log(Level.INFO, "readTwitterProperties({0}, {1}, {2}, {3}, {4})",
                 new Object[] {host, port, contextPath, requestURI, queryString});
         Twitter.host = host + ":" + port;
         Twitter.contextRoot = contextPath;
         
         mainDisplayPage = getMainDisplayPage(requestURI, queryString);
-        
+                
+        // Secret and Key are already set
         if (!((CONSUMER_SECRET == null || CONSUMER_SECRET.equals("")) &&
-            (CONSUMER_KEY == null || CONSUMER_KEY.equals(""))))
-                return;
+            (CONSUMER_KEY == null || CONSUMER_KEY.equals("")))) {
+                    return;
+        }
         
-        // Secret and Key has not been set, try to read from the local filesystem
+        // Secret and Key are not set, try to read from System properties
+        Properties props = new Properties(System.getProperties());
+        if (!props.containsKey(CONSUMER_KEY_PROPERTY) || !props.containsKey(CONSUMER_SECRET_PROPERTY)) {
+            logger.log(Level.WARNING, CONSUMER_KEY_PROPERTY + " or " + CONSUMER_SECRET_PROPERTY + " not defined in system properties.");
+        } else {
+            logger.log(Level.INFO, CONSUMER_KEY_PROPERTY + " and " + CONSUMER_SECRET_PROPERTY + " properties defined in system properties.");
+            CONSUMER_SECRET = props.getProperty(CONSUMER_SECRET_PROPERTY);
+            CONSUMER_KEY = props.getProperty(CONSUMER_KEY_PROPERTY);
+        }
+        
+        
+        // Secret and Key are not set yet, try to read from the local filesystem
         FileInputStream fis = null;
         String propsFileName = System.getProperty("user.home") + 
                 System.getProperty("file.separator") + 
                 ".tvitterclone";
-        Properties props = new Properties();
+        
         
         logger.log(Level.FINE, propsFileName);
         try {
             fis = new FileInputStream(propsFileName);
             props.load(fis);
         } catch (FileNotFoundException e) {
-            logger.log(Level.WARNING, "{0} not found.", propsFileName);
+            logger.log(Level.SEVERE, "{0} not found.", propsFileName);
             return;
         } catch (IOException e) {
             // ignore
@@ -188,6 +201,7 @@ public class Twitter implements Serializable {
             return;
         }
 
+        logger.log(Level.INFO, CONSUMER_KEY_PROPERTY + " and " + CONSUMER_SECRET_PROPERTY + " read from {0}", propsFileName);
         CONSUMER_SECRET = props.getProperty(CONSUMER_SECRET_PROPERTY);
         CONSUMER_KEY = props.getProperty(CONSUMER_KEY_PROPERTY);
     }
@@ -202,8 +216,9 @@ public class Twitter implements Serializable {
         StringTokenizer tokens = new StringTokenizer(queryString, "&");
         while (tokens.hasMoreTokens()) {
             String token = tokens.nextToken();
-            if (token.startsWith("display"))
+            if (token.startsWith("display")) {
                 return "/" + contextRoot + token.substring(token.indexOf("=")+1, token.length());
+            }
         }
         
 //        return requestURI;
