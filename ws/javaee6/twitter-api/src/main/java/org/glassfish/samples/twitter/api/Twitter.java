@@ -163,6 +163,7 @@ public class Twitter implements Serializable {
         Properties props = new Properties(System.getProperties());
         if (!props.containsKey(CONSUMER_KEY_PROPERTY) || !props.containsKey(CONSUMER_SECRET_PROPERTY)) {
             logger.log(Level.WARNING, CONSUMER_KEY_PROPERTY + " or " + CONSUMER_SECRET_PROPERTY + " not defined in system properties.");
+            logger.log(Level.WARNING, "Existing system properties: {0}", props.toString());
         } else {
             logger.log(Level.INFO, CONSUMER_KEY_PROPERTY + " and " + CONSUMER_SECRET_PROPERTY + " properties defined in system properties.");
             CONSUMER_SECRET = props.getProperty(CONSUMER_SECRET_PROPERTY);
