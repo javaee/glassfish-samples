@@ -160,14 +160,15 @@ public class Twitter implements Serializable {
         }
         
         // Secret and Key are not set, try to read from System properties
-        Properties props = new Properties(System.getProperties());
+        Properties props = System.getProperties();
         if (!props.containsKey(CONSUMER_KEY_PROPERTY) || !props.containsKey(CONSUMER_SECRET_PROPERTY)) {
             logger.log(Level.WARNING, CONSUMER_KEY_PROPERTY + " or " + CONSUMER_SECRET_PROPERTY + " not defined in system properties.");
-            logger.log(Level.WARNING, "Existing system properties: {0}", props.toString());
+//            logger.log(Level.WARNING, "Existing system properties: {0}", props.toString());
         } else {
-            logger.log(Level.INFO, CONSUMER_KEY_PROPERTY + " and " + CONSUMER_SECRET_PROPERTY + " properties defined in system properties.");
+            logger.log(Level.INFO, CONSUMER_KEY_PROPERTY + " and " + CONSUMER_SECRET_PROPERTY + " properties found in system properties.");
             CONSUMER_SECRET = props.getProperty(CONSUMER_SECRET_PROPERTY);
             CONSUMER_KEY = props.getProperty(CONSUMER_KEY_PROPERTY);
+            return;
         }
         
         
@@ -247,8 +248,9 @@ public class Twitter implements Serializable {
                 secrets);
 
         // Add the filter to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             resource.addFilter(new LoggingFilter(logger));
+        }
         resource.addFilter(oauthFilter);
 
         // make the request and print out the result
@@ -276,8 +278,9 @@ public class Twitter implements Serializable {
                 params, 
                 secrets);
         
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             resource.addFilter(new LoggingFilter(logger));
+        }
         resource.addFilter(oauthFilter);
         
         return resource.post(Form.class);
@@ -383,8 +386,9 @@ public class Twitter implements Serializable {
 
         
         // Add filters to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         webResource.addFilter(getOAuthFilter());
 
         user = webResource.get(User.class);
@@ -397,8 +401,9 @@ public class Twitter implements Serializable {
         WebResource webResource = client.resource(API_URI).path("/statuses/user_timeline.json");
         String uid = screen_name;
         
-        if (userId != null && userId.equals(""))
+        if (userId != null && userId.equals("")) {
             uid = userId;
+        }
 
 //        String userId = screen_name;
         
@@ -411,8 +416,9 @@ public class Twitter implements Serializable {
             .queryParam("count", "10");
 
         // Add filters to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         webResource.addFilter(getOAuthFilter());
 
         Tweet[] res = webResource.get(Tweet[].class);
@@ -446,8 +452,9 @@ public class Twitter implements Serializable {
                 .queryParam("count", "200");
 
             webResource.addFilter(getOAuthFilter());
-        if (logger.isLoggable(Level.FINE))
-            webResource.addFilter(new LoggingFilter(logger));
+            if (logger.isLoggable(Level.FINE)) {
+                webResource.addFilter(new LoggingFilter(logger));
+            }
             
             list.addAll(Arrays.asList(webResource.get(Tweet[].class)));
         }
@@ -495,8 +502,9 @@ public class Twitter implements Serializable {
         WebResource webResource = client.resource(API_URI).path(resource);
         
         // Add filters to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         webResource.addFilter(getOAuthFilter());
 
         return (T)webResource.get(clazz);
@@ -508,8 +516,9 @@ public class Twitter implements Serializable {
         WebResource webResource = client.resource(API_URI).path(resource);
         
         // Add filters to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         webResource.addFilter(getOAuthFilter());
 
         return (T[])webResource.get(clazz);
@@ -532,8 +541,9 @@ public class Twitter implements Serializable {
             WebResource webResource = client.resource(API_URI).path("/followers/ids.json");
 
             // Add filters to the resource
-            if (logger.isLoggable(Level.FINE))
+            if (logger.isLoggable(Level.FINE)) {
                 webResource.addFilter(new LoggingFilter(logger));
+            }
             webResource.addFilter(getOAuthFilter());
             followers = webResource.get(FriendsAndFollowers.class).getIds();
             logger.log(Level.FINE, "Initializing followers ...");
@@ -560,8 +570,9 @@ public class Twitter implements Serializable {
             WebResource webResource = client.resource(API_URI).path("/friends/ids.json");
 
             // Add filters to the resource
-            if (logger.isLoggable(Level.FINE))
+            if (logger.isLoggable(Level.FINE)) {
                 webResource.addFilter(new LoggingFilter(logger));
+            }
             webResource.addFilter(getOAuthFilter());
             friends = webResource.get(FriendsAndFollowers.class).getIds();
             logger.log(Level.FINE, "Initializing friends ...");
@@ -585,14 +596,16 @@ public class Twitter implements Serializable {
         }
         
         WebResource webResource2 = client.resource(API_URI).path("/users/lookup.json");
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource2.addFilter(new LoggingFilter(logger));
+        }
         webResource2.addFilter(getOAuthFilter());
         
         StringBuilder ids = new StringBuilder();
         int endIndex = first + pageSize;
-        if (ff.length < (first + pageSize))
+        if (ff.length < (first + pageSize)) {
             endIndex = ff.length;
+        }
         logger.log(Level.FINE, "Returning followers/friends from {0} to {1}", 
                 new Object[]{first, endIndex});
         for (int i=first; i<endIndex; i++) {
@@ -635,15 +648,17 @@ public class Twitter implements Serializable {
         WebResource webResource = client.resource(API_URI).path(resource);
         
         // Add filters to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         webResource.addFilter(getOAuthFilter());
 
         FriendsAndFollowers ff = webResource.get(FriendsAndFollowers.class);
         
         WebResource webResource2 = client.resource(API_URI).path("/users/lookup.json");
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource2.addFilter(new LoggingFilter(logger));
+        }
         webResource2.addFilter(getOAuthFilter());
         
         logger.log(Level.FINE, "Number of followers/friends: {0}", ff.getIds().length);
@@ -656,8 +671,9 @@ public class Twitter implements Serializable {
 
             int startIndex = 100 * i;
             int endIndex = startIndex + 100;
-            if (ff.getIds().length < startIndex + 100)
+            if (ff.getIds().length < startIndex + 100) {
                 endIndex = ff.getIds().length;
+            }
             logger.log(Level.FINE, "Processing {0} to {1} users", 
                     new Object[]{startIndex, endIndex});
             
@@ -679,8 +695,9 @@ public class Twitter implements Serializable {
         WebResource webResource = client.resource(API_URI).path("/users/suggestions.json");
         
         // Add filters to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         webResource.addFilter(getOAuthFilter());
 
         SuggestedUsersCategory[] res = webResource.get(SuggestedUsersCategory[].class);
@@ -690,8 +707,9 @@ public class Twitter implements Serializable {
         for (SuggestedUsersCategory f : res) {
             logger.log(Level.FINE, "Finding users for {0}", f.getSlug());
             WebResource webResource2 = client.resource(API_URI).path("/users/suggestions/" + f.getSlug() + ".json");
-            if (logger.isLoggable(Level.FINE))
+            if (logger.isLoggable(Level.FINE)) {
                 webResource2.addFilter(new LoggingFilter(logger));
+            }
             webResource.addFilter(getOAuthFilter());
             SuggestedUsers u = webResource2.get(SuggestedUsers.class);
             logger.log(Level.FINE, "Found {0}", u.getUsers().length);
@@ -767,8 +785,9 @@ public class Twitter implements Serializable {
         WebResource webResource = client.resource(API_URI).path("/statuses/update.json");
         
         // Add filters to the resource
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         webResource.addFilter(getOAuthFilter());
         
 //        webResource = webResource.queryParam("status", input.getTweetText());
@@ -809,11 +828,13 @@ public class Twitter implements Serializable {
         logger.log(Level.FINE, "getTweets({0}, {1})", 
                 new Object[] { searchString, clazz });
         
-        if (rpp < 0 || rpp > 100)
+        if (rpp < 0 || rpp > 100) {
             rpp = 100;
+        }
         
-        if (page < 1 || page > rpp)
+        if (page < 1 || page > rpp) {
             page = 1;
+        }
         
         WebResource webResource;
         try {
@@ -823,8 +844,9 @@ public class Twitter implements Serializable {
                     .queryParam("rpp", String.valueOf(rpp))
                     .queryParam("result_type", "mixed");
             
-            if (logger.isLoggable(Level.FINE))
+            if (logger.isLoggable(Level.FINE)) {
                 webResource.addFilter(new LoggingFilter(logger));
+            }
             return (T)webResource.get(clazz);
         } catch (UnsupportedEncodingException ex) {
             logger.log(Level.SEVERE, null, ex);
@@ -871,8 +893,9 @@ public class Twitter implements Serializable {
         WebResource webResource;
         webResource = client.resource(API_URI).path("/trends/" + woeid + ".json");
 
-        if (logger.isLoggable(Level.FINE))
+        if (logger.isLoggable(Level.FINE)) {
             webResource.addFilter(new LoggingFilter(logger));
+        }
         return webResource.get(Trends[].class);
     }
 }
