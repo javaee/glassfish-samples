@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!--
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2010-2011 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -41,22 +41,31 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.glassfish-samples</groupId>
-        <artifactId>glassfish-samples-parent</artifactId>
-	<version>4.0-SNAPSHOT</version>
-    </parent>
-
-    <artifactId>jsf-samples</artifactId>
-    <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
-
-    <name>Java EE 7 JSF Samples</name> 
-    <modules>
-        <module>scrumtoys</module>	
-    </modules>
-
-</project>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:jsfcomps="http://www.java.net/scrumtoys/jsfcomps" 
+      xmlns:appez="http://java.sun.com/jsf/composite/components" >
+<h:head>
+    <title>#{"Burndown"}</title>
+    <h:outputStylesheet library="css/1_1" name="app.css"/>
+</h:head>
+<h:body>
+    <h:outputScript library="javax.faces" name="ajax.js" target="head"/>
+	<h:messages errorClass="errorMsgs" infoClass="infoMsgs" />
+	<appez:title id="tituloDashboard" text="#{'Burndown'}" />
+	<h:form>
+		<h:outputLabel value="Sprint:" for="somSprints" />
+		<h:selectOneMenu id="somSprints" value="#{burndownMB.selectedSprintId}">
+			<f:selectItems value="#{burndownMB.siSprints}"/>
+		</h:selectOneMenu>
+		<h:message for="somSprints" />
+		<h:commandButton action="#{burndownMB.update}" value="Update" />
+		<h:panelGrid columns="1">
+		<h:outputText value="#{burndownMB.selectedSprint.name}" />
+		<jsfcomps:burndown value="#{burndownMB.selectedSprint}" />
+		<jsfcomps:test />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

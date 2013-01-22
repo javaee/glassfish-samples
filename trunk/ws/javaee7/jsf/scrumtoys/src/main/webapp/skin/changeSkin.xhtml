@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!--
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -41,22 +41,39 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.glassfish-samples</groupId>
-        <artifactId>glassfish-samples-parent</artifactId>
-	<version>4.0-SNAPSHOT</version>
-    </parent>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-    <artifactId>jsf-samples</artifactId>
-    <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:scrum="http://java.sun.com/jsf/composite/components">
 
-    <name>Java EE 7 JSF Samples</name> 
-    <modules>
-        <module>scrumtoys</module>	
-    </modules>
+    <ui:composition template="/template.xhtml">
+        <f:metadata>
+            <f:viewParam name="skin" value="#{skinUrlManager.skin}" />
+            <f:event type="preRenderView" listener="#{skinUrlManager.update}" />
+        </f:metadata>
 
-</project>
+        <ui:define name="pageTitle">
+            <h:outputText value="#{i18n['story.show.title']}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form id="frmListStories">
+                <h:panelGrid columns="#{skinValuesManager.size + 1}" width="990" >
+                    <h:outputLabel value=""/>
+                    <ui:repeat value="#{skinValuesManager.names}" var="name">
+                        <td>
+                        <scrum:postitLink color="#{name}" url="changeSkin"
+                            paramName="skin" paramValue="#{name}">
+                            <ui:param name="postitLabel" value=""/>
+                            <ui:param name="postitText" value="#{name}"/>
+                        </scrum:postitLink>
+                        </td>
+                    </ui:repeat>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!--
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2010-2011 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -41,22 +41,37 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.glassfish-samples</groupId>
-        <artifactId>glassfish-samples-parent</artifactId>
-	<version>4.0-SNAPSHOT</version>
-    </parent>
-
-    <artifactId>jsf-samples</artifactId>
-    <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
-
-    <name>Java EE 7 JSF Samples</name> 
-    <modules>
-        <module>scrumtoys</module>	
-    </modules>
-
-</project>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite" 
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<ui:composition>
+      <composite:interface>
+      	<composite:attribute name="text" required="true" />
+ 		<composite:valueHolder name="oTitle" />
+		<composite:facet name="header" />      	
+		<composite:facet name="footer" />   
+      </composite:interface>
+      
+      <composite:implementation>
+      	  <h:panelGrid columns="1" rendered="#{not empty compositeComponent.facets.header}">
+     	  	<composite:insertFacet name="header" />
+      	  </h:panelGrid>	
+	      <h:panelGroup>
+	      	  <h1>
+	      	  <h:outputText id="otTitle" value="#{compositeComponent.attrs.text}" />
+		      <span style="font-size: small; color: gray; font-family: serif"><h:outputLabel value="#{fn:toLowerCase(compositeComponent.resourceBundleMap.version)}" /></span>
+	      	  </h1>
+		  </h:panelGroup>
+      	  <h:panelGroup rendered="#{not empty compositeComponent.children}">
+      	  		<div style="border: 1px dotted gray; padding: 10px; margin: 10px">
+		      	  	<composite:insertChildren />
+      	  		</div>
+		  </h:panelGroup>
+      	  <h:panelGrid columns="1" rendered="#{not empty compositeComponent.facets.footer}">
+     	  	<composite:insertFacet name="footer" />
+      	  </h:panelGrid>	
+      </composite:implementation> 
+	</ui:composition>
+</html>
