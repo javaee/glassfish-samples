@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <!--
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
-    Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
 
     The contents of this file are subject to the terms of either the GNU
     General Public License Version 2 only ("GPL") or the Common Development
@@ -41,22 +41,40 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.glassfish-samples</groupId>
-        <artifactId>glassfish-samples-parent</artifactId>
-	<version>4.0-SNAPSHOT</version>
-    </parent>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <artifactId>jsf-samples</artifactId>
-    <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
+	<ui:composition>
+	<h2>#{i18n['label.done']}</h2>
+	<h:panelGroup>
+		#{fn:length(dashboardMB.doneTasks)} #{i18n['label.tasks']}
+	</h:panelGroup>
+	<h:panelGroup>
+			<h:outputLabel value="#{i18n['label.gainedPoints']}:" for="otGainedPoints" style="font-weight: bold" />
+			<h:outputText id="otGainedPoints" value="#{dashboardMB.selectedSprint.gainedStoryPoints}" />
+	</h:panelGroup>
+    <ui:repeat  var="task" value="#{dashboardMB.dmDoneTasks}">
+    <div class="#{task.finished?'closedTask':'openedTask'}">
+    	<span style="font-size: 10px">#{i18n['label.code']} #{task.code}</span>
+    	<br/>
+    	<span style="font-size: 14px">#{task.name}</span>
+    	<br/>
+    	<span style="font-size: 10px">#{task.story.name}</span>
+    	<br/>
+    	<span style="font-size: 10px">#{task.status.single}</span>
+    	<br/>
+        <h:outputText value="#{task.startedAt}">
+    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+    	</h:outputText>
+    	#{i18n['label.to']}
+    	<h:outputText value="#{task.finishedAt}">
+    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+    	</h:outputText>
+    </div>
+    </ui:repeat>
 
-    <name>Java EE 7 JSF Samples</name> 
-    <modules>
-        <module>scrumtoys</module>	
-    </modules>
+	</ui:composition>
 
-</project>
+</html>
