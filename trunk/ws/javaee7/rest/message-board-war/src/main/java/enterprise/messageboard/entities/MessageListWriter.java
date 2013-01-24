@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1997-2013 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -69,13 +69,19 @@ public class MessageListWriter implements MessageBodyWriter<List<Message>> {
     }
 
     private boolean verifyGenericType(Type genericType) {
-        if (!(genericType instanceof ParameterizedType)) return false;
+        if (!(genericType instanceof ParameterizedType)) {
+            return false;
+        }
 
         final ParameterizedType pt = (ParameterizedType)genericType;
 
-        if (pt.getActualTypeArguments().length > 1) return false;
+        if (pt.getActualTypeArguments().length > 1) {
+            return false;
+        }
 
-        if (!(pt.getActualTypeArguments()[0] instanceof Class)) return false;
+        if (!(pt.getActualTypeArguments()[0] instanceof Class)) {
+            return false;
+        }
 
         final Class listClass = (Class)pt.getActualTypeArguments()[0];
         return listClass == Message.class;
