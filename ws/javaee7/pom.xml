@@ -131,7 +131,8 @@
                <dependency>
                    <groupId>javax</groupId>
                    <artifactId>javaee-api</artifactId>
-                   <version>7.0-b72</version>
+		   <version>7.0-b72</version>
+		   <scope>provided</scope>
                </dependency>
            </dependencies>
        </dependencyManagement>
