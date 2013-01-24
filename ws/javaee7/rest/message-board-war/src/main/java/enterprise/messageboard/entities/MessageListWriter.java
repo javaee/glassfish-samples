@@ -60,7 +60,9 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class MessageListWriter implements MessageBodyWriter<List<Message>> {
 
-    @Context UriInfo ui;
+    // TODO: fix this after proxiable UriInfo is supported
+    @Context private javax.inject.Provider<UriInfo> ui;
+
 
     public boolean isWriteable(Class<?> clazz, Type type, Annotation[] annotation, MediaType mediaType) {
         return verifyGenericType(type);
@@ -86,7 +88,7 @@ public class MessageListWriter implements MessageBodyWriter<List<Message>> {
     public void writeTo(List<Message> messages, Class<?> clazz, Type type, Annotation[] annotation, MediaType mediaType, MultivaluedMap<String, Object> arg5, OutputStream ostream) throws IOException, WebApplicationException {
         for (Message m : messages) {
             ostream.write(m.toString().getBytes());
-            URI mUri = ui.getAbsolutePathBuilder().path(Integer.toString(m.getUniqueId())).build();
+            URI mUri = ui.get().getAbsolutePathBuilder().path(Integer.toString(m.getUniqueId())).build();
             ostream.write((" <a href='" + mUri.toASCIIString() + "'>link</a><br />").getBytes());
         }
     }
