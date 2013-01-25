@@ -123,7 +123,7 @@
                             </f:facet>
                             <h:commandButton styleClass="botaoPostIt" action="#{taskManager.edit}" value="#{i18n['task.show.button.edit']}"  />
 
-                            <h:commandButton id="btnDeleteTask" styleClass="botaoPostIt" action="#{taskManager.remove}" value="#{i18n['task.show.button.delete']} AJAX"
+                            <h:commandButton id="btnDeleteTask" styleClass="botaoPostIt" action="#{taskManager.remove}" value="#{i18n['task.show.button.delete']}"
                                              onclick="jsf.ajax.request(this, event, {execute: 'frmListTasks',
                                                  render: 'frmListTasks'}); return false;" />
 

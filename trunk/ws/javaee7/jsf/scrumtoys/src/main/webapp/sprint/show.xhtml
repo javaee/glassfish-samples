@@ -117,7 +117,7 @@
                             </f:facet>
                             <h:commandButton styleClass="botaoPostIt" action="#{sprintManager.edit}" value="#{i18n['sprint.show.button.edit']}"  />
 
-                            <h:commandButton id="btnDeleteSprint" styleClass="botaoPostIt" action="#{sprintManager.remove}" value="#{i18n['sprint.show.button.delete']} AJAX"
+                            <h:commandButton id="btnDeleteSprint" styleClass="botaoPostIt" action="#{sprintManager.remove}" value="#{i18n['sprint.show.button.delete']}"
                                              onclick="jsf.ajax.request(this, event, {execute: 'frmListSprints',
                                                  render: 'frmListSprints'}); return false;" />
 
