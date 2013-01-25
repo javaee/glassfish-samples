@@ -30,8 +30,6 @@
 </HEAD>
 <BODY LANG="de-DE" DIR="LTR">
 <H2 LANG="zxx" CLASS="western">Java EE 7 Sample Applications README</H2>
-<P LANG="zxx"><BR><BR>
-</P>
 <P LANG="zxx"><SPAN LANG="zxx">This README file contains step-by-step
 instructions which can be used to migrate existing Java EE 6 sample
 applications to Java EE 7 sample application workspace. Please refer
@@ -39,16 +37,12 @@ to this IssueTracker <A HREF="http://java.net/jira/browse/GLASSFISH-19256?focuse
 to determine which Java EE 6 samples should be ported and their
 priority. Comment also contains some feedback on directory structure
 reorganization and renaming, so please take that into account.</SPAN></P>
-<P LANG="zxx"><BR><BR>
-</P>
 <P LANG="zxx">You can check out combined Java EE samples workspace
 using this URL:</P>
 <P LANG="zxx"><FONT FACE="Courier New, monospace">https://svn.java.net/svn/glassfish-samples~svn/trunk/ws</FONT></P>
 <P LANG="zxx">Java EE 6 sample applications are located in <FONT FACE="Courier New, monospace">javaee6</FONT>
 subdirectory and Java EE 7 samples workspace is in <FONT FACE="Courier New, monospace">javaee7</FONT>
 subdirectory.</P>
-<P LANG="zxx"><BR><BR>
-</P>
 <P LANG="zxx">To port an existing Java EE 6 sample application:</P>
 <UL>
 	<LI><P LANG="zxx">Locate the application in Java EE 6 sample
@@ -77,11 +71,10 @@ subdirectory.</P>
 	subdirectories for sample documents and code. Most samples will need
 	these subdirectories:</P>
 	<P LANG="zxx"><FONT FACE="Courier New, monospace">src/docs</FONT></P>
+        <P LANG="zxx"><FONT FACE="Courier New, monospace">src/main/java</FONT></P>
+        <P LANG="zxx"><FONT FACE="Courier New, monospace">src/main/resources</FONT></P>
+        <P LANG="zxx"><FONT FACE="Courier New, monospace">src/main/webapp</FONT></P>
 </UL>
-<P LANG="zxx"><FONT FACE="Courier New, monospace">	  src/main/java</FONT></P>
-<P LANG="zxx"><FONT FACE="Courier New, monospace">	 
-src/main/resources</FONT></P>
-<P LANG="zxx"><FONT FACE="Courier New, monospace">	  src/main/webapp</FONT></P>
 <UL>
 	<LI><P LANG="zxx">Copy sample documentation and code from Java EE 6
 	sample module to Java EE 7 sample module. In general, these are the
@@ -109,21 +102,39 @@ src/main/resources</FONT></P>
 	install </FONT><FONT FACE="Times New Roman, serif">from the module
 	directory and build the application. Resulting war file will be
 	present in the </FONT><FONT FACE="Courier New, monospace">target</FONT>
-	<FONT FACE="Times New Roman, serif">subdirectory and you can deploy
-	it to the GlassFish instance using asadmin in order to test it. </FONT>
-	</P>
+	<FONT FACE="Times New Roman, serif">subdirectory.</FONT>
+            
+            <P>To run your application, you can deploy it manually to a GlassFish instance 
+                using asadmin.  The recommended method of telling users of the sample how to deploy
+                it is to use <a href="http://cargo.codehaus.org/">Cargo</a>.  The top-level pom.xml is configured 
+                with the Cargo maven plugin. 
+                There are several ways to use it:
+            </p>
+            <ul>
+                <li>Run it using the "cargo:run" goal - this downloads a GlassFish build from the public web site,
+                installs it under the target directory, creates a domain, starts the server, and deploys the application.</li>
+                <LI>To use a local glassfish.zip file, provide a value for the cargo.maven.containerUrl property.  For example: 
+                    -Dcargo.maven.containerUrl=file:$HOME/test/glassfish/glassfish.zip</LI>
+                <li>To run it using an already installed GlassFish, provide a value for the glassfish.home property.  For example:
+                    -Dglassfish.home=$HOME/test/glassfish/glassfish3</li>
+            </ul>
+            <p>Besides the "cargo:run" goal, which runs the application in the foreground, you can also use
+            the "cargo:start" goal which will create a domain, start the server in the background and deploy the application. 
+            The "cargo:stop" goal can be used to stop the domain.
+            </p>
+            <p>
+                If your sample requires additional configuration, such as a database, security realms, etc., the method 
+                for doing this from maven is still being worked out.  Please let Tom Mueller know what you require, and 
+                stay tuned.
+            </P>
 	<LI><P LANG="zxx"><FONT FACE="Times New Roman, serif">If things work
 	(or at least build), add your content to SVN repository and commit
-	it. If you are unable to commit changes, you may have insuficcient
+	it. If you are unable to commit changes, you may have insufficient
 	project privileges and in that case please contact one of project
 	owners.</FONT></P>
 </UL>
-<P LANG="zxx"><BR><BR>
-</P>
 <H3 LANG="zxx" CLASS="western"><FONT FACE="Times New Roman, serif">Some
 useful links</FONT></H3>
-<P LANG="zxx"><BR><BR>
-</P>
 <UL>
 	<LI><P LANG="zxx"><A HREF="http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html"><FONT FACE="Times New Roman, serif"><SPAN LANG="zxx">Maven
 	standard directory layout</SPAN></FONT></A></P>
