@@ -38,46 +38,46 @@
  * holder.
  */
 
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.glassfish.samples.annotation_war;
+package org.glassfish.servlet.annotation_war;
 
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
+import java.io.PrintWriter;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class illustrate WebFilter annotation
+ * This class illustrate WebServlet annotation
+ *
  * @author Shing Wai Chan
  * @author Daniel Guo
- * 
  */
-@WebFilter(filterName = "TestFilter", urlPatterns = {"/"}, 
-           initParams={ @WebInitParam(name="mesg", value="my filter") })
-public class TestFilter implements Filter {
-    
-String mesg = null;
+@WebServlet(name = "TestServlet", urlPatterns = {"/"},
+            initParams = {@WebInitParam(name = "message", value = "my servlet")})
+public class TestServlet extends HttpServlet {
 
-    public void init(FilterConfig filterConfig) throws ServletException {
-        mesg = filterConfig.getInitParameter("mesg");
-    }   
+    private String listenerMessage = null;
 
-    public void doFilter(ServletRequest req, ServletResponse res,
-            FilterChain chain) throws IOException, ServletException {
-        req.setAttribute("filterMessage", mesg);
-        chain.doFilter(req, res);
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        listenerMessage = (String) config.getServletContext().getAttribute("listenerMessage");
     }
 
-    public void destroy() {
-    } 
-    
-   
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse res)
+            throws IOException, ServletException {
+        PrintWriter writer = res.getWriter();
+        writer.write("Hello, " + getInitParameter("message") + ", ");
+        writer.write(req.getAttribute("filterMessage") + ", ");
+        writer.write(listenerMessage + ".\n");
+    }
 }

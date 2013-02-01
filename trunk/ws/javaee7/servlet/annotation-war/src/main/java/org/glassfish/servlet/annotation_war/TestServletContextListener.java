@@ -42,7 +42,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.glassfish.samples.annotation_war;
+package org.glassfish.servlet.annotation_war;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -54,7 +54,7 @@ import javax.servlet.annotation.WebListener;
  *
  * @author Shing Wai Chan
  * @author Daniel Guo
- * 
+ *
  */
 @WebListener()
 public class TestServletContextListener implements ServletContextListener {
@@ -63,7 +63,7 @@ public class TestServletContextListener implements ServletContextListener {
         ServletContext context = sce.getServletContext();
         String msg = "my listener";
         context.setAttribute("listenerMessage", msg);
-    }   
+    }
 
     public void contextDestroyed(ServletContextEvent sce) {
     }
