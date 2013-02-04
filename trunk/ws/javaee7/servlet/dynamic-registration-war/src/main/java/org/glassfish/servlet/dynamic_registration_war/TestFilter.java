@@ -38,58 +38,45 @@
  * holder.
  */
 
-package org.glassfishsamples.dynamic_registration_war;
+package org.glassfish.servlet.dynamic_registration_war;
 
 import java.io.*;
 import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 
 /**
- * Servlet that is registered by the
+ * Filter that is registered by the
  * <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>.
  *
- * <p>This Servlet verifies that the initialization parameter that was
- * added by the <tt>TestServletContextListener</tt> when it registered the
- * Servlet is present in its <tt>ServetConfig</tt>.
- *
- * <p>The Servlet also verifies that the Filter mapped to it has been
- * invoked, by checking the request for the presence of the Filter's
+ * <p>This Filter retrieves (from its <tt>FilterConfig</tt>) the
  * initialization parameter that was added by the
- * <tt>TestServletContextListener</tt> when it registered the Filter,
- * and was set on the request (as a request attribute) by the Filter as
- * the request passed through the Filter.
- * 
- * <p>If any of the verification steps fail, the Servlet will throw an
- * Exception. Otherwise, it outputs the string <tt>HELLO WORLD!</tt> to the
- * response.
+ * <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>
+ * when it registered the Filter, and stores this initialization parameter
+ * in the request (as a request attribute), so it can be read by the Servlet
+ * to which this Filter was mapped.
  *
  * @author Jan Luehe
  * @author Daniel Guo
  */
-public class TestServlet extends HttpServlet {
+public class TestFilter implements Filter {
+
+    private String filterInitParam;
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse res)
-            throws IOException, ServletException {
+    public void init(FilterConfig filterConfig) throws ServletException {
+        filterInitParam = filterConfig.getInitParameter("filterInitName");
+    }   
 
-        if (!"servletInitValue".equals(getServletConfig().getInitParameter(
-                        "servletInitName"))) {
-            throw new ServletException("Missing servlet init param");
-        }
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res,
+            FilterChain chain) throws IOException, ServletException {
+        req.setAttribute("filterInitName", filterInitParam);
+        chain.doFilter(req, res);
+    }
 
-        if (!"filterInitValue".equals(req.getAttribute("filterInitName"))) {
-            throw new ServletException("Missing request attribute that was " +
-                "supposed to have been set by programmtically registered " +
-                "Filter");
-        }
-
-        if (!"listenerAttributeValue".equals(req.getAttribute(
-                "listenerAttributeName"))) {
-            throw new ServletException("Missing request attribute that was " +
-                "supposed to have been set by programmtically registered " +
-                "ServletRequestListener");
-        }
-
-        res.getWriter().println("HELLO WORLD! GLASSFISH\n");
+    @Override
+    public void destroy() {
+        // Do nothing
     }
 }
