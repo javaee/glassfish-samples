@@ -38,45 +38,53 @@
  * holder.
  */
 
-package org.glassfishsamples.dynamic_registration_war;
+package org.glassfish.servlet.dynamic_registration_war;
 
-import java.io.*;
+import java.util.*;
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 
 /**
- * Filter that is registered by the
- * <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>.
+ * ServletContextListener that registers a Servlet (with
+ * name <tt>DynamicServlet</tt>) and Filter (with name 
+ * <tt>DynamicFilter</tt>) in response to the <tt>contextInitialized</tt>
+ * event.
  *
- * <p>This Filter retrieves (from its <tt>FilterConfig</tt>) the
- * initialization parameter that was added by the
- * <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>
- * when it registered the Filter, and stores this initialization parameter
- * in the request (as a request attribute), so it can be read by the Servlet
- * to which this Filter was mapped.
+ * <p>The <tt>DynamicServlet</tt> is configured with an initialization
+ * parameter and mapped to a URL pattern equal to <tt>/*</tt>.
+ *
+ * <p>The <tt>DynamicFilter</tt> is also configured with an initialization
+ * parameter and mapped to the <tt>DynamicServlet</tt> such that it will
+ * intercept any requests mapped to the <tt>DynamicServlet</tt>.
  *
  * @author Jan Luehe
  * @author Daniel Guo
  */
-public class TestFilter implements Filter {
-
-    private String filterInitParam;
+public class TestServletContextListener implements ServletContextListener {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        filterInitParam = filterConfig.getInitParameter("filterInitName");
+    public void contextInitialized(ServletContextEvent sce) {
+
+        ServletContext sc = sce.getServletContext();
+
+        // Register Servlet
+        ServletRegistration sr = sc.addServlet("DynamicServlet",
+            "org.glassfishsamples.dynamic_registration_war.TestServlet");
+        sr.setInitParameter("servletInitName", "servletInitValue");
+        sr.addMapping("/*");
+
+        // Register Filter
+        FilterRegistration fr = sc.addFilter("DynamicFilter",
+            "org.glassfishsamples.dynamic_registration_war.TestFilter");
+        fr.setInitParameter("filterInitName", "filterInitValue");
+        fr.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST),
+                                     true, "DynamicServlet");
+
+        // Register ServletRequestListener
+        sc.addListener("org.glassfishsamples.dynamic_registration_war.TestServletRequestListener");
     }   
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res,
-            FilterChain chain) throws IOException, ServletException {
-        req.setAttribute("filterInitName", filterInitParam);
-        chain.doFilter(req, res);
-    }
-
-    @Override
-    public void destroy() {
+    public void contextDestroyed(ServletContextEvent sce) {  
         // Do nothing
     }
 }

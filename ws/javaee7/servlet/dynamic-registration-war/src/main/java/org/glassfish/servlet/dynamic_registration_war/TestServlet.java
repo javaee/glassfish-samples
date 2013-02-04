@@ -38,35 +38,58 @@
  * holder.
  */
 
-package org.glassfishsamples.dynamic_registration_war;
+package org.glassfish.servlet.dynamic_registration_war;
 
+import java.io.*;
 import javax.servlet.*;
+import javax.servlet.http.*;
+
 /**
+ * Servlet that is registered by the
+ * <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>.
+ *
+ * <p>This Servlet verifies that the initialization parameter that was
+ * added by the <tt>TestServletContextListener</tt> when it registered the
+ * Servlet is present in its <tt>ServetConfig</tt>.
+ *
+ * <p>The Servlet also verifies that the Filter mapped to it has been
+ * invoked, by checking the request for the presence of the Filter's
+ * initialization parameter that was added by the
+ * <tt>TestServletContextListener</tt> when it registered the Filter,
+ * and was set on the request (as a request attribute) by the Filter as
+ * the request passed through the Filter.
  * 
+ * <p>If any of the verification steps fail, the Servlet will throw an
+ * Exception. Otherwise, it outputs the string <tt>HELLO WORLD!</tt> to the
+ * response.
+ *
  * @author Jan Luehe
  * @author Daniel Guo
  */
-public class TestServletRequestListener implements ServletRequestListener {
+public class TestServlet extends HttpServlet {
 
-    /**
-     * Receives notification that a request is about to enter the scope
-     * of the web application.
-     *
-     * @param sre The ServletRequestEvent
-     */
-    public void requestInitialized(ServletRequestEvent sre) {
-        sre.getServletRequest().setAttribute("listenerAttributeName",
-            "listenerAttributeValue");
-    }
-    
-    /**
-     * Receives notification that a request is about to leave the scope
-     * of the web application.
-     *
-     * @param sre The ServletRequestEvent
-     */
-    public void requestDestroyed(ServletRequestEvent sre) {
-        // Do nothing
-    }
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse res)
+            throws IOException, ServletException {
 
+        if (!"servletInitValue".equals(getServletConfig().getInitParameter(
+                        "servletInitName"))) {
+            throw new ServletException("Missing servlet init param");
+        }
+
+        if (!"filterInitValue".equals(req.getAttribute("filterInitName"))) {
+            throw new ServletException("Missing request attribute that was " +
+                "supposed to have been set by programmtically registered " +
+                "Filter");
+        }
+
+        if (!"listenerAttributeValue".equals(req.getAttribute(
+                "listenerAttributeName"))) {
+            throw new ServletException("Missing request attribute that was " +
+                "supposed to have been set by programmtically registered " +
+                "ServletRequestListener");
+        }
+
+        res.getWriter().println("HELLO WORLD! GLASSFISH\n");
+    }
 }
