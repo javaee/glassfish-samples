@@ -68,19 +68,19 @@ public class TestServletContextListener implements ServletContextListener {
 
         // Register Servlet
         ServletRegistration sr = sc.addServlet("DynamicServlet",
-            "org.glassfishsamples.dynamic_registration_war.TestServlet");
+            "org.glassfish.servlet.dynamic_registration_war.TestServlet");
         sr.setInitParameter("servletInitName", "servletInitValue");
         sr.addMapping("/*");
 
         // Register Filter
         FilterRegistration fr = sc.addFilter("DynamicFilter",
-            "org.glassfishsamples.dynamic_registration_war.TestFilter");
+            "org.glassfish.servlet.dynamic_registration_war.TestFilter");
         fr.setInitParameter("filterInitName", "filterInitValue");
         fr.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST),
                                      true, "DynamicServlet");
 
         // Register ServletRequestListener
-        sc.addListener("org.glassfishsamples.dynamic_registration_war.TestServletRequestListener");
+        sc.addListener("org.glassfish.servlet.dynamic_registration_war.TestServletRequestListener");
     }   
 
     @Override
