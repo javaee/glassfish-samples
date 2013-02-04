@@ -101,6 +101,8 @@
         <module>jsf</module>
         <module>rest</module>
         <module>servlet</module>
+        <!-- javax.javaee-api:7.0-b73 required -->
+        <!-- <module>websocket</module> -->
     </modules>
 
     <build>
