@@ -41,7 +41,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.glassfish.servlet.multipart_annotation_war;
+package org.glassfish.servlet.multipart_war;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -49,11 +49,11 @@
   </parent>
 
     <groupId>org.glassfish-samples</groupId>
-    <artifactId>multipart-annotation-war</artifactId>
+    <artifactId>multipart-war</artifactId>
     <version>4.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>multipart-annotation-war</name>
+    <name>multipart-war</name>
 
     <dependencies>
         <dependency>
@@ -64,7 +64,7 @@
     </dependencies>
 
     <build>
-        <finalName>multipart-annotation-war</finalName>
+        <finalName>multipart-war</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
