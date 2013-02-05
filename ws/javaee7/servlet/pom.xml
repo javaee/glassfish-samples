@@ -39,25 +39,30 @@
     only if the new code is made subject to such option by the copyright
     holder.
 
--->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.glassfish-samples</groupId>
         <artifactId>glassfish-samples-parent</artifactId>
-	<version>4.0-SNAPSHOT</version>
+        <version>4.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>servlet-samples</artifactId>
     <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
 
     <name>Java EE 7 Servlet Samples</name>
 
-    <modules>
-	
-    </modules>
-
+  <modules>
+    <module>non-blocking-io-read-war</module>
+    <module>annotation-war</module>
+    <module>non-blocking-io-write-war</module>
+    <module>async-request-war</module>
+    <module>dynamic-registration-war</module>
+    <module>multipart-war</module>
+    <module>session-cookie-config-war</module>
+    <module>jsp-resource-in-bundled-jar-war</module>
+    <module>servlet-container-initializer</module>
+    <module>absolute-ordering-web-fragments</module>
+    <module>http-upgrade-war</module>
+  </modules>
 </project>
