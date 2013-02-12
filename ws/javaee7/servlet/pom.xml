@@ -52,10 +52,8 @@
 
     <name>Java EE 7 Servlet Samples</name>
 
-  <modules>
-    <module>non-blocking-io-read-war</module>
-    <module>annotation-war</module>
-    <module>non-blocking-io-write-war</module>
+  <modules>    
+    <module>annotation-war</module>  
     <module>async-request-war</module>
     <module>dynamic-registration-war</module>
     <module>multipart-war</module>
@@ -63,6 +61,10 @@
     <module>jsp-resource-in-bundled-jar-war</module>
     <module>servlet-container-initializer</module>
     <module>absolute-ordering-web-fragments</module>
+    <!-- modules not checked in yet, commenting in order to build from the top
+    <module>non-blocking-io-read-war</module>
+    <module>non-blocking-io-write-war</module>
     <module>http-upgrade-war</module>
+    -->
   </modules>
 </project>

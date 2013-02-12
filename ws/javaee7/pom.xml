@@ -101,8 +101,7 @@
         <module>jsf</module>
         <module>rest</module>
         <module>servlet</module>
-        <!-- javax.javaee-api:7.0-b73 required -->
-        <!-- <module>websocket</module> -->
+        <module>websocket</module> 
     </modules>
 
     <build>
@@ -161,7 +160,7 @@
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
-                <version>7.0-b72</version>
+                <version>7.0-b74</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
