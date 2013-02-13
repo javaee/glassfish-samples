@@ -41,33 +41,37 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.glassfish-samples</groupId>
-        <artifactId>glassfish-samples-parent</artifactId>
+	<groupId>org.glassfish-samples</groupId>
+        <artifactId>rest-samples</artifactId>
         <version>4.0-SNAPSHOT</version>
     </parent>
+    <artifactId>managed-client</artifactId>
+    <packaging>war</packaging>
+    <name>Proxy REST Sample Application</name>
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>managed-client</warName>
+                </configuration>
+            </plugin>
+        </plugins>
 
-    <artifactId>rest-samples</artifactId>
-    <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
-
-    <name>Java EE 7 REST Samples</name>
-
-    <modules>
-	<module>message-board</module>
-	<module>async-chat</module>
-	<module>managed-client</module>
-    </modules>
-
-    <!-- javaee-api jar-->
-    <repositories>
-        <repository>
-            <id>Java EE 7</id>
-            <url>https://maven.java.net/content/groups/promoted/</url>
-        </repository>
-    </repositories>
-
+    </build>
 </project>
+
