@@ -106,6 +106,8 @@ applications and take whatever action as the library sees fit.<br>
     is deployed, the web container recognizes that the <tt>ServletContainerInitializer</tt> implementation in the (dummy) library will be interested in this application. Hence the web
     container will call the <tt>onStartUp</tt> method which will set <tt>SHAREDLIB-1</tt> attribute in the <tt>ServletContext</tt> of the application which is read and printed by
     the sample application on the browser.</p>
+    <h2>Key Features</h2>
+    <li>It is available to do any initialization when the container is starting up.</li>
 <h2>Building, Deploying, and Running the Application</h2>
 <p> Perform the following steps to build, deploy, and run the
     application:<br>

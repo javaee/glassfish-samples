@@ -72,6 +72,7 @@
 </a></p>
 <h1>The Servlet 3.0 Asynchronous Sample Application</h1>
 This is a simple Servlet 3.0 application using asychronous API.
+<h2>Description</h2>
 <p><b>Servlet</b>
 </p>
 <p>The servlet is responsible for asynchronous request processing.
@@ -138,6 +139,9 @@ There is no need to define any Sun GlassFish Enterprise Server specific
 deployment descrpitor (<code>sun-web.xml</code>) for this
 example.
 <br>
+<h2>Key Features</h2>
+<li>AsyncListener is listening the request and dealing with the data asynchronously. The server thread does not need to wait for data.</li>
+<li>The callback functions can easily deal with different events.</li>
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
   Perform the following steps to build, deploy, and run the
