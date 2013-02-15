@@ -59,7 +59,7 @@
     <properties>
         <integration.container.id>glassfish3x</integration.container.id>
         <glassfish.home>${basedir}/target/cargo/installs/glassfish</glassfish.home>
-        <cargo.maven.containerUrl>http://javaweb.us.oracle.com/java/re/glassfish/4.0/promoted/b74/archive/bundles/latest-glassfish.zip</cargo.maven.containerUrl>
+        <cargo.maven.containerUrl>http://javaweb.us.oracle.com/java/re/glassfish/4.0/promoted/b76/archive/bundles/latest-glassfish.zip</cargo.maven.containerUrl>
     </properties>
     <scm>
         <connection>scm:svn:https://svn.java.net/svn/glassfish-samples~svn/trunk/ws/javaee7</connection>
@@ -99,8 +99,10 @@
 
     <modules>
         <module>jsf</module>
-        <module>rest</module>
-        <module>servlet</module>
+	<module>rest</module>
+	<!--
+	<module>servlet</module>
+	-->
         <module>websocket</module> 
     </modules>
 
@@ -160,7 +162,7 @@
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
-                <version>7.0-b74</version>
+                <version>7.0-b76</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
