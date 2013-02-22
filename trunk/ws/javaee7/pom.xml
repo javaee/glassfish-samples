@@ -103,7 +103,8 @@
 	<!--
 	<module>servlet</module>
 	-->
-        <module>websocket</module> 
+        <module>websocket</module>
+        <module>cdi</module> 
     </modules>
 
     <build>

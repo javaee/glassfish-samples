@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010-2011 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>JSF 2.0 CDI Example</title>
+    </h:head>
+
+    <h:body>
+       <h:form id="NumberGuessMain">
+          <h:panelGrid styleClass="title-panel">
+             <h:outputText value="Guess Number" styleClass="title-panel-text"/>
+             <h:outputText value="Powered By JavaServer Faces 2.0 and CDI" styleClass="title-panel-subtext"/>
+          </h:panelGrid>
+
+          <div style="color: black; font-size: 24px;">
+             I'm thinking of a number between <span style="color: blue">#{game.smallest}</span> and <span style="color: blue">#{game.biggest}</span>. You have <span style="color: blue">#{game.remainingGuesses}</span> guesses.
+          </div>
+     
+          <h:panelGrid border="1" columns="5" style="font-size: 18px;">
+             Number: 
+             <h:inputText id="inputGuess" value="#{game.guess}" required="true" size="3" disabled="#{game.number eq game.guess}" 
+		validator="#{game.validateNumberRange}">
+             </h:inputText>
+             <h:commandButton id="GuessButton" value="Guess" action="#{game.check}" disabled="#{game.number eq game.guess}"/>
+             <h:commandButton id="RestartButton" value="Reset" action="#{game.reset}" immediate="true" />
+             <h:outputText id="Higher" value="Higher!" rendered="#{game.number gt game.guess and game.guess ne 0}" style="color: red"/>
+             <h:outputText id="Lower" value="Lower!" rendered="#{game.number lt game.guess and game.guess ne 0}" style="color: red"/>
+          </h:panelGrid>
+
+          <div style="color: red; font-size: 14px;">
+             <h:messages id="messages" globalOnly="false"/>
+          </div>
+
+          <h:outputStylesheet name="stylesheet.css" />
+       </h:form>
+    </h:body>
+
+</html>
