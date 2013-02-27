@@ -63,7 +63,8 @@ public class ResponseFilter implements ContainerResponseFilter {
         Date currentDate = new Date();
         final Date lastDate = date.getAndSet(currentDate);
 
-        containerResponseContext.getHeaders().add("last-response", lastDate == null ? "this is the first response" : lastDate.toString());
+        containerResponseContext.getHeaders().add("previous-response", lastDate == null ? "this is the first response"
+                : lastDate.toString());
         containerResponseContext.getHeaders().add("this-response", currentDate.toString());
     }
 }

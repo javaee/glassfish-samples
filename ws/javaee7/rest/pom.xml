@@ -59,7 +59,6 @@
     <modules>
 	<module>message-board</module>
 	<module>async-chat</module>
-	<module>managed-client</module>
     </modules>
 
     <!-- javaee-api jar-->

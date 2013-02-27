@@ -84,6 +84,11 @@
                 }
             }
 
+            function updateHeaders(xmlHttp) {
+                var allResponseHeaders = xmlHttp.getAllResponseHeaders().replace(new RegExp("\n", 'g'), "<br/>");
+                document.getElementById("headers").innerHTML = allResponseHeaders;
+            }
+
             function getMessages()
             {
                 var xmlHttp = getXmlHttpRequest();
@@ -93,11 +98,9 @@
                     {
                         document.getElementById("query").innerHTML = "GET app/messages";
                         document.getElementById("output").innerHTML = xmlHttp.responseText;
-                        var allResponseHeaders = xmlHttp.getAllResponseHeaders().replace(new RegExp("\n", 'g'),"<br/>");
-                        document.getElementById("headers").innerHTML = allResponseHeaders;
-
+                        updateHeaders(xmlHttp);
                     }
-                }
+                };
                 xmlHttp.open("GET","app/messages/",true);
                 xmlHttp.send(null);
             }
@@ -117,9 +120,10 @@
                         } else {
                             document.getElementById("output").innerHTML=xmlHttp.responseText;
                         }
+                        updateHeaders(xmlHttp);
                         
                     }
-                }
+                };
                 xmlHttp.open("GET","app/messages/" + index,true);
                 xmlHttp.send(null);
             }
@@ -138,8 +142,9 @@
                         } else {
                             document.getElementById("output").innerHTML=xmlHttp.responseText;
                         }
+                        updateHeaders(xmlHttp);
                     }
-                }
+                };
                 xmlHttp.open("DELETE","app/messages/" + index,true);
                 xmlHttp.send(null);
             }
@@ -154,7 +159,8 @@
                         document.getElementById("query").innerHTML="POST app/messages";
                         document.getElementById("output").innerHTML="";
                     }
-                }
+                    updateHeaders(xmlHttp);
+                };
                 xmlHttp.open("POST","app/messages/",true);
                 xmlHttp.send(message);
             }
@@ -188,9 +194,8 @@
 
 <form name="form3">
     Message: <input type="test" name="messageText" />
-
     <button type="button" name="GET2" onclick="addMessage(document.form3.messageText.value)">ADD MESSAGE</button>
-    
+    <i>Reader interceptor will remove all invalid character. Valid characters are characters, numbers, white spaces and dot.</i>
 </form>
 
 
@@ -198,6 +203,7 @@
     <h3>query: </h3>
 <div id="query" style="font-weight: bold"></div>
     <h3>response headers</h3>
+        <i>Response filter adds 'previous-response' and 'this-response' header.</i>
 <div id="headers" style="border: 1px solid black; color: black; height: 9em; width: 100%"></div>
      <h3>response entity</h3>
 <div id="output" style="border: 1px solid black; color: black; height: 18em; width: 100%"></div>
