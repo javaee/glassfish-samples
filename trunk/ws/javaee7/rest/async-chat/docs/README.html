@@ -97,10 +97,15 @@
         resumed with the message from the POST request that is still waiting blocked on the blocking queue. Message
         will be returned to the browser and message is displayed in the box below the GET MESSAGE button. When buttons
         are clicked in the opposite order the GET request will be suspended waiting to be resumed by incoming POST request.
-         </p>
+        </p>
+        <p>The screen also contains the field with the status of an asynchronous queue kept in the ChatResource. This
+            field is automatically refreshed in short intervals by calling the GET on /chat/queue from ChatResource.
+        </p>
         <p>
-        Only one GET and one POST request can be sent to the server (then buttons are disabled). The screen also
-        contains log of asynchronous requests done by browser.</p>
+        Only one GET and one POST request can be sent to the server (then buttons are disabled). In order to submit more
+        GET and POST requests more browser windows needs to be opened. The screen also contains log of asynchronous requests
+        done by browser.</p>
+
 
         <h2>Key Features</h2>
         <ul>
