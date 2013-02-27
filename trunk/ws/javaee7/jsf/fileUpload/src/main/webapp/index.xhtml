@@ -50,7 +50,10 @@
    <h1>JSF 2.2 File Upload Samples</h1>
    <article>
       <p>This sample demonstrates the use of a simple file upload component introduced in JSF 2.2.<br/>
-         Click on the "Browse" button and choose one of <i>inputFileFailure.txt</i> or <br/>
+         One option demonstrates a traditional file upload operation, while the other option<br/>
+         demonstrates a file upload operation over Ajax.<br/>
+         For both options, Click on the "Browse" button and navigate to the<br/>
+         <i>javaee7/jsf/fileupload</i> directory.  choose one of <i>inputFileFailure.txt</i> or <br/>
          <i>inputFileSuccess.txt .</i>  Then press the <i>Upload</i> button.  There is a validator
          attached to the file input component that examines the contents of the uploaded file, <br/>
          looking for the string <i>JSR-344</i>.  The <i>inputFileFailure.txt</i> file does not contain<br/>
@@ -61,6 +64,10 @@
 
 <form jsf:id="form">
    <h:commandButton value="Continue to Sample" action="inputFile"/>
+   <br/>
+   <br/>
+   <h:commandButton value="Continue to Ajax Sample" action="inputFileAjax"/>
+
 </form>
 
 </html>
