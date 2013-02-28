@@ -99,12 +99,13 @@
 
     <modules>
         <module>jsf</module>
-	<module>rest</module>
-	<!--
-	<module>servlet</module>
-	-->
+        <module>rest</module>
+    <!--
+    <module>servlet</module>
+    -->
         <module>websocket</module>
         <module>cdi</module> 
+        <module>jsonp</module> 
     </modules>
 
     <build>
