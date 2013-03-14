@@ -37,6 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+
 package org.glassfish.samples.websocket.auction.decoders;
 
 import javax.websocket.Decoder;
@@ -46,18 +47,20 @@ import org.glassfish.samples.websocket.auction.message.AuctionMessage;
 /**
  * @author Stepan Kopriva (stepan.kopriva at oracle.com)
  */
-public class LogoutRequestDecoder implements Decoder.Text<AuctionMessage.LogoutRequestMessage> {
+public class AuctionMessageDecoder extends Decoder.Adapter implements Decoder.Text<AuctionMessage> {
 
     @Override
-    public AuctionMessage.LogoutRequestMessage decode(String s) {
+    public AuctionMessage decode(String s) {
         String[] tokens = s.split(":");
 
-        return new AuctionMessage.LogoutRequestMessage(tokens[1], tokens[2]);
+        return new AuctionMessage(tokens[0], tokens[1], tokens[2]);
     }
 
     @Override
     public boolean willDecode(String s) {
-        return s.startsWith(AuctionMessage.LogoutRequestMessage.LOGOUT_REQUEST);
-
+        return s.startsWith(AuctionMessage.BID_REQUEST) ||
+                s.startsWith(AuctionMessage.AUCTION_LIST_REQUEST) ||
+                s.startsWith(AuctionMessage.LOGIN_REQUEST) ||
+                s.startsWith(AuctionMessage.LOGOUT_REQUEST);
     }
 }

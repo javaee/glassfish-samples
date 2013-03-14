@@ -47,10 +47,10 @@ import org.glassfish.samples.websocket.auction.message.AuctionMessage;
 /**
  * @author Pavel Bucek (pavel.bucek at oracle.com)
  */
-public class AuctionMessageEncoder implements Encoder.Text<AuctionMessage<?>> {
+public class AuctionMessageEncoder extends Encoder.Adapter implements Encoder.Text<AuctionMessage> {
 
     @Override
-    public String encode(AuctionMessage<?> object) throws EncodeException {
-        return object.asString();
+    public String encode(AuctionMessage object) throws EncodeException {
+        return object.toString();
     }
 }

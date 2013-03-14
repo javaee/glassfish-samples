@@ -39,16 +39,15 @@
  */
 package org.glassfish.samples.websocket.echo;
 
-import javax.websocket.WebSocketMessage;
-import javax.websocket.server.DefaultServerConfiguration;
-import javax.websocket.server.WebSocketEndpoint;
+import javax.websocket.OnMessage;
+import javax.websocket.server.ServerEndpoint;
 
 /**
  * Echo endpoint.
  *
  * @author Pavel Bucek (pavel.bucek at oracle.com)
  */
-@WebSocketEndpoint(value = "echo", configuration = DefaultServerConfiguration.class)
+@ServerEndpoint("/echo")
 public class EchoEndpoint {
 
     /**
@@ -61,10 +60,10 @@ public class EchoEndpoint {
      * @param message incoming text message.
      * @return outgoing message.
      *
-     * @see WebSocketMessage
+     * @see OnMessage
      * @see javax.websocket.Session
      */
-    @WebSocketMessage
+    @OnMessage
     public String echo(String message) {
         return message;
     }

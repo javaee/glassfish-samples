@@ -47,16 +47,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.websocket.EncodeException;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
 import javax.websocket.Session;
-import javax.websocket.WebSocketClose;
-import javax.websocket.WebSocketMessage;
-import javax.websocket.server.DefaultServerConfiguration;
-import javax.websocket.server.WebSocketEndpoint;
+import javax.websocket.server.ServerEndpoint;
 
-import org.glassfish.samples.websocket.auction.decoders.AuctionListRequestDecoder;
-import org.glassfish.samples.websocket.auction.decoders.BidRequestDecoder;
-import org.glassfish.samples.websocket.auction.decoders.LoginRequestDecoder;
-import org.glassfish.samples.websocket.auction.decoders.LogoutRequestDecoder;
+import org.glassfish.samples.websocket.auction.decoders.AuctionMessageDecoder;
 import org.glassfish.samples.websocket.auction.encoders.AuctionMessageEncoder;
 import org.glassfish.samples.websocket.auction.message.AuctionMessage;
 
@@ -65,18 +61,13 @@ import org.glassfish.samples.websocket.auction.message.AuctionMessage;
  *
  * @author Stepan Kopriva (stepan.kopriva at oracle.com)
  */
-@WebSocketEndpoint(value = "/auction",
+@ServerEndpoint(value = "/auction",
         decoders = {
-                LoginRequestDecoder.class,
-                BidRequestDecoder.class,
-                LogoutRequestDecoder.class,
-                AuctionListRequestDecoder.class,
-                LogoutRequestDecoder.class
+                AuctionMessageDecoder.class,
         },
         encoders = {
                 AuctionMessageEncoder.class
-        },
-        configuration = DefaultServerConfiguration.class
+        }
 )
 public class AuctionServer {
 
@@ -84,56 +75,57 @@ public class AuctionServer {
      * Set of auctions (finished, running, to be started auctions).
      */
     private static final Set<Auction> auctions = Collections.unmodifiableSet(new HashSet<Auction>() {{
-        add(new Auction(new AuctionItem("Swatch", "Nice Swatch watches, hand made", 100, System.currentTimeMillis() + 60000, 30)));
-        add(new Auction(new AuctionItem("Rolex", "Nice Rolex watches, hand made", 200, System.currentTimeMillis() + 120000, 30)));
-        add(new Auction(new AuctionItem("Omega", "Nice Omega watches, hand made", 300, System.currentTimeMillis() + 180000, 30)));
+        add(new Auction(new AuctionItem("Swatch", "Nice Swatch watches, hand made", 100, 20)));
+        add(new Auction(new AuctionItem("Rolex", "Nice Rolex watches, hand made", 200, 20)));
+        add(new Auction(new AuctionItem("Omega", "Nice Omega watches, hand made", 300, 20)));
     }});
 
-    @WebSocketClose
+    @OnClose
     public void handleClosedConnection(Session session) {
         for (Auction auction : auctions) {
             auction.removeArc(session);
         }
     }
 
-    @WebSocketMessage
-    public void handleLogoutRequest(AuctionMessage.LogoutRequestMessage alrm, Session session) {
-        handleClosedConnection(session);
-    }
+    @OnMessage
+    public void handleMessage(AuctionMessage message, Session session){
+        String communicationId;
 
-    @WebSocketMessage
-    public void handleAuctionListRequest(AuctionMessage.AuctionListRequestMessage alrm, Session session) {
-        StringBuilder sb = new StringBuilder("-");
-
-        for (Auction auction : auctions) {
-            sb.append(auction.getId()).append("-").append(auction.getItem().getName()).append("-");
-        }
-
-        try {
-            session.getRemote().sendObject((new AuctionMessage.AuctionListResponseMessage("0", sb.toString())));
-        } catch (IOException | EncodeException e) {
-            Logger.getLogger(AuctionServer.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-
-    @WebSocketMessage
-    public void handleLoginRequest(AuctionMessage.LoginRequestMessage lrm, Session session) {
-        String communicationId = lrm.getCommunicationId();
-        for (Auction auction : auctions) {
-            if (communicationId.equals(auction.getId())) {
-                auction.handleLoginRequest(lrm, session);
-            }
-        }
-    }
-
-    @WebSocketMessage
-    public void handleBidRequest(AuctionMessage.BidRequestMessage brm, Session session) {
-        String communicationId = brm.getCommunicationId();
-        for (Auction auction : auctions) {
-            if (communicationId.equals(auction.getId())) {
-                auction.handleBidRequest(brm, session);
+        switch (message.getType()){
+            case AuctionMessage.LOGOUT_REQUEST:
+                handleClosedConnection(session);
                 break;
-            }
+            case AuctionMessage.AUCTION_LIST_REQUEST:
+                StringBuilder sb = new StringBuilder("-");
+
+                for (Auction auction : auctions) {
+                    sb.append(auction.getId()).append("-").append(auction.getItem().getName()).append("-");
+                }
+
+                try {
+                    session.getBasicRemote().sendObject((new AuctionMessage.AuctionListResponseMessage("0", sb.toString())));
+                } catch (IOException | EncodeException e) {
+                    Logger.getLogger(AuctionServer.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case AuctionMessage.LOGIN_REQUEST:
+                communicationId = message.getCommunicationId();
+                for (Auction auction : auctions) {
+                    if (communicationId.equals(auction.getId())) {
+                        auction.handleLoginRequest(message, session);
+                    }
+                }
+                break;
+            case AuctionMessage.BID_REQUEST:
+                communicationId = message.getCommunicationId();
+                for (Auction auction : auctions) {
+                    if (communicationId.equals(auction.getId())) {
+                        auction.handleBidRequest(message, session);
+                        break;
+                    }
+                }
+                break;
         }
+
     }
 }

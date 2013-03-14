@@ -44,7 +44,6 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.websocket.EncodeException;
 import javax.websocket.Session;
 
 import org.glassfish.samples.websocket.auction.message.AuctionMessage;
@@ -52,9 +51,9 @@ import org.glassfish.samples.websocket.auction.message.AuctionMessage;
 /**
  * @author Stepan Kopriva (stepan.kopriva at oracle.com)
  */
-class AuctionTimeBroadcasterTask extends TimerTask {
+public class AuctionTimeBroadcasterTask extends TimerTask {
 
-    private final Auction owner;
+    private Auction owner;
     private int timeoutCounter;
 
     public AuctionTimeBroadcasterTask(Auction owner, int timeoutCounter) {
@@ -72,9 +71,9 @@ class AuctionTimeBroadcasterTask extends TimerTask {
 
                 for (Session arc : owner.getRemoteClients()) {
                     try {
-                        arc.getRemote().sendObject(atbm);
-                    } catch (IOException | EncodeException e) {
-                        Logger.getLogger(PreAuctionTimeBroadcasterTask.class.getName()).log(Level.SEVERE, null, e);
+                        arc.getBasicRemote().sendText(atbm.toString());
+                    } catch (IOException ex) {
+                        Logger.getLogger(AuctionTimeBroadcasterTask.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
