@@ -52,6 +52,9 @@
     <artifactId>flows</artifactId>
     <packaging>war</packaging>
     <name>Faces Flow JSF Sample Application</name>
+    <build>
+        <finalName>flows</finalName>
+    </build>
 
     <dependencies>
         <dependency>

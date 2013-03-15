@@ -52,6 +52,9 @@
     <artifactId>fileupload</artifactId>
     <packaging>war</packaging>
     <name>File Upload JSF Sample Application</name>
+    <build>
+        <finalName>fileUpload</finalName>
+    </build>
     <dependencies>
         <dependency>
             <groupId>javax</groupId>

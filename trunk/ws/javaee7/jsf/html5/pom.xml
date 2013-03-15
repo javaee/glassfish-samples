@@ -52,6 +52,9 @@
     <artifactId>html5</artifactId>
     <packaging>war</packaging>
     <name>HTML5 JSF Sample Application</name>
+    <build>
+        <finalName>html5</finalName>
+    </build>
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
