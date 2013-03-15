@@ -90,7 +90,7 @@ application:</p>
   server with which the build system has to work by following the <a
  href="../../../../docs/UserREADME.html"> common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
-  directory: <code><i>samples_install_dir</i>/javaee7/servlet/jsp-resource-in-bundled-jar-war</code>.</li>
+  directory: <code><i>samples_install_dir</i>/servlet/jsp-resource-in-bundled-jar-war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
     <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
@@ -102,7 +102,7 @@ application:</p>
     <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
     </p>
     <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;/glassfish/glassfish3</code></p>
+    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
     <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
     </p>
     <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
@@ -135,7 +135,7 @@ The following output is expected in the browser: <br>
 <p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
 <ol>
 <li> Refer to the <a href="../../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 7 SDK.</li>
-<li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee7/servlet/</code> directory, select <code>jsp-resource-in-bundled-jar-war</code>, and click Open Project.</li>
+<li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/servlet/</code> directory, select <code>jsp-resource-in-bundled-jar-war</code>, and click Open Project.</li>
 <li> In the Projects tab, right click <code>jsp-resource-in-bundled-jar-war</code> and select Run to build, deploy, and run the project.</li>
 </ol>
 
