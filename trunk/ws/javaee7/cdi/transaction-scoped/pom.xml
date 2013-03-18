@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
 
     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
@@ -42,24 +41,37 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.glassfish-samples</groupId>
-        <artifactId>glassfish-samples-parent</artifactId>
+	<groupId>org.glassfish-samples</groupId>
+        <artifactId>cdi-samples</artifactId>
         <version>4.0-SNAPSHOT</version>
     </parent>
-    <artifactId>cdi-samples</artifactId>
-    <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
-    <name>Java EE 7 CDI Samples</name> 
-    <modules>
-        <module>events</module>
-        <module>interceptors</module>
-        <module>cdi-guess</module>
-        <module>cdi-servlet</module>
-        <module>transaction-scoped</module>
-        <module>transactional</module>
-    </modules>
+    <artifactId>transaction-scoped</artifactId>
+    <packaging>war</packaging>
+    <name>CDI Sample Application for TransactionScoped annotation</name>
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+        	<plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                		<failOnMissingWebXml>false</failOnMissingWebXml>
+            	</configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
+
