@@ -61,10 +61,8 @@
     <module>jsp-resource-in-bundled-jar-war</module>
     <module>servlet-container-initializer</module>
     <module>absolute-ordering-web-fragments</module>
-    <!-- modules not checked in yet, commenting in order to build from the top
     <module>non-blocking-io-read-war</module>
     <module>non-blocking-io-write-war</module>
     <module>http-upgrade-war</module>
-    -->
   </modules>
 </project>
