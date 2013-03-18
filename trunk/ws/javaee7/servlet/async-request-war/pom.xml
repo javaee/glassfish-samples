@@ -56,10 +56,16 @@
     <name>async-request-war</name>
 
     <dependencies>
+        <!--
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1-b05-SNAPSHOT</version>
+        </dependency>
+    -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
         </dependency>
     </dependencies>
 
