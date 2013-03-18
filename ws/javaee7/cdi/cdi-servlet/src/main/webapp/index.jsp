@@ -50,7 +50,7 @@
         <title>CDI Servlet Injection</title>
         <script type="text/javascript" src="resources/ajax.js">
         </script>
-        <link type="text/css" rel="stylesheet" href="/weld-servlet/resources/stylesheet.css" />
+        <link type="text/css" rel="stylesheet" href="/cdi-servlet/resources/stylesheet.css" />
     </head>
     <body>
         <form name="myForm" method="POST" action="LoginServlet">
