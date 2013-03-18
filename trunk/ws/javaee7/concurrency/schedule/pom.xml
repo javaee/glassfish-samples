@@ -58,6 +58,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>schedule</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -71,7 +72,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warName>schedule</warName>
                 </configuration>
             </plugin>
         </plugins>
