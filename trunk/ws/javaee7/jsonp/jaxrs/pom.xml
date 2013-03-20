@@ -60,6 +60,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>jsonp-jaxrs-resources</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
