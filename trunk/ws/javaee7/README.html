@@ -127,6 +127,11 @@ subdirectory.</P>
                 for doing this from maven is still being worked out.  Please let Tom Mueller know what you require, and 
                 stay tuned.
             </P>
+            <p>
+                If the client of your sample is a standalone Java application, you can use org.codehaus.mojo:exec-maven-plugin:exec to run the Java client. Take 
+                ejb/automatic-timer/automatic-timer-client/pom.xml for example, this sample uses exec-maven-plugin plugin to run a remote EJB client. And the client
+                depends on the local gf-client.jar. This jar and the directory of target/classes will be placed on classpath when run the client.
+            </P>
 	<LI><P LANG="zxx"><FONT FACE="Times New Roman, serif">If things work
 	(or at least build), add your content to SVN repository and commit
 	it. If you are unable to commit changes, you may have insufficient

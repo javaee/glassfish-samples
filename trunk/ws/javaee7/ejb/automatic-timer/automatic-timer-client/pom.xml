@@ -72,7 +72,7 @@
                     <executable>java</executable>
                 		<arguments>
 												<argument>-classpath</argument>
-                        <!-- Strip down the classpath to two items -->
+                        <!-- Strip down the classpath to two items, the gf-client.jar and project's target/classes directory -->
 												<classpath>
 												  <dependency>org.glassfish.appclient:gf-client</dependency>
 												</classpath>
