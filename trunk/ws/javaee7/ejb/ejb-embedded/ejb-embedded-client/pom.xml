@@ -62,15 +62,11 @@
             <artifactId>ejb-embedded-server</artifactId>
         		<version>4.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish.extras</groupId>
-            <artifactId>glassfish-embedded-static-shell</artifactId>
-            <version>${project.version}</version>
-            <scope>system</scope>
-            <systemPath>
-                ${glassfish.home}/glassfish/lib/embedded/glassfish-embedded-static-shell.jar
-            </systemPath>
-        </dependency>
+				<dependency>
+						<groupId>org.glassfish.main.extras</groupId>
+						<artifactId>glassfish-embedded-all</artifactId>
+						<version>4.0-b72</version>
+				</dependency>
     </dependencies>
     <build>
         <plugins>
@@ -85,7 +81,7 @@
                         <!-- Strip down the classpath to two items -->
 												<classpath>
 												  <dependency>org.glassfish-samples:ejb-embedded-server</dependency>
-												  <dependency>org.glassfish.extras:glassfish-embedded-static-shell</dependency>
+												  <dependency>org.glassfish.main.extras:glassfish-embedded-all</dependency>
 												</classpath>
 												<argument>ejb.embedded.client.TestClient</argument>
 										</arguments>
