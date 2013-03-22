@@ -59,7 +59,6 @@
         <dependency>
             <groupId>org.glassfish.appclient</groupId>
             <artifactId>gf-client</artifactId>
-            <version>3.2-b06</version>
         </dependency>
     </dependencies>
    
@@ -68,6 +67,7 @@
 	      <plugin>
 	        <groupId>org.codehaus.mojo</groupId>
 	        <artifactId>exec-maven-plugin</artifactId>
+	        <version>1.2.1</version>
 	        <executions>
 	          <execution>
 	            <goals>

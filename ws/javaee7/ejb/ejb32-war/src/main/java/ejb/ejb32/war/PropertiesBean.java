@@ -38,54 +38,55 @@
  * holder.
  */
 
-package ejb.ejb31.war;
+package ejb.ejb32.war;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Enumeration;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.ejb.EJBException;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Properties;
+import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.ejb.EJB;
+@Singleton
+@Startup
+public class PropertiesBean {
 
-/**
- * 
- *
- */
-@WebServlet(name="TestServlet",
-	    urlPatterns={"/"})
-public class TestServlet extends HttpServlet {
+    private Properties props;
+    private int accessCount = 0;
 
-    private @EJB PropertiesBean propertiesBean;
-    private @EJB HelloBean helloBean;
+    @PostConstruct
+    private void startup() {
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-	System.out.println("In TestServlet::init()");
+	System.out.println("In PropertiesBean(Singleton)::startup()");
+
+	try {
+
+            InputStream propsStream = 
+		PropertiesBean.class.getResourceAsStream("/app.properties");
+            props = new Properties();
+            props.load(propsStream);
+
+        } catch(Exception e) {
+	    throw new EJBException("PropertiesBean initialization error", e);
+        }
+
     }
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse res)
-            throws IOException, ServletException {
-
-        PrintWriter writer = res.getWriter();
-
-	String titleMsg = propertiesBean.getProperty("title.message");
-        writer.println(titleMsg);
-
-	String helloMsg = helloBean.sayHello();
-	writer.println("HelloBean says : " + helloMsg);
-
-	int numPropertyAccesses = propertiesBean.getAccessCount();
-	writer.println("Singleton property access count = " + 
-		       numPropertyAccesses);
-	
+    public String getProperty(String name) {
+	accessCount++;
+	return props.getProperty(name);
     }
+
+    public int getAccessCount() {
+	return accessCount;
+    }
+
+    @PreDestroy
+    private void shutdown() {
+        System.out.println("In PropertiesBean(Singleton)::shutdown()");
+    }
+
 }

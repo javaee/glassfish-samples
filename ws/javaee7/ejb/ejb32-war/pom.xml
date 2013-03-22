@@ -48,9 +48,9 @@
         <artifactId>ejb-samples</artifactId>
         <version>4.0-SNAPSHOT</version>
     </parent>
-    <artifactId>ejb31-war</artifactId>
+    <artifactId>ejb32-war</artifactId>
     <packaging>war</packaging>
-    <name>ejb31-war</name>
+    <name>ejb32-war</name>
     <dependencies>
         <dependency>
         	<groupId>javax</groupId>
@@ -59,17 +59,14 @@
     </dependencies>
        
     <build>
-    	<finalName>ejb31-war</finalName>
+    		<finalName>ejb32-war</finalName>
         <plugins>
             <plugin>
             		<groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <configuration>
+                <configuration>                		
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

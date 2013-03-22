@@ -58,6 +58,8 @@
     <modules>
 	      <module>automatic-timer</module>
 	      <module>ejb-embedded</module>
+	      <module>ejb32-war</module>
+	      <module>hello-stateless-ejb</module>
     </modules>
     <!-- Repo for javaee-api jar-->
     <repositories>
@@ -65,6 +67,10 @@
             <id>Java EE 7</id>
             <url>https://maven.java.net/content/groups/promoted/</url>
         </repository>
+        <repository>
+   					<id>EclipseLink</id>
+   					<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+				</repository>
     </repositories>
 
     <dependencyManagement>
@@ -73,11 +79,7 @@
 				    <dependency>
 				        <groupId>org.glassfish.appclient</groupId>
 				        <artifactId>gf-client</artifactId>
-				        <version>${project.version}</version>
-				        <scope>system</scope>
-				        <systemPath>
-				            ${glassfish.home}/glassfish/lib/gf-client.jar
-				        </systemPath>
+				        <version>3.2-b06</version>
 				    </dependency>
         </dependencies>
     </dependencyManagement>

@@ -50,7 +50,7 @@
     </parent>
     <artifactId>hello-stateless-ejb-bean</artifactId>
     <packaging>ejb</packaging>
-    <name>The EJB 3.0 Stateless Session Bean Sample Application</name>
+    <name>The EJB 3.2 Stateless Session Bean Sample Application</name>
     <dependencies>
         <dependency>
         	<groupId>javax</groupId>
@@ -58,13 +58,19 @@
         </dependency>        
     </dependencies>
     
-    <build> 		
+    <build>
+    		<finalName>stateless-bean</finalName> 		
         <plugins>
             <plugin>
+            		<groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ejb-plugin</artifactId>
                 <configuration>
                 		<jarName>stateless-bean</jarName>
+                		<ejbVersion>3.2</ejbVersion>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
