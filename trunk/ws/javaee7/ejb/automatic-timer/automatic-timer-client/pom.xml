@@ -69,15 +69,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.1</version>
                 <configuration>
-                    <executable>java</executable>
-                		<arguments>
-												<argument>-classpath</argument>
-                        <!-- Strip down the classpath to two items, the gf-client.jar and project's target/classes directory -->
-												<classpath>
-												  <dependency>org.glassfish.appclient:gf-client</dependency>
-												</classpath>
-												<argument>enterprise.automatic_timer_client.AutomaticTimerJavaClient</argument>
-										</arguments>
+                    <mainClass>enterprise.automatic_timer_client.AutomaticTimerJavaClient</mainClass>
                 </configuration>
             </plugin>
         </plugins>
