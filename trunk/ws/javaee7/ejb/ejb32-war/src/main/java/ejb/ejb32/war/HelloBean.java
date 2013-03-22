@@ -38,7 +38,7 @@
  * holder.
  */
 
-package ejb.ejb31.war;
+package ejb.ejb32.war;
 
 import javax.ejb.Stateless;
 import javax.ejb.EJB;
