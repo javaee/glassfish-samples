@@ -64,7 +64,7 @@ public class Main {
         // static method reference
         eval("Integer.numberOfTrailingZeros(16)");
         // string concatenation
-        eval("10 cat 11");
+        eval("10 += 11");
         // assignment and semicolon operator
         eval("xx = 100; yy = 11; xx+yy");
         // lambda expression: immediate invokation
