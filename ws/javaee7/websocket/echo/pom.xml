@@ -60,6 +60,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>websocket-echo</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
