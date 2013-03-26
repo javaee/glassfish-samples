@@ -72,139 +72,88 @@
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page</a></p>
-<h1>The EJB 3.2 Embeddable API Sample Application - Test Code</h1>
-<p>This is a standalone Jave client of the example.</p>
+<h1>The EJB 3.2 Embeddable API Sample Application (Test Client)</h1>
+<p>This sample application demonstrates how to use the embeddable EJB container.</p>
 <h2>Description</h2>
-<p>The Java client uses an embeddable
-EJB container to test EJBs in an environment that supports for the same
-basic services that would exist within a Java EE runtime: injection,
-access to a component environment, container-managed transactions, Java
-Persistence API, etc</p>
-<b><br>
-Used EJB 3.2 Embeddable API<br>
-<br>
-</b>The following bootstrapping API that are defined on the class<span
- style="color: rgb(102, 102, 102);"> javax.ejb.embeddable.EJBContainer</span>
-are used to create the embeddable
-EJB container and to lookup the Stateless Session bean in the JNDI:<br>
-<br>
+<p>The EJB 3.2 Embeddable API Sample Application demonstrates how to use the 
+embeddable EJB container defined in the Enterprise JavaBeans 3.2 specification. 
+You can launch the embeddable EJB container from your code to run tests on EJBs 
+outside of an application server environment.</p>
+<p>The sample application consists of two parts: an EJB module and the test client 
+(this project). The rest of this document describes the test client.</p>
+<p>The test client uses an <b>embeddable EJB container</b> to test the EJB in an environment
+that supports the same basic services that would be available in a Java EE runtime:
+injection, access to a component environment, container-managed transactions, the Java
+Persistence API, etc.</p>
+<p>The client uses the following methods defined in the <code>EJBContainer</code> class
+in the <code>javax.ejb.embeddable</code> package to create the embeddable EJB container
+and to look up the stateless session bean from the EJB module in the JNDI:</p>
 <ul>
-  <li><span style="color: rgb(102, 102, 102);">public static
-javax.ejb.embeddable.EJBContainer createEJBContainer(MapMap&lt;?, ?&gt;
-properties)</span></li>
-  <li><span style="color: rgb(102, 102, 102);">public
-javax.naming.Context javax.ejb.EJBContainer getContext()</span></li>
-  <li><span style="color: rgb(102, 102, 102);">public void close()</span><br>
-  </li>
+  <li><code>public static EJBContainer createEJBContainer(Map&lt;?,?&gt; properties)</code></li>
+  <li><code>public Context getContext()</code></li>
+  <li><code>public void close()</code></li>
 </ul>
-<span style="color: rgb(102, 102, 102);"><span
- style="color: rgb(0, 0, 0);">EJB module called <span
- style="color: rgb(102, 102, 102);">ejb-embedded.jar</span> is located
-in the JVM classpath.<br>
-<br>
-<br>
-</b><b>Standalone Java Client</b> <br>
-<br>
-<span style="color: rgb(102, 102, 102);">public class TestClient {</span><br
- style="color: rgb(102, 102, 102);">
-<br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp; private
-static String appName;</span><br style="color: rgb(102, 102, 102);">
-<br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp; public
-static void main(String[] s) throws Exception {</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-TestClient t = new TestClient();</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-t.test();</span><br style="color: rgb(102, 102, 102);">
-<br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp; }</span><br
- style="color: rgb(102, 102, 102);">
-<br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp; private
-void test() throws Exception {</span><br
- style="color: rgb(102, 102, 102);">
-<br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-EJBContainer c = null;</span><br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-try {</span><br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-c = EJBContainer.createEJBContainer();</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Context ic = c.getContext();</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Looking up EJB...");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/ejb-embedded/SimpleEjb");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Invoking EJB...");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Inserting entities...");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-ejb.insert(5);</span><br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("JPA count returned: " + ejb.verify());</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Done calling EJB");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-} finally {</span><br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-if (c != null) {</span><br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Closing container ...");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-c.close();</span><br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Done Closing container");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</span><br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</span><br style="color: rgb(102, 102, 102);">
-<br style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("..........FINISHED Embedded test");</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">&nbsp;&nbsp;&nbsp; }</span><br
- style="color: rgb(102, 102, 102);">
-<span style="color: rgb(102, 102, 102);">}</span><br>
-<br>
+<p>The EJB module (<code>ejb-embedded.jar</code>) is located in the JVM classpath.</p>
+<p>The test client implementation is the following:</p>
+<pre>
+public class TestClient {
+
+    private static String appName;
+
+    public static void main(String[] s) throws Exception {
+        TestClient t = new TestClient();
+        t.test();
+
+    }
+
+    private void test() throws Exception {
+
+        EJBContainer c = null;
+        try {
+            c = EJBContainer.createEJBContainer();
+            Context ic = c.getContext();
+            System.out.println("Looking up EJB...");
+            SimpleEjb ejb = (SimpleEjb) ic.lookup("java:global/ejb-embedded/SimpleEjb");
+            System.out.println("Invoking EJB...");
+            System.out.println("Inserting entities...");
+            ejb.insert(5);
+            System.out.println("JPA count returned: " + ejb.verify());
+            System.out.println("Done calling EJB");
+        } finally {
+            if (c != null) {
+                System.out.println("Closing container ...");
+                c.close();
+                System.out.println("Done Closing container");
+            }
+        }
+
+        System.out.println("..........FINISHED Embedded test");
+    }
+}
+</pre>
 
 <h2>Key Features</h2>
+<p>The test client demonstrates the following key features:</p>
 <ul>
-    <li>ejb: EJBContainer.createEJBContainer(), EJBContainer.getContext(), EJBContainer.close()</li>
+  <li><code>EJBContainer.createEJBContainer()</code></li>
+  <li><code>EJBContainer.getContext()</code></li>
+  <li><code>EJBContainer.close()</code></li>
 </ul>
 
-<h2>Building, Deploying, and Running the Java Client<br>
-</h2>
-<p>
-</p>
-<p>Following are the instructions for building, deploying, and running
-the Java Client.<br>
-<br>
-</p>
+<h2>Building, Deploying, and Running the Application</h2>
+<p>Perform the following steps to build, deploy, and run the test client:</p>
 <ol>
-  <li> Setup your build environment and Configure the application
+  <li>Set up your build environment and configure the application
 server with which the build system has to work by following the <a href="../../../../docs/UserREADME.html">
 common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-client</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
-  <li>This project depends on project ejb-embedded-server, make sure that project is built and installed prior to running this client. <br>
-  </li>
-  <li>Build and Run the standalone client. When running the client, the ejb-embedded-server's artifact will be placed on classpath. <p><code>mvn clean verify exec:exec</code></p></li>
+  <li>This sample application depends on the <code>ejb-embedded-server</code> project.
+      Ensure that you have built and installed it prior to running the test client.</li>
+  <li>Build and run the test client. <p><code>mvn clean verify exec:exec</code></p>
+      The artifact for the <code>ejb-embedded-server</code> project
+      is added to the classpath. </li>
 </ol>
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer to the <a href="../../../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
