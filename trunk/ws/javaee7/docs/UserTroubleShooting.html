@@ -43,7 +43,7 @@
 
 -->
 
-  <title>Java Platform, Enterprise Edition (Java EE) 6 Samples</title>
+  <title>Troubleshooting Sample Applications</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -67,9 +67,67 @@
     </tr>
   </tbody>
 </table>
-<!---- Don't modify anything above this line, except for the title tag --------><!--- Do not modify the rest of the document --><br>
-<h1>Java Platform, Enterprise Edition (Java EE) 6 Samples</h1>
-<p>The Java EE 6 samples demonstrate the features and technologies of Java EE&nbsp;6, and include detailed instructions to build and run them. For more information, click <a href="./javaee6/index.html">here</a></p>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Troubleshooting Sample Applications</h1>
+<br>
+There are three components which contribute to the smooth working of
+sample applications. These components are the build infrastructure,
+application server, and the sample application. Follow the <a
+ href="UserREADME.html">common build instructions</a> to set up the the
+build infrastructure and application server. To troubleshoot a sample
+application, follow this procedure:
+<ol>
+  <li>Use the fine-grained Ant targets to isolate the problem. For
+example, if Ant all causes an exception then try to run the constituent
+Ant
+targets like compile, package, deploy, and run separately.</li>
+  <li>Refer to the exception in detail and try to fix it.</li>
+  <li>Refer to application server's <code>server.log</code> file for
+clues
+or messages.</li>
+  <li>Try alternative ways of doing the same thing. For example, if
+deployment fails then try deploying through the Admin Console or CLI. </li>
+  <li>Before retrying, run the clean target to undeploy and to remove
+the generated directories.</li>
+  <li>Restart the application server which might be needed to apply
+certain non dynamic configuration changes.</li>
+  <li>Make sure the user ID and password or the credentials are valid.<br>
+  </li>
+  <li>If the application uses JDBC resources, make sure that the
+database server is up and running and the resources are setup properly.
+Likewise, if the application usees JMS resources, make sure the MQ
+server is
+running and the JMS resources are configured properly. </li>
+<li>
+The recommended version of Ant is 1.7.1. 
+It is possible to use Ant 1.6.5 since certain samples support this
+version.
+The samples which do not support Ant 1.6.5 may cause exceptions
+similar to the following.
+<pre>
+C:\sonia2\glassfishv3\glassfish\samples\javaee6\security\http-method-omission\b
+ild.xml:9: The following error occurred while executing this line:
+C:\sonia2\glassfishv3\glassfish\samples\bp-project\main.xml:22: The
+following e
+ror occurred while executing this line:
+C:\sonia2\glassfishv3\glassfish\samples\bp-project\command-line-ant-tasks.xml:1
+: The following error occurred while executing this line:
+C:\sonia2\glassfishv3\glassfish\samples\bp-project\common-properties.xml:35:
+Th
+<loadfile> type doesn't support the "quiet" attribute. 
+</pre>
+To resolve this, one need to use Ant version 1.7.1 which can be
+downloaded using the Update Tool that is included with
+Sun GlassFish Enterprise Server. For instructions for using Update
+Tool, see
+<a href="http://docs.sun.com/doc/820-7692/ghapp">Extending Enterprise
+Server in <cite>Sun GlassFish Enterprise Server v3 Administration
+Guide</cite></a>.
+
+</ol>
+<p>
+The above list is evolving and is by no means exhaustive.
+<br>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->
 <p class="copy"> Copyright &copy; 1997-2010 Oracle and/or its affiliates. All rights reserved. </p>
