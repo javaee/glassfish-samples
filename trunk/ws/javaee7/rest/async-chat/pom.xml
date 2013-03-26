@@ -58,6 +58,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>async-chat</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -67,7 +68,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warName>async-chat</warName>
                 </configuration>
             </plugin>
         </plugins>

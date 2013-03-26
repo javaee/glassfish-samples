@@ -58,6 +58,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>message-board</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -67,7 +68,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warName>message-board</warName>
                 </configuration>
             </plugin>
         </plugins>
