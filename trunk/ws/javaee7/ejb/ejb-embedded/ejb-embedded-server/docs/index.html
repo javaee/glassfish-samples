@@ -73,101 +73,81 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../docs/list.html">Samples Main Page<br>
 </a></p>
-<h1>The EJB 3.2 Embeddable API Sample Application</h1>
-<p>This is a simple EJB module that will be deployed to the embeddable EJB container.</p>
+<h1>The EJB 3.2 Embeddable API Sample Application (EJB Module)</h1>
+<p>This sample application demonstrates how to use the embeddable EJB container.<p>
 <h2>Description</h2>
-<p>
-The EJB module contains a very simple EJB Stateless Session Bean with a no-interface
-view and a POJO Entity that demonstrates EJB 3.2 Embeddable API usage.</p>
-<b>EJB Module</b>
-<p>The application is built as an EJB module. It is deployed during
-creation of the embeddable EJB container. It is undeployed when the
-embeddable EJB container is closed. The EJB module consists of: </p>
+<p>The EJB 3.2 Embeddable API Sample Application demonstrates how to use the embeddable 
+EJB container defined in the Enterprise JavaBeans 3.2 specification. You can launch the
+embeddable EJB container from your code to run tests on EJBs outside of an application
+server environment.</p>
+<p>The sample application consists of two parts: an EJB module
+(this project) and the test client. The rest of this document describes the EJB module.</p>
+<p>The EJB module contains a <b>stateless session bean</b> with a no-interface
+view and a <b>Java entity object</b>. The client code creates the embeddable EJB container
+and deploys the EJB module, which consists of the following files:</p>
 <ul>
   <li>
-    <p style="margin-bottom: 0in;">A POJO that represents a <code>SimpleEntity</code>.
-The <code>persistence.xml</code> file defines a persistence unit. The
-persistence
-unit uses <code>jdbc/__default</code> as the data source, and the <code>java2db</code>
-feature of
-glassfish to create tables.</p>
+    <code>SimpleEntity.java</code> is a Java entity object. The <code>persistence.xml</code>
+    file defines a persistence unit which uses <code>jdbc/__default</code> as
+	its data source and the <code>java2db</code> feature of GlassFish to create tables.
   </li>
   <li>
-    <p style="margin-bottom: 0in;">An EJB <code>SimpleEjb </code>that
-uses <code></code>JPA to persist entities in and fetch entities from
-the database.<br>
-    </p>
+    <code>SimpleEjb.java</code> is an EJB that uses the Java Persistence API to
+	store and retrieve entities from the data source.
   </li>
 </ul>
-<b>No-interface View</b>
-<blockquote>The Stateless Session bean has a no-interface with 2
-business methods<br>
-  <br>
-  <code>public int verify()<br>
-  <br>
-  </code><code>public void insert(int num)</code><br>
-  <code>&nbsp;
-  </code><br>
-</blockquote>
-<b></b><br>
-<b>Stateless Session Bean Class</b>
-<blockquote>The bean implementation is as follows:<br>
-  <br>
-  <code>@Stateless<br>
-public class SimpleEjb {<br>
-  <br>
-&nbsp;&nbsp;&nbsp; @PersistenceContext(unitName="embedded_test")
-EntityManager em;<br>
-  <br>
-&nbsp;&nbsp;&nbsp; @PermitAll<br>
-&nbsp;&nbsp;&nbsp; public int verify() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String result = null;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Query q =
-em.createNamedQuery("SimpleEntity.findAll");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Collection entities =
-q.getResultList();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int s = entities.size();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (Object o : entities) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-SimpleEntity se = (SimpleEntity)o;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Found: " + se.getName());<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return s;<br>
-&nbsp;&nbsp; }<br>
-  <br>
-&nbsp;&nbsp;&nbsp; @PermitAll<br>
-&nbsp;&nbsp;&nbsp; public void insert(int num) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (int i = 1; i &lt;= num;
-i++) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Inserting # " + i);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-SimpleEntity e = new SimpleEntity(i);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-em.persist(e);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
-&nbsp;&nbsp;&nbsp; }<br>
-}<br>
-  </code><br>
-  <br>
-</blockquote>
-<b>Deployment Descriptor</b>
-<blockquote>Only persistence deployment descriptor is required.<br>
-</blockquote>
-<b>JNDI Lookup</b>
-<blockquote>The global JNDI name used for lookup of the Stateless
-Session Bean is : <code>java:global/ejb-embedded/SimpleEjb.</code>The
-EJB module name <span style="color: rgb(102, 102, 102);">"ejb-embedded"</span>
-is defined by <span style="color: rgb(102, 102, 102);">the unqualified jar name
-  </span>when the example is built.
-</blockquote>	
+<p>The <b>stateless session bean</b> has a no-interface view with the following two business
+methods:</p>
+<ul>
+  <li><code>public int verify()</code></li>
+  <li><code>public void insert(int num)</code></li>
+</ul>
+<p>The implementation of the stateless session bean is the following:</p>
+<pre>
+@Stateless
+public class SimpleEjb {
+
+    @PersistenceContext(unitName="embedded_test") EntityManager em;
+
+    @PermitAll
+    public int verify() {
+        String result = null;
+        Query q = em.createNamedQuery("SimpleEntity.findAll");
+        Collection entities = q.getResultList();
+        int s = entities.size();
+        for (Object o : entities) {
+            SimpleEntity se = (SimpleEntity)o;
+            System.out.println("Found: " + se.getName());
+        }
+
+        return s;
+   }
+
+    @PermitAll
+    public void insert(int num) {
+        for (int i = 1; i <= num; i++) {
+            System.out.println("Inserting # " + i);
+            SimpleEntity e = new SimpleEntity(i);
+            em.persist(e);
+        }
+    }
+}
+</pre>
+<p>The sample application only requires the persistence deployment descriptor.
+The global JNDI name of the stateless session bean is 
+<code>java:global/ejb-embedded/SimpleEjb</code>, where the EJB module name 
+<code>ejb-embedded</code> corresponds to the unqualified name of the <code>.jar</code> 
+file when building the application.</p>
+
 
 <h2>Key Features</h2>
+<p>The EJB in the sample application demonstrates the following key features:<p>
 <ul>
-    <li>ejb: @PersistenceContext, @Stateless</li>
+  <li><code>@PersistenceContext</code></li>
+  <li><code>@Stateless</code></li>
 </ul>
+
+
 <h2>Building, Deploying, and Running the Application</h2>
 Perform the following steps to build, deploy, and run the
 application:
@@ -179,10 +159,12 @@ common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-server</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
-  <li>Make sure the JavaDB database is started. </li>
-  <li>Build and install the sample application to the repository, so that the client project can depend on this artifact.<p><code>mvn clean install</code></p></li>
-  <li>Go to: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-client</code>.  </li>
-  <li>Build and Run the application client.<p><code>mvn clean verify exec:exec</code></p></li>
+  <li>Ensure that the JavaDB database is started.</li>
+  <li>Build and install the sample application in the repository
+      <p><code>mvn clean install</code></p>
+	  This satisfies the dependency of the test client on this artifact.
+  <li>Go to: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-client</code>.</li>
+  <li>Build and Run the test client.<p><code>mvn clean verify exec:exec</code></p></li>
 </ol>
 
 <h2>Troubleshooting</h2>
