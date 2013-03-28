@@ -43,7 +43,7 @@
         
         -->
 
-        <title>CDI Events Sample Application</title>
+        <title>The CDI Events Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,59 +73,58 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>CDI Events Sample Application</h1>
-        <p>Contexts & Dependency Injection (JSR 299) defines a standards-based 
-type-safe Dependency Injection mechanism in the Java EE 6 platform. The 
-type-safety comes from the fact that no String-based identifiers are 
+        <h1>The CDI Events Sample Application</h1>
+        <p>Contexts & Dependency Injection (JSR 299) defines a standards-based, 
+type-safe Dependency Injection mechanism in the Java EE platform. The 
+type-safety comes from the fact that no <code>String</code>-based identifiers are 
 used to identify the dependencies and instead all the information is 
 specified using the Java object model. The loose coupling is possible 
 because the bean requesting injection need not be aware of the 
-lifecycle, concrete implementation, threading model and similar details 
+lifecycle, concrete implementation, threading model, and similar details 
 of the injected bean. The CDI runtime automatically figures out the 
 right bean in the right scope and context and then injects it correctly 
-for the requestor.
+for the requestor.</p>
 <p>
 CDI Events take loose coupling to the next level by following the Observer 
 pattern. Event producers raise events that are consumed by observers. 
 The event object carries state from producer to consumer. The producer
 can fire the events and observer can specify qualifiers to narrow the set of
 events received.
-<p>
+</p>
 
         <h2>Description</h2>
-        This demo is intended to illustrate how events can be produced by stateless
-EJB and consumed by a singleton EJB. As EJBs in Java EE 6 are also POJOs they
+This sample illustrates how stateless EJBs can produce events and how
+singleton EJB can consume them. As EJBs in Java EE are also POJOs they
 have all the characteristics of a CDI bean as well. 
-The demo uses a <code>PrintServlet</code> to invoke a print page stateless EJB. The
+The sample uses a <code>PrintServlet</code> to invoke a print page stateless EJB. The
 bean fires events based upon the number of pages. These events are then consumed
-by <code>PrintObserver</code> bean and a statement is printed out.
+by the <code>PrintObserver</code> bean and a statement is printed out.
 </p>
 
-<p>The code snippet below indicates how <code>PrintProducer</code> is firing events.
+<p>The following code snippet shows how <code>PrintProducer</code> fires events:
 </p>
 
-<p><pre>
-@Inject Event<PrintEvent> printEvent;
-@Inject @BindIt Event<PrintEvent> printAndBindEvent;
+<pre>
+@Inject Event&lt;PrintEvent&gt; printEvent;
+@Inject @BindIt Event&lt;PrintEvent&gt; printAndBindEvent;
 
 public void print(int pages) {
-&nbsp;&nbsp;&nbsp;&nbsp;PrintEvent event = new PrintEvent(pages);
-&nbsp;&nbsp;&nbsp;&nbsp;if (pages < 10)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printEvent.fire(event);
-&nbsp;&nbsp;&nbsp;&nbsp;else
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printAndBindEvent.fire(event);
+    PrintEvent event = new PrintEvent(pages);
+    if (pages < 10)
+        printEvent.fire(event);
+    else
+        printAndBindEvent.fire(event);
 }
 </pre>
+<p>The following code snippet shows how <code>PrintObserver</code> consumes events:
 </p>
-And how <code>PrintObserver</code> is consuming events.
-<p>
 <pre>
 public void onPrintAndBind(@Observes @BindIt PrintEvent event) {
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Printing and binding " + event.getPages() + " pages");
+    System.out.println("Printing and binding " + event.getPages() + " pages");
 }
 
 public void onPrint(@Observes @Default PrintEvent event) {
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Printing " + event.getPages() + " pages");
+    System.out.println("Printing " + event.getPages() + " pages");
 }
 </pre>
 <p>
