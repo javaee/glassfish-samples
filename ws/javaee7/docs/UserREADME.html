@@ -1,96 +1,180 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010-2013 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
   <title>Common Build Instructions for Sample Applications</title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="1187.34">
   <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: right; font: 10.0px Geneva; color: #ffffff}
-    p.p3 {margin: 0.0px 0.0px 13.0px 0.0px; font: 13.0px Geneva}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Geneva}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Geneva; min-height: 17.0px}
-    p.p7 {margin: 0.0px 0.0px 6.0px 0.0px; font: 13.0px Geneva; background-color: #808080; min-height: 17.0px}
-    p.p8 {margin: 0.0px 0.0px 10.0px 0.0px; text-align: center; font: 11.0px Geneva}
-    li.li4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Geneva}
-    span.s1 {font: 13.0px Geneva; color: #000000}
-    span.s2 {font: 13.0px Monaco; color: #666666}
-    span.s3 {text-decoration: underline ; color: #594fbf}
-    table.t1 {width: 780.0px}
-    td.td1 {width: 768.0px; background-color: #587993; margin: 2.0px 2.0px 2.0px 2.0px; padding: 2.0px 2.0px 2.0px 2.0px}
-    ol.ol1 {list-style-type: decimal}
-    ul.ul1 {list-style-type: disc}
-    ul.ul2 {list-style-type: circle}
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
   </style>
 </head>
-<body>
-<table width="780.0" cellspacing="0" cellpadding="0" class="t1">
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
   <tbody>
     <tr>
-      <td valign="top" class="td1">
-        <p class="p1">Java EE 7 SDK<span class="s1"> </span></p>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
 </table>
-<h1 style="margin: 0.0px 0.0px 16.0px 0.0px; font: 24.0px Geneva">Common Build Instructions for Sample Applications</h1>
-<p class="p3">The sample applications depend on the following software:</p>
-<ul class="ul1">
-  <li class="li4">Java SE Development Kit (JDK) version 1.7.0_21.</li>
-  <li class="li4">Apache Maven version 3.0.5.</li>
-  <li class="li4">The Java DB database included in the Java EE SDK.</li>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Common Build Instructions for Sample Applications</h1>
+<p>The sample applications depend on the following software:</p>
+<ul>
+<li>Java SE Development Kit (JDK) version 1.7.0_21.</li>
+<li>Apache Maven version 3.0.5.</li>
+<li>The Java DB database included in the Java EE SDK.</li>
 </ul>
-<p class="p3">Due to these dependencies, you must perform some one-time setup tasks before building and running the individual samples.</p>
-<h3 style="margin: 0.0px 0.0px 16.0px 0.0px; font: 16.0px Geneva">One-Time Setup Tasks</h3>
-<p class="p3">Note: In the following instructions, <span class="s2">&lt;javee.home&gt;</span> refers to the directory where the Java EE SDK is installed; for example, <span class="s2">C:\glassfish4</span>.</p>
-<ol class="ol1">
-  <li class="li4">Download and install JDK version 1.7.0_21, if necessary. If JDK version 1.7.0_21 is not already on your system, you must download and install it. The download is available at the <a href="http://java.sun.com/javase/downloads/index.jsp"><span class="s3">Java SE Downloads</span></a> page.</li>
-  <li class="li4">Download and install Apache Maven version 3.0.5, if necessary. If Apache Maven version 3.0.5 is not already installed on your system, the download is available at the <a href="http://maven.apache.org/download.cgi">Maven download</a> page.<span class="Apple-converted-space"> </span></li>
+
+<p>Due to these dependencies, you must perform some one-time setup tasks 
+before building and running the individual samples.</p>
+
+<h3>One-Time Setup Tasks</h3>
+<p><b>Note:</b> In the following instructions, <code>&lt;javee.home&gt;</code> 
+refers to the directory where the Java EE SDK is installed; for example, 
+<code>C:\glassfish4</code>.</p>
+<ol>
+  <li>
+    <b>Download and install JDK version 1.7.0_21, if necessary.</b>
+    If JDK version 1.7.0_21 is not already on your system, you must 
+    download and install it. The download is available at the 
+    <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
+    Java SE Downloads</a> page.
+  </li>
+  <li>
+    <b>Download and install Apache Maven version 3.0.5, if necessary.</b>
+	If Apache Maven version 3.0.5 is not already installed on your system, 
+	the download is available at the <a href="http://maven.apache.org/download.cgi">
+	Maven download</a> page.
+  </li>
 </ol>
-<p class="p6"><br></p>
-<h3 style="margin: 0.0px 0.0px 16.0px 0.0px; font: 16.0px Geneva">Building and Running a Sample Application</h3>
-<p class="p3">After performing the one-time setup tasks, you can build and run a sample application as follows:</p>
-<ol class="ol1">
-  <li class="li4">Add the JDK 1.7.0_21 bin directory to your PATH environment variable. For example: <span class="s2">set PATH=C:\Program Files\Java\jdk1.7.0_21\bin;%PATH%<br>
-</span></li>
-  <li class="li4">Add the Maven 3.0.5 bin directory to your PATH environment variable. For example: <span class="s2"><br>
-set PATH=C:\Program Files\apache-maven-3.0.5\bin;%PATH%</span></li>
-  <li class="li4">Follow the instructions for the specific sample to build and run it. Note that many of the samples use the following common Maven goals:<span class="Apple-converted-space"> </span></li>
-  <ul class="ul2">
-    <li class="li4">compile - compiles the sample application</li>
-    <li class="li4">install - packages the archive and installs it in the local maven repository</li>
-    <li class="li4">cargo:run - runs the application using the application server in the SDK</li>
-    <li class="li4">clean - deletes the compilation artifacts</li>
-  </ul>
+
+<h3>Building and Running a Sample Application</h3>
+
+<p>After performing the one-time setup tasks, you can build and run a 
+sample application as follows:</p>
+
+<ol>
+  <li>
+    Add the JDK 1.7.0_21 <code>bin</code> directory to your 
+	<code>PATH</code> environment variable. For example:
+    <p><code>set PATH=C:\Program Files\Java\jdk1.7.0_21\bin;%PATH%</code></p>
+  </li>
+  <li>
+    Add the Maven 3.0.5 <code>bin</code> directory to your <code>PATH</code> 
+	environment variable. For example:
+    <p><code>set PATH=C:\Program Files\apache-maven-3.0.5\bin;%PATH%</code></p>
+  </li>
+  <li>
+    Follow the instructions for the specific sample to build and run it. 
+	Note that many of the samples use the following common Maven goals: <p> </p>
+	<ul>
+	  <li><code>compile</code> - compiles the sample application</li>
+	  <li><code>install</code> - packages the archive and installs it in the local maven repository</li>
+	  <li><code>cargo:run</code> - runs the application using the application server in the SDK</li>
+	  <li><code>clean</code> - deletes the compilation artifacts</li>
+	</ul>
+  </li>
 </ol>
-<p class="p6"><br></p>
-<p class="p4">By default, the cargo:run goal will use the GlassFish version that accompanies the samples.<span class="Apple-converted-space">  </span>If you want to direct Cargo to use a specific version of GlassFish, you can add the -Dglassfish.home=&lt;javaee.home&gt; option when running the sample.<span class="Apple-converted-space"> </span></p>
-<p class="p6"><br></p>
-<h3 style="margin: 0.0px 0.0px 16.0px 0.0px; font: 16.0px Geneva">Sample Applications as NetBeans Projects</h3>
-<p class="p3">You can open the sample applications as projects in the NetBeans IDE. To do so, follow these steps after downloading and installing NetBeans from the <a href="http://www.netbeans.org/downloads/index.html"><span class="s3">NetBeans Download</span></a> page:</p>
-<ol class="ol1">
-  <li class="li4">Set JDK 1.7.0 as the default Java platform by changing the <span class="s2">netbeans_jdkhome</span> property in the <span class="s2">&lt;netbeans.home&gt;\etc\netbeans.conf</span> file.</li>
-  <li class="li4">Configure the browser that the NetBeans IDE will use by selecting Tools-&gt;Options-&gt;General-&gt;WebBrowser.</li>
-  <li class="li4">Configure the GlassFish 4 server to use JDK 1.7.0 by selecting Tools-&gt;Servers and then clicking the Java tab for GlassFish 4 Domain.</li>
-  <li class="li4">Start the GlassFish server:<span class="Apple-converted-space"> </span></li>
-  <ol class="ol1">
-    <li class="li4">Choose Windows-&gt;Services.</li>
-    <li class="li4">Expand the Servers group.</li>
-    <li class="li4">Right-click the GlassFish domain and choose Start from the context menu.</li>
-  </ol>
-  <li class="li4">Open one of the sample applications:<span class="Apple-converted-space"> </span></li>
-  <ol class="ol1">
-    <li class="li4">Choose File-&gt;Open Project.</li>
-    <li class="li4">Navigate to the <span class="s2">&lt;javaee.home&gt;\glassfish\samples\javaee7</span> directory and then to the appropriate sample project.</li>
-    <li class="li4">Select the sample project.</li>
-    <li class="li4">After NetBeans scans the project, select "Open Required Projects" if projects appear in the box below the option, and then click Open Project.</li>
-  </ol>
-  <li class="li4">Check the sample's docs/index.html file for any special prerequisites or build instructions.</li>
-  <li class="li4">Right-click the sample project and execute one of the Maven targets; for example, <span class="s2">Run</span>.</li>
+
+<p>By default, the <code>cargo:run</code> goal will use the GlassFish version that 
+accompanies the samples. If you want to direct Cargo to use a specific version of 
+GlassFish, you can add the <code>-Dglassfish.home=&lt;javaee.home&gt;</code> option 
+when running the sample.</p> 
+
+<h3>Sample Applications as NetBeans Projects</h3>
+
+<p>You can open the sample applications as projects in the NetBeans IDE. 
+To do so, follow these steps after downloading and installing 
+NetBeans from the 
+<a href="http://www.netbeans.org/downloads/index.html">NetBeans Download</a> 
+page:</p>
+<ol>
+ <li>
+   Set JDK 1.7.0 as the default Java platform by changing the 
+   <code>netbeans_jdkhome</code> property in the 
+   <code><i>&lt;netbeans.home&gt;</i>\etc\netbeans.conf</code> file.
+ </li>
+ <li>
+   Configure the browser that the NetBeans IDE will use by
+   selecting Tools-&gt;Options-&gt;General-&gt;WebBrowser.
+ </li>
+ <li>
+   Configure the GlassFish 4 server to use JDK 1.7.0 by selecting 
+   Tools-&gt;Servers and then clicking the Java tab for the GlassFish 4 Domain.
+ </li>
+ <li>
+   Start the GlassFish server:<p> </p>
+   <ol>
+     <li>Choose Windows-&gt;Services.</li>
+     <li>Expand the Servers group.</li>
+     <li>Right-click the GlassFish domain and choose Start from the context menu.</li>
+   </ol>
+ </li>
+ <li>Open one of the sample applications:<p> </p>
+   <ol>
+     <li>Choose File-&gt;Open Project.</li>
+     <li>Navigate to the <code><i>&lt;javaee.home&gt;</i>\glassfish\samples\javaee7</code> directory and then to the appropriate sample project.</li>
+     <li>Select the sample project.</li>
+     <li>After NetBeans scans the project, select "Open Required Projects" if projects appear in the box below the option, and then click Open Project.</li> 
+   </ol>
+ </li>
+ <li>Check the sample's <code>docs/index.html</code> file for any special prerequisites or build instructions.</li>
+ <li>Right-click the sample project and execute one of the Maven targets; for example, <code>Run</code>.</li>
 </ol>
-<p class="p6"><br></p>
-<p class="p7"><br></p>
-<p class="p8">Copyright © 1997-2013 Oracle and/or its affiliates. All rights reserved.</p>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2013 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
 </body>
 </html>
