@@ -73,28 +73,27 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>CDI Servlet Sample Application</h1>
-        <p>This simple demo is intended to illustrate the use and injection of
-request scoped and session scoped CDI Beans in a Web application. The
-demo shows how a simple user authentication scheme can be implemented.</p>
+        <h1>The CDI Servlet Sample Application</h1>
+        <p>This example application demonstrates the use and injection of
+request-scoped and session-scoped CDI beans in a web application. The
+example shows how to implement a simple user authentication scheme.</p>
 
         <h2>Description</h2>
-       <p>The demo uses a LoginServlet to authenticate a user based on the
-provided username/password values. The username and password values
-provided by the user is saved in a request scoped <span style="font-style: italic;">Credentials </span>bean. The session
-scoped <span style="font-style: italic;">LoginHandler</span> bean is
-used to authenticate the credentials provided in the current request. <br>
+       <p>The demo uses a log-in servlet to authenticate a user with
+a username and password. The username and password values
+are saved in a request-scoped <code>Credentials</code> bean. The session-scoped 
+<code>LoginHandler</code> bean checks the credentials provided in the 
+current request. <br>
 </p>
 
-<p>The code snippet below indicates how the Credentials and
-LoginHandler bean can be annotated with a
-javax.enterprise.context.RequestScoped and
-javax.enterprise.context.SessionScoped&nbsp; annotation to specify to
-the CDI runtime that the beans are request scoped or session scoped.
-The CDI runtime automatically manages the lifecycle of these beans.
-Also note that a request scoped Credentials bean can be injected into a
-session scoped LoginHandler bean and the CDI runtime would ensure that
-the right request scoped state is available in the session scoped bean.
+<p>The code snippet below shows how to decorate the <code>Credentials</code> and
+<code>LoginHandler</code> beans with the <code>RequestScoped</code> and 
+<code>SessionScoped</code> annotations to indicate to the CDI runtime that 
+these beans are request-scoped and session-scoped respectively.
+The CDI runtime automatically manages the lifecycle of these beans. For example,
+a request-scoped <code>Credentials</code> bean can be injected into a
+session-scoped <code>LoginHandler</code> bean, and the CDI runtime ensures that
+the right request-scoped state is available inside the session-scoped bean.
 </p>
 
 <pre>
@@ -105,27 +104,28 @@ public class Credentials {...}
 <pre>
 @SessionScoped
 public class LoginHandler implements Serializable {
-&nbsp;&nbsp;&nbsp; //Get the request scoped Credentials associated
-&nbsp;&nbsp;&nbsp; //with this user.
-&nbsp;&nbsp;&nbsp; @Inject Credentials credentials;
+    // Get the request scoped Credentials associated
+    // with this user.
+    @Inject Credentials credentials;
 }
 </pre> 
 
-<p>The LoginServlet requests the request scoped Credentials and session
-scoped LoginHandler bean using field based injection as shown below. In
-its processRequest() method, it populates the Credentials beans with
-the values from the form and invokes a login method on the LoginHandler
-to handle the authentication.
+<p>The <code>LoginServlet</code> servlet obtains the request-scoped 
+<code>Credentials</code> bean and the session-scoped <code>LoginHandler</code> 
+bean using field-based injection as shown in the code snippet below. 
+In the service method, the servlet populates the <code>Credentials</code> 
+bean with the values from the form and invokes a log-in method on the 
+<code>LoginHandler</code> bean to handle the authentication.
 </p>
 
 <pre>
 @WebServlet(name="LoginServlet",urlPatterns={"/LoginServlet"})<br>
 public class LoginServlet extends HttpServlet {
-&nbsp;&nbsp;&nbsp; // Inject the Credentials request-scoped bean.
-&nbsp;&nbsp;&nbsp; @Inject Credentials credentials;
-<br>
-&nbsp;&nbsp;&nbsp; // Inject the Login session-scoped bean.
-&nbsp;&nbsp;&nbsp; @Inject LoginHandler login;
+    // Inject the Credentials request-scoped bean.
+    @Inject Credentials credentials;
+
+    // Inject the Login session-scoped bean.
+    @Inject LoginHandler login;
 }
 </pre>
 
