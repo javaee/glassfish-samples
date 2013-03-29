@@ -113,17 +113,17 @@
 
 <h1>The Executor Sample Application</h1>
 
-<p>This sample demonstrates the usage of javax.enterprise.concurrent.ManagedExecutorService for submitting tasks.</p>
+<p>This sample demonstrates how to use <code>javax.enterprise.concurrent.ManagedExecutorService</code> for submitting tasks.</p>
 
 <h2>Description</h2>
-<p>The demo contains a collection of Servlets showing the usage of various APIs from the ManagedExecutorService
-   interface to submit tasks to be processed asynchronously.<br>
-
-   All the samples Servlets in this demo uses the
-   default ManagedExecutorService as defined in the Concurrency Utilities for Java EE 1.0 specification which is
+<p>The demo contains a collection of servlets that show how to use methods from the <code>ManagedExecutorService</code>
+   interface to submit tasks to be processed asynchronously.</p>
+<p>
+   All the sample servlets in this demo use the
+   default <code>ManagedExecutorService</code> as defined in the Concurrency Utilities for Java EE 1.0 specification which is
    available in all compliant Java EE Products. Thus no special configuration is required.</p>
 
-<p>A list of Servlets included in this demo:</p>
+<p>The following is a list of servlets included in this demo:</p>
 <table border="1">
     <tbody>
     <tr>
@@ -132,31 +132,37 @@
     </tr>
     <tr>
         <td>/TestResourceServlet</td>
-        <td>Submit tasks using a ManagedExecutorService retrieved using @Resource in a Servlet, using the execute() and submit() APIs.</td>
+        <td>Submit tasks using a <code>ManagedExecutorService</code> retrieved using <code>@Resource</code> 
+		in a servlet, using the <code>execute()</code> and <code>submit()</code> methods.</td>
     </tr>
     <tr>
         <td>/TestJNDIServlet</td>
-        <td>Submit tasks using a ManagedExecutorService retrieved using JNDI lookup in a Servlet, using the execute() and submit() APIs.</td>
+        <td>Submit tasks using a <code>ManagedExecutorService</code> retrieved using JNDI 
+		lookup in a servlet, using the <code>execute()</code> and <code>submit()</code> methods.</td>
     </tr>
     <tr>
         <td>/TestEJBServlet</td>
-        <td>Submit tasks using a ManagedExecutorService in an EJB session bean, using the sumbit() API.</td>
+        <td>Submit tasks using a <code>ManagedExecutorService</code> in an EJB session bean, 
+		using the <code>sumbit()</code> method.</td>
     </tr>
     <tr>
         <td>/TestInvokeAllServlet</td>
-        <td>Submit a collection of tasks using the invokeAll() API in ManagedExecutorService, and wait for all tasks to complete.</td>
+        <td>Submit a collection of tasks using the <code>invokeAll()</code> method in 
+		<code>ManagedExecutorService</code>, and wait for all tasks to complete.</td>
     </tr>
     <tr>
         <td>/TestInvokeAnyServlet</td>
-        <td>Submit a collection of tasks using the invokeAny() API in ManagedExecutorService, and wait for the first task to complete.</td>
+        <td>Submit a collection of tasks using the <code>invokeAny()</code> method in 
+		<code>ManagedExecutorService</code>, and wait for the first task to complete.</td>
     </tr>
     <tr>
         <td>/TestListenerServlet</td>
-        <td>Submit a ManagedTask with a ManagedTaskListener to receive task lifecycle callbacks.</td>
+        <td>Submit a <code>ManagedTask</code> with a <code>ManagedTaskListener</code> to 
+		receive task lifecycle callbacks.</td>
     </tr>
     <tr>
         <td>/TestTransactionServlet</td>
-        <td>Submit tasks that make use of javax.transaction.UserTransaction.</td>
+        <td>Submit tasks that make use of <code>javax.transaction.UserTransaction</code>.</td>
     </tr>
     </tbody>
 </table>
@@ -168,11 +174,12 @@
 
 <h2>Key Features</h2>
 <ul>
-    <li>Lookup of ManagedExecutorService from Servlet and EJB</li>
-    <li>submit(), execute(), invokeAll(), invokeAny() APIs in ManagedExecutorService</li>
-    <li>Using ManagedTaskListener to receive task lifecycle notifications</li>
-    <li>Performing JNDI lookup from a task</li>
-    <li>Transaction demarcation using javax.transaction.UserTransaction from a task</li>
+    <li>Lookup of <code>ManagedExecutorService</code> from servlets and EJBs</li>
+    <li>Use of the <code>submit()</code>, <code>execute()</code>, <code>invokeAll()</code>, 
+	    <code>invokeAny()</code> methods in <code>ManagedExecutorService</code></li>
+    <li>Use of <code>ManagedTaskListener</code> to receive task lifecycle notifications</li>
+    <li>Perform JNDI lookup from a task</li>
+    <li>Transaction demarcation using <code>javax.transaction.UserTransaction</code> from a task</li>
 </ul>
 
 <h2>Building, Deploying, and Running the Application</h2>
@@ -186,8 +193,8 @@
     <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
         <p><code>mvn clean verify cargo:run</code></p>
     </li>
-    <li>Front page of this sample is at <a href="http://localhost:8080/executor">http://localhost:8080/executor</a>
-        (port number might vary)
+    <li>The front page of this sample is at <a href="http://localhost:8080/executor">http://localhost:8080/executor</a>
+        (the port number might vary).
     </li>
     <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as
         <code>build</code> and <code>dist</code>.
