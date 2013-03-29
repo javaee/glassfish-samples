@@ -59,13 +59,13 @@
     </dependencies>
 
     <build>
+        <finalName>automatic-timer-ejb</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-ejb-plugin</artifactId>
                 <configuration>
                     <!-- Make the ejb-jar.xml file optional -->
                     <ejbVersion>3.2</ejbVersion>
-                    <jarName>automatic-timer-ejb</jarName>
                 </configuration>
             </plugin>
         </plugins>
