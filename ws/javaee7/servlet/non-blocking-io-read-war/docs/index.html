@@ -43,7 +43,7 @@
 
 -->
 
-  <title>The non-blocking-io-read-war Sample Application</title>
+  <title>The Non-blocking I/O Read Sample Application</title>
   <style type="text/css">
 body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
 	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
@@ -88,83 +88,109 @@ p.copy {
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
   </a></p>
-<h1>The Servlet 3.1 Non-blocking-IO-read Sample Application</h1>
-This is a simple Servlet 3.1 application using new API  to show the Non-Blocking-IO-Read feature.<br>
-<br>
+<h1>The Non-blocking I/O Read Sample Application</h1>
+
+<p>This sample application demonstrates how to use the non-blocking I/O functionality in servlets.</p>
+
 <h2>Description</h2>
-<p>In this sample application, the <b>client</b> (org.glassfish.servlet.non_blocking_io_read_war.ClientTest) will send two parts of data to <b>server</b> (org.glassfish.servlet.non_blocking_io_read_war.ServerTest).  <b>Server</b> sets up the <b>ReadListener</b> which will be listening the input stream. The implementation of <b>ReadListener</b> will collect data and echo it back in reverse order.</p>
-<b>Client</b><br>
-<br>
-In ClientTest.java, the client initiates HTTP connection to server, and writes two parts of data with 2sec sleeping in between which simulates the blocking from client side.
-<blockquote>
-  <p><br>
-  <code>@WebServlet(name = "ClientTest", urlPatterns = {"/"}) <br>
-  public class ClientTest extends HttpServlet {<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;OutputStream output = null;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;InputStream input = null;
-  <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;protected void processRequest(HttpServletRequest request, <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HttpServletResponse response)
-            throws ServletException, IOException {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String urlPath = "http://"<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ request.getServerName()<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ ":" + request.getLocalPort() //default http port is 8080<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ request.getContextPath()<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ "/ServerTest";<br><br>
 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;URL url = new URL(urlPath);<br>
+<p>In this sample application, the client (<code>ClientTest</code>) sends two parts of data to 
+the server (<code>ServerTest</code>). The server registers a <code>ReadListener</code>,
+whose methods are called when events related to the input stream occur. The implementation of 
+<code>ReadListener</code> in this application collects data and echoes it back in reverse order.</p>
 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HttpURLConnection conn = (HttpURLConnection) url.openConnection();<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn.connect();<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output = conn.getOutputStream();<br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String firstPart = "Hello";<br>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writeData(output, firstPart);<br>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thread.sleep(2000);<br>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...// Sending the second part<br><br>
-   
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input = conn.getInputStream();<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printEchoData(out, input);<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;protected void writeData(OutputStream output, String data) throws IOException {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (data != null && !data.equals("") && output != null) {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.write(data.getBytes());<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.flush();<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;protected void printEchoData(PrintWriter out, InputStream input) throws IOException {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (input.available() > 0 && input != null && out != null) {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.print((char) input.read());<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.println("&lt;/br&gt;");<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<p><b>Client</b></p>
+
+<p>In <code>ClientTest</code>, the client initiates an HTTP connection to the server and writes 
+two parts of data with a two second pause between them, which simulates blocking from the client side.
+</p>
+
+<pre>
+@WebServlet(name = "ClientTest", urlPatterns = {"/"})
+public class ClientTest extends HttpServlet {
+    OutputStream output = null;
+    InputStream input = null;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                 throws ServletException, IOException {
+        ...
+        String urlPath = "http://"
+            + request.getServerName()
+            + ":" + request.getLocalPort() //default http port is 8080
+            + request.getContextPath()
+            + "/ServerTest";
+
+        URL url = new URL(urlPath);
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        ...
+        conn.connect();
+        ...
+        output = conn.getOutputStream();
+		String firstPart = "Hello";
+        writeData(output, firstPart);
+        Thread.sleep(2000);
+        ...
+		// Sending the second part
+        input = conn.getInputStream();
+        printEchoData(out, input);
     }
-  </code>
-  </p>
-  </blockquote>
-<p><code>OutputStream</code> and <code>InputStream </code>is used to write and read data. <code>Thread.sleep()</code> is used to pause the thread for two seconds in order to simulate the IO blocking. You can even send some big data instead of &quot;Hello World&quot; in the sample.</p>
-<b>Server</b><br>
-<br>
-In ServerTest.java, once server gets the request it will start the asynchronous request process and set up the ReadListener.
-<blockquote><code> <br>
-  @WebServlet(name=&quot;ServerTest&quot;, urlPatterns={&quot;/ServerTest&quot;}, asyncSupported = true)<br>
-  public class ServerTest extends HttpServlet {<br>
+	
+    protected void writeData(OutputStream output, String data) throws IOException {
+        if (data != null && !data.equals("") && output != null) {
+            output.write(data.getBytes());
+            output.flush();
+        }
+    }
+	
+    protected void printEchoData(PrintWriter out, InputStream input) throws IOException {
+        while (input.available() > 0 && input != null && out != null) {
+            out.print((char) input.read());
+        }
+        out.println("&lt;/br&gt;");
+    }
+}
+</pre>
+
+<p>The servlet uses <code>OutputStream</code> and <code>InputStream </code> to write and read data,
+and <code>Thread.sleep()</code> to pause the thread for two seconds to simulate 
+I/O blocking. You can send larger blocks of data instead of &quot;Hello World&quot;.</p>
+
+<p><b>Server</b></p>
+
+<p>In <code>ServerTest</code>, the server receives the request, starts the asynchronous processing of
+the request, and registers a <code>ReadListener</code></p>
+
+
+<pre>
+@WebServlet(name=&quot;ServerTest&quot;, urlPatterns={&quot;/ServerTest&quot;}, asyncSupported = true)
+public class ServerTest extends HttpServlet {
   
-  &nbsp;&nbsp;&nbsp;&nbsp;protected void processRequest(HttpServletRequest request,<br> 
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HttpServletResponse response)
-            throws ServletException, IOException {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final AsyncContext context = request.startAsync();<br>
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                  throws ServletException, IOException {
+        ...
+        final AsyncContext context = request.startAsync();
+        final ServletInputStream input = request.getInputStream();
+        final ServletOutputStream output = response.getOutputStream();
+        input.setReadListener(new ServerReadListenerImpl(input, output, context));
+    }
+    ...
+}
+</pre>
 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final ServletInputStream input = request.getInputStream();<br>
-        
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final ServletOutputStream output = response.getOutputStream();<br>
+<p><code>@WebServlet(..., asyncSupported = true)</code> is an annotation that specifies
+the servlet name, its URL, and enables asynchronous processing.
+The <code>setReadListener()</code> method registers a read listener for the input stream.</p>
+<p><b>Note</b>: Non-blocking I/O only works with asynchronous request processing in servlets and 
+filters.</p>
 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input.setReadListener(new ServerReadListenerImpl(input, output, context));<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;...<br>
-  }
-  </code></blockquote>
-<p><code>@javax.servlet.annotation.WebServlet(..., asyncSupported = true)</code> is an annotation
-    specifying the servlet name, url, and enable the async.
-  <code>input.setReadListener()</code> is to set the read listener for the input stream.<br><b>Note</b>: Non-blocking IO only works with async request processing in Servlets and Filters. </p>
+
+
+
+
+
+
+
 <b>Implementation of Read Listener</b><br>
 <br>
 The ReadListenerImpl.java is the implementation of ReadListener.
