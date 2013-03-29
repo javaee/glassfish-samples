@@ -43,7 +43,7 @@
 
 -->
 
-  <title>The Servlet 3.0 Asynchronous Request Sample Application</title>
+  <title>The Servlet Asynchronous Processing Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -70,127 +70,107 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
 </a></p>
-<h1>The Servlet 3.0 Asynchronous Sample Application</h1>
-This is a simple Servlet 3.0 application using asychronous API.
+<h1>The Servlet Asynchronous Processing Sample Application</h1>
+<p>This is a simple servlet application using the Asynchronous Processing API.</p>
+
 <h2>Description</h2>
-<p><b>Servlet</b>
-</p>
-<p>The servlet is responsible for asynchronous request processing.
-</p>
-<blockquote>
-  <ul>
-    <li>In the <code>init</code> method, start a thread to read
-message from the <code>messageQueue</code> and then process the
-message for each <code>AsyncContext</code>
-in
-the queue as follows:
-      <p> <code>PrintWriter acWriter = ac.getResponse().getWriter();<br>
-acWriter.println(cMessage);<br>
-acWriter.flush();</code><br>
-      </p>
-      <p> The preceding code writes a message to each asynchronous
-request
-corresponding to <code>AsyncContext</code>. </p>
-      <p> </p>
-    </li>
-    <li>In <code>doGet</code>, set the timeout to ten minutes,
-start asynchronous, and add <code>AsyncContext</code> to a queue as follows:
-<p> <code>final AsyncContext ac = req.startAsync();<br>
-ac.setTimeout(10 * 60 * 1000);<br>
-queue.add(ac);</code><br>
-      </p>
-      <p> Registers <code>AsyncListener</code> with the <code>AsyncContext</code>. In this case, only clean up the <code>AsyncContext</code> from the queue. </p>
-      <p><code> ac.addListener(new AsyncListener() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;public void onComplete(AsyncEvent event) throws
-IOException {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-      <br>
-&nbsp;&nbsp;&nbsp;&nbsp;public void onTimeout(AsyncEvent event) throws
-IOException {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-      <br>
-&nbsp;&nbsp;&nbsp;&nbsp;public void onError(AsyncEvent event) throws
-IOException {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.remove(ac);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-      <br>
-&nbsp;&nbsp;&nbsp;&nbsp;public void onStartAsync(AsyncEvent event) throws
-IOException {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-});</code><br>
-      </p>
-    </li>
-    <li>In <code>doPost</code>, put a message to the
-messageQueue. This message is picked up in the thread that starts in
-the <code>init</code>
-method. </li>
-  </ul>
-</blockquote>
-<b>Deployment Descriptor</b><br>
-<br>
-The good news is the deployment descriptor is no longer
-required!<br>
-<br>
-<b>Sun GlassFish Enterprise Server Specific Deployment Configuration</b><br>
-<br>
+<p><b>Servlet</b></p>
+<p>The servlet processes requests asynchronously.</p>
+<p>In the <code>init</code> method, the servlet starts a thread that reads
+messages from the <code>messageQueue</code> and then processes the
+message for each <code>AsyncContext</code> in the queue as follows:</p>
+<pre>
+   PrintWriter acWriter = ac.getResponse().getWriter();
+   acWriter.println(cMessage);
+   acWriter.flush();
+</pre>
+<p>The preceding code writes a message for each asynchronous request
+by getting a writer from its <code>AsyncContext</code>.</p>
+<p>In the <code>doGet</code> method, the servlet sets the timeout to ten minutes,
+starts the asynchronous processing, and adds the <code>AsyncContext</code> to a queue as follows:</p>
+<pre>
+final AsyncContext ac = req.startAsync();
+ac.setTimeout(10 * 60 * 1000);
+queue.add(ac);
+</pre>
+<p>The servlet registers an <code>AsyncListener</code> for each <code>AsyncContext</code>. 
+In this case, the listener methods remove the <code>AsyncContext</code> from the queue. </p>
+<pre>ac.addListener(new AsyncListener() {
+    public void onComplete(AsyncEvent event) throws IOException {
+        queue.remove(ac);
+    }
+    public void onTimeout(AsyncEvent event) throws IOException {
+        queue.remove(ac);
+    }
+    public void onError(AsyncEvent event) throws IOException {
+        queue.remove(ac);
+    }
+    public void onStartAsync(AsyncEvent event) throws IOException {
+    }
+});
+</pre>
+<p>In the <code>doPost</code> method, the servlet adds a message to the
+message queue. The message is picked up in the thread started in
+the <code>init</code> method. </p>
+<p><b>Deployment Descriptor</b></p>
+<p>By using annotations, the deployment descriptor is no longer required</p>
+<p><b>GlassFish Server Specific Deployment Configuration</b></p>
+<p>
 There is no need to define any Sun GlassFish Enterprise Server specific
 deployment descrpitor (<code>sun-web.xml</code>) for this
 example.
-<br>
+</p>
+
 <h2>Key Features</h2>
-<li>AsyncListener is listening the request and dealing with the data asynchronously. The server thread does not need to wait for data.</li>
-<li>The callback functions can easily deal with different events.</li>
+<p>This sample application demonstrates the following key features:</p>
+<ul>
+  <li>Asynchronous processing in servlets. The server thread does not have to wait
+      until the response is ready and can be reused by the container.</li>
+  <li>Asynchronous processing listeners in servlets.</li>
+</ul>
+
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
   Perform the following steps to build, deploy, and run the
   application:
 </p>
 <ol>
- <li> Set up your build environment and configure the application
+ <li>Set up your build environment and configure the application
     server with which the build system has to work by following the <a
  href="../../../../docs/UserREADME.html"> common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
   directory: <code><i>samples_install_dir</i>/servlet/async-request-war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-    <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can simply use the command below to run this sample which is using Cargo framework:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run </code><br>
-    </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code></p>
-  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
-  <li>To run this chat application, you need two browsers, say
-Browser A and Browser B. You'd better to create two different process of each chatting dialog.&nbsp;
+  <li>Build and deploy the sample application using the <code>mvn</code> target:</li>
+	  <p>Use the command below to run this sample which is using Cargo framework:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	  mvn clean verify cargo:run </code></p>
+	  <p>You can point Cargo to an already installed and running Glassfish server:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
+      <p>You can also build, deploy the sample application without Cargo:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+  </li>
+  <li>Open two different browser windows to run this application (Browser A and Browser B). <br><br>
     <ul>
       <li>In Browser A, open
-http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/async-request-war.
-Repeat this step for Browser B also. </li>
-      <li>In Browser A, input user name, say "userA", in the text box.
+<code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/async-request-war</code><br>
+Repeat this step for Browser B.</li>
+      <li>In Browser A, enter a user name in the text box; for example, <code>userA</code>.
 Click the Login button. The following message is displayed in Browser A
 and Browser B:
         <p><code>System Message:<br>
 userA has joined.</code> </p>
-        <p>Similarly, login as "userB" in Browser B. </p>
+        <p>Similarly, log in as <code>userB</code> in Browser B. </p>
       </li>
-      <li>Now, you are ready to chat. In Browser A,type "Hello", in
-text box and click the Post Message button. You will see the following
-message in both Browser A and Browser
+      <li>Now, you are ready to chat. In Browser A, type "Hello" in
+the text box and click the <code>Post Message</code> button. The following
+message appears in both Browser A and Browser
 B:
         <p><code>userA:<br>
 Hello</code> </p>
-        <p>Try the same step in Browser B also. </p>
+        <p>Try the same step in Browser B. </p>
       </li>
     </ul>
   </li>
