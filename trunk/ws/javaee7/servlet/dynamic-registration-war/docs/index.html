@@ -71,20 +71,42 @@ Application</title>
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
 </a></p>
-<h1>The Servlet 3.0 Dynamic Registration of Servlets, Filters, and Listeners Sample Application</h1>
-This sample application demonstrates the dynamic registration facilities for Servlets, Filters, and Listeners that were added in Servlet 3.0.<br>
+<h1>The Dynamic Registration of Servlets, Filters, and Listeners Sample Application</h1>
+<p>This sample application demonstrates the dynamic registration facilities for Servlets, 
+Filters, and Listeners defined in the Servlet specification.</p>
+
 <h2>Description</h2>
-<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt> (of type <tt>org.glassfish.servlet.dynamic_registration_war.TestServletContextListener</tt>) in its deployment descriptor. This ServletContextListener registers a <tt>javax.servlet.Servlet</tt> (of type <tt>org.glassfish.servlet.dynamic_registration_war.TestServlet</tt>) with name <tt>DynamicServlet</tt>, a <tt>javax.servlet.Filter</tt> (of type <tt>org.glassfish.servlet.dynamic_registration_war.TestFilter</tt>) with name <tt>DynamicFilter</tt>, and a <tt>javax.servlet.ServletRequestListener</tt> (of type <tt>org.glassfish.servlet.dynamic_registration_war.TestServletRequestListener</tt>) in response to the <tt>ServletContextListener.contextInitialized</tt> event.
-</p>
-<p>The <tt>Servlet</tt>, <tt>Filter</tt>, and <tt>ServletRequestListener</tt> are registered using the <tt>ServletContext.addServlet</tt>, <tt>ServletContext.addFilter</tt>, and <tt>ServletContext.addListener</tt> methods, respectively, which are new in Servlet 3.0.
-</p>
-<p><tt>ServletContext.addServlet</tt> returns a <tt>javax.servlet.ServletRegistration</tt> object, through which all aspects of the registered <tt>Servlet</tt>, including its mappings and initialization parameters, may be configured. Similarly, <tt>ServletContext.addFilter</tt> returns a <tt>FilterRegistration</tt> object, through which all aspects of the registered <tt>Filter</tt>, including its mappings and initialization parameters, may be configured.
-</p>
-<p>The test client accesses the registered <tt>Servlet</tt> at its designated URI. The <tt>Servlet</tt> makes sure that the <tt>ServletRequestListener</tt>, as well as the <tt>Filter</tt> that was mapped to the <tt>Servlet</tt>, have both been invoked, by checking for the existence of <tt>ServletRequest</tt> attributes that were supposed to have been set by these entities.
-<br>
-</p>
+<p>This sample application declares a <tt>ServletContextListener</tt> 
+in its deployment descriptor. The
+<code>ServletContextListener</code> registers a servlet with name 
+<tt>DynamicServlet</tt>, a <tt>Filter</tt> with name <tt>DynamicFilter</tt>, 
+and a <tt>ServletRequestListener</tt> in response to the 
+<tt>ServletContextListener.contextInitialized</tt> event.</p>
+
+<p>The <tt>Servlet</tt>, <tt>Filter</tt>, and <tt>ServletRequestListener</tt> are registered 
+using the <tt>ServletContext.addServlet</tt>, <tt>ServletContext.addFilter</tt>, and 
+<tt>ServletContext.addListener</tt> methods respectively.</p>
+
+<p><tt>ServletContext.addServlet</tt> returns a <tt>ServletRegistration</tt> object, through which 
+all aspects of the registered <tt>Servlet</tt>, including its mappings and initialization parameters, 
+may be configured. Similarly, <tt>ServletContext.addFilter</tt> returns a <tt>FilterRegistration</tt> 
+object, through which all aspects of the registered <tt>Filter</tt>, including its mappings and 
+initialization parameters, may be configured.</p>
+
+<p>The test client accesses the registered <tt>Servlet</tt> at its designated URI. The 
+<tt>Servlet</tt> ensures that the <tt>ServletRequestListener</tt>, as well as the <tt>Filter</tt> 
+that was mapped to the <tt>Servlet</tt>, have both been invoked by checking for the existence of 
+<tt>ServletRequest</tt> attributes that must have been set by these entities.</p>
+
 <h2>Key Features</h2>
-<li>Dynamically register the Servlets, Filters, and Listeners in ServletContextListener</li>
+<p>This sample application demonstrates how to register the following elements in
+<code>ServletContextListener</code>:</p>
+<ul>
+  <li>Servlets</li>
+  <li>Filters</li>
+  <li>Listeners</li>
+</ul>
+
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
 Perform the following steps to build, deploy, and run the
@@ -97,33 +119,21 @@ application:</p>
   directory: <code><i>samples_install_dir</i>/servlet/dynamic-registration-war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-    <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can simply use the command below to run this sample which is using Cargo framework:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run </code><br>
-    </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code></p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
-    
-  <li><span style="font-weight: bold;">Note</span>: You can run the
-test in  the following way:
-    <ul>
-      <li>Use the browser to access
-http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/dynamic-registration-war
-        <br>
-The following output is expected in the browser: <br>
-&nbsp;&nbsp;&nbsp;&nbsp;HELLO WORLD! GLASSFISH</li>
-      
-    </ul>
+  <li>Build and deploy the sample application using the <code>mvn</code> target:
+      <p>Use the command below to run this sample which is using Cargo framework:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	  mvn clean verify cargo:run </code></p>
+	  <p>You can point Cargo to an already installed and running Glassfish server:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
+      <p>You can also build, deploy the sample application without Cargo:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+  </li>
+  <li>To test the application, use a web browser to access<br> 
+  <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/dynamic-registration-war</code>
+  <br><br>
+  You should see the following output:<br>
+  <code>HELLO WORLD! GLASSFISH</code>
   </li>
    <li>Use the glassfish command line to undeploy the application.
       <p><code><span style="font-style: italic;">app_dir&gt; </span>
