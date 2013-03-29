@@ -43,7 +43,7 @@
 
 -->
 
-  <title>The HTTP-Upgrader Sample Application</title>
+  <title>The HTTP-Upgrade Sample Application</title>
   <style type="text/css">
 body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
 	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
@@ -88,139 +88,170 @@ p.copy {
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
   </a></p>
-<h1>The Servlet 3.1 HTTP Upgrade Sample Application</h1>
-This is a simple Servlet 3.1 application using new API  to show the the HTTP upgrade process.<br>
-<br>
+<h1>The Servlet HTTP Upgrade Sample Application</h1>
+<p>This sample application demonstrates how to use the HTTP Protocol Upgrade API from the 
+Servlet specification.</p>
+
 <h2>Description</h2>
-<p>In HTTP/1.1, it allows the client to specify the additional communication protocols that is supports and would like to use. The new feature of Servlet 3.1 provides an HTTP upgrade mechanism. <b>Client</b><code> (org.glassfish.servlet.http_upgrade_war.ClientTest)</code> initiates the upgrade request. When <b>Server</b><code>(org.glassfish.servlet.http_upgrade_war.ServerTest)</code> receives the request, it can invoke the <code>HttpServletRequest.upgrade()</code> which will instantiate the  <b>HttpUpgradeHandler</b><code> (org.glassfish.servlet.http_upgrade_war.ProtocolUpgradeHandler)</code>. <code>HttpUpgradeHandler.init()</code> will be invoked after exiting the <code>ProcessRequest()</code> of the servlet. In this sample, <b>Client</b> sends the request to <b>Server</b>. The <b>Server</b> accepts the request, sends back the response, and then invokes <code>HttpUpgradeHandler.init()</code> and establish the communication with a dummy protocol. <b>Client</b> will display the request/response headers during the handshake process.</p>
-<b>Client</b><br>
-<br>
-In ClientTest.java, the client initiates the HTTP upgrade request.
-<blockquote>
-  <p><br>
-  <code>@WebServlet(name = "ClientTest", urlPatterns = {"/"}) <br>
-  public class ClientTest extends HttpServlet {<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;protected void processRequest(HttpServletRequest request, <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HttpServletResponse response)
-            throws ServletException, IOException {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String reqStr = "POST " + contextRoot + "/ServerTest HTTP/1.1" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += "User-Agent: Java/1.7" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += "Host: " + host + ":" + port + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += "Upgrade: Dummy Protocol" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += "Connection: Upgrade" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += "Content-type: application/x-www-form-urlencoded" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += "Transfer-Encoding: chunked" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reqStr += Data + CRLF;<br><br>
+<p>HTTP/1.1 allows the client to specify additional communication protocols that it supports
+and would like to use. The Servlet specification includes support for the HTTP protocol upgrade
+mechanism. The client (<code>ClientTest</code>) initiates the upgrade request. The server
+(<code>ServerTest</code>) receives the upgrade request and invokes the 
+<code>HttpServletRequest.upgrade()</code> method, which instantiates the 
+<code>HttpUpgradeHandler</code> implementation (<code>ProtocolUpgradeHandler</code>).
+The <code>HttpUpgradeHandler.init()</code> method is invoked after exiting the 
+<code>ProcessRequest()</code> method of the servlet.</p>
 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Create socket connection to ServerTest<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s = new Socket(host, port);<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input = s.getInputStream();<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output = s.getOutputStream();<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Send request header with data<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.write(reqStr.getBytes());<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.flush();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+<p>In this sample, the client sends the request to the server. The server accepts the request,
+sends back the response, and then invokes the <code>HttpUpgradeHandler.init()</code> method
+and continues the communication using a dummy protocol. The client shows the request and response
+headers during the handshake process.</p>
+
+<p><b>Client</b></p>
+
+<p>In <code>ClientTest.java</code>, the client initiates the HTTP upgrade request.</p>
+
+<pre>
+@WebServlet(name = "ClientTest", urlPatterns = {"/"})
+public class ClientTest extends HttpServlet {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                  throws ServletException, IOException {
+	    ...
+        String reqStr = "POST " + contextRoot + "/ServerTest HTTP/1.1" + CRLF;
+        reqStr += "User-Agent: Java/1.7" + CRLF;
+        reqStr += "Host: " + host + ":" + port + CRLF;
+        reqStr += "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2" + CRLF;
+        reqStr += "Upgrade: Dummy Protocol" + CRLF;
+        reqStr += "Connection: Upgrade" + CRLF;
+        reqStr += "Content-type: application/x-www-form-urlencoded" + CRLF;
+        reqStr += "Transfer-Encoding: chunked" + CRLF;
+        reqStr += CRLF;
+        reqStr += Data + CRLF;
+
+        // Create socket connection to ServerTest
+        s = new Socket(host, port);
+        input = s.getInputStream();
+        output = s.getOutputStream();
+		// Send request header with data
+        output.write(reqStr.getBytes());
+        output.flush();
+   }
+}
+</pre>
+
+<p>The header <code>Upgrade: Dummy Protocol</code> is an HTTP/1.1 header field set to
+<code>Dummy Protocol</code> in this sample. The server decides whether to accept the protocol
+upgrade request.</p>
+
+<p><b>Server</b></p>
+
+<p><code>ServerTest.java</code> checks the <code>Upgrade</code> field in the request header.
+When it accepts the upgrade requests, the server instantiates <code>ProtocolUpgradeHandler</code>,
+which is the implementation of <code>HttpUpgradeHandler</code>. If the server does not support
+the <code>Upgrade</code> protocol specified by the client, it sends a response with 404 Status.</p>
+
+<pre>
+@WebServlet(name=&quot;ServerTest&quot;, urlPatterns={&quot;/ServerTest&quot;})
+public class ServerTest extends HttpServlet {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                  throws ServletException, IOException { 
+        // Checking request header
+        if ("Dummy Protocol".equals(request.getHeader("Upgrade"))) {
+            System.out.println("Accept to upgrade");
+            response.setStatus(101);
+            response.setHeader("X-Powered-By", "Servlet/3.1 "
+                + "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");
+            response.setHeader("Upgrade", "Dummy Protocol");
+            response.setHeader("Connection", "Upgrade");
+            response.flushBuffer();
+            // Call the upgrade API, and invoke the upgrade handler
+            ProtocolUpgradeHandler handler = request.upgrade(ProtocolUpgradeHandler.class);
+        } else {
+            response.setStatus(400);
+            response.setHeader("X-Powered-By", "Servlet/3.1 "
+                + "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");
+            response.setHeader("Connection", "Refused");
+            response.sendError(400, "The Upgrade request sent by the client was incorrect or can not be accept by the server");
+            System.out.println("Upgrade field is: " + request.getHeader("Upgrade"));
+            System.out.println("Upgrade refused");
+        }
     }
-  </code>
-  </p>
-  </blockquote>
-<p><b>Note</b>: <code>Upgrade: Dummy Protocol</code> is HTTP/1.1 general header field which is set to &quot;Dummy Protocol&quot; in this sample. Whether to accept the upgrade request is determined by server side. </p>
-<b>Server</b><br>
-<br>
-In ServerTest.java, it will check the &quot;Upgrade&quot; field of the request header. Once accepting the upgrade request, it will instantiate <code>ProtocolHpgradeHandler</code> which is the implementation of HttpUpgradeHandler. If it can not support the &quot;Upgrade&quot; protocol, it will send back the response with 400 status.
-<blockquote><code> <br>
-  @WebServlet(name=&quot;ServerTest&quot;, urlPatterns={&quot;/ServerTest&quot;})<br>
-  public class ServerTest extends HttpServlet {<br>
+    ...
+}
+</pre>
+
+<p><code>ProtocolUpgradeHandler</code> is the implementation of <code>HttpUpgradeHandler</code>, 
+which processes the upgrade request and switchs the comminication protocol.
+The server checks the value of the <code>Upgrade</code> header to determine if it supports 
+  that protocol. Once server accepts the request, it must use the <code>Upgrade</code> header 
+  field within a 101 (Switching Protocols) response to indicate which protocol(s) are being 
+  switched.</p>
   
-  &nbsp;&nbsp;&nbsp;&nbsp;protected void processRequest(HttpServletRequest request,<br> 
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HttpServletResponse response)
-            throws ServletException, IOException {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br> 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Checking request header<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ("Dummy Protocol".equals(request.getHeader("Upgrade"))) {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Accept to upgrade");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.setStatus(101);<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.setHeader("X-Powered-By", "Servlet/3.1 "<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.setHeader("Upgrade", "Dummy Protocol");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.setHeader("Connection", "Upgrade");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.flushBuffer();<br><br>
+<p><b>Implementation of HttpUpgradeHandler</b></p>
 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Call the upgrade API, and invoke the upgrade handler<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProtocolUpgradeHandler handler = request.upgrade(ProtocolUpgradeHandler.class);<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.setStatus(400);<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.setHeader("X-Powered-By", "Servlet/3.1 "<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.setHeader("Connection", "Refused");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.sendError(400, "The Upgrade request sent by the client was incorrect or can not be accept by the server");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Upgrade field is: " + request.getHeader("Upgrade"));<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Upgrade refused");<br>
+<p><code>ProtocolUpgradeHandler</code> is the implementation of <code>HttpUpgradeHandler</code>.</p>
+<pre>
+public class ProtocolUpgradeHandler implements HttpUpgradeHandler {
+    @Override
+    public void init(WebConnection wc) {
+        this.wc = wc;
+        try {
+            ServletOutputStream output = wc.getOutputStream();
+            ServletInputStream input = wc.getInputStream();
+            Calendar calendar = Calendar.getInstance();
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			
+            // Reading the data into byte array
+            input.read(echoData);
 
+            // Setting new protocol header
+            String resStr = "Dummy Protocol/1.0 " + CRLF;
+            resStr += "Server: Glassfish/ServerTest" + CRLF;
+            resStr += "Content-Type: text/html" + CRLF;
+            resStr += "Connection: Upgrade" + CRLF;
+            resStr += "Date: " + dateFormat.format(calendar.getTime()) + CRLF;
+            resStr += CRLF;
             
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;...<br>
-  }
-  </code></blockquote>
-<p><code>ProtocolUpgradeHandler</code> is the implementation of <code>HttpUpgradeHandler</code> which is going to process the upgrade request and switch the comminication protocol(s).<br>
-  <b>Note</b>: Server can check the value of &quot;Upgrade&quot; field to see if it support that protocol. Once server accept the request, it must use the &quot;Upgrade&quot; header field within a 101 (Switching Protocols) response to indicate which protocol(s) are being switched . </p>
-<b>Implementation of HttpUpgradeHandler</b><br>
-<br>
-The ProtocolUpgradeHandler.java is the implementation of <code>HttpUpgradeHandler</code>.
-<blockquote>
-    <p> <code>public class ProtocolUpgradeHandler implements HttpUpgradeHandler {<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;@Override<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;public void init(WebConnection wc) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.wc = wc;<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try {<br>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ServletOutputStream output = wc.getOutputStream();<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ServletInputStream input = wc.getInputStream();<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calendar calendar = Calendar.getInstance();<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");<br>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Reading the data into byte array<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input.read(echoData);<br>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Setting new protocol header<br> 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String resStr = "Dummy Protocol/1.0 " + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resStr += "Server: Glassfish/ServerTest" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resStr += "Content-Type: text/html" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resStr += "Connection: Upgrade" + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resStr += "Date: " + dateFormat.format(calendar.getTime()) + CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resStr += CRLF;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Appending data with new protocol<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resStr += new String(echoData) + CRLF;<br>
+			// Appending data with new protocol
+            resStr += new String(echoData) + CRLF;
             
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Sending back to client<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.write(resStr.getBytes());<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.flush();<br>
-
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (IOException ex) {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger.getLogger(ProtocolUpgradeHandler.class.getName()).log(Level.SEVERE, null, ex);<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;@Override<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;public void destroy() {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wc.close();<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (Exception ex) {<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger.getLogger(ProtocolUpgradeHandler.class.getName()).log(Level.SEVERE, 
-                    "Failed to close connection", ex);<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            // Sending back to client
+            ...
+            output.write(resStr.getBytes());
+            output.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ProtocolUpgradeHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+	    ...
     }
-  </code> </p>
-  </blockquote>
-<p><code>init()</code> method sets up the new protocol header which is used for subsequent comminications. And append the echo data behind. In this sample, we are using a dummy protocol.<br> <code>destroy()</code> method will be invoked when the upgrade process is done. 
-<br>
-<b>Note</b>: This sample shows the handshake process of HTTP upgrade. After the handshake process, the subsequent communications are going to use the new protocol. This mechanism only applies to upgrading application-layer protocols upon the existing transport-layer connection. And cannot be used to insist on a protocol change. Usually, this new feature is used by SDK providers.</p>
+	
+    @Override
+    public void destroy() {
+        ...
+    
+        try {
+            wc.close();
+        } catch (Exception ex) {
+            Logger.getLogger(ProtocolUpgradeHandler.class.getName()).log(Level.SEVERE, 
+                             "Failed to close connection", ex);
+        }
+		...
+    }
+}
+</pre>
+
+<p>The <code>init()</code> method sets up the new protocol headers. The new protocol is used 
+for subsequent comminications. This sample uses a dummy protocol. The <code>destroy()</code> 
+method is invoked when the upgrade process is done.</p>
+
+<p>This sample shows the handshake process of the protocol upgrade. After the handshake process, 
+the subsequent communications use the new protocol. This mechanism only applies to upgrading 
+application-layer protocols upon the existing transport-layer connection. This feature 
+is normally most useful for Java EE Platform providers.</p>
+
 <h2>Key Features</h2>
-<li>Allows client to specify what additional communication protocols it supports and would like to use if the server finds it appropriate to switch protocols.</li>
+<p>This sample application demonstrates how to handle HTTP Protocol Upgrade requests in Java EE Servlets.</p>
+
 <h2>Building, Deploying, and Running the Application</h2>
 <p> </p>
 <p>Following are the instructions for building, deploying, and running
@@ -235,79 +266,70 @@ The ProtocolUpgradeHandler.java is the implementation of <code>HttpUpgradeHandle
     directory: <code><i>samples_install_dir</i>/servlet/http-upgrade-war</code>.</li>
     <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-    <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can simply use the command below to run this sample which is using Cargo framework:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run </code><br>
-    </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code></p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+    <li>Build and deploy the sample application using the <code>mvn</code> target:</li>
+      <p>Use the command below to run this sample which is using Cargo framework:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	  mvn clean verify cargo:run </code></p>
+	  <p>You can point Cargo to an already installed and running Glassfish server:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
+      <p>You can also build, deploy the sample application without Cargo:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+	</li>
     
-  <li>You can run the
-    sample in the following way:<br>
-    <br>
+  <li>Run the sample as follows:<br><br>
     <ul>
-        <li>Use the browser to access
-        http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/http-upgrade-war <br>
-        The expected message in the browser is as follows: <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<code>Http Upgrade Process<br><br>
+        <li>Use the browser to access<br>
+        <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/http-upgrade-war </code><br><br>
+        The expected message in the browser is as follows:
+<pre>
+Http Upgrade Process
 
-&nbsp;&nbsp;Sending upgrade request to server......<br><br>
+Sending upgrade request to server......
 
-&nbsp;&nbsp;Request header with data:<br>
+Request header with data:
 
-&nbsp;&nbsp;POST /http-upgrade-war/ServerTest HTTP/1.1<br>
-&nbsp;&nbsp;User-Agent: Java/1.7<br>
-&nbsp;&nbsp;Host: localhost:8080<br>
+POST /http-upgrade-war/ServerTest HTTP/1.1
+User-Agent: Java/1.7
+Host: localhost:8080
 
-&nbsp;&nbsp;Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2<br>
-&nbsp;&nbsp;Upgrade: Dummy Protocol<br>
-&nbsp;&nbsp;Connection: Upgrade<br>
-&nbsp;&nbsp;Content-type: application/x-www-form-urlencoded<br>
-&nbsp;&nbsp;Transfer-Encoding: chunked<br>
-<br>
-&nbsp;&nbsp;Hello World<br>
-&nbsp;&nbsp;---------------------------------------<br><br> 
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Upgrade: Dummy Protocol
+Connection: Upgrade
+Content-type: application/x-www-form-urlencoded
+Transfer-Encoding: chunked
 
-
-&nbsp;&nbsp;Server accept upgrade request, send back the response:<br><br>
-
-&nbsp;&nbsp;Response header:<br><br>
-
-&nbsp;&nbsp;HTTP/1.1 101 Web Socket Protocol Handshake<br>
-&nbsp;&nbsp;X-Powered-By: Servlet/3.1 (GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)<br>
-&nbsp;&nbsp;Server: GlassFish Server Open Source Edition 4.0<br> 
-&nbsp;&nbsp;Upgrade: Dummy Protocol<br>
-&nbsp;&nbsp;Connection: Upgrade<br>
-&nbsp;&nbsp;--------------------------------------- 
-<br><br>
-
-&nbsp;&nbsp;Server send back the response with new protocol and data:<br><br>
-
-&nbsp;&nbsp;Response header with data:<br><br>
-
-&nbsp;&nbsp;Dummy Protocol/1.0<br> 
-&nbsp;&nbsp;Server: Glassfish/ServerTest<br>
-&nbsp;&nbsp;Content-Type: text/html<br>
-&nbsp;&nbsp;Connection: Upgrade<br>
-&nbsp;&nbsp;Date: 02/13/2013 18:03:28<br>
-<br>
-&nbsp;&nbsp;Hello World<br>
-&nbsp;&nbsp;---------------------------------------<br> 
-<br>
+Hello World
+---------------------------------------
 
 
-&nbsp;&nbsp;Connection with new protocol established<br></code> </li>
-        
+Server accept upgrade request, send back the response:
+
+Response header:
+
+HTTP/1.1 101 Web Socket Protocol Handshake
+X-Powered-By: Servlet/3.1 (GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)
+Server: GlassFish Server Open Source Edition 4.0
+Upgrade: Dummy Protocol
+Connection: Upgrade
+--------------------------------------- 
+
+Server send back the response with new protocol and data:
+
+Response header with data:
+
+Dummy Protocol/1.0
+Server: Glassfish/ServerTest
+Content-Type: text/html
+Connection: Upgrade
+Date: 02/13/2013 18:03:28
+
+Hello World
+---------------------------------------
+
+Connection with new protocol established
+</pre>
+      </li>  
     </ul>
   </li>
     <li>Use the glassfish command line to undeploy the application.
