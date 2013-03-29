@@ -43,7 +43,7 @@
         
         -->
 
-        <title>CDI Interceptors Sample Application</title>
+        <title>The CDI Interceptors Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,27 +73,29 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>CDI Interceptors Sample Application</h1>
+        <h1>The CDI Interceptors Sample Application</h1>
         <p>CDI Interceptors intercept on invocations and lifecycle events on 
-an associated target class.  Basically, interceptor is a class whose 
+an associated target class.  An interceptor is a class whose 
 methods are invoked when business methods on the target class are 
-invoked and/or lifecycle events such as methods that create/destroy 
+invoked and/or when lifecycle events such as calls that create/destroy 
 the bean occur. Interceptors are typically used to implement 
 cross-cutting concerns like logging, auditing, and profiling.</p>
 
         <h2>Description</h2>
 <p>
-This demo is intended to illustrate how interceptors can be added to a CDI bean that mimics a shopping cart.
+This sample illustrates how interceptors can be added to a CDI bean that mimics a shopping cart.
 The demo uses a <code>ShoppingServlet</code> to add items to the cart. The cart itself
 is injected as a CDI bean and has a class-level interceptor which ensures that
 the interceptor is applied to all methods of the bean. The interceptor (<code>LoggingInterceptorSimple</code>) is enabled
-in WEB-INF/beans.xml and prints the method name being invoked. <p>An alternative 
-interceptor implementation (commented out in beans.xml) is also available and
+in <code>WEB-INF/beans.xml</code> and prints the method name being invoked. 
+</p>
+<p>An alternative 
+interceptor implementation (commented out in <code>beans.xml</code>) is also available and
 may be enabled instead of or in addition to the existing interceptor.
 </p>
 
-<p>The code snippet below indicates how LoggingInterceptor is defined.
-The <code>@AroundInvoke</code> (can be only one per interceptor) on a method 
+<p>The code snippet below shows the definition of <code>LoggingInterceptor</code>.
+The <code>@AroundInvoke</code> annotation (only one per interceptor) on a method 
 in the interceptor class ensures that this method is invoked around the 
 business method interception. 
 </p>
@@ -102,13 +104,13 @@ business method interception.
 @LoggingInterceptor
 @Interceptor
 public class LoggingInterceptorSimple {
-&nbsp;&nbsp;&nbsp;&nbsp;@AroundInvoke
-&nbsp;&nbsp;&nbsp;&nbsp;public Object log(InvocationContext context) throws Exception {
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("LOG: " + context.getMethod());
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return context.proceed();
-&nbsp;&nbsp;&nbsp;&nbsp;}
+    @AroundInvoke
+    public Object log(InvocationContext context) throws Exception {
+        System.out.println("LOG: " + context.getMethod());
+        return context.proceed();
+    }
 }
-        </pre>
+</pre>
 
         <h2>Building, Deploying, and Running the Application</h2>
         <!-- Modify this section as needed -->
