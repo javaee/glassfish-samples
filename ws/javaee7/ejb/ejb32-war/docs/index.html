@@ -73,17 +73,29 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../../docs/list.html">Samples Main Page</a></p>
-        <h1>A Simple WAR-based EJB 3.2 Application</h1>
-        <p>This is a simple EJB 3.2 application that shows the use of WAR-based packaging , the no-interface Local view, Singleton session beans, and startup/shutdown callbacks.</p>
+        <h1>The WAR-based EJB 3.2 Sample Application</h1>
+        <p>This is a simple EJB 3.2 application that shows the use of WAR-based packaging, 
+		the no-interface local view, singleton session beans, and startup/shutdown callbacks.</p>
 
         <h2>Description</h2>
-        <p>The application is composed of a Servlet, a Singleton session bean, and a Stateless session bean. Each session bean exposes a no-interface view. The Singleton defines a callback that is called by the container during application initialization. Both the Servlet and Stateless bean use the Singleton to access common application configuration info. When the Servlet is accessed, it invokes the session beans and prints some messages containing the return values.</p>
+        <p>The application is composed of a servlet, a singleton session bean, and a 
+		stateless session bean. Each session bean exposes a no-interface view. The singleton 
+		defines a callback that is called by the container during application initialization. 
+		Both the servlet and stateless bean use the singleton to access common application 
+		configuration information. When the servlet is accessed, it invokes the session beans 
+		and prints some messages containing the return values.</p>
 
-        <p>The entire application is packaged within a <code>.war</code> file, without any <code>.xml</code> files.</p>
+        <p>The entire application is packaged within a <code>.war</code> file, 
+		without any <code>.xml</code> files.</p>
        
-				<h3>No-interface view</h3>
+		<h3>No-interface View</h3>
 
-				<p>Each session bean exposes a no-interface Local view. This client view has the same semantics as the EJB 3.1 Local business interface, except that it does not require a separate interface. All public methods of the bean class are automatically exposed to the caller. By default, any session bean that has an empty implements clause and does not define any other Local/Remote client views exposes a no-interface client view:</p>
+		<p>Each session bean exposes a no-interface local view. This client view has the 
+		same semantics as the EJB 3.1 local business interface, except that it does not 
+		require a separate interface. All public methods of the bean class are automatically 
+		exposed to the caller. By default, any session bean that has an empty implements 
+		clause and does not define any other local/remote client views exposes a 
+		no-interface client view:</p>
         <pre>
 @Stateless
 public class HelloBean {   
@@ -95,7 +107,10 @@ public class HelloBean {
 }
         </pre>
         
-	      <p>A client of the no-interface view always acquires an ejb reference, either through injection or JNDI lookup. The java type of the ejb reference is the bean class. The client never uses the <code>new()</code> operator to explicitly instantiate the bean class:</p>
+	      <p>A client of the no-interface view always acquires an EJB reference, either 
+		  through injection or JNDI lookup. The Java type of the EJB reference is the bean 
+		  class. The client never uses the <code>new()</code> operator to explicitly 
+		  instantiate the bean class:</p>
 	      <pre>
 	@EJB
 	private HelloBean helloBean;
@@ -105,11 +120,19 @@ public class HelloBean {
 	String helloMsg = helloBean.sayHello();
 				</pre>
 	
-				<h3>Singleton bean</h3>
-				<p>A Singleton bean is a new kind of session bean component that is guaranteed to be instantiated once per application in a particular JVM. A Singleton bean is defined using the @Singleton component-defining annotation.</p>
+			<h3>Singleton Bean</h3>
+			<p>A singleton bean is a new kind of session bean component that is guaranteed 
+			to be instantiated once per application in a particular JVM. A singleton bean 
+			is defined using the <code>@Singleton</code> component-defining annotation.</p>
 
-				<p>By default, the container decides when to instantiate the Singleton bean instance. However, the developer can force the container to instantiate the Singleton bean instance during application initialization by using the <code>@Startup</code> annotation. This allows the bean to define a <code>@PostConstruct</code> method that is guaranteed to be called during startup time. In addition, regardless of eager vs. lazy instantiation, any Singleton <code>@PostDestroy</code> method is guaranteed to be called when the application is shutting down.</p>
-				<pre>
+			<p>By default, the container decides when to instantiate the singleton bean. 
+			However, the developer can force the container to instantiate the singleton 
+			bean during application initialization by using the <code>@Startup</code> 
+			annotation. This allows the bean to define a <code>@PostConstruct</code> method 
+			that is guaranteed to be called during startup time. In addition, regardless of 
+			eager vs. lazy instantiation, any singleton <code>@PostDestroy</code> method is 
+			guaranteed to be called when the application is shutting down.</p>
+			<pre>
 @Singleton
 @Startup
 public class PropertiesBean {
@@ -122,16 +145,26 @@ public class PropertiesBean {
 
 	...  
 }
-				</pre>
-				<h3>Deployment Descriptor</h3>
-				<p>No deployment descriptors are needed, even for the Servlet. All metadata is either defaulted or specified using annotations.</p>
+			</pre>
+			<h3>Deployment Descriptor</h3>
+			<p>No deployment descriptors are needed, even for the servlet. All metadata is 
+			either defaulted or specified using annotations.</p>
 
-				<h3>Packaging</h3>
-				<p>The entire application is packaged in a single <code>.war</code> file. The EJB 3.2 specification allows any enterprise bean classes to be packaged directly in <code>WEB-INF/classes</code> (or in a <code>.jar</code> in <code>WEB-INF/lib</code>), just like other <code>.war</code></p>
+			<h3>Packaging</h3>
+			<p>The entire application is packaged in a single <code>.war</code> file. The 
+			EJB 3.2 specification allows any enterprise bean classes to be packaged directly 
+			in <code>WEB-INF/classes</code> (or in a <code>.jar</code> in 
+			<code>WEB-INF/lib</code>), just like other <code>.war</code> files.</p>
   
   			<h2>Key Features</h2>
+			    <p>This sample demonstrates the following key features:</p>
 				<ul>
-				    <li>ejb: @EJB, @Stateless, @Singleton, @Startup, @PostConstruct, @PreDestroy</li>
+				    <li><code>@EJB</code></li>
+					<li><code>@Stateless</code></li>
+					<li><code>@Singleton</code></li>
+					<li><code>@Startup</code></li>
+					<li><code>@PostConstruct</code></li>
+					<li><code>@PreDestroy</code></li>
 				</ul>
 				
         <h2>Building, Deploying, and Running the Application</h2>
@@ -144,7 +177,8 @@ public class PropertiesBean {
             <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
                 <p><code>mvn clean verify cargo:run</code></p>
             </li>
-          	<li>After deployment, the test servlet can be accessed at <code>http://&lt;host&gt;:&lt;http-port&gt;/ejb32-war</code>, default <code>http://localhost:8080/ejb32-war</code>.</li>
+          	<li>After deployment, the test servlet can be accessed at <code>http://&lt;host&gt;:&lt;http-port&gt;/ejb32-war</code>.
+			The default location is <code>http://localhost:8080/ejb32-war</code>.</li>
             <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as <code>target</code>.
                 <p><code>mvn clean</code></p>
             </li>
