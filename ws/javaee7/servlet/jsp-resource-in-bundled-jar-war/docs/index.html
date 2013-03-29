@@ -43,7 +43,7 @@
 
 -->
 
-  <title>The Access JAR-Bundled JSP Resource Sample Application</title>
+  <title>The JAR-Bundled JSP Resource Sample Application</title>
   <style type="text/css">
   body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
   {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -70,53 +70,59 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
 </a></p>
-<h1>The Access JAR-Bundled JSP Resource Sample Application</h1>
-This sample application demonstrates how dynamic and static resources bundled inside the <tt>META-INF/resources</tt> directory of a JAR file inside the application's <tt>WEB-INF/lib</tt> directory may be accessed in the same way as if they had been placed in the application's document root.<br>
+<h1>The JAR-Bundled JSP Resource Sample Application</h1>
+<p>This sample application demonstrates how dynamic and static resources bundled 
+inside the <tt>META-INF/resources</tt> directory of a JAR file inside the application's 
+<tt>WEB-INF/lib</tt> directory may be accessed in the same way as if they had been placed 
+in the document root of the application.</p>
+
 <h2>Description</h2>
-<p>This sample application bundles a JAR file with name <tt>dynamicResources.jar</tt> in its <tt>WEB-INF/lib</tt> directory. This JAR file contains a JSP resource with path <tt>jsp/helloWorld.jsp</tt> in its <tt>META-INF/resources</tt> directory.
+
+<p>This sample application bundles the <tt>dynamicResources.jar</tt> JAR file in its 
+<tt>WEB-INF/lib</tt> directory. This JAR file contains a JSP resource with path 
+<tt>jsp/helloWorld.jsp</tt> in its <tt>META-INF/resources</tt> directory.
 </p>
-<p>Client can accesses the JSP resource at its <tt>jsp/helloWorld.jsp</tt> path, as if it had been placed in the application's document root. Prior to Servlet 3.0, this would have resulted in a 404 response.
+
+<p>The client can access the JSP resource in <tt>jsp/helloWorld.jsp</tt>, as if it had been 
+placed in the application's document root. Prior to Servlet 3.0, this would have 
+resulted in a 404 response.
 </p>
-<br>
-</p>
+
 <h2>Key Features</h2>
-<li>JAR-Bundled JSP resources in META-INF are accessible</li>
+<p>This sample application demonstrates that JAR-bundled JSP resources in META-INF are accesible.
+</p>
+
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
 Perform the following steps to build, deploy, and run the
 application:</p>
 <ol>
-  <li> Set up your build environment and configure the application
+  <li>Set up your build environment and configure the application
   server with which the build system has to work by following the <a
  href="../../../../docs/UserREADME.html"> common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
   directory: <code><i>samples_install_dir</i>/servlet/jsp-resource-in-bundled-jar-war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-    <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can simply use the command below to run this sample which is using Cargo framework:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run </code><br>
-    </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code></p>
-  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
-  <li><span style="font-weight: bold;">Note</span>: You can run the
-test in the following way:
+    <li>Build and deploy the sample application using the <code>mvn</code> target:
+	  <p>Use the command below to run this sample which is using Cargo framework:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	  mvn clean verify cargo:run </code></p>
+	  <p>You can point Cargo to an already installed and running Glassfish server:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
+      <p>You can also build, deploy the sample application without Cargo:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+	</li>
+  <li>Run the test as follows:<br><br>
     <ul>
-      <li>Use the browser to access
-http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/jsp-resource-in-bundled-jar-war/jsp/helloWorld.jsp
-        <br>
+      <li>Use the browser to access<br>
+<code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/jsp-resource-in-bundled-jar-war/jsp/helloWorld.jsp</code>
+
+        <br><br>
 The following output is expected in the browser: <br>
-&nbsp;&nbsp;&nbsp;&nbsp;Hello World</li>
+<code>Hello World</code>
+        </li>
      
     </ul>
   </li>
