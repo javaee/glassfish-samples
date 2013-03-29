@@ -111,24 +111,19 @@
 <!--- Do not modify anything above this line, except for the title tag --->
 <p><a href="../../../docs/list.html">Samples Main Page</a></p>
 
-<h1>The JAXR-RS MessageBoard Application</h1>
+<h1>The JAXR-RS MessageBoard Sample Application</h1>
 
-<p>This sample demonstrates the possibility to use no-interface EJB
-    session beans as
-    RESTful resource classes deployed as a servlet.</p>
+<p>This sample demonstrates how to use no-interface EJB
+    session beans as RESTful resource classes deployed as a servlet.</p>
 
-<p>MessageBoard represents message boards you may know from aiports or
-    train stations.
-    It stores messages and every new added message is placed
-    on top and gets an unique message id.</p>
+<p><code>MessageBoard</code> resembles a message board like those in aiports and train stations.
+     <code>MessageBoard</code> stores messages: every new message is placed at the top and gets an 
+	 unique message id.</p>
 
-<p>If configured properly, page http://localhost:8080/message-board
-    will be opened after
-    invoking the
-    <code>run</code> target. </p>
+<p>If configured properly, the page <code>http://localhost:8080/message-board</code>
+    opens in a web browser after invoking the <code>run</code> Maven target.</p>
 
-<p>The mapping of the URI path space is presented in the following
-    table:</p>
+<p>The following table lists the mapping of the URI paths:</p>
 <table border="1">
     <tbody>
     <tr>
@@ -141,37 +136,37 @@
         <td>/message-board</td>
         <td>---</td>
         <td>GET</td>
-        <td>Simple html/ajax client</td>
+        <td>Simple HTML/AJAX client</td>
     </tr>
     <tr>
         <td>/message-board/app/messages</td>
-        <td>MessageBoardResourceBean</td>
+        <td><code>MessageBoardResourceBean</code></td>
         <td>GET</td>
-        <td>Returns first ten messsages</td>
+        <td>Returns the first ten messsages.</td>
     </tr>
     <tr>
         <td>/message-board/app/messages/{id}</td>
-        <td>MessageBoardResourceBean</td>
+        <td><code>MessageBoardResourceBean<code></td>
         <td>GET</td>
-        <td>Returns message with uniqueId = {id} or returns HTTP 404 if
-            message does not exist
+        <td>Returns the message with uniqueId = {id} or returns HTTP 404 if
+            the message does not exist.
         </td>
     </tr>
     <tr>
         <td>/message-board/app/messages/{id}</td>
-        <td>MessageBoardResourceBean</td>
+        <td><code>MessageBoardResourceBean</code></td>
         <td>DELETE</td>
-        <td>Deletes message with uniqueId = {id} or returns HTTP 404 if
-            message does not exist
+        <td>Deletes the message with uniqueId = {id} or returns HTTP 404 if
+            the message does not exist.
         </td>
     </tr>
     <tr>
         <td>/message-board/app/messages/<br>
-            (with message as request entity)
+            (with a message as the request entity)
         </td>
-        <td>MessageBoardResourceBean</td>
+        <td><code>MessageBoardResourceBean<code></td>
         <td>POST</td>
-        <td>Creates new message and allocates unique id for it</td>
+        <td>Creates a new message and allocates a unique id for it.</td>
     </tr>
     </tbody>
 </table>
@@ -179,60 +174,80 @@
 
 <h2>Application Structure</h2>
 
-<p> The application is built and deployed as a WAR file.
+<p>The sample application is built and deployed as a WAR file.
 </p>
 
 <h3>Web Module</h3>
 
-<p> The web module consists of: </p>
+<p> The web module consists of the following elements: </p>
 <ul>
-    <li>An HTML page that represents the view layer of the application</li>
-    <li> A simple class that represents a message</li>
-    <li> Two providers - MessageBodyWriter implementations for Message
-        and ListMessage, which are also a stateless EJB
-        session or singleton bean.
+    <li>An HTML page that represents the view layer of the application.</li>
+    <li>A simple class that represents a message.</li>
+    <li>Two providers (<code>MessageBodyWriter</code> implementations for 
+	    <code>Message</code> and <code>ListMessage</code>, which are also stateless EJBs,
+        session, or singleton beans.
     </li>
-    <li> Two no-interface-view session beans that are simulatenously REST
-        resources
+    <li>Two no-interface-view session beans that are simulatenously REST
+        resources.
     </li>
-    <li> A singleton bean that holds data "persistently" in application
-        instance
+    <li>A singleton bean that stores data for an application
+        instance.
     </li>
-    <li> Response filter that add the header <code>previous-response</code> and <code>this-response</code></li>
-    <li> Reader interceptor that intercepts incoming entity and removes all invalid characters. Valid characters are characters,
-        numbers, white spaces and dot.
+    <li>A response filter that adds the headers <code>previous-response</code> and 
+	    <code>this-response</code>.</li>
+    <li>A Reader interceptor that intercepts the incoming entity and removes all invalid characters. 
+	    Valid characters are letters, numbers, white spaces, and dots.
     </li>
 </ul>
 
 
 The starting point of the application is the main <code>index.html</code>
-page (javascript must be enabled). The application control is
-straightforward:
+page (JavaScript must be enabled). The application control is the following:
 
 <ol>
-    <li> Click the <code>LIST ALL MESSAGES</code> button to see all
-        messages. This command is executed automaticaly when you hit the main
+    <li>Click the <code>LIST ALL MESSAGES</code> button to see all
+        messages. This command is executed automaticaly when you load the main
         page.
     </li>
-    <li> Select message number and click the <code>GET MESSAGE</code>
-        button to see one particular message.
+    <li>Select the message number and click the <code>GET MESSAGE</code>
+        button to see a particular message.
     </li>
-    <li> Select message number and click the <code>DELETE MESSAGE</code>
-        button to delete one particular message.
+    <li>Select the message number and click the <code>DELETE MESSAGE</code>
+        button to delete a particular message.
     </li>
-    <li> Fill in message input box and click the <code>ADD MESSAGE</code>
-        button to add message. Message will be added as first. Use any not valid characters (e.g. '/*+') to check that they will
-        be removed by interceptors.
+    <li>Fill in the message input box and click the <code>ADD MESSAGE</code>
+        button to add a message. The message will be added as the first. 
+		Use any not valid characters (e.g. '/*+') to check that they are
+        removed by the interceptor.
     </li>
 </ol>
-The page contains section <code>response headers</code> that displays headers of
-received response. Filters should add correctly <code>last-response</code> and <code>this-response</code>.
+The page contains the section <code>response headers</code> that displays headers of
+the response. The filters add the headers <code>last-response</code> and <code>this-response</code>.
 
 <h2>Key Features</h2>
+<p>This sample application demonstrates the following key features:</p>
 <ul>
-    <li>jax-rs: Filter, Interceptor, ExceptionMapper, MessageBodyWriter</li>
-    <li>jax-rs annotations: @Path, @Singleton, @GET, @POST, @DELETE</li>
-    <li>ejb: @EJB, @Stateless, @Singleton</li>
+  <li>JAX-RS</li>
+  <ul>
+    <li><code>Filter</code></li>
+	<li><code>Interceptor</code></li>
+	<li><code>ExceptionMapper</code></li>
+	<li><code>MessageBodyWriter</code></li>
+  </ul>
+  <li>JAX-RS Annotations</li>
+  <ul>
+    <li><code>@Path</code></li>
+	<li><code>@Singleton</code></li>
+	<li><code>@GET</code></li>
+	<li><code>@POST</code></li>
+	<li><code>@DELETE</code></li>
+  </ul>
+  <li>EJB</li>
+  <ul>
+    <li><code>@EJB</code></li>
+	<li><code>@Stateless</code></li>
+	<li><code>@Singleton</code></li>
+  </ul>
 </ul>
 
 <h2>Building, Deploying, and Running the Application</h2>
@@ -246,8 +261,9 @@ received response. Filters should add correctly <code>last-response</code> and <
     <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
         <p><code>mvn clean verify cargo:run</code></p>
     </li>
-    <li>Front page of this sample is at <a href="http://localhost:8080/managed-client">http://localhost:8080/message-board</a>
-        (port number might vary)
+    <li>The front page of this sample is at 
+	    <a href="http://localhost:8080/managed-client">http://localhost:8080/message-board</a>.
+        (The port number might vary.)
     </li>
     <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as
         <code>build</code> and <code>dist</code>.
