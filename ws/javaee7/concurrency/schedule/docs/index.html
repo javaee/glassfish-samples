@@ -113,17 +113,18 @@
 
 <h1>The Schedule Sample Application</h1>
 
-<p>This sample demonstrates the usage of javax.enterprise.concurrent.ManagedScheduledExecutorService for submitting delayed or periodic tasks.</p>
+<p>This sample demonstrates how to use <code>javax.enterprise.concurrent.ManagedScheduledExecutorService</code>
+   for submitting delayed or periodic tasks.</p>
 
 <h2>Description</h2>
-<p>The demo contains a collection of Servlets showing the usage of various APIs from the ManagedScheduledExecutorService
-   interface to submit delayed or periodic tasks to be processed asynchronously.<br>
-
-   All the samples Servlets in this demo uses the
-   default ManagedScheduledExecutorService as defined in the Concurrency Utilities for Java EE 1.0 specification which is
+<p>The sample contains a collection of servlets showing the usage of the methods in the <code>ManagedScheduledExecutorService</code>
+   interface to submit delayed or periodic tasks to be processed asynchronously.</p>
+<p>
+   All the sample servlets in this demo use the
+   default <code>ManagedScheduledExecutorService</code> as defined in the Concurrency Utilities for Java EE 1.0 specification which is
    available in all compliant Java EE Products. Thus no special configuration is required.</p>
 
-<p>A list of Servlets included in this demo:</p>
+<p>The following is a list of servlets included in this demo:</p>
 <table border="1">
     <tbody>
     <tr>
@@ -132,19 +133,19 @@
     </tr>
     <tr>
         <td>/TestScheduledServlet</td>
-        <td>Submit delayed tasks using the schedule() API in ManagedScheduledExecutorService.</td>
+        <td>Submit delayed tasks using the <code>schedule()</code> method of <code>ManagedScheduledExecutorService</code>.</td>
     </tr>
     <tr>
         <td>/TestScheduleFixedRateServlet</td>
-        <td>Submit fixed-rate tasks using the scheduleAtFixedRate() API in ManagedScheduledExecutorService.</td>
+        <td>Submit fixed-rate tasks using the <code>scheduleAtFixedRate()</code> method of <code>ManagedScheduledExecutorService</code>.</td>
     </tr>
     <tr>
         <td>/TestScheduleWithFixedDelayServlet</td>
-        <td>Submit fixed-delay tasks using the scheduleWithFixedDelay() API in ManagedScheduledExecutorService.</td>
+        <td>Submit fixed-delay tasks using the <code>scheduleWithFixedDelay()</code> method of <code>ManagedScheduledExecutorService</code>.</td>
     </tr>
     <tr>
         <td>/TestTriggerServlet</td>
-        <td>Submit custom periodic tasks with a Trigger.</td>
+        <td>Submit custom periodic tasks with a <code>Trigger</code>.</td>
     </tr>
     </tbody>
 </table>
@@ -156,8 +157,8 @@
 
 <h2>Key Features</h2>
 <ul>
-    <li>Submit tasks using schedule(), scheduleWithFixedDelay(), scheduleAtFixedRate() APIs in ManagedScheduledExecutorService</li>
-    <li>Submit tasks with a custom schedule using a class that implements javax.enterprise.concurrent.Trigger interface</li>
+    <li>Submit tasks using <code>schedule()</code>, <code>scheduleWithFixedDelay()</code>, <code>scheduleAtFixedRate()</code> methods of <code>ManagedScheduledExecutorService</code></li>
+    <li>Submit tasks with a custom schedule using a class that implements the <code>javax.enterprise.concurrent.Trigger</code> interface</li>
 </ul>
 
 <h2>Building, Deploying, and Running the Application</h2>
@@ -172,7 +173,7 @@
         <p><code>mvn clean verify cargo:run</code></p>
     </li>
     <li>Front page of this sample is at <a href="http://localhost:8080/schedule">http://localhost:8080/schedule</a>
-        (port number might vary)
+        (the port number might vary).
     </li>
     <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as
         <code>build</code> and <code>dist</code>.
