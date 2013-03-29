@@ -151,7 +151,7 @@ common build instructions.</a></li>
 directory: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-client</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
   <li>This sample application depends on the <code>ejb-embedded-server</code> project.
-      Ensure that you have built and installed it prior to running the test client.</li>
+      Ensure that you have installed <code>ejb-embedded-server</code> and its parent prior to running the test client. This means you should install the pom files under <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded</code>, <code><i>samples_install_dir</i>/javaee7/ejb</code> and <code><i>samples_install_dir</i>/javaee7</code>.</li>
   <li>Build and run the test client. <p><code>mvn clean verify exec:exec</code></p>
       The artifact for the <code>ejb-embedded-server</code> project
       is added to the classpath. </li>
