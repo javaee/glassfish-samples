@@ -184,57 +184,66 @@ The <code>setReadListener()</code> method registers a read listener for the inpu
 <p><b>Note</b>: Non-blocking I/O only works with asynchronous request processing in servlets and 
 filters.</p>
 
+<p><b>Implementation of the Read Listener</b></p>
 
+<p><code>ReadListenerImpl.java</code> is the implementation of the <code>ReadListener<code>
+interface:</p>
 
+<pre>
+public class ReadListenerImpl implements ReadListener {
 
+    public ServerReadListenerImpl() {
+        ...
+    }
+	
+    @Override
+    public void onDataAvailable() {
+        ...
+        while (input.isReady() && !input.isFinished()) {
+            sb.append((char) input.read()); // Use StringBuilder to append chars together
+        }
+    }
 
-
-
-
-<b>Implementation of Read Listener</b><br>
-<br>
-The ReadListenerImpl.java is the implementation of ReadListener.
-<blockquote>
-    <p> <code>public class ReadListenerImpl implements ReadListener {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;public ServerReadListenerImpl() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;@Override<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;public void onDataAvailable() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (input.isReady() && !input.isFinished()) {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append((char) input.read());// Use StringBuilder to append chars together<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-    <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;@Override<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;public void onAllDataRead() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br> 
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.print("Echo the reverse String from server: " + sb.reverse().toString() + "&lt;br&gt;");<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.flush();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;@Override<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;public void onError(Throwable t) {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("--> onError");
-    <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}
-    </code> </p>
-  </blockquote>
-<p><code>onDataAvailable() </code>will be invoked when the data is available to be read from input request stream. The container will subsequently invoke the <code>onDataAvailable()</code> if and only if <code>isReady()</code> returns true.<br>
-  <code>onAllDataRead()</code> will be invoked when finish reading all the data. <br>
-  <code>onError(Throwable t)</code> will be invoked if ther is any error or exceptions that occurs while processing the request.<br>
-  <code>isReady()</code> will return ture if the underlying data stream is not blocked at which point the container will invoke the <code>onDataAvailable()</code>.<br>
-  <b>Note</b>: The <b>constructor</b> can be customized to handle different parameters. Usually, the parameters could be ServletInputStream, ServletOutputStream, or AsyncContext. In this sample, we are using all of them to implement the ReadListener.</p>
-<br>
-<h2>Key Features</h2>
-<li>Involve ReadListener: Developers do not need to wait for the data by doing a loop.</li>
-<li>Work with async processing: Server thread does not need to wait for the data if it is blocked or slower than the server can read</li>
-<h2>Building, Deploying, and Running the Application</h2>
-<p> </p>
-<p>Following are the instructions for building, deploying, and running
-    this sample application. <br>
+    @Override
+    public void onAllDataRead() {
+        ...
+        output.print("Echo the reverse String from server: " + sb.reverse().toString() + "&lt;br&gt;");
+        output.flush();
+        ...
+    }
     
-  </p>
+    @Override
+    public void onError(Throwable t) {
+        ...
+        System.out.println("--> onError");
+    }
+</pre>
+
+<p>The <code>onDataAvailable()</code> method is invoked when data is available to be read from the 
+input request stream. The container subsequently invokes the <code>read()</code> method 
+if and only if <code>isReady()</code> returns true. The <code>onAllDataRead()</code> method is 
+invoked when all the data from the request has been read. The <code>onError(Throwable t)</code> 
+method is invoked if there is any error or exceptions occurs while processing the request.
+The <code>isReady()</code> method returns true if the underlying data stream is not blocked. At 
+this point, the container invokes the <code>onDataAvailable()</code> method.</p>
+
+<p>You can customize the constructor to handle different parameters. Usually, the parameters 
+are <code>ServletInputStream</code>, <code>ServletOutputStream</code>, or <code>AsyncContext</code>. 
+This sample uses all of them to implement the <code>ReadListener</code> interface.</p>
+
+
+<h2>Key Features</h2>
+<p>This sample application demonstrates the following key features:</p>
+<ul>
+  <li>Implementation of the <code>ReadListener</code> interface to avoid waiting for data inside a loop.</li>
+  <li>Asynchronous processing in servlets.</li>
+</ul>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<p>Following these instructions for building, deploying, and running
+    this sample application: </p>
 <ol>
-    <li> Set up your build environment and configure the application
+    <li>Set up your build environment and configure the application
     server with which the build system has to work by following the <a
  href="../../../../docs/UserREADME.html"> common build instructions.</a></li>
     <li><code><i>app_dir</i></code> is the sample application base
@@ -242,33 +251,27 @@ The ReadListenerImpl.java is the implementation of ReadListener.
     <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
     <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can simply use the command below to run this sample which is using Cargo framework:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run </code><br>
-    </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g ../glassfish4)</p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code></p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+	
+	<p>Use the command below to run this sample using the Cargo framework:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	mvn clean verify cargo:run </code></p>
+	<p>You can point Cargo to an already installed and running Glassfish server:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
+	<p>You can also build, deploy the sample application without Cargo:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
     
-  <li>You can run the
-    sample in the following way:<br>
-    <br>
+	</li>
+  <li>Run the sample as follows:<br><br>
     <ul>
-        <li>Use the browser to access
-        http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/non-blocking-io-read-war <br>
-        The expected message in the browser is as follows: <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<code>Sending to server: Hello<br>
-        &nbsp;&nbsp;Sending to server: World
-        <br><br>&nbsp;&nbsp;Echo data from server: dlroW olleH<br><br>&nbsp;&nbsp;Please check server log for detail</code> </li>
-        
+        <li>Use the browser to access<br/>
+        <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/non-blocking-io-read-war</code> <br>
+        <br/>The expected message in the browser is the following: <br>
+        <code>Sending to server: Hello<br>
+        Sending to server: World
+        <br><br>Echo data from server: dlroW olleH<br><br>
+		Please check server log for details.</code> 
+		</li>
     </ul>
   </li>
     <li>Use the glassfish command line to undeploy the application.
