@@ -43,7 +43,7 @@
         
         -->
 
-        <title>CDI Sample Application for Transactional Annotation</title>
+        <title>The CDI Transactional Annotation Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,24 +73,31 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>CDI Sample Application for Transactional Annotation</h1>
+        <h1>The CDI Transactional Annotation Sample Application</h1>
+		<p>This sample application demonstrates how to inject a bean annotated with the <code>@Transactional</code> annotation.</p>
 
          <h2>Description</h2>
-<p> This example application demonstrates uses a servlet to inject a bean annotated with <code>@Transctional</code> annotation with one of the user selected values. Invoking the URL as <code>http://host:port/context-root/</code> will display user with a page to select value for <code>@Transctional</code> annotation. Once user has selected the value and clicked submit, a bean with selected value for  <code>@Transctional</code> annotation is injected e.g. selecting <code>MANDATORY</code> will inject <p>
+		 
+		 
+<p>This sample application uses a servlet that injects a bean annotated with the <code>@Transctional</code> annotation 
+with one of the user selected values. The servlet provides a web page to select the value for <code>@Transctional</code> annotation. 
+When the user selects the value and clicks the Submit button, the servlet injects a bean with the selected value for the 
+<code>@Transctional</code> annotation. For example, selecting <code>MANDATORY</code> injects the following bean:</p>
 
 <pre>
 @Transactional(value = Transactional.TxType.MANDATORY)
-public class BeanMandatory  {
+public class BeanMandatory  { ... }
 </pre>
 
-<p> Method on this bean are invoked inside and outside transactional context to demonstrate the difference in behavior and result is presented as an html output. </p>
+<p>The methods in this bean are invoked inside and outside the transactional context to demonstrate the different behaviour. The 
+result is presented as HTML output.</p>
 
         <h2>Building, Deploying, and Running the Application</h2>
         <!-- Modify this section as needed -->
         <p>Perform the following steps to build, deploy, and run the application:</p>
         <ol>
             <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
-            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee7/cdi/interceptors</code>.</li>
+            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee7/cdi/transactional</code>.</li>
             <li>Change directory to <code><i>app_dir.</i></code></li>
             <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
                 <p><code>mvn clean verify cargo:run</code></p>
