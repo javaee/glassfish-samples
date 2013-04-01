@@ -75,7 +75,11 @@
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
         <h1>The JSF 2.0 CDI Sample Application</h1>
         <p>This simple demo is intended to illustrate the use of CDI
-with JSF 2.0. Each game is run within a CDI conversation. </p>
+with JSF 2.0. Its taken from samples from Weld reference implementation. </p>
+
+<h2>Description</h2>
+        <p>In the test application you get 10 attempts to guess a number between 1 and 100. After each attempt, you're told whether your guess was too high or too low.</p>
+        <p> The example exists of 4 classes, the first two of which are qualifiers. First, there is the <code>@Random</code> qualifier, used for injecting a random number. There is also the <code>@MaxNumber</code> qualifier, used for injecting the maximum number that can be injected. The application-scoped <code>Generator</code> class is responsible for creating the random number and maximum number, via a producer methods. The <code>Generator</code> is application scoped, so we don't get a different random each time. The final bean in the application is the session-scoped <code>Game</code> class. This is the primary entry point of the application. It's responsible for setting up or resetting the game, capturing and validating the user's guess and providing feedback to the user with a <code>FacesMessage</code>. </p>
 
         <h2>Building, Deploying, and Running the Application</h2>
         <!-- Modify this section as needed -->

@@ -43,11 +43,6 @@ package transactional;
 import javax.transaction.Transactional;
 
 @Transactional(value = Transactional.TxType.MANDATORY)
-public class BeanMandatory  {
-public String getId() {
-    return "ObjectId for this bean is " + this + "";
-  }
-  public String getId(String s) {
-    return "ObjectId for this bean is " + this + " and "+ s;
-  }
+public class BeanMandatory extends BeanBase {
+
 }      

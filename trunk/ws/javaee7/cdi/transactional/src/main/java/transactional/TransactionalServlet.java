@@ -94,51 +94,64 @@ public class TransactionalServlet extends HttpServlet {
    	 	m_out.println("</HEAD>");
     	m_out.println("<BODY>");
     	m_out.println("TransactionalInterceptor value is -> " + transactionalInterceptor);
-    	m_out.println("<BR>");
-    	//response.setContentType("text/html;charset=UTF-8");
-        //PrintWriter out = response.getWriter();
+    	m_out.println("<BR><BR>");
+		
         if (transactionalInterceptor.equalsIgnoreCase("MANDATORY")) {
 			try {
+				m_out.println("<b>Scenario: Invoking outside transaction. Should get an error.</b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanMandatory.getId());
-				m_out.println("<BR>");
-				m_out.println("ERROR: should have thrown TransactionRequiredException due to " +
-						"transactionalInterceptorMANDATORY and no tx in place");
-				m_out.println("<BR>");
-			} catch (TransactionalException transactionalException) {
-				if (transactionalException.getCause() instanceof TransactionRequiredException)
-					m_out.println("Got transactionalException.getCause() instanceof TransactionRequiredException as expected.");
-				else 
-					m_out.println("Got unexpected exception" + transactionalException.getMessage());
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println("<BR><BR>");
+			} catch (Exception transactionalException) {
+				if (transactionalException.getCause() instanceof TransactionRequiredException) {
+					m_out.println("Got TransactionRequiredException for transactionalException.getCause() as expected.");
+					m_out.println("<BR><BR>");
+				} else {
+					m_out.println("If you see this, it means there is something wrong!");
+					m_out.println(transactionalException.getMessage());
+					m_out.println("<BR><BR>");
+				}
 			}
 			try {
 				userTransaction.begin();
-				m_out.println("<b>New transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking within a transaction.</b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanMandatory.getId());
-				m_out.println("<BR>");
-				userTransaction.commit();
-				m_out.println("<b>Transaction is over.</b>" );
-    			m_out.println("<BR>");
+				m_out.println("<BR><BR>");
+				userTransaction.commit();    			
 			} catch (Exception e){
-				e.printStackTrace();
-				m_out.println("Got unexpected exception" + e.getMessage());
-				m_out.println("<BR>");
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			}
         } else if (transactionalInterceptor.equalsIgnoreCase("NEVER")) {
 			try {
-				userTransaction.begin();
-				m_out.println("<b>New transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking outside transaction.</b>"); 
+				m_out.println("<BR><BR>");
 				m_out.println(beanNever.getId());
-				m_out.println("<BR>");
-				m_out.println("ERROR: should have thrown InvalidTransactionException due to " +
-                    "TransactionalInterceptorNEVER and  tx in place");
-				m_out.println("<BR>");
-			} catch (Exception transactionalException) {
-				if (transactionalException.getCause() instanceof InvalidTransactionException)
-					m_out.println("Got transactionalException.getCause() instanceof InvalidTransactionException as expected.");
-				else 
-					m_out.println("Got unexpected exception" + transactionalException.getMessage());
+				m_out.println("<BR><BR>");
+			} catch (Exception e){
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
+			}
+			try {
+				userTransaction.begin();
+				m_out.println("<b>Scenario: Invoking within a transaction. Should get an error.</b>");
+				m_out.println("<BR><BR>");
+				m_out.println(beanNever.getId());
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println("<BR><BR>");
+			} catch (Exception transactionalException) {					
+				if (transactionalException.getCause() instanceof InvalidTransactionException) {
+					m_out.println("Got InvalidTransactionException for transactionalException.getCause() as expected.");
+					m_out.println("<BR><BR>");
+				} else {
+					m_out.println("If you see this, it means there is something wrong!");
+					m_out.println(transactionalException.getMessage());
+					m_out.println("<BR><BR>");
+				}
 			} finally {
 				try {
             		userTransaction.rollback();
@@ -146,112 +159,102 @@ public class TransactionalServlet extends HttpServlet {
             		m_out.println("Got unexpected exception in finally rollback for NEVER" + e.getMessage());
             	}
        		}
-			try {
-				m_out.println("<b>Invoking without any transaction</b>" );
-				m_out.println("<BR>");
-				m_out.println(beanNever.getId());
-				m_out.println("<BR>");
-			} catch (Exception e){
-				e.printStackTrace();
-				m_out.println("Got unexpected exception" + e.getMessage());
-				m_out.println("<BR>");
-			}
         } else if (transactionalInterceptor.equalsIgnoreCase("NOT_SUPPORTED")) {
 			try {
-				m_out.println("<b>Invoking without any transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking outside transaction.</b>"); 
+				m_out.println("<BR><BR>");
 				m_out.println(beanNotSupported.getId());
-			} catch (TransactionalException transactionalException) {
-				m_out.println("Got TransactionalException " + transactionalException.getMessage());
+				m_out.println("<BR><BR>");
+			} catch (Exception e){
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			} 
 			try {
 				userTransaction.begin();
-				m_out.println("<b>New transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking within a transaction. Transaction is suspended during the method call. </b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanNotSupported.getId());
-				m_out.println("<BR>");
 				userTransaction.commit();
-				m_out.println("<b>Transaction is over.</b>" );
-				m_out.println("<BR>");
+				m_out.println("<BR><BR>");
 			} catch (Exception e){
-				e.printStackTrace();
-				m_out.println("Got unexpected exception" + e.getMessage());
-				m_out.println("<BR>");
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			}
         } else if (transactionalInterceptor.equalsIgnoreCase("REQUIRED")) {
 			try {
-				m_out.println("<b>Invoking without any transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking outside transaction. Transaction would be started automatically for the method call.</b>"); 
+				m_out.println("<BR><BR>");
 				m_out.println(beanRequired.getId());
-			} catch (TransactionalException transactionalException) {
-				m_out.println("Got TransactionalException " + transactionalException.getMessage());
+				m_out.println("<BR><BR>");
+			} catch (Exception e){
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			} 
 			try {
 				userTransaction.begin();
-				m_out.println("<b>New transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking within a transaction.</b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanRequired.getId());
-				m_out.println("<BR>");
+				m_out.println("<BR><BR>");
 				userTransaction.commit();
-				m_out.println("<b>Transaction is over.</b>" );
-				m_out.println("<BR>");
 			} catch (Exception e){
-				e.printStackTrace();
-				m_out.println("Got unexpected exception" + e.getMessage());
-				m_out.println("<BR>");
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			}
         } else  if (transactionalInterceptor.equalsIgnoreCase("REQUIRES_NEW")) {
 			try {
-				m_out.println("<b>Invoking without any transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking outside transaction. Transaction would be started automatically for the method call.</b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanRequiresNew.getId());
-			} catch (TransactionalException transactionalException) {
-				m_out.println("Got TransactionalException " + transactionalException.getMessage());
+				m_out.println("<BR><BR>");
+			} catch (Exception e){
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			} 
 			try {
 				userTransaction.begin();
-				m_out.println("<b>New transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking within a transaction. NEW Transaction would be started automatically for the method call. </b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanRequiresNew.getId());
-				m_out.println("<BR>");
+				m_out.println("<BR><BR>");
 				userTransaction.commit();
-				m_out.println("<b>Transaction is over.</b>" );
-				m_out.println("<BR>");
 			} catch (Exception e){
-				e.printStackTrace();
-				m_out.println("Got unexpected exception" + e.getMessage());
-				m_out.println("<BR>");
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			}
         } else  if (transactionalInterceptor.equalsIgnoreCase("SUPPORTS")) {
 			try {
-				m_out.println("<b>Invoking without any transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking outside transaction. Method is executed outside transaction. </b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanSupports.getId());
-			} catch (TransactionalException transactionalException) {
-				m_out.println("Got TransactionalException " + transactionalException.getMessage());
+				m_out.println("<BR><BR>");
+			} catch (Exception e){
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			} 
 			try {
 				userTransaction.begin();
-				m_out.println("<b>New transaction</b>" );
-				m_out.println("<BR>");
+				m_out.println("<b>Scenario: Invoking within a transaction. Method is executed within transaction context.</b>");
+				m_out.println("<BR><BR>");
 				m_out.println(beanSupports.getId());
-				m_out.println("<BR>");
+				m_out.println("<BR><BR>");
 				userTransaction.commit();
-				m_out.println("<b>Transaction is over.</b>" );
-				m_out.println("<BR>");
 			} catch (Exception e){
-				e.printStackTrace();
-				m_out.println("Got unexpected exception" + e.getMessage());
-				m_out.println("<BR>");
+				m_out.println("If you see this, it means there is something wrong!");
+				m_out.println(e.getMessage());
+				m_out.println("<BR><BR>");
 			}
         } 
         
-    	m_out.println("<BR>");
         m_out.println("</BODY>");
     	m_out.println("</HTML>");
-    	//finally { 
-        //    out.close();
-        //}
     }
     
     /** 

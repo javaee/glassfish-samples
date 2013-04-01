@@ -43,7 +43,7 @@
         
         -->
 
-        <title>CDI Sample Application for Transactional Annotation</title>
+        <title>CDI Sample Application for Bean Validation</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,24 +73,30 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>CDI Sample Application for Transactional Annotation</h1>
+        <h1>CDI Sample Application for Bean Validation</h1>
 
-         <h2>Description</h2>
-<p> This example application demonstrates uses a servlet to inject a bean annotated with <code>@Transctional</code> annotation with one of the user selected values. Invoking the URL as <code>http://host:port/context-root/</code> will display user with a page to select value for <code>@Transctional</code> annotation. Once user has selected the value and clicked submit, a bean with selected value for  <code>@Transctional</code> annotation is injected e.g. selecting <code>MANDATORY</code> will inject <p>
-
+        <h2>Description</h2>
+<p>This example application demonstrates uses a servlet to inject a bean annotated with a few validation/constraint annotation. These constraints are validated at the run-time against the input/output. <p>
 <pre>
-@Transactional(value = Transactional.TxType.MANDATORY)
-public class BeanMandatory  {
+@Named(value="Bean1")
+public class Bean1 {
+	
+    public @NotNull String sayHello(@NotNull @Size(max=5) String arg) {
+        return "Hello, " + arg + " !";
 </pre>
-
-<p> Method on this bean are invoked inside and outside transactional context to demonstrate the difference in behavior and result is presented as an html output. </p>
+<p> Example is divided into 3 scenarios.
+<li> Scenario 1 is a happy scenario where input <code>arg</code> is <code>test</code> which passes both constraint placed on input. </li>
+<li> Scenario 2 <code>arg</code> is <code>null</code> and we should see failure as <code>@NotNull</code> constraint is violated. </li>
+<li> Scenario 3 <code>arg</code> is <code>testxyz</code> and we should see failure as <code>@Size(max=5)</code> constraint is violated.</li>
+</p>
+<p> Invoking the URL as <code>http://host:port/context-root/ValidationServlet</code> will run all 3 scenarios and present result as an html output. </p>
 
         <h2>Building, Deploying, and Running the Application</h2>
         <!-- Modify this section as needed -->
         <p>Perform the following steps to build, deploy, and run the application:</p>
         <ol>
             <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
-            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee7/cdi/interceptors</code>.</li>
+            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee7/cdi/bean-validation</code>.</li>
             <li>Change directory to <code><i>app_dir.</i></code></li>
             <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
                 <p><code>mvn clean verify cargo:run</code></p>
