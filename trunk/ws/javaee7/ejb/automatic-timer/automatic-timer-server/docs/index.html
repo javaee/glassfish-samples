@@ -43,7 +43,7 @@
     
     -->
 
-  <title>The EJB 3.2 Automatic Timer Sample Application</title>
+  <title>The EJB Automatic Timer Sample Application</title>
 	<style type="text/css">
       body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
       {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,127 +73,107 @@
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
 </a></p>
-<h1>The EJB 3.2 Automatic Timer Sample Application</h1>
-<p>This is a simple EJB module that will be deployed to the EJB container.</p>
+<h1>The EJB Automatic Timer Sample Application (EJB Module)</h1>
+<p>This is a simple EJB module that demonstrates how to use the EJB automatic timer.</p>
 <h2>Description</h2>
 <p>
-The EJB module contains a very simple EJB Stateless Session Bean with a Remote
-business interface and a POJO Entity that demonstrates EJB 3.2
-automatic timer feature.</p>
-<b>EJB Module</b>
-<p>The EJB module consists of: </p>
+The EJB module contains an stateless session bean with a remote
+business interface and a Java entity. The stateless session bean demonstrates how to use the
+EJB automatic timer.</p>
+
+<p>This sample application consists of two parts: an EJB module (this project) and a 
+<a href="../../automatic-timer-client/docs/index.html">test client</a>. The rest of this document
+describes the EJB module.</p>
+
+<p><b>EJB Module</b></p>
+
+<p>The EJB module consists of the following elements: </p>
 <ul>
   <li>
-    <p style="margin-bottom: 0in;">A POJO that represents a <code>LogRecord</code>.
-The <code>persistence.xml</code> file defines a persistence unit. The
-persistence
-unit uses <code>jdbc/__default</code> as the data source, and the <code>java2db</code>
-feature of
-glassfish to create tables.</p>
+    A Java entity object that represents a <code>LogRecord</code>.
+The <code>persistence.xml</code> file defines a persistence unit
+which uses <code>jdbc/__default</code> as the data source and the <code>java2db</code>
+feature of Glassfish to create tables.
   </li>
   <li>
-    <p style="margin-bottom: 0in;">An EJB that uses <code>@javax.ejb.Schedule</code>
-annotation to both cause
-creation of an EJB Timer and designate the method <span
- style="font-style: italic;">test_automatic_timer </span>as the
-timeout method. This EJB logs records on
-timeout callbacks, and cancels the timer after 10 callbacks. The sample
-uses JPA to store the log records in the database.<br>
-    </p>
+    An stateless session bean that uses the <code>@javax.ejb.Schedule</code>
+annotation to create a timer and to register the <code>test_automatic_timer</code>
+method as the timeout method. This EJB creates log records on timeout callbacks and
+cancels the timer after 10 callbacks. The sample uses the Java Persistence API
+to store the log records in a database.
   </li>
 </ul>
-<b>Business Interface</b>
-<blockquote>The Stateless Session bean has a Remote business interface
-with a
-single business method.<br>
-  <br>
-  <code>@Remote<br>
-public interface StatelessSession {<br>
-  <br>
-&nbsp;&nbsp;&nbsp; public List&lt;String&gt; getRecords();<br>
-  <br>
-}</code><br>
-  <br>
-</blockquote>
-<b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Note</b>: Unlike EJB 3.0, this
-interface is used only to verify the
-timeout
-calls,
-not to create the EJB Timer.<br>
-<br>
-The business interface is designated as a remote business interface by
+
+<p><b>Business Interface</b></p>
+
+<p>The stateless session bean has a remote business interface
+with a single business method:</p>
+<pre>
+@Remote
+public interface StatelessSession {
+
+    public List&lt;String&gt; getRecords();
+}</pre>
+
+<p>Unlike in EJB 3.0, this interface is used only to verify the
+timeout calls. It is not used to create the EJB timer.</p>
+
+<p>The business interface is designated as a remote business interface by
 using the <code>@javax.ejb.Remote</code> annotation.<br>
-<br>
-<b>Stateless Session Bean Class</b>
-<blockquote>The bean implementation is as follows:<br>
-  <br>
-  <code>@Stateless<br>
-public class StatelessSessionBean implements StatelessSession {<br>
-  <br>
-&nbsp;&nbsp;&nbsp; @PersistenceContext EntityManager em;<br>
-  <br>
-&nbsp;&nbsp;&nbsp; @Schedule(second="*/3", minute="*", hour="*",
-info="Automatic Timer Test")<br>
-&nbsp;&nbsp;&nbsp; public void test_automatic_timer(Timer t) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; long count =
-(Long)em.createNamedQuery("LogRecord.count").getSingleResult();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println("Call # "
-+ (count + 1));<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (count &gt; 10) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-throw new IllegalStateException("Too many timeouts received: " +
-cache.size());<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else if (count ==
-10) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-LogRecord lr = new LogRecord("Canceling timer " + t.getInfo() + " at "
-+ new Date());<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-em.persist(lr);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-t.cancel();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Done");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-LogRecord lr = new LogRecord("" + t.getInfo() + " timeout received at "
-+ new Date());<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-em.persist(lr);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
-&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-&nbsp;&nbsp;&nbsp; public List&lt;String&gt; getRecords() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
-(List&lt;String&gt;)em.createNamedQuery("LogRecord.findAllRecords").getResultList();<br>
-&nbsp;&nbsp;&nbsp; }<br>
-  <br>
-  <br>
-}<br>
-  </code> <br>
-Note: The use of the <code>@javax.ejb.Schedule</code>
-annotation that causes timeouts to happen every 3 seconds starting with
-0.<br>
-  <br>
-</blockquote>
-<b>Deployment Descriptor</b>
-<blockquote> The good news is the deployment descriptor is no longer
-required! &nbsp;The two java files above are sufficient to completely
-describe this stateless session bean. &nbsp;<br>
-</blockquote>
-<b>Sun GlassFish Enterprise Server Specific Deployment Configuration</b>
-<blockquote> There is no need to define any Sun GlassFish Enterprise
-Server-specific
-deployment
-descrpitors, such as <code>sun-ejb-jar.xml</code>, <code>sun-application-client.xml</code>
-for this
-example. &nbsp; The global JNDI name used for lookup of the Remote
-Stateless Session is : <code>java:global/automatic-timer-ejb/StatelessSessionBean</code><br>
-</blockquote>
+
+<p><b>Stateless Session Bean Class</b></p>
+
+<p>The bean implementation is the following:</p>
+<pre>
+@Stateless
+public class StatelessSessionBean implements StatelessSession {
+
+    @PersistenceContext EntityManager em;
+    @Schedule(second="*/3", minute="*", hour="*", info="Automatic Timer Test")
+
+    public void test_automatic_timer(Timer t) {
+        long count =(Long)em.createNamedQuery("LogRecord.count").getSingleResult();
+        System.out.println("Call # "+ (count + 1));
+        if (count &gt; 10) {
+            throw new IllegalStateException("Too many timeouts received: " + cache.size());
+        } else if (count == 10) {
+            LogRecord lr = new LogRecord("Canceling timer " + t.getInfo() + " at " + new Date());
+            em.persist(lr);
+            t.cancel();
+            System.out.println("Done");
+        } else {
+            LogRecord lr = new LogRecord("" + t.getInfo() + " timeout received at " + new Date());
+            em.persist(lr);
+        }
+    }
+
+    public List&lt;String&gt; getRecords() {
+        return (List&lt;String&gt;)em.createNamedQuery("LogRecord.findAllRecords").getResultList();
+    }
+}
+</pre>
+
+<p>The use of the <code>@javax.ejb.Schedule</code>
+annotation that causes timeouts to happen every 3 seconds starting with 0.</p>
+
+<p><b>Deployment Descriptor</b></p>
+
+<p>The deployment descriptor is no longer required by using annotations.</p>
+
+<b>GlassFish Enterprise Server Specific Deployment Configuration</b>
+<p> There is no need to define any GlassFish Enterprise Server-specific deployment
+descrpitors, such as <code>sun-ejb-jar.xml</code> or <code>sun-application-client.xml</code>
+for this example.</p>
+<p>The global JNDI name used for lookup of the Remote
+Stateless Session is : <code>java:global/automatic-timer-ejb/StatelessSessionBean</code>.</p>
+
 
 <h2>Key Features</h2>
+<p>This sample demonstrates the following key features:</p>
 <ul>
-    <li>ejb: @Schedule, @PersistenceContext, @Stateless</li>
+   <li>Defining stateless session EJBs.</li>
+   <li>Using EJB timers.</li>
+   <li>Using basic functionality from the Java Persistence API.</li>
 </ul>
 
 <h2>Building, Deploying, and Running the Application</h2>
@@ -207,7 +187,7 @@ common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>samples_install_dir</i>/javaee7/ejb/automatic-timer/automatic-timer-server</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
-  <li>Make sure the JavaDB database is started. </li>
+  <li>Ensure that the JavaDB database service is running. </li>
   <li>Build and deploy the sample application using the <code>run</code> outcome.<p><code>mvn clean verify cargo:run</code></p></li>
   <li>Go to: <code><i>samples_install_dir</i>/javaee7/ejb/automatic-timer/automatic-timer-client</code>.  </li>
   <li>Build and Run the application client.<p><code>mvn clean verify exec:java</code></p></li>
