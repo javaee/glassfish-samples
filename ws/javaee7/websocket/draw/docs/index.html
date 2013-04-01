@@ -43,7 +43,7 @@
 
         -->
 
-        <title>WebSocket Draw Sample</title>
+        <title>The WebSocket Draw Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,21 +73,30 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>WebSocket Draw Sample</h1>
-        <p>Drawing board shared among several users with real-time change propagation.</p>
+        <h1>The WebSocket Draw Sample Application</h1>
+        <p>This sample application consists of a drawing board shared among several users with real-time change propagation.</p>
 
         <h2>Description</h2>
-        <p>This sample demonstrates main advantage of Java API for WebSocket - <a href="http://jcp.org/en/jsr/detail?id=356">JSR 356</a> compared
-        to other technologies based on HTTP protocol - bi-directional "real-time" communication. When you deploy this application and hit its front page,
-        all changes you make to canvas are propagated to all other joined clients. Please note that whole state is not propagated, so if first users draws
-        smiley face and second one joins afterwards, he will see only blank canvas. But when he starts drawing something, first user will see immediately
-        what second one drew.</p>
+        <p>This sample demonstrates the main advantage of the Java API for WebSocket (<a href="http://jcp.org/en/jsr/detail?id=356">JSR 356</a>) compared
+        to other technologies based on the HTTP protocol: bi-directional real-time communication. When you deploy this application and load its front page,
+        the changes you make to the canvas are propagated to all connected clients. The whole state is not propagated: if the first users draws
+        a smiley face and the second user joins right after, this second user only sees a bank canvas. But when the second user starts drawing something, 
+		the first user sees it immediately.</p>
 
         <h2>Key Features</h2>
+		<p>This sample application demonstrates the following key features:</p>
         <ul>
-            <li>@ServerEndpoint, @OnMessage, @OnOpen, @OnClose</li>
-            <li>Bi-directional communication</li>
-            <li>Broadcasting</li>
+		  <li>
+		  <p>Creating a WebSocket server endpoint and registering methods to handle endpoint events using the following annotations:</p>
+		  <ul>
+		    <li><code>@ServerEndpoint</code></li>
+			<li><code>@OnMessage</code></li>
+			<li><code>@OnOpen</code></li>
+			<li><code>@OnClose</code></li>
+		  </ul>
+		  </li>
+		  <li>Using the WebSocket protocol for bi-directional communication with clients.</li>
+		  <li>Broadcasting data to all connected clients.</li>
         </ul>
 
         <h2>Building, Deploying, and Running the Application</h2>
@@ -99,7 +108,7 @@
             <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
                 <p><code>mvn clean verify cargo:run</code></p>
             </li>
-            <li>Front page of this sample is at <a href="http://localhost:8080/websocket-draw">http://localhost:8080/websocket-draw</a> (port number might vary)</li>
+            <li>The front page of this sample is at <a href="http://localhost:8080/websocket-draw">http://localhost:8080/websocket-draw</a>. (The port number might vary.)</li>
             <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as <code>build</code> and <code>dist</code>.
                 <p><code>mvn clean</code></p>
             </li>
