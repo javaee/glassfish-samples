@@ -71,16 +71,27 @@
 <p><a href="../../../docs/list.html">Samples Main Page<br>
 </a></p>
 <h1>The Programmatic Configuration of HTTP Session Cookies Sample Application</h1>
-This sample application demonstrates the  programmatic configuration support for session cookies available with Servlet 3.0.<br>
+<p>This sample application demonstrates the  programmatic configuration support for session 
+cookies available in servlets.</p>
+
 <h2>Description</h2>
-<p>This sample application declares a <tt>javax.servlet.ServletContextListener</tt> (of type <tt>org.glassfish.servlet.sessioncookieconfig_war.ConfigListener</tt>) in its deployment descriptor. This ServletContextListener configures, via the <tt>javax.servlet.SessionCookieConfig</tt> interface that is  available with Servlet 3.0, various aspects of the application's cookies that will be used for HTTP session tracking purposes. Note that this application has cookies enabled.
+
+<p>This sample application declares a <tt>ServletContextListener</tt> in its deployment descriptor. 
+This <code>ServletContextListener</code> configures, via the <tt>SessionCookieConfig</tt> interface, 
+various aspects of the application's cookies used for HTTP session tracking purposes. 
+This application has cookies enabled.
 </p>
-<p>The client accesses the <tt>CreateSession</tt> servlet of the application, which creates an HTTP session, retrieves the value of the corresponding <tt>Set-Cookie</tt> header from the response, and makes sure that it matches the configuration that was applied by the ServletContextListener during the application's initialization phase.
+
+<p>The client accesses the <tt>CreateSession</tt> servlet of the application, which creates an 
+HTTP session, retrieves the value of the corresponding <tt>Set-Cookie</tt> header from the response, 
+and ensures that it matches the configuration that was applied by the <code>ServletContextListener</code> 
+during the application's initialization phase.
 </p>
-<br>
-</p>
+
 <h2>Key Features</h2>
-<li><code>javax.servlet.SessionCookieConfig</code> interface is available for ServletContextListener to configure the application's cookies.</li>
+<p>This sample application demonstrates how to use the <code>SessionCookieConfig</code> interface in
+a <code>ServletContextListener</code> to configure cookies for web applications.</p>
+
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
 Perform the following steps to build, deploy, and run the
@@ -93,30 +104,23 @@ application:</p>
   directory: <code><i>samples_install_dir</i>/servlet/session-cookie-config-war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-    <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can simply use the command below to run this sample which is using Cargo framework:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run </code><br>
-    </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code></p>
-  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
-  <li><span style="font-weight: bold;">Note</span>: You can run the
-test in the following way:
+    <li>Build, deploy, the sample application using the <code>mvn</code> target:
+	<p>Use the command below to run this sample using the Cargo framework:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	  mvn clean verify cargo:run </code></p>
+	  <p>You can point Cargo to an already installed and running Glassfish server:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
+      <p>You can also build, deploy the sample application without Cargo:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+    </li>
+  <li>Test the application as follows:<br><br>
     <ul>
-      <li>Use the browser to access
-http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/session-cookie-config-war
-        <br>
+      <li>Use the browser to access<br>
+<code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/session-cookie-config-war</code>
+        <br><br>
 The following output is expected in the browser: <br>
-&nbsp;&nbsp;&nbsp;&nbsp;SUCCESS</li>
+<code>SUCCESS</code></li>
       
     </ul>
   </li>
