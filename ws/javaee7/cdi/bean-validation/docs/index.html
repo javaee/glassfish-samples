@@ -43,7 +43,7 @@
         
         -->
 
-        <title>CDI Sample Application for Bean Validation</title>
+        <title>The CDI Bean Validation Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,23 +73,30 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>CDI Sample Application for Bean Validation</h1>
+        <h1>The CDI Bean Validation Sample Application</h1>
+		<p>This sample application demonstrates how to inject beans with validation constrains.</p>
 
         <h2>Description</h2>
-<p>This example application demonstrates uses a servlet to inject a bean annotated with a few validation/constraint annotation. These constraints are validated at the run-time against the input/output. <p>
+		<p>This sample application injects a bean in a servlet with annotations for validation constraints. The constraints
+		   are validated at run time using the input/output provided.</p>
+		
 <pre>
 @Named(value="Bean1")
 public class Bean1 {
 	
     public @NotNull String sayHello(@NotNull @Size(max=5) String arg) {
         return "Hello, " + arg + " !";
+    }
+}
 </pre>
-<p> Example is divided into 3 scenarios.
-<li> Scenario 1 is a happy scenario where input <code>arg</code> is <code>test</code> which passes both constraint placed on input. </li>
-<li> Scenario 2 <code>arg</code> is <code>null</code> and we should see failure as <code>@NotNull</code> constraint is violated. </li>
-<li> Scenario 3 <code>arg</code> is <code>testxyz</code> and we should see failure as <code>@Size(max=5)</code> constraint is violated.</li>
-</p>
-<p> Invoking the URL as <code>http://host:port/context-root/ValidationServlet</code> will run all 3 scenarios and present result as an html output. </p>
+<p>The example is divided into 3 scenarios:</p>
+<ul>
+<li> Scenario 1 runs successfully: the value of <code>arg</code> is <code>test</code>, which passes both constraints placed on the input. </li>
+<li> Scenario 2 causes a failure: the value of <code>arg</code> is <code>null</code>, which violates the <code>@NotNull</code> constraint. </li>
+<li> Scenario 3 causes a failure: the value of <code>arg</code> is <code>testxyz</code>, which violates the <code>@Size(max=5)</code> constraint.</li>
+</ul>
+
+<p>The servlet at <code>http://&lt;host&gt;:&lt;port&gt;/&lt;context-root&gt;/ValidationServlet</code> runs these three scenarios and presents the results as HTML output.</p>
 
         <h2>Building, Deploying, and Running the Application</h2>
         <!-- Modify this section as needed -->
