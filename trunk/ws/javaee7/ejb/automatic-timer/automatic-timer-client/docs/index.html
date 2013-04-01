@@ -43,7 +43,7 @@
     
     -->
 
-  <title>The EJB 3.2 Automatic Timer Sample Application</title>
+  <title>The EJB Automatic Timer Sample Application (Test Client)</title>
 	<style type="text/css">
       body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
       {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -72,48 +72,41 @@
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page</a></p>
-<h1>The EJB 3.2 Automatic Timer Sample Application - Test Code</h1>
-<p>This is a standalone Jave client of the example.</p>
+<h1>The EJB Automatic Timer Sample Application (Test Client)</h1>
+<p>This is the standalone Java client for a simple EJB module that demonstrates how to use the EJB automatic timer.</p>
+
 <h2>Description</h2>
+<p>This sample application consists of two parts: an <a href="../../automatic-timer-server/docs/index.html">EJB module</a> and a 
+test client (this project). The rest of this document describes the test client.</p>
+
 <p>
-Here's an example of a plain Java client that runs outside of a Java EE
-container. &nbsp;In this case, it does a global JNDI lookup since
-dependency injection is not available outside of a Java EE component.</p><br>
-<b>Standalone Java Client</b>
-<br>
-public class AutomaticTimerJavaClient {<br>
-<br>
-&nbsp;&nbsp;&nbsp; public static void main(String args[]) {<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-StatelessSession sless =<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-(StatelessSession)
-ic.lookup("java:global/automatic-timer-ejb/StatelessSessionBean");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Waiting for the timer to expire");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Thread.sleep(7000);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-List&lt;String&gt; result = sless.getRecords();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println("Got " + result.size() + " log records:");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for
-(String s : result) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-System.out.println(s);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch(Exception e) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-e.printStackTrace();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
-<br>
-&nbsp;&nbsp;&nbsp; }<br>
-<br>
+<code>AutomaticTimerJavaClient</code> is a client that runs outside of a Java EE container.
+In this case, the client performs a global JNDI lookup since dependency injection is not
+available outside of a Java EE environment.
+</p>
+
+<p><b>Standalone Java Client</b></p>
+
+<pre>
+public class AutomaticTimerJavaClient {
+    public static void main(String args[]) {
+        try {
+            StatelessSession sless = (StatelessSession)
+                                      ic.lookup("java:global/automatic-timer-ejb/StatelessSessionBean");
+            System.out.println("Waiting for the timer to expire");
+            Thread.sleep(7000);
+            List&lt;String&gt; result = sless.getRecords();
+            System.out.println("Got " + result.size() + " log records:");
+            for (String s : result) {
+                System.out.println(s);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+</pre>
+
 <h2>Building, Deploying, and Running the Java Client<br>
 </h2>
 <p>
