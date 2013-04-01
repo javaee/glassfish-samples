@@ -43,7 +43,7 @@
         
         -->
 
-        <title>The EJB 3.2 Stateless Bean Sample Java client</title>
+        <title>The EJB Stateless Bean Sample (Test Client)</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,10 +73,14 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../../docs/list.html">Samples Main Page</a></p>
-        <h1>The EJB 3.2 Stateless Session Bean Sample Application - Test Code</h1>
-	      <p>Here's an example of a plain Java client that runs outside of a Java EE container.  In this case, it does a global JNDI lookup since dependency injection is not available outside of a Java EE component.</p>
+        <h1>The Stateless Session Bean Sample Application (Test Client)</h1>
+		  <p>This sample is a Java client that uses a EJB stateless session bean with a remote business interface. The Java client runs outside
+		     of a Java EE container and performs a global JNDI lookup since dependency injection is not available outside of a Java EE component.</p>
 
         <h2>Description</h2>
+		<p>This sample application consists of two parts: an <a href="../../hello-statless-ejb-bean/docs/index.html">EJB module</a> and a test client (this project). 
+		   The rest of this document describes the test client.</p>
+		   
         <h3>Standalone Java Client</h3>
 				<pre>
 public class StatelessJavaClient {
@@ -94,9 +98,7 @@ public class StatelessJavaClient {
 				</pre>
 				
 				<h2>Key Features</h2>
-				<ul>
-				    <li>jndi</li>
-				</ul>
+				<p>The test client demonstrates how to perform a JNDI lookup for an EJB and how to use its business methods.</p>
 				
         <h2>Building, Deploying, and Running the Java Client</h2>
         <!-- Modify this section as needed -->
