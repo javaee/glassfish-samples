@@ -43,7 +43,7 @@
 
 -->
 
-  <title>The ServletContainerInitializer Sample Application</title>
+  <title>The Servlet Container Initializer Sample Application</title>
   <style type="text/css">
 body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
 	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
@@ -88,29 +88,43 @@ p.copy {
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page<br>
   </a></p>
-<h1>The Servlet 3.0 ServletContainerInitializer Sample Application</h1>
-This sample application demonstrates how the ServletContainerInitializer
+<h1>The Servlet Container Initializer Sample Application</h1>
+
+<p>This sample application demonstrates how the servlet container initializer
 feature can be used by libraries to register interest in certain types of
-applications and take whatever action as the library sees fit.<br>
+applications and take whatever action as the library sees fit.</p>
+
 <h2>Description</h2>
-<p>This sample application has a (dummy) library with a class, <tt>org.glassfish.servlet.container_initializer_lib.Initializer</tt>, that implements <tt>javax.servlet.ServletContainerInitializer</tt>. This class declares interest in any
-    web application that has a class that uses the <tt>@javax.servlet.annotation.WebServlet</tt> annotation. This
-    class registers such interest by using the <tt>@javax.servlet.annotation.HandlesTypes</tt> annotation. The action performed by this (dummy) library is to set an attibute <tt>SHAREDLIB-1</tt> in the <tt>ServletContext</tt> whenever an application, in which
-    at least one class uses <tt>@WebServlet</tt> annotation, is getting deployed.</p>
-<p>The main web application in this sample has a class that uses <tt>@WebServlet</tt> annotation and this class checks if the attribute <tt>SHAREDLIB-1</tt> is indeed set
+
+<p>This sample application has a (dummy) library with a class, <tt>Initializer</tt>, that implements 
+<tt>ServletContainerInitializer</tt>. This class declares interest in any
+    web application that has a class that uses the <tt>@WebServlet</tt> annotation. This
+    class registers such interest by using the <tt>@HandlesTypes</tt> annotation. The action 
+	performed by this (dummy) library is to set an attibute <tt>SHAREDLIB-1</tt> in the 
+	<tt>ServletContext</tt> whenever an application is deployed in which
+    at least one class uses <tt>@WebServlet</tt> annotation.</p>
+	
+<p>The main web application in this sample has a class that uses the <tt>@WebServlet</tt> 
+annotation. This class checks if the attribute <tt>SHAREDLIB-1</tt> is indeed set
     in the <tt>ServletContext</tt> for this application.</p>
-<p>When started, this sample, stops GlassFish server (if it is already running), creates
-    the (dummy) library and places this library JAR file in the <tt>$GLASSFISH_HOME/lib</tt> directory before restarting GlassFish server. During server start, the web container
+	
+<p>When started, this sample stops GlassFish server (if it is already running), creates
+    the (dummy) library, and places this library JAR file in the <tt>$GLASSFISH_HOME/lib</tt> 
+	directory before restarting GlassFish server. During server start, the web container
     scans the libraries and registers the <tt>ServletContainerInitializer</tt> implementations
     and their respective interest. When the sample application (which uses <tt>@WebServlet</tt>)
-    is deployed, the web container recognizes that the <tt>ServletContainerInitializer</tt> implementation in the (dummy) library will be interested in this application. Hence the web
-    container will call the <tt>onStartUp</tt> method which will set <tt>SHAREDLIB-1</tt> attribute in the <tt>ServletContext</tt> of the application which is read and printed by
-    the sample application on the browser.</p>
-    <h2>Key Features</h2>
-    <li>It is available to do any initialization when the container is starting up.</li>
+    is deployed, the web container recognizes that the <tt>ServletContainerInitializer</tt> 
+	implementation in the (dummy) library will be interested in this application. Hence the web
+    container calls the <tt>onStartUp</tt> method which sets the <tt>SHAREDLIB-1</tt> attribute 
+	in the <tt>ServletContext</tt> of the application. The application reads and prints the 
+	attribute on the browser.</p>
+	
+<h2>Key Features</h2>
+<p>This sample application demonstrates how to use the servlet container initializer.</p>
+
 <h2>Building, Deploying, and Running the Application</h2>
 <p> Perform the following steps to build, deploy, and run the
-    application:<br>
+    sample application:<br>
   </p>
 <ol>
     <li> Set up your build environment and configure the application
@@ -121,29 +135,29 @@ applications and take whatever action as the library sees fit.<br>
     <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
     <li>Build the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can use the command below to compile initializer library and build the main web application war file:<br>
-  </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install </code><br>
-  </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<b>Note</b>: The initializer library is under <code>app_dir/servlet-container-initializer-lib/target/</code> The main web application war file is under <code>app_dir/servlet-container-initializer-war/target/</code><br>
-  </p>
+	
+    <p>Use the command below to compile the initializer library and build the main web application 
+	war file:</p>
+	
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install </code></p>
+	
+    <p>The initializer library is under <code>app_dir/servlet-container-initializer-lib/target/</code>. 
+	The main web application war file is under <code>app_dir/servlet-container-initializer-war/target/</code></p>
+
     <li>Copy <code>servlet-container-initializer-lib.jar</code> to <code>$GLASSFISH_HOME/lib</code>.</li>
     <li>Deploy the application:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can go to: <code>app_dir/servlet-container-initializer-war/target</code> to find the war file. Deploy the war file by using the command below: (you may have to start the server before deploying)</p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;servlet-container-initializer-war/&gt; </span>asadmin deploy ./target/servlet-container-initializer-war.war</code><br>
-  </p>
-  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<b>Note</b>: You have to restart the server before running the application<br>
-  </p>
-    <li><span style="font-weight: bold;">Note</span>: You can run the
-    test in the following way:
+    <p>Go to: <code>app_dir/servlet-container-initializer-war/target</code> to find the war file. 
+	Deploy the war file by using the command below: (you may have to start the server before deploying)</p>
+    <p><code><span style="font-style: italic;">servlet-container-initializer-war/&gt; 
+	</span>asadmin deploy ./target/servlet-container-initializer-war.war</code></p>
+
+  <p><b>Note</b>: You have to restart the server before running the application</p>
+    <li>Test the application as follows:<br><br>
       <ul>
-        <li>Use the browser to access
-        http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/servlet-container-initializer-war <br>
+        <li>Use the browser to access<br>
+        <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/servlet-container-initializer-war</code><br><br>
         The following output is expected in the browser: <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<tt>ServletContainerInitializer says : Attribute successfully set by SharedLibrary class which has expressed interest in @WebServlet</tt> </li>
-        
+        <tt>ServletContainerInitializer says : Attribute successfully set by SharedLibrary class which has expressed interest in @WebServlet</tt> </li>
       </ul>
   </li>
     <li>Use the glassfish command line to undeploy the application.
