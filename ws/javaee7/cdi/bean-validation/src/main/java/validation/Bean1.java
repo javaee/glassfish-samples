@@ -37,17 +37,16 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package transactionscoped;
+package validation;
 
-@javax.transaction.TransactionScoped
-public class Bean2 implements java.io.Serializable {
+import javax.inject.Named;
+import javax.validation.constraints.*;
 
-    public String getId() {
-        return "ObjectId for Bean2 is " + this + "";
+@Named(value="Bean1")
+public class Bean1 {
+	
+    public @NotNull String sayHello(@NotNull @Size(max=5) String arg) {
+        return "Hello, " + arg + " !";
     }
 
-    @javax.annotation.PreDestroy
-    public void preDestroy() {
-        System.out.println("In Bean2 predestroy");
-    }
 }

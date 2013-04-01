@@ -37,7 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package transactionscoped;
+package validation;
 
 import javax.enterprise.context.ContextNotActiveException;
 import javax.inject.Inject;
@@ -50,90 +50,57 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.*;
 import java.io.IOException;
 
-@WebServlet(name = "TransactionScopedServlet", urlPatterns = {"/TransactionScopedServlet"})
-public class TransactionScopedServlet extends HttpServlet {
+@WebServlet(name = "ValidationServlet", urlPatterns = {"/ValidationServlet"})
+public class ValidationServlet extends HttpServlet {
 
     public static ServletOutputStream m_out;
     @Inject
-    UserTransaction userTransaction;
-    @Inject
     Bean1 bean1;
-    @Inject
-    Bean1 bean1_1;
-    @Inject
-    Bean2 bean2;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         m_out = response.getOutputStream();
         m_out.println("<HTML>");
         m_out.println("<HEAD>");
-        m_out.println("<title>CDI Sample Application for TransactionScoped Annotation</title>");
+        m_out.println("<title>CDI Sample Application for Bean Validation</title>");
         m_out.println("</HEAD>");
         m_out.println("<BODY>");
+        
 
         try {
-            userTransaction.begin();
-            
             m_out.println("<BR>");
             m_out.println("<BR>");
-            m_out.println("<b>Scenario 1: Starting transaction and calling beans. Bean 1 is called twice but object id should be the same.</b>");
+            m_out.println("<b>Scenario 1: Happy Scenario!</b>");
             m_out.println("<BR>");
             m_out.println("<BR>");
-
-            m_out.println(bean1.getId());
-            m_out.println("<BR>");
-            m_out.println("<BR>");
-
-            m_out.println(bean1_1.getId());
-            m_out.println("<BR>");
-            m_out.println("<BR>");
-
-            m_out.println(bean2.getId());
-
-            userTransaction.commit();
+            m_out.println(bean1.sayHello("test"));
         } catch (Exception e) {
             m_out.println("If you see this, it means there is something wrong!");
             m_out.println(e.getMessage());
         }
 
         try {
-            userTransaction.begin();
-            
             m_out.println("<BR>");
             m_out.println("<BR>");
-            m_out.println("<b>Scenario 2: Repeat of scenario 1 with new transction. Should see different object ids. </b>");
+            m_out.println("<b>Scenario 2: We are passing null argument while the method expects NotNull</b>");
             m_out.println("<BR>");
             m_out.println("<BR>");
-
-            m_out.println(bean1.getId());
-            m_out.println("<BR>");
-            m_out.println("<BR>");
-
-            m_out.println(bean1_1.getId());
-            m_out.println("<BR>");
-            m_out.println("<BR>");
-
-            m_out.println(bean2.getId());
-
-            userTransaction.commit();
+            m_out.println(bean1.sayHello(null));
+            m_out.println("If you see this, it means there is something wrong!");
         } catch (Exception e) {
-            m_out.println("If you see this, it means there is something wrong!");
-            m_out.println(e.getMessage());
+            m_out.println("<b>Got expected constraint violation exception: </b>" + e.getMessage());
         }
-
-        m_out.println("<BR>");
-        m_out.println("<BR>");
-        m_out.println("<b>Scenario 3: Calling TransactionScoped bean outside transaction.</b>");
-        m_out.println("<BR>");
-        m_out.println("<BR>");
         try {
-            bean1.getId();
+            m_out.println("<BR>");
+            m_out.println("<BR>");
+            m_out.println("<b>Scenario 3: We are passing argument testxyz while the method expects max length of 5 chars</b>");
+            m_out.println("<BR>");
+            m_out.println("<BR>");
+            m_out.println(bean1.sayHello("testxyz"));
             m_out.println("If you see this, it means there is something wrong!");
-        } catch (ContextNotActiveException cnae) {
-            m_out.println("Got a ContextNotActiveException as expected.");
-            m_out.println(cnae.getMessage());
+        } catch (Exception e) {
+            m_out.println("<b>Got expected constraint violation exception: </b>" + e.getMessage());
         }
-
+        
         m_out.println("</BODY>");
         m_out.println("</HTML>");
     }
