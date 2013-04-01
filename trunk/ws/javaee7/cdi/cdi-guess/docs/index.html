@@ -43,7 +43,7 @@
         
         -->
 
-        <title>The JSF 2.0 CDI Sample Application</title>
+        <title>The CDI Java Server Faces Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,14 +73,23 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>The JSF 2.0 CDI Sample Application</h1>
-        <p>This simple demo is intended to illustrate the use of CDI
-with JSF 2.0. Its taken from samples from Weld reference implementation. </p>
+        <h1>The CDI Java Server Faces Sample Application</h1>
+        <p>This sample application demonstrates how to use CDI (Contexts and Dependency Injection) with Java Server Faces.</p>
 
 <h2>Description</h2>
-        <p>In the test application you get 10 attempts to guess a number between 1 and 100. After each attempt, you're told whether your guess was too high or too low.</p>
-        <p> The example exists of 4 classes, the first two of which are qualifiers. First, there is the <code>@Random</code> qualifier, used for injecting a random number. There is also the <code>@MaxNumber</code> qualifier, used for injecting the maximum number that can be injected. The application-scoped <code>Generator</code> class is responsible for creating the random number and maximum number, via a producer methods. The <code>Generator</code> is application scoped, so we don't get a different random each time. The final bean in the application is the session-scoped <code>Game</code> class. This is the primary entry point of the application. It's responsible for setting up or resetting the game, capturing and validating the user's guess and providing feedback to the user with a <code>FacesMessage</code>. </p>
+        <p>This sample application gives you 10 attempts to guess a number between 1 an 100. After each attempt, the application tells you whether your guess was too high
+		   or too low.</p>
 
+        <p>The example consists of two qualifiers, an application scopped bean, and a session-scoped bean:</p>
+
+        <ul>
+          <li>The <code>@Random</code> qualifier injects a random number.</li>
+          <li>The <code>@MaxNumber</code> qualifier injects the maximum number allowed.</li>
+		  <li>The application-scoped <code>Generator</code> bean generates a random number and the maximum number using producer methods.</li>
+		  <li>The session-scoped <code>Game</code> bean sets up or resets the game, captures and validates the user's guess, and provides feedback with a <code>FacesMessage</code>. This bean
+		  is the primary entry point of the application.</li>
+		</ul>
+	
         <h2>Building, Deploying, and Running the Application</h2>
         <!-- Modify this section as needed -->
         <p>Perform the following steps to build, deploy, and run the application:</p>
