@@ -43,7 +43,7 @@
         
         -->
 
-        <title>The EJB 3.2 Stateless Bean Sample Application</title>
+        <title>The EJB Stateless Bean Sample Application (EJB Module)</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,27 +73,29 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../../../docs/list.html">Samples Main Page</a></p>
-        <h1>The EJB 3.2 Stateless Session Bean Sample Application</h1>
-        <p>This is a very simple EJB 3.2 Stateless Session Bean with a Remote business interface.</p>
+        <h1>The EJB Stateless Session Bean Sample Application (EJB Module)</h1>
+        <p>This sample is a simple EJB stateless session bean with a remote business interface.</p>
 
         <h2>Description</h2>
+		<p>This sample application consists of two parts: an EJB module (this project) and a 
+		<a href="../../hello-stateless-ejb-client/docs/index.html">test client</a>. The rest of this document describes the EJB module.</p>
         <h3>Business Interface</h3>
-        <p>The Stateless Session bean has a Remote business interface with a single business method.</p>
+        <p>The stateless session bean has a remote business interface with a single business method:</p>
 				<pre>
 import javax.ejb.Remote;
 
 @Remote
 public interface StatelessSession {
 
-public String hello();
+    public String hello();
 
 }
 				</pre>
-	      <p><b>Note</b>: Unlike earlier versions of EJB, the Remote interface is <b>not</b> required to extend <code>java.rmi</code>.The Remote interface and its business methods are <b>not</b> required to throw <code>java.rmi.RemoteException</code>.</p>
+	      <p><b>Note</b>: Unlike in earlier versions of EJB, the remote interface is <b>not</b> required to extend <code>java.rmi</code>. The remote interface and its business methods are <b>not</b> required to throw <code>java.rmi.RemoteException</code>.</p>
 
-				<p>The business interface is designated as a remote business interface by using the <code>@javax.ejb.Remote</code> annotation.</p>
+		        <p>The <code>@javax.ejb.Remote</code> annotation designates the business interface as a remote business interface.</p>
 				
-				<h3>Stateless Session Bean Class</h3>
+				<h3>Stateless Session Bean</h3>
 				<p>The bean implementation is as follows:</p>				
         <pre>
 @Stateless
@@ -105,14 +107,16 @@ public class StatelessSessionBean implements StatelessSession {
 	
 }
         </pre>
-        <p><code>@javax.ejb.Stateless</code> is a component-defining annotation that designates this class as the bean class for a Stateless Session Bean.</p>
+        <p><code>@javax.ejb.Stateless</code> is a component-defining annotation that designates this class as the bean class for a stateless session bean.</p>
 
 				<h3>Deployment Descripton</h3>
-				<p>The good news is that the deployment descriptor is no longer required. The two Java files above are sufficient to completely describe this stateless session bean.
+				<p>The deployment descriptor is no longer required. The two Java files above are sufficient to completely describe this stateless session bean.
 				
 				<h2>Key Features</h2>
+				<p>This sample demonstrates the following key features of EJBs:</p>
 				<ul>
-				    <li>ejb: @Remote, @Stateless</li>
+				    <li><code>@Remote</code></li>
+					<li><code>@Stateless</code></li>
 				</ul>
 				
         <h2>Building, Deploying, and Running the Application</h2>
