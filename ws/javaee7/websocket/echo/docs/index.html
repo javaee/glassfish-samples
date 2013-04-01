@@ -43,7 +43,7 @@
 
         -->
 
-        <title>WebSocket Echo Sample</title>
+        <title>The WebSocket Echo Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,19 +73,26 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>WebSocket Echo Sample</h1>
-        <p>"Hello world" like application written using Java API for WebSockets.</p>
+        <h1>The WebSocket Echo Sample Application</h1>
+        <p>This sample is a <i>Hello world</i> application using the Java API for WebSocket.</p>
 
         <h2>Description</h2>
-        <p>This sample shows basic use of annotated version of Java API for WebSocket - <a href="http://jcp.org/en/jsr/detail?id=356">JSR 356</a>. Class EchoEndpoint is
-        the simples endpoint possible and all it does is just returning back incoming text message. This endpoint can be accessed from index.html included in this sample,
-        which contains again minimalistic Javascript client, which sends whatever you put into only textfield present on that page and reports what is send back.</p>
+        <p>This sample shows how to use the annotations in the Java API for WebSocket (<a href="http://jcp.org/en/jsr/detail?id=356">JSR 356</a>) to create a simple
+		WebSocket endpoint. The class <code>EchoEndpoint</code> is a very simple endpoint: it sends back every incoming text message. You can access the endpoint
+        from the <code>index.html</code> page included in this sample. This page contains a very simple JavaScript client that sends the contents of
+		a text field to the server and shows the response on the page.</p>
 
         <h2>Key Features</h2>
+		<p>This sample demonstrates the following key features:</p>
         <ul>
-            <li>@ServerEndpoint</li>
-            <li>@OnMessage</li>
-            <li>Javascript client usage</li>
+		  <li>
+		    <p>Creating a simple WebSocket endpoint using the following annotations:</p>
+			<ul>
+            <li><code>@ServerEndpoint</code></li>
+            <li><code>@OnMessage</code></li>
+            </ul>
+		  </li>
+		  <li>Connecting to a WebSocket endpoint from an HTML page using JavaScript.</li>
         </ul>
 
         <h2>Building, Deploying, and Running the Application</h2>
@@ -97,7 +104,7 @@
             <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
                 <p><code>mvn clean verify cargo:run</code></p>
             </li>
-            <li>Front page of this sample is at <a href="http://localhost:8080/websocket-echo">http://localhost:8080/websocket-echo</a> (port number might vary)</li>
+            <li>Front page of this sample is at <a href="http://localhost:8080/websocket-echo">http://localhost:8080/websocket-echo</a>. (The port number might vary.)</li>
             <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as <code>build</code> and <code>dist</code>.
                 <p><code>mvn clean</code></p>
             </li>
