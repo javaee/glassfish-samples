@@ -43,7 +43,7 @@
         
         -->
 
-        <title>CDI Sample Application for TransactionScoped annotation</title>
+        <title>The CDI TransactionScoped Annotation Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,23 +73,30 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>CDI Sample Application for TransactionScoped annotation</h1>
-        <p>This example application demonstrates the use <code>@javax.transaction.TransactionScoped</code> annotation on bean and injection of that bean within Transactional context.</p>
+        <h1>The CDI TransactionScoped Annotation Sample Application</h1>
+        <p>This sample application uses the <code>@TransactionScoped</code> annotation on a bean 
+		   and injects this bean within a transactional context.</p>
 
         <h2>Description</h2>
-<p>This demo uses a servlet to inject two beans annotated with <code>TransactionScoped</code> annotation. Example is divided into 3 scenarios.
-<li> Scenario 1 illustrates that if the same bean is injected twice within a single transaction then the same instance is used. </li>
-<li> Scenario 2 is repeat of scenario 1 but within a new transaction, to demo that with each new transaction, a new instance is used. </li>
-<li> Scenario 3 is negative scenario which shows that a bean annotated with <code>TransactionScoped</code> annotation, must be invoked within Transactional context.</li>
-</p>
-<p> Invoking the URL as <code>http://host:port/context-root/TransactionScopedServlet</code> will run all 3 scenarios and present result as an html output. </p>
+<p>This demo uses a servlet to inject two beans annotated with the <code>@TransactionScoped</code> annotation. 
+   The example is divided in three scenarios:</p>
+   
+<ul>
+<li>Scenario 1 demonstrates that all injections of a bean within a single transaction use the same bean instance.</li>
+<li>Scenario 2 demonstrates that injections of a bean in different transactions use different bean instances.</li>
+<li>Scenario 3 demonstrates that beans annotated with the <code>@TransactionScoped</code> annotation must be invoked
+    within a transactional context.</li>
+</ul>
+
+<p>The servlet at <code>http://&lt;host&gt;:&lt;port&gt;/&lt;context-root&gt;/TransactionScopedServlet</code> runs the three scenarios and
+   presents the result as HTML output.</p>
 
         <h2>Building, Deploying, and Running the Application</h2>
         <!-- Modify this section as needed -->
         <p>Perform the following steps to build, deploy, and run the application:</p>
         <ol>
             <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
-            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee7/cdi/interceptors</code>.</li>
+            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee7/cdi/transaction-scoped</code>.</li>
             <li>Change directory to <code><i>app_dir.</i></code></li>
             <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
                 <p><code>mvn clean verify cargo:run</code></p>
