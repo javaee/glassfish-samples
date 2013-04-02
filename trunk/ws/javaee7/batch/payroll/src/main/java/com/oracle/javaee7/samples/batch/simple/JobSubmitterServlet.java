@@ -80,6 +80,10 @@ public class JobSubmitterServlet extends HttpServlet {
             pw.println("</head>");
             pw.println("<body>");
 
+            pw.println("<p>To run this sample, first select a month from the drop down list and click 'Display Input Records' button</p>");
+
+            pw.println("<p>Once the input records are displayed, click the 'Calculate Payroll' button at the bottom of this page</p>");
+
             String origSelectedMonthYear = request.getParameter("inputMonthYear");
             String selectedMonthYear = origSelectedMonthYear == null
                 ? "JAN-2013" : origSelectedMonthYear;
