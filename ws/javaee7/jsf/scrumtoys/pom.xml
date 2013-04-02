@@ -63,26 +63,6 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>start-database</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <executable>${glassfish.home}/bin/asadmin</executable>
-                   <arguments>
-                        <argument>start-database</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
