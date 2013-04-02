@@ -104,6 +104,7 @@
         <module>websocket</module>
         <module>cdi</module> 
         <module>jsonp</module> 
+        <module>batch</module> 
         <module>ejb</module> 
     </modules>
 
