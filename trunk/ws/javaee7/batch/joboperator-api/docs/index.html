@@ -45,7 +45,7 @@
 
     <meta content="text/html; charset=ISO-8859-1"
           http-equiv="content-type">
-    <title>Sample Application demonstrating Batch (JSR 352) JobOperator APIs</title>
+    <title>The JobOperator API Batch Sample Application</title>
     <style type="text/css">
         body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
             font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
@@ -111,32 +111,35 @@
 <!--- Do not modify anything above this line, except for the title tag --->
 <p><a href="../../../docs/list.html">Samples Main Page</a></p>
 
-<h1>Sample Application demonstrating Batch (JSR 352) JobOperator APIs</h1>
+<h1>The JobOperator API Batch Sample Application</h1>
 
-<p>This sample demonstrates the usage of javax.batch.operations.JobOperator APIs for submitting batch jobs.</p>
+<p>This sample demonstrates how to use the <code>javax.batch.operations.JobOperator</code> 
+   interface to submit batch jobs.</p>
 
 <h2>Description</h2>
-<p>The sample demonstrates how JSR 352 (Batch Processing for JavaEE) APIs can be used
-    to submit a batch job. This sample also demonstrates how details about submitted
-    jobs can be obtained using various APIs in JobOperator.</p>
 
-<p> This demo uses the embedded JavaDB database that runs within the admin server JVM.</p>
-<p> The application is built and deployed as a WAR file.</p>
+<p>This sample application demonstrates how to use the Batch Processing API (JSR 352)
+   to submit batch jobs and how to obtain information about submitted jobs using the
+   <code>JobOperator</code> interface.</p>
+
+<p>The sample uses the embedded JavaDB database service included with the Glassfish server.</p>
+<p>The sample is built and deployed as a WAR file.</p>
 
 
 <h2>Key Features</h2>
+<p>This sample application demonstrates the following key features:</p>
 <ul>
-    <li>Submitting a batch job using a batch job xml</li>
-    <li>Using <code>JobOperator.start()</code> to submit a batch job.</li>
-    <li>Using <code>jobOperator.getJobInstances()</code> to get a list of Job instances submitted by this application.</li>
-    <li>Using <code>jobOperator.getJobExecutions(jobInstance)</code> to get a list of JobExecution objects.</li>
-    <li>For each JobExecution: </li>
+    <li>Defining a batch job using a job XML file.</li>
+    <li>Using the method <code>JobOperator.start()</code> to submit a batch job.</li>
+    <li>Using the method <code>jobOperator.getJobInstances()</code> to get a list of job instances submitted by this application.</li>
+    <li>Using the method <code>jobOperator.getJobExecutions(jobInstance)</code> to get a list of <code>JobExecution</code> objects.</li>
+    <li>Working with <code>JobExecution</code> objects:</li>
     <ul>
-        <li>Using <code>jobExecution.getJobName()</code> to get the job name.</li>
-        <li>Using <code>jobExecution.getBatchStatus()</code> to get the batch status of the job execution.</li>
-        <li>Using <code>jobExecution.getExitStatus()</code> to get the exit status of the job execution.</li>
-        <li>Using <code>jobExecution.getStartTime()</code> to obtain the time when the job execution commenced.</li>
-        <li>Using <code>jobExecution.getEndTime()</code> to obtain the time when the job execution completed.</li>
+        <li>Using the method <code>JobExecution.getJobName()</code> to get the job name.</li>
+        <li>Using the method <code>JobExecution.getBatchStatus()</code> to get the batch status of the job execution.</li>
+        <li>Using the method <code>JobExecution.getExitStatus()</code> to get the exit status of the job execution.</li>
+        <li>Using the method <code>JobExecution.getStartTime()</code> to obtain the time when the job execution started.</li>
+        <li>Using the method <code>JobExecution.getEndTime()</code> to obtain the time when the job execution completed.</li>
     </ul>
 </ul>
 
@@ -150,8 +153,8 @@
     </li>
     <li>Build the sample application by running <code>mvn build</code> command from a command line terminal.</li>
     <li>Deploy the sample application by running <code>asadmin deploy --force target/joboperator-api.war</code> command from a command line terminal.</li>
-    <li>Front page of this sample is at <a href="http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet">http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet</a>
-        (port number might vary)</li>
+    <li>The front page of this sample is at <a href="http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet">http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet</a>.
+        (The port number might vary.)</li>
     <li>Use <code>mvn clean</code> command from a command line terminal to clean up the target directory.</li>
     <li>Undeploy the sample application by running <code>asadmin undeploy joboperator-api</code> command from a command line terminal.</li>
     </li>
