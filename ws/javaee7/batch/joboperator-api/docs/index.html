@@ -45,7 +45,7 @@
 
     <meta content="text/html; charset=ISO-8859-1"
           http-equiv="content-type">
-    <title>The JobOperator API Batch Sample Application</title>
+    <title>Sample Batch application demonstrating JobOperator APIs</title>
     <style type="text/css">
         body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
             font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
@@ -111,7 +111,7 @@
 <!--- Do not modify anything above this line, except for the title tag --->
 <p><a href="../../../docs/list.html">Samples Main Page</a></p>
 
-<h1>The JobOperator API Batch Sample Application</h1>
+<h1>Sample Batch application demonstrating JobOperator APIs</h1>
 
 <p>This sample demonstrates how to use the <code>javax.batch.operations.JobOperator</code> 
    interface to submit batch jobs.</p>
@@ -122,6 +122,27 @@
    to submit batch jobs and how to obtain information about submitted jobs using the
    <code>JobOperator</code> interface.</p>
 
+The job xml contains one step called 'process'. This step uses three batch artifacts:
+<ul>
+    <li>SimpleItemReader (that implements ItemReader): An ItemReader reads input records. The
+        Batch runtime calls ItemReader.readItem() to read input records. The ItemReader can
+        read input records from a variety of sources like Database, a CSV flat file, from
+        another JavaEE component etc. Each record that is read from a ItemReader is handed
+        to an ItemProcessor.
+        <p>In this sample, the SimpleItemReader reads PayrollInputRecord(s) from a Singleton bean.</p></li>
+    <li>SimpleItemProcessor (that implements ItemProcessor): An ItemProcessor processes an input
+        record and returns (possibly a different) output record. The Batch runtime calls
+        ItemProcessor.processItem() to process the record that was read by ItemReader.
+        <p>In this sample, SimpleItemProcessor receives PayrollInputRecord (from the batch runtime),
+            computes the net pay and returns a PayrollRecord (to the batch runtime). The batch
+            runtime then calls ItemWriter</p></li>
+    <li>SimpleItemWriter (that implements ItemWriter): An ItemWrites writes the output record
+        to some datastore. The datastore can range from Database, a CSV flat file, to another
+        JavaEE component. The Batch runtime calls ItemWriter.writeItems()
+        to write the records that were processed by ItemWriter.
+        <p>In this sample, SimpleItemWriter stores the processed PayrollRecord into an
+            EJB Singleton bean.</p></li>
+</ul>
 <p>The sample uses the embedded JavaDB database service included with the Glassfish server.</p>
 <p>The sample is built and deployed as a WAR file.</p>
 
@@ -130,7 +151,8 @@
 <p>This sample application demonstrates the following key features:</p>
 <ul>
     <li>Defining a batch job using a job XML file.</li>
-    <li>Using the method <code>JobOperator.start()</code> to submit a batch job.</li>
+    <li>Using the method <code>JobOperator.start()</code> to submit a batch job. This method returns the execution id for the job execution</li>
+    <li>Using the method <code>JobOperator.getJobInstances()</code> method to obtain all JobInstabnces for the "payroll" job</li>
     <li>Using the method <code>jobOperator.getJobInstances()</code> to get a list of job instances submitted by this application.</li>
     <li>Using the method <code>jobOperator.getJobExecutions(jobInstance)</code> to get a list of <code>JobExecution</code> objects.</li>
     <li>Working with <code>JobExecution</code> objects:</li>
