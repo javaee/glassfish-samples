@@ -124,6 +124,29 @@ job to the batch runtime using the <code>JobOperator.start()</code> method. This
 also demonstrates how to use the <code>ItemReader</code>, <code>ItemProcessor</code>,
 and <code>ItemWriter</code> interfaces.</p>
 
+<p>The samples contains an (EJB) Singleton bean that contains payroll records for
+    a set of employees for three months. The singleton bean also holds the processed
+    payroll records.</p>
+
+The job xml contains one step called 'process'. This step uses three batch artifacts:
+<ul>
+    <li>SimpleItemReader (that implements ItemReader): An ItemReader reads input records. The
+        Batch runtime calls ItemReader.read() to read input records. The ItemReader can
+        read input records from a variety of sources like Database, a CSV flat file, from
+        another JavaEE component etc. Each record that is read from a ItemReader is handed
+        to an ItemProcessor. <p>In this sample, the SimpleItemReader reads the input records
+            from an Singleton bean.</p></li>
+    <li>SimpleItemProcessor (that implements ItemProcessor): An ItemProcessor processes an input
+        record and returns (possibly a different) output record. <p>In this sample, SimpleItemProcessor
+            receives PayrollInputRecord (from the batch runtime), computes the net pay and returns a
+            PayrollRecord (to the batch runtime). The batch runtime then calls ItemWriter</p></li>
+    <li>SimpleItemWriter (that implements ItemWriter): An ItemWrites writes the output record
+        to some datastore. The datastore can range from Database, a CSV flat file, to another
+        JavaEE component. <p>In this sample, SimpleItemWriter stores the processed payroll record
+            into an EJB Singleton bean.</p></li>
+</ul>
+
+
 <p>This sample application uses the embedded JavaDB database service included with the
 Glassfish server.</p>
 
@@ -148,9 +171,9 @@ Glassfish server.</p>
 <p>This sample application demonstrates the following key features:</p>
 <ul>
     <li>Defining a batch job using a job XML file. The batch job processes payroll records.</li>
-    <li>Using the <code>ItemReader</code>, <code>ItemProcessor</code>, and <code>ItemWriter</code> interfaces 
+    <li>Using the <code>ItemReader</code>, <code>ItemProcessor</code>, and <code>ItemWriter</code> interfaces
 	    describe the logic of a steps in the payroll job.</li>
-    <li>Injecting that <code>EJBs</code> and <code>JobContext</code> into implementations of 
+    <li>Injecting <code>EJBs</code> and <code>JobContext</code> into implementations of
 	    the <code>ItemReader</code> and <code>ItemWriter</code> interfaces.</li>
     <li>Using the <code>JobOperator.start()</code> method to start a batch job.</li>
 </ul>
