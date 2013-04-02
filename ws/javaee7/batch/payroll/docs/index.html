@@ -131,19 +131,23 @@ and <code>ItemWriter</code> interfaces.</p>
 The job xml contains one step called 'process'. This step uses three batch artifacts:
 <ul>
     <li>SimpleItemReader (that implements ItemReader): An ItemReader reads input records. The
-        Batch runtime calls ItemReader.read() to read input records. The ItemReader can
+        Batch runtime calls ItemReader.readItem() to read input records. The ItemReader can
         read input records from a variety of sources like Database, a CSV flat file, from
         another JavaEE component etc. Each record that is read from a ItemReader is handed
-        to an ItemProcessor. <p>In this sample, the SimpleItemReader reads the input records
-            from an Singleton bean.</p></li>
+        to an ItemProcessor.
+        <p>In this sample, the SimpleItemReader reads PayrollInputRecord(s) from a Singleton bean.</p></li>
     <li>SimpleItemProcessor (that implements ItemProcessor): An ItemProcessor processes an input
-        record and returns (possibly a different) output record. <p>In this sample, SimpleItemProcessor
-            receives PayrollInputRecord (from the batch runtime), computes the net pay and returns a
-            PayrollRecord (to the batch runtime). The batch runtime then calls ItemWriter</p></li>
+        record and returns (possibly a different) output record. The Batch runtime calls
+        ItemProcessor.processItem() to process the record that was read by ItemReader.
+        <p>In this sample, SimpleItemProcessor receives PayrollInputRecord (from the batch runtime),
+            computes the net pay and returns a PayrollRecord (to the batch runtime). The batch
+            runtime then calls ItemWriter</p></li>
     <li>SimpleItemWriter (that implements ItemWriter): An ItemWrites writes the output record
         to some datastore. The datastore can range from Database, a CSV flat file, to another
-        JavaEE component. <p>In this sample, SimpleItemWriter stores the processed payroll record
-            into an EJB Singleton bean.</p></li>
+        JavaEE component. The Batch runtime calls ItemWriter.writeItems()
+        to write the records that were processed by ItemWriter.
+        <p>In this sample, SimpleItemWriter stores the processed PayrollRecord into an
+            EJB Singleton bean.</p></li>
 </ul>
 
 
