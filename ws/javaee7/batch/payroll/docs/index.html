@@ -45,7 +45,7 @@
 
     <meta content="text/html; charset=ISO-8859-1"
           http-equiv="content-type">
-    <title>Batch (JSR 352) Sample Application</title>
+    <title>The Payroll Batch Sample Application</title>
     <style type="text/css">
         body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
             font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
@@ -111,22 +111,23 @@
 <!--- Do not modify anything above this line, except for the title tag --->
 <p><a href="../../../docs/list.html">Samples Main Page</a></p>
 
-<h1>The Batch (JSR 352) Sample Application</h1>
+<h1>The Payroll Batch Sample Application</h1>
 
-<p>This sample demonstrates the usage of javax.batch.operations.JobOperator APIs for submitting batch jobs.</p>
+<p>This sample demonstrates how to use the <code>javax.batch.operations.JobOperator</code> interface
+   to submit batch jobs.</p>
 
 <h2>Description</h2>
-<p>The sample demonstrates how JSR 352 (Batch Processing for JavaEE) APIs can be used
-    to submit a batch job. A Batch job is typically a long running process involving a
-    sequence of steps. This sample performs a simple payroll processing by submitting a
-    'payroll' job to the Batch runtime using the javax.batch.operations.JobOperator.start()
-    method. This sample also the demonstrates the use of ItemReader, ItemProcessor and
-    ItemWriter interfaces.<br>
+<p>This sample application demonstrates how to use the Batch Processing API (JSR 352)
+to submit batch jobs. A batch job is typically a long-running process that involves a sequence
+of steps. This sample processes a simple payroll by submitting a <code>payroll</code>
+job to the batch runtime using the <code>JobOperator.start()</code> method. This sample
+also demonstrates how to use the <code>ItemReader</code>, <code>ItemProcessor</code>,
+and <code>ItemWriter</code> interfaces.</p>
 
-   This demo uses the embedded JavaDB database that runs within the admin server JVM.
-   Thus no special configuration is required.</p>
+<p>This sample application uses the embedded JavaDB database service included with the
+Glassfish server.</p>
 
-<p>A list of Servlet(s) included in this demo:</p>
+<p>The following is a list of servlets included in this sample:</p>
 <table border="1">
     <tbody>
     <tr>
@@ -134,23 +135,24 @@
         <th>Description</th>
     </tr>
     <tr>
-        <td>/payroll/JobSubmitterServlet</td>
+        <td><code>/payroll/JobSubmitterServlet</code></td>
         <td>Displays payroll input records and allows starting a payroll processing job.
     </tr>
     </tbody>
 </table>
 
-
-<p> The application is built and deployed as a WAR file.
-</p>
+<p>The application is built and deployed as a WAR file.</p>
 
 
 <h2>Key Features</h2>
+<p>This sample application demonstrates the following key features:</p>
 <ul>
-    <li>Using a batch job xml to process payroll records</li>
-    <li>Using ItemReader, ItemProcessor and ItemWriter to accomplish a payroll job step</li>
-    <li>Demonstrates that EJBs and JobContext can be injected into ItemReader, ItemWriter</li>
-    <li>Using JobOperator.start() API to start a batch job.</li>
+    <li>Defining a batch job using a job XML file. The batch job processes payroll records.</li>
+    <li>Using the <code>ItemReader</code>, <code>ItemProcessor</code>, and <code>ItemWriter</code> interfaces 
+	    describe the logic of a steps in the payroll job.</li>
+    <li>Injecting that <code>EJBs</code> and <code>JobContext</code> into implementations of 
+	    the <code>ItemReader</code> and <code>ItemWriter</code> interfaces.</li>
+    <li>Using the <code>JobOperator.start()</code> method to start a batch job.</li>
 </ul>
 
 <h2>Building, Deploying, and Running the Application</h2>
