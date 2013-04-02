@@ -82,9 +82,13 @@ public class PayrollJobSubmitterServlet extends HttpServlet {
         try {
             pw.println("<html>");
             pw.println("<head>");
-            pw.println("<title>Servlet PayrollJobSubmitterServlet " + System.identityHashCode(simpleLock) + "</title>");
+            pw.println("<title>Sample Batch application demonstrating JobOperator API</title>");
             pw.println("</head>");
             pw.println("<body>");
+            pw.println("<h1>Sample Batch application demonstrating JobOperator API</h1>");
+            pw.println("<p>This sample application, submits a batch job that performs payroll processing for the selected month.</p>");
+            pw.println("<p>To run, first select a month and click 'Calculate Payroll'. This will submit a batch job. Each execution will");
+            pw.println("</br> create a new JobExecution with an associated unique executionID. The table below will list details about each job execution.</p>");
 
             String origSelectedMonthYear = request.getParameter("inputMonthYear");
             String selectedMonthYear = origSelectedMonthYear == null
