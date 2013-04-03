@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="7"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/application_7.xsd">
+             
+  <description>Java.net - The Source for Java Technology Collaboration</description>
+  <display-name>mailconnector-ear</display-name>
+  <module>
+    <ejb>mailconnector-mdb.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>mailconnector-web.war</web-uri>
+      <context-root>/mailconnector-web</context-root>
+    </web>
+  </module>
+  <module>
+    <connector>mailconnector.rar</connector>
+  </module>
+  <library-directory>lib</library-directory>
+
+</application>
