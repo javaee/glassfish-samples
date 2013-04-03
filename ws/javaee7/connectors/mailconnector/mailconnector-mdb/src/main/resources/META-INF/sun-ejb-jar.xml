@@ -51,7 +51,7 @@
       <jndi-name>JavaMailMDB</jndi-name>
       <resource-ref>
         <res-ref-name>TheMailSession</res-ref-name>
-        <jndi-name>ava:app/env/TheMailSessionmail/MySession</jndi-name>
+        <jndi-name>java:app/env/TheMailSessionmail/MySession</jndi-name>
       </resource-ref>
       <pass-by-reference>false</pass-by-reference>
       <ior-security-config>
