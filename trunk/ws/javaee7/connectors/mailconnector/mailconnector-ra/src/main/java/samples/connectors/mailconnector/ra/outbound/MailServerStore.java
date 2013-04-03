@@ -110,15 +110,8 @@ public class MailServerStore {
             // Get a session object
             session = javax.mail.Session.getDefaultInstance(mailProperties);
             
-            logger.log(Level.INFO, "Get Mail session with properties: "+session.getProperties());
-            StringBuilder sb = new StringBuilder();
-            for(Provider p: session.getProviders()){
-                sb.append("  protocol="+p.getProtocol()+"; type="+p.getType()+"; class="+p.getClassName()+"\n");
-            }
-            logger.log(Level.INFO, "The Mail session has providers: \n"+sb.toString());
-            
             // Get a store object
-            store = session.getStore();
+            store = session.getStore("imap");
             this.store.connect(serverName, userName, password);
         } catch (Exception te) {
             logger.log(Level.SEVERE, "[S] Caught an exception when obtaining a JavaMail Session", te);

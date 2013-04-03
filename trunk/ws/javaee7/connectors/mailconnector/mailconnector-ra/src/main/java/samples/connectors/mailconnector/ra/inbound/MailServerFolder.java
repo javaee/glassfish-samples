@@ -81,6 +81,7 @@ public class MailServerFolder {
         mailProperties.setProperty("mail.transport.protocol", "smtp");
         mailProperties.setProperty("mail.store.protocol", protocol);
         mailProperties.setProperty("mail.smtp.host", serverName);
+//        mailProperties.setProperty("mail.imap.class", "org.jvnet.mock_javamail.MockStore");
 
         try {
             open();
@@ -122,15 +123,9 @@ public class MailServerFolder {
         try {
             // Get a session object
             session = javax.mail.Session.getDefaultInstance(mailProperties);
-            logger.log(Level.INFO, "Get Mail session with properties: "+session.getProperties());
-            StringBuilder sb = new StringBuilder();
-            for(Provider p: session.getProviders()){
-                sb.append("  protocol="+p.getProtocol()+"; type="+p.getType()+"; class="+p.getClassName()+"\n");
-            }
-            logger.log(Level.INFO, "The Mail session has providers: \n"+sb.toString());
             
             // Get a store object
-            store = session.getStore();
+            store = session.getStore("imap");
         } catch (Exception te) {
             logger.log(Level.FINE, "[MSF] Caught an exception when obtaining a JavaMail Session", te);
             throw te;
