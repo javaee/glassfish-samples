@@ -43,7 +43,7 @@
         
         -->
 
-        <title>MailConnector Sample Application</title>
+        <title>The MailConnector Resource Adapter Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -73,24 +73,18 @@
         </table>
         <!-- Don't modify anything above this line, except for the title tag -->
         <p><a href="../../../docs/list.html">Samples Main Page</a></p>
-        <h1>MailConnector Resource Adapter and Sample Application</h1>
-        <p>The MailConnector sample application demonstrates:</p>
-        <ul>
-          <li>How to create a resource adapter (RA) according to the Java EE Connector Architecture 1.6 Specification by annotating the resource adapter artifacts.</li>
-          <li>How to deploy such RAs to the Application Server.</li>
-          <li>How RAs interact with other Java EE application components.</li>
-          <li>How to use resouce adapter's (RA) outbound artifacts.</li>
-          <li>How to use resource adapter's (RA) inbound artifacts.</li>
-          <li>How to use <code>WorkContext</code> (eg: <code>SecurityContext</code>) features introduced in Java EE Connector Architecture 1.6 Specification to flow in contextual information from external systems (aka. EIS) to the application server (applications).</li>
-          <li>How to define a connector resource in a Web module according to the Java EE Connector Architecture 1.7 Specification through the annotation <code>@ConnectionFactoryDefinition</code>. </li>
-          <li>How to define a mail session resource in a Web module according to the Java EE 7 through the annotation <code>@MailSessionDefinition</code>. </li>
-        </ul>
+        <h1>The MailConnector Resource Adapter Sample Application</h1>
+		<p>This sample application demonstrates how to develop a resource adapter (RA) and deploy connector resources with annotations defined
+		in the Java EE Connector Architecture 1.7 specification. The application uses the mail connector resource adapter to retrieve e-mails.
+		The mail connector resource adapter is completely built by specifying annotations; no deployment descriptor is used.</p>
+		
+
 
     <h2>Description</h2>
-    <p>This Mail Connector application consists of 4 maven projects:</p>
+    <p>This Mail Connector sample application consists of 4 maven projects:</p>
     <ul>
-        <li><a href="#ear">mailconnector-ear</a> is the Java EE enterprise application which contains the following 3 JavaEE modules</li>
-        <li><a href="#ra">mailconnector-ra</a> is an embedded resource adapter module that facilitates communication between JavaEE application and mail server.</li>
+        <li><a href="#ear">mailconnector-ear</a> is the Java EE enterprise application which contains the following 3 JavaEE modules.</li>
+        <li><a href="#ra">mailconnector-ra</a> is an embedded resource adapter module that facilitates communication between the JavaEE application and the mail server.</li>
         <li><a href="#mdb">mailconnector-mdb</a> is an EJB module that contains a message-driven bean (MDB). This MDB exercises the Inbound connector.</li>
         <li><a href="#web">mailconnector-web</a> is a web module that enables the user to send email messages and query for new messages on a given mailbox folder.</li>
     </ul>
@@ -114,19 +108,17 @@
     <p>
         The components of the resource adapter are archived into a file named
         <code>mailconnector.rar</code>
-        that contains Java classes and error message files
+        that contains Java classes and error message files.
     </p>
-    <ul>
-    </ul>
-    <p>Because this is a annotated rar, it does not have connector
-        descriptor file (ra.xml). It is also possible to have ra.xml along
-        with annotated .rar</p>
+    <p>Because this is a annotated rar, it does not have a connector
+        descriptor file (<code>ra.xml</code>). It is also possible to have the <code>ra.xml</code> file along
+        with the annotated <code>.rar</code> file.</p>
     <h4>MailConnector RAR File</h4>
     <p>
         The
         <code>mailconnector.rar</code>
-        file contains the Java interfaces, classes, error message and resource
-        files that make up the resource adapter . You can modify the resource
+        file contains the Java interfaces, classes, error messages and resource
+        files that make up the resource adapter. You can modify the resource
         file,
         <code>LocalStrings.properties</code>
         , for localization.
@@ -165,7 +157,7 @@
                 <td><code>@Connector</code> annotation to represent the
                     resource-adapter.<br> <code>@AuthenticationMechanism</code>
                     annotation to provide the authentication mechanism requirement.<br>
-                    <code>@SecurityPermission</code> annotation to provide security
+                    <code>@SecurityPermission</code> annotation to provide the security
                     permission requirement.</td>
             </tr>
             <tr>
@@ -182,7 +174,7 @@
                     activation-spec and the message-listener artifact details.</td>
             </tr>
             <tr>
-                <td><code>All of annotated classes</code></td>
+                <td><code>All the annotated classes</code></td>
                 <td><code>@ConfigProperty</code> annotation to represent config
                     properties of the Java Bean</td>
             </tr>
@@ -193,22 +185,22 @@
     <p>When the MailConnector resource adapter is deployed, it uses the
         Work Management facilities available to resource adapters to start a
         thread that monitors mailbox folders for new messages. When a new
-        message arrives to a folder, the PollingThread instantiates a
-        DeliveryThread that forwards the message to the appropriate
+        message arrives to a folder, the <code>PollingThread</code> instantiates a
+        <code>DeliveryThread</code> that forwards the message to the appropriate
         message-driven bean.</p>
-    <p>The information needed by the PollingThread to monitor a
+    <p>The information needed by the <code>PollingThread</code> to monitor a
         specific folder (username, password, server name, and folder name) is
-        specified by the MDB assembler via the the activation config
+        specified by the MDB assembler via the the activation configuration
         properties of the MDB deployment descriptor. When an MDB is deployed,
-        the Application Server passes the MDB's activation config spec
+        the Application Server passes the MDB's activation configuration
         information to the MailConnector resource adapter, which in turn
-        forwards it to the PollingThread. When the MDB is undeployed, the
+        forwards it to the <code>PollingThread</code>. When the MDB is undeployed, the
         Application Server notifies the RA, and then the MailConnector RA
-        notifies the PollingThread, so that it stops monitoring the the mail
+        notifies the <code>PollingThread</code>, so that it stops monitoring the the mail
         folder associated with the MDB being undeployed. When the RA is
-        undeployed, the PollingThread is terminated.</p>
+        undeployed, the <code>PollingThread</code> is terminated.</p>
     <p>
-        The PollingThread source code is located at
+        The <code>PollingThread</code> source code is located at
         <code>
             mailconnector/mailconnector-ra/src/main/java/samples/connectors/mailconnector/ra/inbound
         </code>
@@ -220,7 +212,7 @@
         The source code for these components is in the following sub-directories:
     </p>
     <ul>
-        <li><code>mailconnector/mailconnector-mdb/src/main/resources/META-INF</code>: application deployment descriptor files.</li>
+        <li><code>mailconnector/mailconnector-mdb/src/main/resources/META-INF</code>: contains application deployment descriptor files.</li>
         <li><code>mailconnector/mailconnector-mdb/src/main/java/samples/connectors/mailconnector/ejb/mdb</code>:
             contains source code for the MDB. The <code>onMessage</code> method of this MDB 
             consumes email messages sent to a mailbox folder. The mailbox folder is described through the annotation
@@ -267,29 +259,30 @@
         </tbody>
     </table>
     </p>
+	
+	
     <h2>Mail Server</h2>
-    <ul>
-        <li>For this sample, a mock JavaMail implementation is used. &nbsp;(https://mock-javamail.java.net/)</li>
-        <ul>
-            <li>the mock JavaMail implementation does not talk to
-                any mail server, instead it simulates a mail server with
-                in-memory mailbox.</li>
-        </ul>
-        <li>source code can be downloaded as follows :</li>
-        <ul>
-            <li>svn checkout https://svn.java.net/svn/mock-javamail~svn/trunk/mock-javamail </li>
-        </ul>
-        <li>binary can be built as follows :</li>
-        <ul>
-            <li>mvn clean install</li>
-        </ul>
-        <li>mock-javamail binary (.jar) will be generated at&nbsp;<span
-            style="font-style: italic; font-weight: bold;">target/mock-javamail-&lt;SNAPSHOT&gt;.jar</span></li>
-        <li>Copy the binary (.jar) to <span
-            style="font-style: italic; font-weight: bold;">installDir/lib</span>
-            directory and restart GlassFish
-        </li>
-    </ul>
+	<p>The sample application uses a mock <a href="https://mock-javamail.java.net/">JavaMail</a> implementation.
+	The mock JavaMail implementation does not communicate with an mail server. Instead, it simulates a mail server
+	using an in-memory mailbox. Follow these steps to install mock JavaMail with the Glassfish server:</p>
+	<ol>
+	<li>
+	Download the sources for mock JavaMail using the following command:<br><br>
+	<code>svn checkout https://svn.java.net/svn/mock-javamail~svn/trunk/mock-javamail</code>
+	</li>
+	<li>
+	Compile the sources using the following command:<br><br>
+	<code>mvn clean install</code><br><br>
+	This command generates the JAR file in <code>target/mock-javamail-&lt;SNAPSHOT&gt;.jar</code>
+	</li>
+	<li>
+	Copy the JAR file to the <code><i>&ltglassfish-install-dir&gt;</i>/lib</code> directory of your
+	Glassfish installation.
+	</li>
+	<li>
+	Restart the Glassfish server.
+	</li>
+	</ol>
     
     <h2>Configuration</h2>
     <p>
@@ -313,6 +306,19 @@
         <li>If you wish, edit these properties. These properties enable the MDB to send email messages.&nbsp;
         </li>
     </ol>
+	
+	<h2>Key Features</h2>
+	<p>The MailConnector sample application demonstrates the following key features:</p>
+	<ul>
+	  <li>How to create a resource adapter (RA) according to the Java EE Connector Architecture 1.6 Specification by annotating the resource adapter artifacts.</li>
+	  <li>How to deploy such RAs to the Application Server.</li>
+	  <li>How resource adapters interact with other Java EE application components.</li>
+	  <li>How to use resouce adapter's (RA) outbound artifacts.</li>
+	  <li>How to use resource adapter's (RA) inbound artifacts.</li>
+	  <li>How to use the <code>WorkContext</code> (eg: <code>SecurityContext</code>) features introduced in Java EE Connector Architecture 1.6 Specification to flow in contextual information from external systems (EIS) to the application server (applications).</li>
+	  <li>How to define a connector resource in a Web module according to the Java EE Connector Architecture 1.7 Specification through the <code>@ConnectionFactoryDefinition</code> annotation. </li>
+	  <li>How to define a mail session resource in a Web module according to the Java EE 7 specification with the <code>@MailSessionDefinition</code> annotation. </li>
+	</ul>
 
     <h2>Building, Deploying, and Running the Application</h2>
     <!-- Modify this section as needed -->
