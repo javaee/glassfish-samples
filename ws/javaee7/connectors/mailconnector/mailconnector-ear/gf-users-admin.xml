@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+<!-- Copyright 1997-2009 Sun Microsystems, Inc. All rights reserved. -->
+
+<project name="mailconnector-ear" default="create-users" basedir=".">
+
+    <target name="tools">
+        <condition property="javaee-script-suffix" value=".bat">
+            <os family="windows" />
+        </condition>
+        <condition property="javaee-script-suffix" value="">
+            <not>
+                <os family="windows" />
+            </not>
+        </condition>
+        <property name="asadmin" value="${gf4.bin.dir}/asadmin${javaee-script-suffix}" />
+        <echo>${gf4.bin.dir}</echo>
+        <chmod perm="a+x" osfamily="unix" dir="${gf4.bin.dir}/" includes="*"/>
+    </target>
+
+    <target name="create-single-user" description="create file-realm user" depends="tools">
+
+        <echo message="Generating key for user ${app.user} in server." />
+
+        <!-- generate temporary password file -->
+        <property name="user.password.file" value="asadminuserpassword.txt" />
+        <delete file="${user.password.file}" failonerror="false" />
+        <loadproperties srcFile="${admin.password.file}" />
+
+        <!-- By default, the password is equals to user name -->
+        <condition property="app.password" value="${app.user}">
+            <not>
+                <isset property="app.password"/>
+            </not>
+        </condition>
+
+        <!-- do not format the following echo which is intentional -->
+        <echo file="${user.password.file}" append="false">AS_ADMIN_USERPASSWORD=${app.password}
+            AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}
+        </echo>
+
+        <exec executable="${asadmin}">
+            <arg line=" create-file-user" />
+            <arg line=" --user admin" />
+            <arg line=" --passwordfile '${user.password.file}'" />
+            <arg line=" --host localhost" />
+            <arg line=" --port 4848" />
+            <arg line=" --groups ${app.groups}" />
+            <arg line=" ${app.user}" />
+        </exec>
+        <delete file="${user.password.file}" failonerror="false" />
+    </target>
+
+    <target name="create-users">
+        <antcall target="create-single-user">
+            <param name="app.user" value="leo" />
+            <param name="app.password" value="leo" />
+            <param name="app.groups" value="employee" />
+        </antcall>
+
+        <antcall target="create-single-user">
+            <param name="app.user" value="tom" />
+            <param name="app.password" value="tom" />
+            <param name="app.groups" value="employee" />
+        </antcall>
+
+        <antcall target="create-single-user">
+            <param name="app.user" value="mike" />
+            <param name="app.password" value="mike" />
+            <param name="app.groups" value="employee" />
+        </antcall>
+
+        <antcall target="create-single-user">
+            <param name="app.user" value="george" />
+            <param name="app.password" value="george" />
+            <param name="app.groups" value="employee" />
+        </antcall>
+    </target>
+
+</project>
