@@ -71,15 +71,24 @@
 <p><a href="../../../docs/list.html">Samples Main Page<br>
 </a></p>
 <h1>The File Upload Servlet Sample Application</h1>
-This sample application demonstrates how to use the support for multipart (or more commonly referred to as file upload) defined in the Servlet specification.
-<h2>Description</h2>
-<p>This sample application demonstrates the multiparts supported feature from servlet 3.0. It contains a simple web page that prompts the user for the names of two files to be uploaded to the web container.  </p><p>The files are uploaded to a servlet and then redirect to a jsp page.  Using the API from servlet 3.0, It allows users to get the contents and attributes of each part directly by using HttpServletRequest. </p><p>In the <code>getParts.jsp</code>, it is demonstrating the use of the basic APIs from <code>Part</code>.
+<p>This sample application demonstrates how to use the support for multipart (also known as file upload) defined in the Servlet specification.</p>
 
-</p>
-<br>
-</p>
+<h2>Description</h2>
+<p>This sample application demonstrates the multipart feature of Servlet 3.0.
+The sample contains a simple web page that promts the user for the names of two files
+to upload them to the web container. The files are uploaded to a servlet, then the client
+is redirected to a JSP page.</p>
+
+<p>Servlet 3.0 enables you to get the contents and attributes
+of each part directly using the <code>HttpServletRequest</code> interface.</p>
+
+<p>The <code>getParts.jsp</code> file demonstrates how to use the basic functionality from the 
+<code>Part</code> interface.</p>
+
+
 <h2>Key Features</h2>
-<li>Part attributes and contents can be accessed directly from the HttpServletRequest.</li>
+<p>This sample demonstrates how to access the attributes and contents of parts directly from the <code>HttpServletRequest</code> interface.</p>
+
 <h2>Building, Deploying, and Running the Application</h2>
 <p>
 Perform the following steps to build, deploy, and run the
@@ -92,36 +101,32 @@ application:</p>
   directory: <code><i>samples_install_dir</i>/servlet/multipart-war</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
     </i></code></li>
-    <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can simply use the command below to run this sample which is using Cargo framework:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run </code><br>
-    </p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; You can also point Cargo at an already installed and running Glassfish:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
-    <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>Note</b>: You can also build, deploy the sample application without Cargo:<br>
-    </p>
-    <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code></p>
-  <p><code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
-  <li><span style="font-weight: bold;">Note</span>: You can run the
-test in the following way:
+    <li>Build, deploy, the sample application using the <code>mvn</code> target:
+	
+	
+    <p>Use the command below to run this sample using the Cargo framework:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	mvn clean verify cargo:run </code></p>
+	<p>You can point Cargo to an already installed and running Glassfish server:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish4)</p>
+	<p>You can also build and deploy the sample application without Cargo:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+  
+   </li>
+  <li>Test the sample application as follows:<br><br>
     <ul>
       <li>Use the browser to access
-http:&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/multipart-war/
+<code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/multipart-war/</code>
       
     </ul>
   </li>
-  <li>Use the glassfish command line to undeploy the application.
+  <li>Use the Glassfish <code>asadmin</code> command line utility to undeploy the application.
       <p><code><span style="font-style: italic;">app_dir&gt; </span>
-      asadmin undeploy</code> &lt;app_name&gt;</p>
+      asadmin undeploy &lt;app_name&gt;</code></p>
   </li>
-    <li>Use the target <code>clean</code> to remove the temporary directories
-    like /target.
+    <li>Use the <code>clean</code> target to remove the temporary directories
+    like <code>/target</code>.
       <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn
       clean</code> </p>
   </li>
