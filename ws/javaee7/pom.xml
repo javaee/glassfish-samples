@@ -106,6 +106,7 @@
         <module>jsonp</module> 
         <module>batch</module> 
         <module>ejb</module> 
+        <module>connectors</module> 
     </modules>
 
     <build>
@@ -156,7 +157,7 @@
                     </configuration>
                 </configuration>
             </plugin>
-        </plugins>              
+        </plugins>
     </build>
 
     <dependencyManagement>
