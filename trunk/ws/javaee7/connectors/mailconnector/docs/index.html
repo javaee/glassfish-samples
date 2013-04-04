@@ -287,13 +287,13 @@
     <h2>Configuration</h2>
     <p>
         <b>Note</b>:The pre-built EAR file provided with this sample contains an MDB with generic property values
-        that&nbsp;corresponds to the email folder of user <span style="font-style: italic;"><span style="font-weight: bold;">joe</span></span>.
-        If you intend to change the user, rebuild the EAR file before deploying this application.&nbsp;
+        that corresponds to the email folder of user <span style="font-style: italic;"><span style="font-weight: bold;">joe</span></span>.
+        If you intend to change the user, rebuild the EAR file before deploying this application.
     </p>
-    <p>Follow these steps:</p>
+    <p>Follow these steps to configure the application:</p>
     <ol>
         <li>The MDB class <code>samples.connectors.mailconnector.ejb.mdb.JavaMailMessageBean</code> 
-        define the following properties by the annotation <code>@ActivationConfigProperty</code>:
+        defines the following properties using the <code>@ActivationConfigProperty</code> annotation:<br/><br/>
             <ul>
                 <li>serverName: localhost</li>
                 <li>userName: joe</li>
@@ -338,7 +338,8 @@
             <p>
                 <code>mvn cargo:install</code>
             </p>
-        <li>Build the library mock-javamail mentioned above and copy the generated .jar package to GlassFish's lib/ directory.</li>
+        <li>Build the library mock-javamail mentioned above and copy the generated .jar package to the <code>lib/</code> directory
+		    in your Glassfish installation.</li>
         <li>Start and deploy the sample application using:
             <p>
                 <code>mvn cargo:start antrun:run</code>
@@ -353,25 +354,25 @@
         </li>
     </ol>
     
-    <h2>Exercising the Outbound Resource Adapter</h2>
+    <h2>Testing the Outbound Resource Adapter</h2>
     <p>You can test the outbound resource adapter by running the MailConnector application.&nbsp;</p>
-    <p>eg: http://localhost:8080/mailconnector-web</p>
+    <p>Go to the following URL: <code>http://localhost:8080/mailconnector-web</code></p>
     <p>Use the menu to access the JSP pages that allow you to send
-        email messages to a given email mailbox and also to query the
-        same mailbox for new messages arrived. These JSPs use servlets
+        email messages to an email mailbox and to check the
+        same mailbox for new messages. The JSP pages use servlets
         to accomplish these tasks.</p>
-    <p>Querying the mailbox is accomplished using the outbound resource adapter features.</p>
-    <h2>Exercising the Inbound Resource Adapter&nbsp;(SecurityContext)</h2>
+    <p>Querying the mailbox is accomplished using the outbound resource adapter.</p>
+    <h2>Testing the Inbound Resource Adapter&nbsp;(SecurityContext)</h2>
     <ul>
-        <li>Access the URL :
-            http://localhost:8080/mailconnector-web</li>
-        <li>Click : Send an email message</li>
+        <li>Access the following URL:
+            <code>http://localhost:8080/mailconnector-web</code></li>
+        <li>Click on <i>Send an email message</i></li>
         <ul>
-            <li>set the From field to <span
+            <li>Set the <i>From</i> field to <span
                 style="font-style: italic;">tom@localhost</span></li>
         </ul>
         <ul>
-            <li>set the To field to <span
+            <li>Set the <i>To</i> field to <span
                 style="font-style: italic;">joe@localhost</span></li>
         </ul>
         <ul>
@@ -380,65 +381,65 @@
         <ul>
             <li>Press send</li>
         </ul>
-        <li>The message will be sent to <span
+        <li>The message is sent to <span
             style="font-style: italic;">joe's</span> mail box.&nbsp;
         </li>
         <li>The deployed resource-adapter has a polling thread that
-            will poll the user's (<span style="font-style: italic;">joe's</span>)
+            polls the user's (<span style="font-style: italic;">joe's</span>)
             mailbox periodically (every 30 seconds).
         </li>
         <ul>
-            <li>It queries for any new messages. If new messages
-                are found they will be scheduled for delivery.</li>
+            <li>The thread checks for any new messages. If there are new messages,
+                they will be scheduled for delivery.</li>
         </ul>
         <ul>
-            <li>Delivery is scheduled with the <span
+            <li>Delivery is scheduled in the <span
                 style="font-style: italic;">SecurityContext</span> ie.,
                 in the context of the sender's identity.
             </li>
         </ul>
         <ul>
-            <li>Resource Adapter will create and submit a <span
+            <li>The Resource Adapter will create and submit a <span
                 style="font-style: italic;">SecurityContext</span>
-                representing the sender's identity. For simplicity we
-                have created the users and credentials in GlassFish's
-                domain with credentials (password) same as username.
-                List of users are <span style="font-style: italic;">tom,
-                    mike, leo, george</span>.&nbsp;
+                representing the sender's identity. For simplicity, we
+                have created the users and credentials in the GlassFish
+                domain; the password is the same as the user name.
+                The list of users is the following: 
+				<span style="font-style: italic;">tom, mike, leo, george</span>.
             </li>
-            <li>For every received message, resource-adapter will
-                schedule a delivery of message to MDB by submitting a <span
-                style="font-style: italic;">work</span> instance.&nbsp;
+            <li>For every received message, the resource adapter
+                schedules a delivery of the message to the MDB by submitting a <span
+                style="font-style: italic;">work</span> instance.
             </li>
             <ul>
-                <li>The SecurityContext will be set with sender's
-                    id. The SecurityContext in this sample will create
+                <li>The SecurityContext is set with sender's
+                    id. The SecurityContext in this sample creates
                     a&nbsp;<span style="font-style: italic;">PasswordValidationCallback</span>
-                    with sender's id and credentials(password)
+                    with the sender's id and password.
                 </li>
             </ul>
             <ul>
                 <li>If the sender's id is a configured user in
-                    GlassFish, <span style="font-style: italic;">context
-                        setup</span> in GlassFish will succeed ie., <span
+                    GlassFish, the <span style="font-style: italic;">context
+                        setup</span> in GlassFish succeeds ie., <span
                     style="font-style: italic;">PasswordValidationCallback</span>
-                    will succeed and message will be delivered to MDB.
+                    succeeds and the message is delivered to the MDB.
                 </li>
-                <li>If the sender's id is not configured, <span
+                <li>If the sender's id is not configured, the <span
                     style="font-style: italic;">context setup</span> in
-                    GlassFish will fail thereby not delivering the
-                    message to MDB.
+                    GlassFish fails, and the message is not delivered to the
+                     MDB.
                 </li>
             </ul>
-            <li>When the message is delivered to MDB, MDB will
-                print the <span style="font-style: italic;">caller-principal</span>
+            <li>When the message is delivered to the MDB, the MDB
+                prints the <span style="font-style: italic;">caller-principal</span>
                 &nbsp;of the delivered message using
-                MDBContext.getCallerPrincipal()
+				<code>MDBContext.getCallerPrincipal()</code>.
             </li>
         </ul>
     </ul>
     <ul>
-        <li>The MDB logs the receipt of the message in the
+        <li>The MDB logs the reception of messages in the
             application server log file with entries similar to these:</li>
     </ul>
     <div style="margin-left: 40px;">
@@ -453,33 +454,35 @@
         <pre>&lt;MDB&gt; getCallerPrincipal() : tom</pre>
     </div>
     <p>You can also check the server log file and verify that the RA
-        has started PollingThread and that it has received the
+        has started the <code>PollingThread</code> and that it has received the
         information corresponding to the deployed MDB.</p>
     <ul>
-        <li>The PollingThread logs are preceded by <code>[PT]</code>
+        <li>The <code>PollingThread</code> log entries are preceded by <code>[PT]</code>
         </li>
-        <li>The PollingThread helper class EndpointConsumer logs
-            are preceded by <code>[EC]</code>
+        <li>The <code>PollingThread</code> helper class <code>EndpointConsumer</code> log
+            entries are preceded by <code>[EC]</code>
         </li>
-        <li>Resource adapter logs are preceded by <code>[RA]</code></li>
-        <li>SecurityContext created per message delivery related
-            logs are preceded by <code>[SC]</code>
+        <li>Resource adapter log entries are preceded by <code>[RA]</code></li>
+        <li>The log entries related to the SecurityContext created per message delivery
+            are preceded by <code>[SC]</code>
         </li>
-        <li>The MDB logs are preceded by <code>[MDB]</code>
+        <li>The MDB log entries are preceded by <code>[MDB]</code>
         </li>
     </ul>
+	<p>
     After deploying the EAR file containing the MDB, if there are
         no problems opening the mail folder associated with the MDB, you
-        should see log lines similar to the following (with the
+        should see log entries similar to the following (with the
         appropriate values):
-    <pre>[EC] Created EndpointConsumer for: username::foldername@mailserver</pre>
+	</p>
+    <p><pre>[EC] Created EndpointConsumer for: username::foldername@mailserver</pre></p>
     
-    After deploying the embedded RA, you should see the following lines
-    (along with other log lines from the application server):
-    <pre>[PT] WorkManager started polling thread</pre>
+    <p>After deploying the embedded RA, you should see log entries similar to the following
+    (along with other log entries from the application server):</p>
+    <p><pre>[PT] WorkManager started polling thread</pre></p>
     
-    By default, INFO and above log level related messages are printed.
-    You can set FINEST logging for the sample by executing the following command.
+    <p>By default, the <code>INFO</code> log level messages and above are printed.
+    You can set the <code>FINEST</code> level of logging for the sample by executing the following command:</p>
     <pre>GF_HOME/bin/asadmin set-log-level --log-level FINEST samples.connectors.mailconnector.ra</pre>
     <pre>
     </pre>
