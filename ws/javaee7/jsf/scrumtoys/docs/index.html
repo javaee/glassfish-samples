@@ -68,29 +68,31 @@
             </tbody>
         </table>
         <!---- Don't modify anything above this line, except for the title tag -------->
-        <p><a href="../../../../docs/list.html">Samples Main Page<br>
+        <p><a href="../../../docs/list.html">Samples Main Page<br>
             </a></p>
         <h1>The HTML5 ScrumToys JSF Sample Application</h1>
-        This is a JSF 2.2 application that demonstrates JSF 2.2 in a more
-        complex example.<br>
-        <br>
+        <p>This is a JavaServer Faces 2.2 application that demonstrates a more
+        complex example.</p>
+       
         <h2>Description</h2>
-        <p>This sample demonstrates a more complex JSF 2.2 application.</p>
+        <p>This sample demonstrates a more complex JavaServer Faces 2.2 application.</p>
 
         <h2>Key Features</h2>
-    <li>
-        Shows an example of how you can use JSF features in a more complex application.
+    <ul>
+	<li>
+        Using JSF features in a more complex application.
     </li>
+	</ul>
 
     <h2>Building, Deploying, and Running the Application</h2>
-    <p><b>This application uses a database.  You must start the database before deploying the application:</b>
+    <p><b>This application uses a database.  You must start the database service before deploying the application.</b>
+	<br/>Use the following command to start the database:</p>
     <p>
     <ul>
-    <li>asadmin start-database</li>
+    <li><code>asadmin start-database</code></li>
     </ul>
     </p>
-    <p>
-    </p>
+	
     <p>Following are the instructions for building, deploying, and running
         this sample application. <br>
     </p>
@@ -98,7 +100,7 @@
         <li>
             Set up your build environment and configure the application
             server with which the build system has to work by following the <a
-                href="../../../../docs/UserREADME.html"> common build instructions.</a>
+                href="../../../docs/UserREADME.html"> common build instructions.</a>
         </li>
         <li>
             <code><i>app_dir</i></code> is the sample application base
@@ -136,24 +138,27 @@
     </ol>
 
     <h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
-    <p><b>This application uses a database.  You must start the database before deploying the application:</b>
+    <p><b>This application uses a database.  You must start the database service before deploying the application.</b>
+	<br/>Use the following command to start the database:</p>
     <p>
     <ul>
-    <li>asadmin start-database</li>
+    <li><code>asadmin start-database</code></li>
     </ul>
     </p>
 
     <p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
     <ol>
-        <li> Refer to the <a href="../../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 7 SDK.</li>
+        <li> Refer to the <a href="../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 7 SDK.</li>
         <li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee7/jsf</code> directory, select <code>scrumtoys</code>, select Open Required Projects, and click Open Project.</li>
         <li> In the Projects tab, right click <code>scrumtoys</code> and select Run to build, deploy, and run the project.</li>
     </ol>
     <h2>Troubleshooting</h2>
 
-In case of receiving "Error on try to save Project" check if database is up.
-<br>
-The domains/domain1/log/server.log file may contain the following errors:
+<p>If you see the error <code>Error on try to save Project</code>, the database service
+may not be running.</p>
+<p>
+The <code>domains/domain1/log/server.log</code> file may contain the following errors:
+</p>
 <p>
 <pre>
 [#|2009-05-14T23:23:17.140-0700|SEVERE|glassfish|org.eclipse.persistence.session
@@ -165,10 +170,10 @@ Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.0.0.v20090424-r40
 Internal Exception: java.sql.SQLException: Error in allocating a connection. Cau
 se: Connection could not be allocated because: java.net.ConnectException : Error
  connecting to server localhost on port 1527 with message Connection refused: co
-nnect.
+nnect.</pre>
 
 or
-
+<pre>
 [#|2009-05-14T16:37:52.578-0700|WARNING|glassfish|org.eclipse.persistence.sessio
 n.file:/C:/sdk/glassfish/domains/domain1/applications/scrumtoys/WEB-INF/classes/
 -scrumtoysPU|_ThreadID=15;_ThreadName=Thread-1;|
@@ -179,15 +184,15 @@ Internal Exception: java.sql.SQLSyntaxErrorException: Table/View 'PROJECTS' does
  not exist.
 </pre>
 
-Once the scrumtoys application is deployed while database is down, bringing
+<p>Once the scrumtoys application is deployed while database is down, bringing
 database up will not fix the problem.  Restarting glassfish does not help
 either.  The only way to get the scrumtoys application working properly is to
-have the database up before *deploying* the application.  Thus to remedy the
-problem with not being able to save a project one needs to do the following:
+have the database up before <b>deploying</b> the application.  To remedy the
+problem of not being able to save a project, follow these steps:
+</p>
 
-<p>
 <ol>
-<li>asadmin start-database</li>
+<li>Run the following command: <code>asadmin start-database</code></li>
 <li>Repeat Step 4 above (Building, Deploying, and Running The Application).</li>
 </ol>
 
