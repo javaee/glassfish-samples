@@ -40,7 +40,7 @@
     holder.
 
 -->
-<job id="payroll" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+<job id="payroll" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
     <step id="process">
         <chunk item-count="1">
             <reader ref="SimpleItemReader"></reader> 
