@@ -37,31 +37,79 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.samples.websocket.auction.encoders;
 
-import javax.websocket.EncodeException;
-import javax.websocket.Encoder;
-import javax.websocket.EndpointConfig;
+/*
+    Document   : main
+    Created on : Mar 18, 2013, 6:15:21 PM
+    Author     : petrjiricka
+    Description:
+        Purpose of the stylesheet follows.
+*/
 
-import org.glassfish.samples.websocket.auction.message.AuctionMessage;
+root {
+    display: block;
+}
 
-/**
- * @author Pavel Bucek (pavel.bucek at oracle.com)
- */
-public class AuctionMessageEncoder implements Encoder.Text<AuctionMessage> {
+body {
+    font-family: sans-serif;
+}
 
-    @Override
-    public String encode(AuctionMessage object) throws EncodeException {
-        return object.toString();
-    }
 
-    @Override
-    public void init(EndpointConfig endpointConfig) {
-        // do nothing.
-    }
+#userID {
+    text-align: right;
+}
 
-    @Override
-    public void destroy() {
-        // do nothing.
-    }
+#html5images {
+    text-align: center;
+}
+
+#html5images img {
+    width: 64px;
+    height: 64px;
+}
+
+h2 {
+    text-align: center;
+}
+
+table {
+    text-align: center;
+    padding: 5;
+    border-spacing: 10;
+    margin: auto;
+}
+
+
+.label {
+    vertical-align: top;
+    text-align: left;
+}
+
+.label p {
+    color: blue;
+}
+
+.value {
+    vertical-align: central;
+    background-color: #E8E8E8;
+    text-align: left;
+
+}
+
+#resultID, #newBid {
+    text-align: center;
+}
+
+#comboID {
+     width: 300px;
+}
+
+.innertable {
+    text-align: center;
+    padding: 5;
+    border-spacing: 10;
+}
+
+.centered {
+    text-align: center;
 }
