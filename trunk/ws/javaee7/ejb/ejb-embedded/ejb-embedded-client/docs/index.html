@@ -43,7 +43,7 @@
         
         -->
 
-  <title>The Embeddable API EJB Sample Application</title>
+  <title>The EJB 3.2 Embeddable API Sample Application</title>
   <style type="text/css">
       body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
       {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -72,7 +72,7 @@
 </table>
 <!---- Don't modify anything above this line, except for the title tag -------->
 <p><a href="../../../../docs/list.html">Samples Main Page</a></p>
-<h1>The Embeddable API EJB Sample Application (Test Client)</h1>
+<h1>The EJB 3.2 Embeddable API Sample Application (Test Client)</h1>
 <p>This sample application demonstrates how to use the embeddable EJB container.</p>
 <h2>Description</h2>
 <p>The EJB 3.2 Embeddable API Sample Application demonstrates how to use the 
@@ -147,14 +147,19 @@ public class TestClient {
   <li>Set up your build environment and configure the application
 server with which the build system has to work by following the <a href="../../../../docs/UserREADME.html">
 common build instructions.</a></li>
+  <li>This client refers to <code>ejb-embedded-server</code> project as a dependency.
+      If you have not yet installed <code>ejb-embedded-server</code> and its parent, please run the following commands: 
+      <ul><li>Run <code>mvn install</code> under <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-server</code>. This command will install <code>ejb-embedded-server</code> project into your local repository.</li>
+          <li>Run <code>mvn -N install</code> under <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded</code>, <code><i>samples_install_dir</i>/javaee7/ejb</code> and <code><i>samples_install_dir</i>/javaee7</code>. This command will install <code>ejb-embedded-server</code> project's parent into local repository.
+          <br/><b>Note</b>: You can also run <code>mvn install</code> under <code><i>samples_install_dir</i>/javaee7</code>, but this command will install all the samples.</li>
+      </ul>
+  </li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-client</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
-  <li>This sample application depends on the <code>ejb-embedded-server</code> project.
-      Ensure that you have installed <code>ejb-embedded-server</code> and its parent prior to running the test client. This means you should install the pom files under <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded</code>, <code><i>samples_install_dir</i>/javaee7/ejb</code> and <code><i>samples_install_dir</i>/javaee7</code>.</li>
-  <li>Build and run the test client. <p><code>mvn clean verify exec:exec</code></p>
-      The artifact for the <code>ejb-embedded-server</code> project
-      is added to the classpath. </li>
+  
+  <li>Build and run the test client. The goal of <code>exec:exec</code> will start up a JVM to run <code>TestClient</code> class. At this time, the artifact(<code>ejb-embedded.jar</code>) of <code>ejb-embedded-server</code> project will be located in the JVM classpath, and then deployed to the embeddable EJB container.
+      <p><code>mvn clean verify exec:exec</code></p> </li>
 </ol>
 <h2>Troubleshooting</h2>
 <p>If you have problems when running the application, refer to the <a href="../../../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
