@@ -59,7 +59,7 @@
     <properties>
         <integration.container.id>glassfish3x</integration.container.id>
         <glassfish.home>${basedir}/target/cargo/installs/glassfish</glassfish.home>
-        <cargo.maven.containerUrl>http://javaweb.us.oracle.com/java/re/glassfish/4.0/promoted/b82/archive/bundles/latest-glassfish.zip</cargo.maven.containerUrl>
+        <cargo.maven.containerUrl>http://javaweb.us.oracle.com/java/re/glassfish/4.0/promoted/b83/archive/bundles/latest-glassfish.zip</cargo.maven.containerUrl>
     </properties>
     <scm>
         <connection>scm:svn:https://svn.java.net/svn/glassfish-samples~svn/trunk/ws/javaee7</connection>
@@ -97,16 +97,15 @@
         </mailingList>
     </mailingLists>
 
+    <!-- Please keep only web profile samples on the default modules list -->
+    <!-- TODO: create separate profile for full platform module list -->
     <modules>
         <module>jsf</module>
         <module>rest</module>
         <module>servlet</module>
         <module>websocket</module>
         <module>cdi</module> 
-        <module>jsonp</module> 
-        <module>batch</module> 
-        <module>ejb</module> 
-        <module>connectors</module> 
+        <module>jsonp</module>  
     </modules>
 
     <build>
@@ -165,7 +164,7 @@
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
-                <version>7.0-b82</version>
+                <version>7.0-b83</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
