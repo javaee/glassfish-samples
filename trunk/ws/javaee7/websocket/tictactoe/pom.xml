@@ -79,7 +79,7 @@
 
     <modules>
         <module>client</module>
-        <module>tictactoe-server</module>
+        <module>server</module>
     </modules>
 
     <!-- javaee-api jar-->
