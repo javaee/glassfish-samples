@@ -57,6 +57,7 @@
         <module>auction</module>
         <module>draw</module>
         <module>echo</module>
+        <module>tictactoe</module>
     </modules>
 
     <!-- javaee-api jar-->
