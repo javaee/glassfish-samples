@@ -75,7 +75,7 @@
         <p><a href="../../../../docs/list.html">Samples Main Page</a></p>
         <h1>The Stateless Bean EJB Sample Application (Test Client)</h1>
 		  <p>This sample is a Java client that uses a EJB stateless session bean with a remote business interface. The Java client runs outside
-		     of a Java EE container and performs a global JNDI lookup since dependency injection is not available outside of a Java EE component.</p>
+		     of a Java EE container and performs a global JNDI lookup, since dependency injection is not available outside of a Java EE component.</p>
 
         <h2>Description</h2>
 		<p>This sample application consists of two parts: an <a href="../../hello-stateless-ejb-bean/docs/index.html">EJB module</a> and a test client (this project). 
@@ -105,7 +105,8 @@ public class StatelessJavaClient {
         <p>Perform the following steps to build, deploy, and run the Java Client:</p>
         <ol>
             <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../../docs/UserREADME.html">common build instructions.</a></li>
-          <li>It depends on hello-stateless-ejb-bean. Please follow <a href="../../hello-stateless-ejb-bean/docs/index.html"> instruction of hello-stateless-ejb-bean</a> first, make sure the ejb bean has been built and deployed and the GlassFish is running before the next steps. 
+          <li>This project depends on <code>hello-stateless-ejb-bean</code>. Follow <a href="../../hello-stateless-ejb-bean/docs/index.html">the instruction for deploying hello-stateless-ejb-bean</a> first. 
+		  Ensure that the EJB bean has been built and deployed. Ensure also that the GlassFish server is running. </li>
             <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee7/ejb/hello-stateless-ejb/hello-stateless-ejb-client</code>.</li>
             <li>Change directory to <code><i>app_dir.</i></code></li>
             <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
