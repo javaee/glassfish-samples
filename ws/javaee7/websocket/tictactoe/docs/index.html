@@ -151,6 +151,18 @@ public void onMessage(final String message) {
                 <p><code>mvn clean verify cargo:run</code></p>
             </li>
             <li>
+                Before running the client application, you should make sure JavaFx library has been installed into local maven repository.
+                <p>
+                    The following commands are going to install the JavaFx library into local maven repository:
+                </p>
+                <p>
+                    <code>
+                        mvn install:install-file -Dfile=$JAVA_HOME/jre/lib/jfxrt.jar -DgroupId=com.oracle -DartifactId=javafx -Dversion=2.2 -Dpackaging=jar
+                    </code>
+                </p>
+                <p><b>Note: </b> <code>$JAVA_HOME</code> is point to JDK repository</p>
+            </li>
+            <li>
                 Run the client standalone application. You need two client endpoints. To obtain two client instances,
 				type the following commands in two different terminal windows:
                 <p>
