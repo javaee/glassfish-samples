@@ -58,7 +58,7 @@
                    
     <properties>
         <javafx.version>2.2</javafx.version>
-        <javafx.runtime.lib.jar>${java.home}/jre/lib/jfxrt.jar</javafx.runtime.lib.jar>
+        <javafx.runtime.lib.jar>${java.home}/lib/jfxrt.jar</javafx.runtime.lib.jar>
     </properties>
     <dependencies>
         <dependency>
