@@ -107,11 +107,8 @@ public class AutomaticTimerJavaClient {
 }
 </pre>
 
-<h2>Building, Deploying, and Running the Java Client<br>
-</h2>
-<p>
-</p>
-<p>Following are the instructions for building, deploying, and running
+<h2>Building, Deploying, and Running the Java Client<br></h2>
+<p>Since this is the client of <code>automatic-timer-server</code>, so please first go to <code><i>samples_install_dir</i>/javaee7/ejb/automatic-timer/automatic-timer-server</code>, and run the instructions described in section "Building, Deploying, and Running the Application" in <a href="../../automatic-timer-server/docs/index.html">the sample's document</a>. <br><br>Following are the instructions for building and running
 the Java Client.<br>
 <br>
 </p>
@@ -122,7 +119,7 @@ common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>samples_install_dir</i>/javaee7/ejb/automatic-timer/automatic-timer-client</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
-  <li>Make sure that the project automatic-timer-server is built and deployed prior to running this client. <br>
+  <li>Make sure that the database has been started up and the project automatic-timer-server has been built and deployed. <br>
   </li>
   <li>Build and Run the standalone client.<p><code>mvn clean verify exec:java</code></p></li>
 </ol>
