@@ -100,7 +100,7 @@ refers to the directory where the Java EE SDK is installed; for example,
 </ol>
 <p>Refer to the <a href="http://maven.apache.org/guides/index.html">Maven documentation 
 page</a> for information on configuring and using Maven. For example, you may
-have to specify a proxy server if your network configuration requires it.</p>
+have to specify a proxy server if your network environment requires it.</p>
 
 <h3>Building and Running a Sample Application</h3>
 
@@ -122,18 +122,19 @@ sample application as follows:</p>
     Follow the instructions for the specific sample to build and run it. 
 	Note that many of the samples use the following common Maven goals: <p> </p>
 	<ul>
-	  <li><code>compile</code> - compiles the sample application</li>
-	  <li><code>install</code> - packages the archive and installs it in the local maven repository</li>
-	  <li><code>cargo:run</code> - runs the application using the application server in the SDK</li>
-	  <li><code>clean</code> - deletes the compilation artifacts</li>
+	  <li><code>compile</code> - compiles the sample application.</li>
+	  <li><code>install</code> - packages the archive and installs it in the local Maven repository.</li>
+	  <li><code>verify</code> - verifies that the package is valid.</li>
+	  <li><code>cargo:run -Dglassfish.home=<i>&lt;gf_install_dir&gt;</i></code> - runs the application 
+	      using the application server in the SDK.</li> 
+	  <li><code>clean</code> - deletes the compilation artifacts.</li>
 	</ul>
   </li>
 </ol>
 
-<p>By default, the <code>cargo:run</code> goal will use the GlassFish version that 
-accompanies the samples. If you want to direct Cargo to use a specific version of 
-GlassFish, you can add the <code>-Dglassfish.home=&lt;javaee.home&gt;</code> option 
-when running the sample.</p> 
+<p>To specify the installation directory of the Glassfish server,
+use the <code>-Dglassfish.home=<i>&lt;gf_install_dir&gt;</i></code> option with the <code>cargo:run</code>
+goal.</p> 
 
 <h3>Sample Applications as NetBeans Projects</h3>
 
@@ -150,30 +151,31 @@ page:</p>
  </li>
  <li>
    Configure the browser that the NetBeans IDE will use by
-   selecting Tools-&gt;Options-&gt;General-&gt;WebBrowser.
+   selecting <b>Tools</b>-&gt;<b>Options</b>-&gt;<b>General</b>-&gt;<b>WebBrowser</b>.
  </li>
  <li>
    Configure the GlassFish 4 server to use JDK 1.7.0 by selecting 
-   Tools-&gt;Servers and then clicking the Java tab for the GlassFish 4 Domain.
+   <b>Tools</b>-&gt;<b>Servers</b> and then clicking on the <b>Java</b> tab for the GlassFish 4 Domain.
  </li>
  <li>
    Start the GlassFish server:<p> </p>
    <ol>
-     <li>Choose Windows-&gt;Services.</li>
+     <li>Choose <b>Windows</b>-&gt;<b>Services</b>.</li>
      <li>Expand the Servers group.</li>
-     <li>Right-click the GlassFish domain and choose Start from the context menu.</li>
+     <li>Right-click on the GlassFish domain and choose <b>Start</b> from the context menu.</li>
    </ol>
  </li>
  <li>Open one of the sample applications:<p> </p>
    <ol>
-     <li>Choose File-&gt;Open Project.</li>
+     <li>Choose <b>File</b>-&gt;<b>Open Project</b>.</li>
      <li>Navigate to the <code><i>&lt;javaee.home&gt;</i>\glassfish\samples\javaee7</code> directory and then to the appropriate sample project.</li>
      <li>Select the sample project.</li>
-     <li>After NetBeans scans the project, select "Open Required Projects" if projects appear in the box below the option, and then click Open Project.</li> 
+     <li>After NetBeans scans the project, select <b>Open Required Projects</b> if projects appear in the box below the option, 
+	 and then click on <b>Open Project</b>.</li> 
    </ol>
  </li>
  <li>Check the sample's <code>docs/index.html</code> file for any special prerequisites or build instructions.</li>
- <li>Right-click the sample project and execute one of the Maven targets; for example, <code>Run</code>.</li>
+ <li>Right-click on the sample project and execute one of the Maven targets; for example, <b>Run</b>.</li>
 </ol>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->
