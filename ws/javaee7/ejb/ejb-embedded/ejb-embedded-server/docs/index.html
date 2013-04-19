@@ -160,12 +160,11 @@ common build instructions.</a></li>
   <li><code><i>app_dir</i></code> is the sample application base
 directory: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-server</code>.</li>
   <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
-  <li>Ensure that the JavaDB database is started.</li>
-  <li>Build and install the sample application in the repository
+  <li>Build and install the sample application into your local repository
       <p><code>mvn clean install</code></p>
 	  This satisfies the dependency of the test client on this artifact.
   <li>Go to: <code><i>samples_install_dir</i>/javaee7/ejb/ejb-embedded/ejb-embedded-client</code>.</li>
-  <li>Build and Run the test client.<p><code>mvn clean verify exec:exec</code></p></li>
+  <li>Follow the instructions described in section "Building, Deploying, and Running the Application" in the <a href="../../ejb-embedded-client/docs/index.html">project's document</a> to build, deploy and run the client.</li>
 </ol>
 
 <h2>Troubleshooting</h2>
