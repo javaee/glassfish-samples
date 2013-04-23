@@ -109,7 +109,7 @@ public class TransactionScopedServlet extends HttpServlet {
             
             m_out.println("<BR>");
             m_out.println("<BR>");
-            m_out.println("<b>Scenario 2: Repeat of scenario 1 with new transction. Should see different object ids. </b>");
+            m_out.println("<b>Scenario 2: Repeat of scenario 1 with new transaction. Should see different object ids. </b>");
             m_out.println("<BR>");
             m_out.println("<BR>");
 
