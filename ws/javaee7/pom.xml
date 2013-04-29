@@ -57,7 +57,7 @@
     
     <name>Java EE 7 Samples Main Parent Project</name>
     <properties>
-        <integration.container.id>glassfish3x</integration.container.id>
+        <integration.container.id>glassfish4x</integration.container.id>
         <glassfish.home>${basedir}/target/cargo/installs/glassfish</glassfish.home>
         <cargo.maven.containerUrl>http://javaweb.us.oracle.com/java/re/glassfish/4.0/promoted/b85/archive/bundles/latest-glassfish.zip</cargo.maven.containerUrl>
     </properties>
@@ -135,7 +135,7 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.3.2</version>
+                    <version>1.4.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
