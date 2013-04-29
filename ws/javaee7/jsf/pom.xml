@@ -59,6 +59,6 @@
         <module>flows</module>
         <module>fileUpload</module>
         <module>html5</module>
-        <!-- GLASSFISH-20104       <module>scrumtoys</module> -->
+        <module>scrumtoys</module>
     </modules>
 </project>
