@@ -200,4 +200,11 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+             <id>jvnet-nexus-promoted</id>
+             <url>https://maven.java.net/content/groups/promoted/</url>
+         </repository>
+     </repositories>
+
 </project>

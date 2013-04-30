@@ -64,10 +64,6 @@
     <!-- Repo for javaee-api jar-->
     <repositories>
         <repository>
-            <id>Java EE 7</id>
-            <url>https://maven.java.net/content/groups/promoted/</url>
-        </repository>
-        <repository>
    					<id>EclipseLink</id>
    					<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
 				</repository>
