@@ -82,12 +82,6 @@
         <module>server</module>
     </modules>
 
-    <!-- javaee-api jar-->
-    <repositories>
-        <repository>
-            <id>Java EE 7</id>
-            <url>https://maven.java.net/content/groups/promoted/</url>
-        </repository>
-    </repositories>
+   
 </project>
 
