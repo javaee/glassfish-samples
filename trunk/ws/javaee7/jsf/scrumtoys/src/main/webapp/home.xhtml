@@ -46,7 +46,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="template.xhtml">
+    <ui:composition template="/template.xhtml">
         <f:metadata>
             <f:viewParam name="skin" value="#{skinUrlManager.skin}" />
             <f:event type="preRenderView" listener="#{skinUrlManager.update}" />

@@ -45,41 +45,58 @@ import jsf2.demo.scrum.model.entities.Story;
 import jsf2.demo.scrum.model.entities.Task;
 
 import javax.annotation.PreDestroy;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.inject.Inject;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import javax.faces.context.FacesContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import jsf2.demo.scrum.model.entities.TaskStatus;
 
 
-@ManagedBean(name = "dashboardManager")
+@Named("dashboardManager")
 @ViewScoped
 public class DashboardManager extends AbstractManager implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ManagedProperty("#{taskManager}")
+    @Inject
     private TaskManager taskManager;
-    @ManagedProperty("#{sprintManager}")
+    @Inject
     private SprintManager sprintManager;
-    @ManagedProperty("#{storyManager}")
+    @Inject
     private StoryManager storyManager;
-
+    @Inject
+    private StoryList storyList;
 
     private ListDataModel<Task> toDoTasks;
     private ListDataModel<Task> workingTasks;
     private ListDataModel<Task> doneTasks;
 
+    @PostConstruct
+    public void init() {
+        List<Task> toDoTasksList = getTasksByStatus(TaskStatus.TODO);
+        toDoTasks = new ListDataModel<Task>(toDoTasksList);
+        
+        List<Task> workingTasksList = getTasksByStatus(TaskStatus.WORKING);
+        workingTasks = new ListDataModel<Task>(workingTasksList);
+        
+        List<Task> doneTasksList = getTasksByStatus(TaskStatus.DONE);
+        doneTasks = new ListDataModel<Task>(doneTasksList);
+    }
+    
     @PreDestroy
     public void destroy() {
         toDoTasks = null;
         workingTasks = null;
         doneTasks = null;
-        FacesContext.getCurrentInstance().getViewRoot().getViewMap().remove("dashboardManager");
     }
 
     public Sprint getSprint() {
@@ -91,47 +108,69 @@ public class DashboardManager extends AbstractManager implements Serializable {
     }
 
     public DataModel<Story> getStories() {
-        return storyManager.getStories();
+        return storyList.getStories();
     }
 
-
     public void setStories(DataModel<Story> stories) {
-        storyManager.setStories(stories);
+        storyList.setStories(stories);
+    }
+    
+    private List<Task> getTasksByStatus(final TaskStatus status) {
+        try {
+            return doInTransaction(new PersistenceAction<List<Task>>() {
+
+                @SuppressWarnings({"unchecked"})
+                public List<Task> execute(EntityManager em) {
+                    Sprint s = storyManager.getSprint();
+                    if (s == null)
+                        return Collections.EMPTY_LIST;
+
+                    Query query = em.createNamedQuery("task.getByStatusAndSprint");
+                    query.setParameter("status", status);
+                    query.setParameter("sprint", s);
+                    
+                    return (List<Task>) query.getResultList();
+                }
+            });
+        } catch (ManagerException ex) {
+            Logger.getLogger(DashboardManager.class.getName()).log(Level.SEVERE, null, ex);
+            return Collections.EMPTY_LIST;
+        }
     }
 
     public ListDataModel<Task> getToDoTasks() {
-        List<Task> toDoTasksList = new ArrayList<Task>();
+        /*List<Task> toDoTasksList = new ArrayList<Task>();
         if (sprintManager.getCurrentSprint() == null) {
             return new ListDataModel<Task>(toDoTasksList);
         }
-        for (Story story : storyManager.getStoryList()) {
+        for (Story story : storyList.getStoryList()) {
             toDoTasksList.addAll(story.getTodoTasks());
         }
-        toDoTasks = new ListDataModel<Task>(toDoTasksList);
+        toDoTasks = new ListDataModel<Task>(toDoTasksList);*/
         return toDoTasks;
     }
 
     public ListDataModel<Task> getWorkingTasks() {
-        List<Task> workingTasksList = new ArrayList<Task>();
+        /*List<Task> workingTasksList = new ArrayList<Task>();
         if (sprintManager.getCurrentSprint() == null) {
             return new ListDataModel<Task>(workingTasksList);
         }
-        for (Story story : storyManager.getStoryList()) {
+        for (Story story : storyList.getStoryList()) {
             workingTasksList.addAll(story.getWorkingTasks());
         }
-        workingTasks = new ListDataModel<Task>(workingTasksList);
+        workingTasks = new ListDataModel<Task>(workingTasksList);*/
         return workingTasks;
     }
 
     public ListDataModel<Task> getDoneTasks() {
-        List<Task> doneTasksList = new ArrayList<Task>();
+        /*List<Task> doneTasksList = new ArrayList<Task>();
         if (sprintManager.getCurrentSprint() == null) {
             return new ListDataModel<Task>(doneTasksList);
         }
-        for (Story story : storyManager.getStoryList()) {
+        for (Story story : storyList.getStoryList()) {
             doneTasksList.addAll(story.getDoneTasks());
         }
-        doneTasks = new ListDataModel<Task>(doneTasksList);
+        doneTasks = new ListDataModel<Task>(doneTasksList);*/
         return doneTasks;
     }
 
@@ -181,6 +220,14 @@ public class DashboardManager extends AbstractManager implements Serializable {
 
     public void setStoryManager(StoryManager storyManager) {
         this.storyManager = storyManager;
+    }
+
+    public StoryList getStoryList() {
+        return storyList;
+    }
+
+    public void setStoryList(StoryList storyList) {
+        this.storyList = storyList;
     }
 
 }

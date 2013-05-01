@@ -45,42 +45,35 @@ import jsf2.demo.scrum.model.entities.Task;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.inject.Named;
+import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PreDestroy;
-import javax.faces.bean.CustomScoped;
-import jsf2.demo.scrum.web.scope.TaskScopeResolver;
+import javax.enterprise.context.SessionScoped;
 
 /**
  * @author Dr. Spock (spock at dev.java.net)
  */
-@ManagedBean(name = "taskManager")
-@CustomScoped(value="#{taskScope}")
+@Named("taskManager")
+@SessionScoped
 public class TaskManager extends AbstractManager implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Task currentTask;
-    private DataModel<Task> tasks;
-    private List<Task> taskList;
-    @ManagedProperty("#{storyManager}")
+    
+    @Inject
     private StoryManager storyManager;
 
     @PostConstruct
     public void construct() {
-        getLogger(getClass()).log(Level.INFO, "new intance of taskManager in taskScope");
+        getLogger(getClass()).log(Level.INFO, "new intance of taskManager");
         init();
     }
 
@@ -89,12 +82,6 @@ public class TaskManager extends AbstractManager implements Serializable {
         Story currentStory = storyManager.getCurrentStory();
         task.setStory(currentStory);
         setCurrentTask(task);
-        if (currentStory != null) {
-            taskList = new LinkedList<Task>(currentStory.getTasks());
-        } else {
-            taskList = new ArrayList<Task>();
-        }
-        tasks = new ListDataModel<Task>(taskList);
     }
 
     public String create() {
@@ -120,15 +107,8 @@ public class TaskManager extends AbstractManager implements Serializable {
                 });
                 if (!currentTask.equals(merged)) {
                     setCurrentTask(merged);
-                    int idx = taskList.indexOf(currentTask);
-                    if (idx != -1) {
-                        taskList.set(idx, merged);
-                    }
                 }
                 storyManager.getCurrentStory().addTask(merged);
-                if (!taskList.contains(merged)) {
-                    taskList.add(merged);
-                }
             } catch (Exception e) {
                 getLogger(getClass()).log(Level.SEVERE, "Error on try to save Task: " + currentTask, e);
                 addMessage("Error on try to save Task", FacesMessage.SEVERITY_ERROR);
@@ -138,13 +118,12 @@ public class TaskManager extends AbstractManager implements Serializable {
         return "show";
     }
 
-    public String edit() {
-        setCurrentTask(tasks.getRowData());
+    public String edit(Task task) {
+        setCurrentTask(task);
         return "edit";
     }
 
-    public String remove() {
-        final Task task = tasks.getRowData();
+    public String remove(final Task task) {
         if (task != null) {
             try {
                 doInTransaction(new PersistenceActionWithoutResult() {
@@ -158,7 +137,6 @@ public class TaskManager extends AbstractManager implements Serializable {
                     }
                 });
                 storyManager.getCurrentStory().removeTask(task);
-                taskList.remove(task);
             } catch (Exception e) {
                 getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Task: " + currentTask, e);
                 addMessage("Error on try to remove Task", FacesMessage.SEVERITY_ERROR);
@@ -183,7 +161,7 @@ public class TaskManager extends AbstractManager implements Serializable {
                     return (Long) query.getSingleResult();
                 }
             });
-            if (count != null && count > 0) {
+            if (count != null && count > 1) {
                 throw new ValidatorException(getFacesMessageForKey("task.form.label.name.unique"));
             }
         } catch (ManagerException ex) {
@@ -203,15 +181,6 @@ public class TaskManager extends AbstractManager implements Serializable {
         this.currentTask = currentTask;
     }
 
-    public DataModel<Task> getTasks() {
-        this.tasks = new ListDataModel<Task>(storyManager.getCurrentStory().getTasks());
-        return tasks;
-    }
-
-    public void setTasks(DataModel<Task> tasks) {
-        this.tasks = tasks;
-    }
-
     public Story getStory() {
         return storyManager.getCurrentStory();
     }
@@ -229,23 +198,14 @@ public class TaskManager extends AbstractManager implements Serializable {
     }
 
     public String showStories() {
-        endScope();
         return "/story/show";
     }
 
-    private void endScope() {
-        TaskScopeResolver.destroyScope();
-    }
 
     @PreDestroy
     public void destroy() {
-        getLogger(getClass()).log(Level.INFO, "destroy intance of taskManager in taskScope");
+        getLogger(getClass()).log(Level.INFO, "destroy intance of taskManager");
 	currentTask = null;
-	tasks = null;
-	if (null != taskList) {
-	    taskList.clear();
-	    taskList = null;
-	}
 	storyManager = null;
     }
 

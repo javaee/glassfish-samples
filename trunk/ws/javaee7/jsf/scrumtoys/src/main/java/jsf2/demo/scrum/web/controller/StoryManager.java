@@ -46,34 +46,30 @@ import jsf2.demo.scrum.model.entities.Story;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.Conversation;
+import javax.faces.context.ExternalContext;
 
 
-@ManagedBean(name = "storyManager")
+@Named("storyManager")
 @SessionScoped
 public class StoryManager extends AbstractManager implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @ManagedProperty("#{sprintManager}")
+    @Inject
     private SprintManager sprintManager;
     private Story currentStory;
-    private DataModel<Story> stories;
-    private List<Story> storyList;
 
     @PostConstruct
     public void construct() {
@@ -84,28 +80,28 @@ public class StoryManager extends AbstractManager implements Serializable {
     public void destroy() {
         sprintManager = null;
         currentStory = null;
-        stories = null;
-        if (null != storyList) {
-            storyList.clear();
-            storyList = null;
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (null != context) {
+            ExternalContext extContext = context.getExternalContext();
+            if (null != extContext) {
+                Map sessionMap = extContext.getSessionMap();
+                if (null != sessionMap) {
+                    sessionMap.remove("storyManager");
+                }
+            }
         }
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("storyManager");
 
     }
 
     public void init() {
-
         Sprint currentSprint = sprintManager.getCurrentSprint();
 
         if (currentSprint != null) {
             Story story = new Story();
-            setStoryList(new LinkedList<Story>(currentSprint.getStories()));
             story.setSprint(currentSprint);
             setCurrentStory(story);
-        } else {
-            setStoryList(new ArrayList<Story>());
         }
-        stories = new ListDataModel<Story>(getStoryList());
     }
 
     public String create() {
@@ -131,15 +127,8 @@ public class StoryManager extends AbstractManager implements Serializable {
                 });
                 if (!currentStory.equals(merged)) {
                     setCurrentStory(merged);
-                    int idx = getStoryList().indexOf(currentStory);
-                    if (idx != -1) {
-                        getStoryList().set(idx, merged);
-                    }
                 }
                 sprintManager.getCurrentSprint().addStory(merged);
-                if (!storyList.contains(merged)) {
-                    getStoryList().add(merged);
-                }
             } catch (Exception e) {
                 getLogger(getClass()).log(Level.SEVERE, "Error on try to save Story: " + currentStory, e);
                 addMessage("Error on try to save Story", FacesMessage.SEVERITY_ERROR);
@@ -149,27 +138,25 @@ public class StoryManager extends AbstractManager implements Serializable {
         return "show";
     }
 
-    public String edit() {
-        setCurrentStory(stories.getRowData());
+    public String edit(Story story) {
+        setCurrentStory(story);
         return "edit";
     }
 
-    public String remove() {
-        final Story story = stories.getRowData();
+    public String remove(final Story story) {
         if (story != null) {
             try {
                 doInTransaction(new PersistenceActionWithoutResult() {
 
                     public void execute(EntityManager em) {
-                        if (em.contains(story)) {
-                            em.remove(story);
-                        } else {
-                            em.remove(em.merge(story));
-                        }
+                        Query query = em.createNamedQuery("task.remove.ByProject");
+                        query.setParameter("project", story.getSprint().getProject());
+                        query.executeUpdate();
+
+                        em.remove(em.find(Story.class, story.getId()));
                     }
                 });
                 sprintManager.getCurrentSprint().removeStory(story);
-                getStoryList().remove(story);
             } catch (Exception e) {
                 getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Story: " + currentStory, e);
                 addMessage("Error on try to remove Story", FacesMessage.SEVERITY_ERROR);
@@ -205,9 +192,9 @@ public class StoryManager extends AbstractManager implements Serializable {
     public String cancelEdit() {
         return "show";
     }
-
-    public String showTasks() {
-        setCurrentStory(stories.getRowData());
+    
+    public String showTasks(Story story) {
+        setCurrentStory(story);
         return "showTasks";
     }
 
@@ -219,19 +206,6 @@ public class StoryManager extends AbstractManager implements Serializable {
         this.currentStory = currentStory;
     }
 
-    public DataModel<Story> getStories() {
-        if (sprintManager.getCurrentSprint() != null) {
-            this.stories = new ListDataModel<Story>(sprintManager.getCurrentSprint().getStories());
-            return stories;
-        } else {
-            return new ListDataModel<Story>();
-        }
-    }
-
-    public void setStories(DataModel<Story> stories) {
-        this.stories = stories;
-    }
-
     public Sprint getSprint() {
         return sprintManager.getCurrentSprint();
     }
@@ -240,33 +214,10 @@ public class StoryManager extends AbstractManager implements Serializable {
         sprintManager.setCurrentSprint(sprint);
     }
 
-    /**
-     * @return the storyList
-     */
-    public List<Story> getStoryList() {
-        if (sprintManager.getCurrentSprint() != null) {
-            this.storyList = sprintManager.getCurrentSprint().getStories();
-        }
-        return this.storyList;
-    }
-
-    /**
-     * @param storyList the storyList to set
-     */
-    public void setStoryList(List<Story> storyList) {
-        this.storyList = storyList;
-    }
-
-    /**
-     * @return the sprintManager
-     */
     public SprintManager getSprintManager() {
         return sprintManager;
     }
 
-    /**
-     * @param sprintManager the sprintManager to set
-     */
     public void setSprintManager(SprintManager sprintManager) {
         this.sprintManager = sprintManager;
     }

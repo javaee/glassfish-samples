@@ -43,7 +43,7 @@
         
         -->
 
-        <title>The HTML5 ScrumToys JSF Sample Application</title>
+        <title>The ScrumToys JSF Sample Application</title>
         <style type="text/css">
             body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
             {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
@@ -70,7 +70,7 @@
         <!---- Don't modify anything above this line, except for the title tag -------->
         <p><a href="../../../docs/list.html">Samples Main Page<br>
             </a></p>
-        <h1>The HTML5 ScrumToys JSF Sample Application</h1>
+        <h1>The ScrumToys JSF Sample Application</h1>
         <p>This is a JavaServer Faces 2.2 application that demonstrates a more
         complex example.</p>
        
@@ -85,13 +85,45 @@
 	</ul>
 
     <h2>Building, Deploying, and Running the Application</h2>
-    <p><b>This application uses a database.  You must start the database service before deploying the application.</b>
+
+    <p><b>This application uses authentication and a database.  You must
+    configure the authentication and start the database service before
+    deploying the application.</b>
+
+	<br/>Use the following sequence of commands to configure
+	authentication as expected by the app:</p>
+
+<p>Let the text file <code>userpassword.txt</code> contain the
+following text only:</p>
+
+<code><pre>AS_ADMIN_USERPASSWORD=user1</pre></code>
+
+<p>Execute the following commands using <code>asadmin</code></p>
+
+<code><pre>
+asadmin set server.security-service.activate-default-principal-to-role-mapping=true 
+asadmin --passwordfile userpassword.txt delete-file-user user1 
+asadmin --passwordfile userpassword.txt create-file-user --groups user user1  
+</pre></code>
+
+<p>If the <code>user1</code> user does not exist,
+the <code>delete-file-user</code> command will fail. This failure is
+expected and can be safely ignored.</p>
+
 	<br/>Use the following command to start the database:</p>
+
     <p>
     <ul>
     <li><code>asadmin start-database</code></li>
     </ul>
     </p>
+
+<p>Note: To remove the database created by this application, shut down
+the app server with <code>asadmin stop-domain domain1</code> and the database with
+<code>asadmin stop-database</code> and then delete the
+<code>sun-appserv-samples</code> directory within
+the <code>glassfish4/glassfish/databases</code> directory.</p>
+
 	
     <p>Following are the instructions for building, deploying, and running
         this sample application. <br>
