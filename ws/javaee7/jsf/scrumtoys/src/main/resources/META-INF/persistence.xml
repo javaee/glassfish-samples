@@ -54,6 +54,9 @@
         <properties>
             <property name="eclipselink.target-database" value="Auto"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <!--
+            <property name="eclipselink.logging.level.sql" value="FINEST" />
+            -->
         </properties>
     </persistence-unit>
 </persistence>

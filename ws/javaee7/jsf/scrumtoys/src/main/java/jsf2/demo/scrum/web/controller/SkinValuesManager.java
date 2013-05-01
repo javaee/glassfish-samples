@@ -43,13 +43,14 @@ package jsf2.demo.scrum.web.controller;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ApplicationScoped;
+import javax.inject.Named;
+import javax.enterprise.context.ApplicationScoped;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ArrayList;
 import javax.annotation.PreDestroy;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 
@@ -57,7 +58,7 @@ import javax.faces.context.FacesContext;
  *
  * @author edermag
  */
-@ManagedBean(name="skinValuesManager", eager=true)
+@Named("skinValuesManager")
 @ApplicationScoped
 public class SkinValuesManager implements Serializable {
 
@@ -81,7 +82,16 @@ public class SkinValuesManager implements Serializable {
             values.clear();
             values = null;
         }
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("skinValuesManager");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (null != context) {
+            ExternalContext extContext = context.getExternalContext();
+            if (null != extContext) {
+                Map sessionMap = extContext.getSessionMap();
+                if (null != sessionMap) {
+                    sessionMap.remove("skinValuesManager");
+                }
+            }
+        }
     }
     
     protected String getSkinCss(String skin) {
