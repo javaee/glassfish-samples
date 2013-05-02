@@ -264,23 +264,21 @@
     <h2>Mail Server</h2>
 	<p>The sample application uses a mock <a href="https://mock-javamail.java.net/">JavaMail</a> implementation.
 	The mock JavaMail implementation does not communicate with an mail server. Instead, it simulates a mail server
-	using an in-memory mailbox. Follow these steps to install mock JavaMail with the Glassfish server:</p>
+	using an in-memory mailbox. For the sake of convenience, this sample project contains its jar library which is
+	located at <code>mailconnector/lib/mock-javamail-1.12.jar</code>. User can directly copy this jar file to the
+	<code>glassfish/lib</code> directory of your Glassfish installation, and do not have to download and build the 
+	mock JavaMail project from source files.</p>
+	
+	For those who want to build the mock JavaMail from source, please follow these steps:
 	<ol>
 	<li>
-	Download the sources for mock JavaMail using the following command:<br><br>
+	Download the sources for mock JavaMail using the following command::<br>
 	<code>svn checkout https://svn.java.net/svn/mock-javamail~svn/trunk/mock-javamail</code>
 	</li>
 	<li>
-	Compile the sources using the following command:<br><br>
-	<code>mvn clean install</code><br><br>
-	This command generates the JAR file in <code>target/mock-javamail-&lt;SNAPSHOT&gt;.jar</code>
-	</li>
-	<li>
-	Copy the JAR file to the <code><i>&ltglassfish-install-dir&gt;</i>/lib</code> directory of your
-	Glassfish installation.
-	</li>
-	<li>
-	Restart the Glassfish server.
+	Compile the sources using the following command:<br>
+	<code>mvn clean install</code><br>
+	This command generates the JAR file in <code>target/mock-javamail-&lt;version&gt;.jar</code>
 	</li>
 	</ol>
     
@@ -328,29 +326,21 @@
         <li><code> <i>app_dir</i></code> is the sample application base directory: 
             <code> <i>samples_install_dir</i>/javaee7/connectors</code>.</li>
         <li>Change directory to <code><i>app_dir.</i> </code></li>
-        <li>Build the sample application using
-            <p>
+        <li>Build the sample application using<br>
                 <code>mvn clean install</code>
-            </p>
         </li>
         <li>Change directory to <code><i>app_dir</i>/mailconnector/mailconnector-ear</code></li>
-        <li>Download the latest GlassFish </code></li>
-            <p>
+        <li>Download the latest GlassFish </code><br>
                 <code>mvn cargo:install</code>
-            </p>
-        <li>Build the library mock-javamail mentioned above and copy the generated .jar package to the <code>lib/</code> directory
-		    in your Glassfish installation.</li>
-        <li>Start and deploy the sample application using:
-            <p>
-                <code>mvn cargo:start antrun:run</code>
-            </p>
         </li>
-        <li>Use the following command to undeploy the
-            sample application and to remove the temporary directories
-            such as <code>build</code> and <code>dist</code>.
-            <p>
+        <li>In order to install mock JavaMail library, copy the jar file of mock JavaMail to the <code>lib/</code> directory
+        of GlassFish installation by executing the command:<br>
+        <code>cp ../lib/mock-javamail-1.12.jar target/cargo/installs/latest-glassfish/glassfish4/glassfish/lib</code></li>
+        <li>Use this command to start GlassFish and deploy the sample application :<br>
+                <code>mvn cargo:start antrun:run</code>
+        </li>
+        <li>Use the following command to undeploy the sample application and stop GlassFish:<br>
                 <code>mvn cargo:deployer-undeploy cargo:stop clean</code>
-            </p>
         </li>
     </ol>
     
@@ -481,9 +471,9 @@
     (along with other log entries from the application server):</p>
     <p><pre>[PT] WorkManager started polling thread</pre></p>
     
-    <p>By default, the <code>INFO</code> log level messages and above are printed.
+    <p>By default, the <code>INFO</code> log level messages are printed.
     You can set the <code>FINEST</code> level of logging for the sample by executing the following command:</p>
-    <pre>GF_HOME/bin/asadmin set-log-level --log-level FINEST samples.connectors.mailconnector.ra</pre>
+    <pre>GF_HOME/bin/asadmin set-log-levels set-log-levels samples.connectors.mailconnector.ra=FINEST</pre>
     <pre>
     </pre>
 
