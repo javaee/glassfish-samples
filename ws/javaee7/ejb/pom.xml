@@ -61,7 +61,7 @@
 	      <module>ejb32-war</module>
 	      <module>hello-stateless-ejb</module>
     </modules>
-    <!-- Repo for javaee-api jar-->
+
     <repositories>
         <repository>
    					<id>EclipseLink</id>
