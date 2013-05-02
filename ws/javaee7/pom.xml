@@ -60,7 +60,7 @@
 	<glassfish.version>4.0-b87</glassfish.version>
         <integration.container.id>glassfish4x</integration.container.id>
         <glassfish.home>${basedir}/target/cargo/installs/glassfish</glassfish.home>
-        <cargo.maven.containerUrl>http://dlc.sun.com.edgesuite.net/glassfish/4.0/promoted/glassfish-4.0-b87.zip</cargo.maven.containerUrl>
+        <cargo.maven.containerUrl>http://javaweb.us.oracle.com/java/re/glassfish/4.0/promoted/b86/archive/bundles/latest-glassfish.zip</cargo.maven.containerUrl>
     </properties>
     <scm>
         <connection>scm:svn:https://svn.java.net/svn/glassfish-samples~svn/trunk/ws/javaee7</connection>
