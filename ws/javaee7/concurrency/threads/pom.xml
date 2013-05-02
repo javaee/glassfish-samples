@@ -48,7 +48,7 @@
         <artifactId>concurrency-samples</artifactId>
         <version>4.0-SNAPSHOT</version>
     </parent>
-    <artifactId>schedule</artifactId>
+    <artifactId>threads</artifactId>
     <packaging>war</packaging>
     <name>Sample Application using ManagedThreadFactory</name>
     <dependencies>
