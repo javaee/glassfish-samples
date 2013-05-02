@@ -58,6 +58,7 @@
 
     <modules>
 	<module>payroll</module>
+	<module>partition</module>
 	<module>joboperator-api</module>
     </modules>
 
