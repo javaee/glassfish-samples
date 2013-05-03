@@ -57,7 +57,7 @@
 					<artifactId>javaee-api</artifactId>
         </dependency>      
         <dependency>
-            <groupId>org.glassfish.appclient</groupId>
+            <groupId>org.glassfish.main.appclient</groupId>
             <artifactId>gf-client</artifactId>
         </dependency>
     </dependencies>
