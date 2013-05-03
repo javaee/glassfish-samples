@@ -58,7 +58,7 @@
         </dependency>
         <!-- Running JNDI operations in a standalone EJB client requires GlassFish client jar -->
         <dependency>
-            <groupId>org.glassfish.appclient</groupId>
+            <groupId>org.glassfish.main.appclient</groupId>
             <artifactId>gf-client</artifactId>
         </dependency>
     </dependencies>

@@ -73,9 +73,9 @@
         <dependencies>
 				    <!-- Running EJB lookup operations in a standalone client requires GlassFish client jar -->
 				    <dependency>
-				        <groupId>org.glassfish.appclient</groupId>
+				        <groupId>org.glassfish.main.appclient</groupId>
 				        <artifactId>gf-client</artifactId>
-				        <version>3.2-b06</version>
+				        <version>${glassfish.version}</version>
 				    </dependency>
         </dependencies>
     </dependencyManagement>
