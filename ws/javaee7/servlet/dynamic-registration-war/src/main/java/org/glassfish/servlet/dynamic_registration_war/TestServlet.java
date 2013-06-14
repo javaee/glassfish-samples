@@ -64,7 +64,6 @@ import javax.servlet.http.*;
  * response.
  *
  * @author Jan Luehe
- * @author Daniel Guo
  */
 public class TestServlet extends HttpServlet {
 

@@ -57,7 +57,6 @@ import javax.servlet.*;
  * intercept any requests mapped to the <tt>DynamicServlet</tt>.
  *
  * @author Jan Luehe
- * @author Daniel Guo
  */
 public class TestServletContextListener implements ServletContextListener {
 

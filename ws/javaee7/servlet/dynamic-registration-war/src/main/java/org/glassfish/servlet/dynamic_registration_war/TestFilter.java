@@ -42,8 +42,6 @@ package org.glassfish.servlet.dynamic_registration_war;
 
 import java.io.*;
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 
 /**
  * Filter that is registered by the
@@ -57,7 +55,6 @@ import javax.servlet.annotation.WebInitParam;
  * to which this Filter was mapped.
  *
  * @author Jan Luehe
- * @author Daniel Guo
  */
 public class TestFilter implements Filter {
 
