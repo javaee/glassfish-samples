@@ -44,7 +44,6 @@ import javax.servlet.*;
 /**
  * 
  * @author Jan Luehe
- * @author Daniel Guo
  */
 public class TestServletRequestListener implements ServletRequestListener {
 
