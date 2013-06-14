@@ -58,7 +58,6 @@ import javax.servlet.annotation.WebInitParam;
  * This class illustrate WebFilter annotation
  *
  * @author Shing Wai Chan
- * @author Daniel Guo
  *
  */
 @WebFilter(filterName = "TestFilter", urlPatterns = {"/"},
