@@ -58,7 +58,6 @@ import javax.servlet.http.HttpServletResponse;
  * This class illustrate WebServlet annotation
  *
  * @author Shing Wai Chan
- * @author Daniel Guo
  */
 @WebServlet(name = "TestServlet", urlPatterns = {"/"},
             initParams = {@WebInitParam(name = "message", value = "my servlet")})

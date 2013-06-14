@@ -53,7 +53,6 @@ import javax.servlet.annotation.WebListener;
  * Web application lifecycle listener.
  *
  * @author Shing Wai Chan
- * @author Daniel Guo
  *
  */
 @WebListener()
