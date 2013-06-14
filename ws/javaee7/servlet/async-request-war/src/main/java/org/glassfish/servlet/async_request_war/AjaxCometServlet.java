@@ -64,7 +64,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Shing Wai Chan
  * @author JeanFrancois Arcand
- * @author Daniel Guo
  */
 @WebServlet(urlPatterns = {"/chat"}, asyncSupported = true)
 public class AjaxCometServlet extends HttpServlet {
