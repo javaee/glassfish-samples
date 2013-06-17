@@ -82,9 +82,12 @@ public class ReadListenerImpl implements ReadListener {
      */
     @Override
     public void onAllDataRead() throws IOException {
-        output.print("Echo the reverse String from server: " + sb.reverse().toString() + "</br>");
-        output.flush();
-        context.complete();
+        try {
+            output.print("Echo the reverse String from server: " + sb.reverse().toString() + "</br>");
+            output.flush();
+        } finally {
+            context.complete();
+        }
         System.out.println("Data is all read");
     }
 
