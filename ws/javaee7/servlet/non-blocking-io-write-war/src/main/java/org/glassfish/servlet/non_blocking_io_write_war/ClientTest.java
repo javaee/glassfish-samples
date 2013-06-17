@@ -117,7 +117,10 @@ public class ClientTest extends HttpServlet {
             out.println("</html>");
         } finally {
             if (input != null) {
-                input.close();      
+                try {
+                    input.close();
+                } catch (Exception ex) {
+                }
             }
         }
     }
