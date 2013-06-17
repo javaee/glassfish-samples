@@ -100,6 +100,7 @@ public class ClientTest extends HttpServlet {
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
         conn.setChunkedStreamingMode(2);
+        conn.setRequestProperty("Content-Type", "text/plain");
         conn.connect();
 
         try {
@@ -131,9 +132,17 @@ public class ClientTest extends HttpServlet {
             Logger.getLogger(ReadListenerImpl.class.getName()).log(Level.SEVERE,
                     "Thread sleeping error", interruptedException);
         } finally {
-            if (input != null && output != null) {
-                input.close();
-                output.close();
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (Exception ex) {
+                }
+            }
+            if (output != null) {
+                try {
+                    output.close();
+                } catch (Exception ex) {
+                }
             }
         }
 
