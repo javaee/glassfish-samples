@@ -46,7 +46,7 @@
     <parent>
 	<groupId>org.glassfish-samples</groupId>
         <artifactId>cdi-samples</artifactId>
-        <version>4.0-SNAPSHOT</version>
+        <version>4.0</version>
     </parent>
     <artifactId>cdi-servlet</artifactId>
     <packaging>war</packaging>

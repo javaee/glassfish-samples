@@ -52,7 +52,7 @@
     </parent>
     <artifactId>cdi-samples</artifactId>
     <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
+    <version>4.0</version>
     <name>Java EE 7 CDI Samples</name> 
     <modules>
         <module>events</module>
