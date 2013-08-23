@@ -56,23 +56,25 @@
         </f:metadata>
 
         <ui:define name="pageTitle">
-            <h:outputText value="#{i18n['story.show.title']}"></h:outputText>
+            <h:outputText value="#{i18n['menuitem.label.changeskin']}"></h:outputText>
         </ui:define>
         <ui:define name="content">
             <h:form id="frmListStories">
                 <h:panelGrid columns="#{skinValuesManager.size + 2}" width="990" >
                     <h:outputLabel value=""/>
-                    <ui:repeat value="#{skinValuesManager.names}" var="name">
+                    <ui:repeat value="#{skinValuesManager.colorTuples}" var="cur">
                         <td>
-                        <scrum:postitLink color="#{name}" url="changeSkin"
-                            paramName="skin" paramValue="#{name}">
-                            <ui:param name="postitLabel" value=""/>
-                            <ui:param name="postitText" value="#{name}"/>
-                        </scrum:postitLink>
+                            <scrum:postitLink color="#{cur.displayName}" url="changeSkin"
+                                          paramName="skin" paramValue="#{cur.value}">
+                              <ui:param name="postitLabel" value=""/>
+                              <ui:param name="postitText" value="#{cur.value}"/>
+                            </scrum:postitLink>
                         </td>
                     </ui:repeat>
-                    <h:commandButton value="#{i18n['button.save']}" />
                 </h:panelGrid>
+                <div style="text-align: center ;">
+                    <h:commandButton value="#{i18n['button.save']}" />
+                </div>
             </h:form>
         </ui:define>
     </ui:composition>
