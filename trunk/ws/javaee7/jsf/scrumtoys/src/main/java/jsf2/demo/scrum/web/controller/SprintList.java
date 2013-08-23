@@ -43,8 +43,6 @@ package jsf2.demo.scrum.web.controller;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -52,7 +50,9 @@ import javax.inject.Inject;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import jsf2.demo.scrum.model.entities.Project;
 import jsf2.demo.scrum.model.entities.Sprint;
 
@@ -71,26 +71,20 @@ public class SprintList extends AbstractManager implements Serializable {
     
     private List<Sprint> sprintList;
     
+    @PersistenceContext
+    private EntityManager em;
+    
     @PostConstruct
+    @Transactional
     public void init() {
-        try {
-            setSprintList(doInTransaction(new PersistenceAction<List<Sprint>>() {
-
-                @SuppressWarnings({"unchecked"}) 
-                public List<Sprint> execute(EntityManager em) {
-                    Project p = sprintManager.getProject();
-                    if (p == null)
-                        return Collections.EMPTY_LIST;
-                    
-                    Query query = em.createNamedQuery("sprint.getByProject");
-                    query.setParameter("project", p);
-                    return (List<Sprint>) query.getResultList();
-                }
-            }));
-        } catch (ManagerException ex) {
-            Logger.getLogger(SprintList.class.getName()).log(Level.SEVERE, null, ex);
+        List<Sprint> temp = Collections.EMPTY_LIST;
+        Project p = sprintManager.getProject();
+        if (p != null) {
+            Query query = em.createNamedQuery("sprint.getByProject");
+            query.setParameter("project", p);
+            temp = (List<Sprint>) query.getResultList();
         }
-        
+        setSprintList(temp);
     }
     
     public DataModel<Sprint> getSprints() {

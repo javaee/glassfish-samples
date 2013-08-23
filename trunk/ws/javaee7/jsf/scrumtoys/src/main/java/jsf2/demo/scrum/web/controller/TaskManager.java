@@ -44,7 +44,6 @@ import jsf2.demo.scrum.model.entities.Story;
 import jsf2.demo.scrum.model.entities.Task;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
@@ -54,9 +53,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 /**
  * @author Dr. Spock (spock at dev.java.net)
@@ -70,10 +70,12 @@ public class TaskManager extends AbstractManager implements Serializable {
     
     @Inject
     private StoryManager storyManager;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @PostConstruct
     public void construct() {
-        getLogger(getClass()).log(Level.INFO, "new intance of taskManager");
         init();
     }
 
@@ -91,29 +93,21 @@ public class TaskManager extends AbstractManager implements Serializable {
         return "create";
     }
 
+    @Transactional
     public String save() {
         if (currentTask != null) {
-            try {
-                Task merged = doInTransaction(new PersistenceAction<Task>() {
-
-                    public Task execute(EntityManager em) {
-                        if (currentTask.isNew()) {
-                            em.persist(currentTask);
-                        } else if (!em.contains(currentTask)) {
-                            return em.merge(currentTask);
-                        }
-                        return currentTask;
-                    }
-                });
-                if (!currentTask.equals(merged)) {
-                    setCurrentTask(merged);
-                }
-                storyManager.getCurrentStory().addTask(merged);
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to save Task: " + currentTask, e);
-                addMessage("Error on try to save Task", FacesMessage.SEVERITY_ERROR);
-                return null;
+            Task merged = currentTask;
+            
+            if (currentTask.isNew()) {
+                em.persist(currentTask);
+            } else if (!em.contains(currentTask)) {
+                merged = em.merge(currentTask);
             }
+            
+            if (!currentTask.equals(merged)) {
+                setCurrentTask(merged);
+            }
+            storyManager.getCurrentStory().addTask(merged);
         }
         return "show";
     }
@@ -123,49 +117,33 @@ public class TaskManager extends AbstractManager implements Serializable {
         return "edit";
     }
 
+    @Transactional
     public String remove(final Task task) {
         if (task != null) {
-            try {
-                doInTransaction(new PersistenceActionWithoutResult() {
-
-                    public void execute(EntityManager em) {
-                        if (em.contains(task)) {
-                            em.remove(task);
-                        } else {
-                            em.remove(em.merge(task));
-                        }
-                    }
-                });
-                storyManager.getCurrentStory().removeTask(task);
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Task: " + currentTask, e);
-                addMessage("Error on try to remove Task", FacesMessage.SEVERITY_ERROR);
-                return null;
+            if (em.contains(task)) {
+                em.remove(task);
+            } else {
+                em.remove(em.merge(task));
             }
+            storyManager.getCurrentStory().removeTask(task);
         }
         return "show";
     }
 
+    @Transactional(dontRollbackOn=ValidatorException.class)
     public void checkUniqueTaskName(FacesContext context, UIComponent component, Object newValue) {
         final String newName = (String) newValue;
-        try {
-            Long count = doInTransaction(new PersistenceAction<Long>() {
-
-                public Long execute(EntityManager em) {
-                    Query query = em.createNamedQuery((currentTask.isNew()) ? "task.new.countByNameAndStory" : "task.countByNameAndStory");
-                    query.setParameter("name", newName);
-                    query.setParameter("story", storyManager.getCurrentStory());
-                    if (!currentTask.isNew()) {
-                        query.setParameter("currentTask", (!currentTask.isNew()) ? currentTask : null);
-                    }
-                    return (Long) query.getSingleResult();
-                }
-            });
-            if (count != null && count > 1) {
-                throw new ValidatorException(getFacesMessageForKey("task.form.label.name.unique"));
-            }
-        } catch (ManagerException ex) {
-            Logger.getLogger(TaskManager.class.getName()).log(Level.SEVERE, null, ex);
+        Long count = null;
+        
+        Query query = em.createNamedQuery((currentTask.isNew()) ? "task.new.countByNameAndStory" : "task.countByNameAndStory");
+        query.setParameter("name", newName);
+        query.setParameter("story", storyManager.getCurrentStory());
+        if (!currentTask.isNew()) {
+            query.setParameter("currentTask", (!currentTask.isNew()) ? currentTask : null);
+        }
+        count = (Long) query.getSingleResult();
+        if (count != null && count.longValue() > 0) {
+            throw new ValidatorException(getFacesMessageForKey("task.form.label.name.unique"));
         }
     }
 
@@ -204,7 +182,6 @@ public class TaskManager extends AbstractManager implements Serializable {
 
     @PreDestroy
     public void destroy() {
-        getLogger(getClass()).log(Level.INFO, "destroy intance of taskManager");
 	currentTask = null;
 	storyManager = null;
     }

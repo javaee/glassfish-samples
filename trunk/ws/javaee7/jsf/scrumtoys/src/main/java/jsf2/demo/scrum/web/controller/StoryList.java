@@ -43,8 +43,6 @@ package jsf2.demo.scrum.web.controller;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -52,7 +50,9 @@ import javax.inject.Inject;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import jsf2.demo.scrum.model.entities.Sprint;
 import jsf2.demo.scrum.model.entities.Story;
 
@@ -69,27 +69,21 @@ public class StoryList extends AbstractManager implements Serializable{
 
     private DataModel<Story> stories;
     private List<Story> storyList;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @PostConstruct
+    @Transactional
     public void init() {
-        try {
-            setStoryList(doInTransaction(new PersistenceAction<List<Story>>() {
-
-                @SuppressWarnings({"unchecked"})
-                public List<Story> execute(EntityManager em) {
-                    Sprint s = storyManager.getSprint();
-                    if (s == null)
-                        return Collections.EMPTY_LIST;
-
-                    Query query = em.createNamedQuery("story.getBySprint");
-                    query.setParameter("sprint", s);
-                    return (List<Story>) query.getResultList();
-                }
-            }));
-        } catch (ManagerException ex) {
-            Logger.getLogger(StoryList.class.getName()).log(Level.SEVERE, null, ex);
+        List<Story> temp = Collections.EMPTY_LIST;
+        Sprint s = storyManager.getSprint();
+        if (s != null) {
+            Query query = em.createNamedQuery("story.getBySprint");
+            query.setParameter("sprint", s);
+            temp = (List<Story>) query.getResultList();
         }
-
+        setStoryList(temp);
     }
 
     public StoryManager getStoryManager() {
