@@ -53,7 +53,9 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import jsf2.demo.scrum.model.entities.Project;
 
 /**
@@ -70,21 +72,15 @@ public class ProjectList extends AbstractManager implements Serializable{
     private DataModel<Project> projects;
     private List<SelectItem> projectItems;
     private List<Project> projectList;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @PostConstruct
+    @Transactional
     public void init() {
-        try {
-            setProjectList(doInTransaction(new PersistenceAction<List<Project>>() {
-
-                @SuppressWarnings({"unchecked"})
-                public List<Project> execute(EntityManager em) {
-                    Query query = em.createNamedQuery("project.getAll");
-                    return (List<Project>) query.getResultList();
-                }
-            }));
-        } catch (ManagerException ex) {
-            Logger.getLogger(ProjectList.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Query query = em.createNamedQuery("project.getAll");
+        setProjectList((List<Project>) query.getResultList());
         projectItems = new LinkedList<SelectItem>();
         projectItems.add(new SelectItem(new Project(), "-- Select one project --"));
         if (getProjectList() != null) {

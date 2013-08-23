@@ -45,7 +45,6 @@ import jsf2.demo.scrum.model.entities.Sprint;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.inject.Inject;
 import javax.enterprise.context.SessionScoped;
@@ -56,9 +55,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 /**
  * @author Dr. Spock (spock at dev.java.net)
@@ -72,6 +71,9 @@ public class SprintManager extends AbstractManager implements Serializable {
     @Inject
     private ProjectManager projectManager;
     private Project currentProject;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @PostConstruct
     public void construct() {
@@ -109,29 +111,19 @@ public class SprintManager extends AbstractManager implements Serializable {
         return "create";
     }
 
+    @Transactional
     public String save() {
         if (currentSprint != null) {
-            try {
-                Sprint merged = doInTransaction(new PersistenceAction<Sprint>() {
-
-                    public Sprint execute(EntityManager em) {
-                        if (currentSprint.isNew()) {
-                            em.persist(currentSprint);
-                        } else if (!em.contains(currentSprint)) {
-                            return em.merge(currentSprint);
-                        }
-                        return currentSprint;
-                    }
-                });
-                if (!currentSprint.equals(merged)) {
-                    setCurrentSprint(merged);
-                }
-                getProjectManager().getCurrentProject().addSprint(merged);
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to save Sprint: " + currentSprint, e);
-                addMessage("Error on try to save Sprint", FacesMessage.SEVERITY_ERROR);
-                return null;
+            Sprint merged = currentSprint;
+            if (currentSprint.isNew()) {
+                em.persist(currentSprint);
+            } else if (!em.contains(currentSprint)) {
+                merged = em.merge(currentSprint);
             }
+            if (!currentSprint.equals(merged)) {
+                setCurrentSprint(merged);
+            }
+            getProjectManager().getCurrentProject().addSprint(merged);
         }
         return "show";
     }
@@ -142,29 +134,10 @@ public class SprintManager extends AbstractManager implements Serializable {
         return "edit";
     }
 
+    @Transactional
     public String remove(final Sprint sprint) {
         if (sprint != null) {
-            try {
-                doInTransaction(new PersistenceActionWithoutResult() {
-
-                    public void execute(EntityManager em) {
-                        Query query = em.createNamedQuery("task.remove.ByProject");
-                        query.setParameter("project", sprint.getProject());
-                        query.executeUpdate();
-
-                        query = em.createNamedQuery("story.remove.ByProject");
-                        query.setParameter("project", sprint.getProject());
-                        query.executeUpdate();
-
-                        em.remove(em.find(Sprint.class, sprint.getId()));
-                    }
-                });
-                getProjectManager().getCurrentProject().removeSpring(sprint);
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Sprint: " + currentSprint, e);
-                addMessage("Error on try to remove Sprint", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
+            em.remove(em.find(Sprint.class, sprint.getId()));
         }
         return "show";
     }
@@ -194,30 +167,22 @@ public class SprintManager extends AbstractManager implements Serializable {
     *
     */
 
+    @Transactional
     public String checkUniqueSprintNameApplicationValidatorMethod(String newValue) {
         String message = null;
 
         final String newName = newValue;
-        try {
-            Long count = doInTransaction(new PersistenceAction<Long>() {
-
-                public Long execute(EntityManager em) {
-                    Query query = em.createNamedQuery((currentSprint.isNew()) ? "sprint.new.countByNameAndProject" : "sprint.countByNameAndProject");
-                    query.setParameter("name", newName);
-                    query.setParameter("project", getProjectManager().getCurrentProject());
-                    if (!currentSprint.isNew()) {
-                        query.setParameter("currentSprint", currentSprint);
-                    }
-                    return (Long) query.getSingleResult();
-                }
-            });
-            if (count != null && count > 0) {
-                message = getFacesMessageForKey("sprint.form.label.name.unique").getSummary();
-            }
-        } catch (ManagerException ex) {
-            Logger.getLogger(SprintManager.class.getName()).log(Level.SEVERE, null, ex);
+        Long count;
+        Query query = em.createNamedQuery((currentSprint.isNew()) ? "sprint.new.countByNameAndProject" : "sprint.countByNameAndProject");
+        query.setParameter("name", newName);
+        query.setParameter("project", getProjectManager().getCurrentProject());
+        if (!currentSprint.isNew()) {
+            query.setParameter("currentSprint", currentSprint);
         }
-
+        count = (Long) query.getSingleResult();
+        if (count != null && count > 0) {
+            message = getFacesMessageForKey("sprint.form.label.name.unique").getSummary();
+        }
         return message;
     }
 

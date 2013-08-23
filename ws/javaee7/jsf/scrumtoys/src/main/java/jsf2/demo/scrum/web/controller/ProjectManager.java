@@ -44,7 +44,6 @@ import jsf2.demo.scrum.model.entities.Project;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -54,9 +53,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
+
+import javax.transaction.Transactional;
+
+import javax.persistence.PersistenceContext;
 
 /**
  * @author Dr. Spock (spock at dev.java.net)
@@ -67,6 +68,9 @@ public class ProjectManager extends AbstractManager implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Project currentProject;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @PostConstruct
     public void construct() {
@@ -95,28 +99,13 @@ public class ProjectManager extends AbstractManager implements Serializable {
         return "create";
     }
 
+    @Transactional
     public String save() {
-        if (getCurrentProject() != null) {
-            try {
-                Project merged = doInTransaction(new PersistenceAction<Project>() {
-
-                    public Project execute(EntityManager em) {
-                        Project toSave = getCurrentProject();
-                        if (toSave.isNew()) {
-                            em.persist(toSave);
-                        } else if (!em.contains(currentProject)) {
-                            return em.merge(toSave);
-                        }
-                        return toSave;
-                    }
-                });
-                if (!currentProject.equals(merged)) {
-                    setCurrentProject(merged);
-                }
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to save Project: " + getCurrentProject(), e);
-                addMessage("Error on try to save Project", FacesMessage.SEVERITY_ERROR);
-                return null;
+        Project cur = getCurrentProject();
+        if (cur != null) {
+            Project merged = em.merge(cur);
+            if (!currentProject.equals(merged)) {
+                setCurrentProject(merged);
             }
         }
         return "show";
@@ -128,60 +117,31 @@ public class ProjectManager extends AbstractManager implements Serializable {
         return "edit";
     }
 
+    @Transactional
     public String remove(final Project project) {
         if (project != null) {
-            try {
-                doInTransaction(new PersistenceActionWithoutResult() {
-
-                    public void execute(EntityManager em) {
-                        Query query = em.createNamedQuery("task.remove.ByProject");
-                        query.setParameter("project", project);
-                        query.executeUpdate();
-
-                        query = em.createNamedQuery("story.remove.ByProject");
-                        query.setParameter("project", project);
-                        query.executeUpdate();
-
-                        query = em.createNamedQuery("sprint.remove.ByProject");
-                        query.setParameter("project", project);
-                        query.executeUpdate();
-                        
-                        Object toRemove = em.find(Project.class, project.getId());
-                        assert(null != toRemove);
-
-                        em.remove(toRemove);
-                    }
-                });
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Project: " + getCurrentProject(), e);
-                addMessage("Error on try to remove Project", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
+            Object toRemove = em.find(Project.class, project.getId());
+            assert(null != toRemove);
+            
+            em.remove(toRemove);
         }
         // Using implicity navigation, this request come from /projects/show.xhtml and directs to /project/show.xhtml
         // could be null instead
         return "show";
     }
 
+    @Transactional(dontRollbackOn=ValidatorException.class)
     public void checkUniqueProjectName(FacesContext context, UIComponent component, Object newValue) {
         final String newName = (String) newValue;
-        try {
-            Long count = doInTransaction(new PersistenceAction<Long>() {
-
-                public Long execute(EntityManager em) {
-                    Query query = em.createNamedQuery((getCurrentProject().isNew()) ? "project.new.countByName" : "project.countByName");
-                    query.setParameter("name", newName);
-                    if (!currentProject.isNew()) {
-                        query.setParameter("currentProject", getCurrentProject());
-                    }
-                    return (Long) query.getSingleResult();
-                }
-            });
-            if (count != null && count > 0) {
-                throw new ValidatorException(getFacesMessageForKey("project.form.label.name.unique"));
-            }
-        } catch (ManagerException ex) {
-            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
+        Long count;
+        Query query = em.createNamedQuery((getCurrentProject().isNew()) ? "project.new.countByName" : "project.countByName");
+        query.setParameter("name", newName);
+        if (!currentProject.isNew()) {
+            query.setParameter("currentProject", getCurrentProject());
+        }
+        count = (Long) query.getSingleResult();
+        if (count != null && count > 0) {
+            throw new ValidatorException(getFacesMessageForKey("project.form.label.name.unique"));
         }
     }
 

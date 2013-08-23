@@ -57,7 +57,9 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import jsf2.demo.scrum.model.entities.TaskStatus;
 
 
@@ -75,6 +77,9 @@ public class DashboardManager extends AbstractManager implements Serializable {
     private StoryManager storyManager;
     @Inject
     private StoryList storyList;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     private ListDataModel<Task> toDoTasks;
     private ListDataModel<Task> workingTasks;
@@ -115,27 +120,18 @@ public class DashboardManager extends AbstractManager implements Serializable {
         storyList.setStories(stories);
     }
     
+    @Transactional
     private List<Task> getTasksByStatus(final TaskStatus status) {
-        try {
-            return doInTransaction(new PersistenceAction<List<Task>>() {
-
-                @SuppressWarnings({"unchecked"})
-                public List<Task> execute(EntityManager em) {
-                    Sprint s = storyManager.getSprint();
-                    if (s == null)
-                        return Collections.EMPTY_LIST;
-
-                    Query query = em.createNamedQuery("task.getByStatusAndSprint");
-                    query.setParameter("status", status);
-                    query.setParameter("sprint", s);
-                    
-                    return (List<Task>) query.getResultList();
-                }
-            });
-        } catch (ManagerException ex) {
-            Logger.getLogger(DashboardManager.class.getName()).log(Level.SEVERE, null, ex);
-            return Collections.EMPTY_LIST;
+        List<Task> result = Collections.EMPTY_LIST;
+        Sprint s = storyManager.getSprint();
+        if (s != null) {
+            Query query = em.createNamedQuery("task.getByStatusAndSprint");
+            query.setParameter("status", status);
+            query.setParameter("sprint", s);
+            
+            result = (List<Task>) query.getResultList();
         }
+        return result;
     }
 
     public ListDataModel<Task> getToDoTasks() {

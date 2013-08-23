@@ -43,8 +43,6 @@ package jsf2.demo.scrum.web.controller;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -52,7 +50,9 @@ import javax.inject.Inject;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import jsf2.demo.scrum.model.entities.Story;
 import jsf2.demo.scrum.model.entities.Task;
 
@@ -70,25 +70,20 @@ public class TaskList extends AbstractManager implements Serializable {
     private DataModel<Task> tasks;
     private List<Task> taskList;
     
+    @PersistenceContext
+    private EntityManager em;
+    
     @PostConstruct
+    @Transactional
     public void init() {
-        try {
-            setTaskList(doInTransaction(new PersistenceAction <List<Task>>() {
-
-                @SuppressWarnings({"unchecked"})
-                public List<Task> execute(EntityManager em) {
-                    Story s = taskManager.getStory();
-                    if (s == null)
-                        return Collections.EMPTY_LIST;
-
-                    Query query = em.createNamedQuery("task.getByStory");
-                    query.setParameter("story", s);
-                    return (List<Task>) query.getResultList();
-                }
-            }));
-        } catch (ManagerException ex) {
-            Logger.getLogger(TaskList.class.getName()).log(Level.SEVERE, null, ex);
+        List<Task> temp = Collections.EMPTY_LIST;
+        Story s = taskManager.getStory();
+        if (s != null) {
+            Query query = em.createNamedQuery("task.getByStory");
+            query.setParameter("story", s);
+            temp = (List<Task>) query.getResultList();
         }
+        setTaskList(temp);        
     }
     
     public String edit() {

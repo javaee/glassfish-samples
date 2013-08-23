@@ -45,7 +45,6 @@ import jsf2.demo.scrum.model.entities.Story;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.inject.Inject;
 import javax.enterprise.context.SessionScoped;
@@ -56,10 +55,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.context.Conversation;
 import javax.faces.context.ExternalContext;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 
 @Named("storyManager")
@@ -70,6 +68,9 @@ public class StoryManager extends AbstractManager implements Serializable {
     @Inject
     private SprintManager sprintManager;
     private Story currentStory;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @PostConstruct
     public void construct() {
@@ -111,29 +112,20 @@ public class StoryManager extends AbstractManager implements Serializable {
         return "create";
     }
 
+    @Transactional
     public String save() {
         if (currentStory != null) {
-            try {
-                Story merged = doInTransaction(new PersistenceAction<Story>() {
-
-                    public Story execute(EntityManager em) {
-                        if (currentStory.isNew()) {
-                            em.persist(currentStory);
-                        } else if (!em.contains(currentStory)) {
-                            return em.merge(currentStory);
-                        }
-                        return currentStory;
-                    }
-                });
-                if (!currentStory.equals(merged)) {
-                    setCurrentStory(merged);
-                }
-                sprintManager.getCurrentSprint().addStory(merged);
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to save Story: " + currentStory, e);
-                addMessage("Error on try to save Story", FacesMessage.SEVERITY_ERROR);
-                return null;
+            Story merged = currentStory;
+            
+            if (currentStory.isNew()) {
+                em.persist(currentStory);
+            } else if (!em.contains(currentStory)) {
+                merged = em.merge(currentStory);
             }
+            if (!currentStory.equals(merged)) {
+                setCurrentStory(merged);
+            }
+            sprintManager.getCurrentSprint().addStory(merged);
         }
         return "show";
     }
@@ -143,49 +135,35 @@ public class StoryManager extends AbstractManager implements Serializable {
         return "edit";
     }
 
+    @Transactional
     public String remove(final Story story) {
         if (story != null) {
-            try {
-                doInTransaction(new PersistenceActionWithoutResult() {
 
-                    public void execute(EntityManager em) {
-                        Query query = em.createNamedQuery("task.remove.ByProject");
-                        query.setParameter("project", story.getSprint().getProject());
-                        query.executeUpdate();
-
-                        em.remove(em.find(Story.class, story.getId()));
-                    }
-                });
-                sprintManager.getCurrentSprint().removeStory(story);
-            } catch (Exception e) {
-                getLogger(getClass()).log(Level.SEVERE, "Error on try to remove Story: " + currentStory, e);
-                addMessage("Error on try to remove Story", FacesMessage.SEVERITY_ERROR);
-                return null;
+            if (em.contains(story)) {
+                em.remove(story);
+            } else {
+                em.remove(em.merge(story));
             }
+
+            sprintManager.getCurrentSprint().removeStory(story);
         }
         return "show";
     }
 
+    @Transactional(dontRollbackOn=ValidatorException.class)
     public void checkUniqueStoryName(FacesContext context, UIComponent component, Object newValue) {
         final String newName = (String) newValue;
-        try {
-            Long count = doInTransaction(new PersistenceAction<Long>() {
+        Long count = null;
 
-                public Long execute(EntityManager em) {
-                    Query query = em.createNamedQuery((currentStory.isNew()) ? "story.new.countByNameAndSprint" : "story.countByNameAndSprint");
-                    query.setParameter("name", newName);
-                    query.setParameter("sprint", sprintManager.getCurrentSprint());
-                    if (!currentStory.isNew()) {
-                        query.setParameter("currentStory", currentStory);
-                    }
-                    return (Long) query.getSingleResult();
-                }
-            });
-            if (count != null && count > 0) {
-                throw new ValidatorException(getFacesMessageForKey("story.form.label.name.unique"));
-            }
-        } catch (ManagerException ex) {
-            Logger.getLogger(StoryManager.class.getName()).log(Level.SEVERE, null, ex);
+        Query query = em.createNamedQuery((currentStory.isNew()) ? "story.new.countByNameAndSprint" : "story.countByNameAndSprint");
+        query.setParameter("name", newName);
+        query.setParameter("sprint", sprintManager.getCurrentSprint());
+        if (!currentStory.isNew()) {
+            query.setParameter("currentStory", currentStory);
+        }
+        count = (Long) query.getSingleResult();
+        if (count != null && count > 0) {
+            throw new ValidatorException(getFacesMessageForKey("story.form.label.name.unique"));
         }
     }
 
