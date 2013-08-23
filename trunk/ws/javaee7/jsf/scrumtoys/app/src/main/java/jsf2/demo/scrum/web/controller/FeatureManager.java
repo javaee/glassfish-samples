@@ -55,7 +55,7 @@ public class FeatureManager implements Serializable {
     public String getFlowEnabled(String flowId) {
         FacesContext context = FacesContext.getCurrentInstance();
         String result = null;
-        Flow flow = context.getApplication().getFlowHandler().getFlow(context, "uploadStoryAttachment", "uploadStoryAttachment");
+        Flow flow = context.getApplication().getFlowHandler().getFlow(context, flowId, flowId);
         if (null != flow) {
             result = flow.getId();
         }

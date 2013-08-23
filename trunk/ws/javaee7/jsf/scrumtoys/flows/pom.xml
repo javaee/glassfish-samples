@@ -45,16 +45,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.glassfish-samples</groupId>
-        <artifactId>jsf-samples</artifactId>
+        <artifactId>scrumtoys-module</artifactId>
         <version>4.0-SNAPSHOT</version>
     </parent>
-    <artifactId>scrumtoys-module</artifactId>
+    <artifactId>scrumtoys-flows-module</artifactId>
     <packaging>pom</packaging>
     <version>4.0-SNAPSHOT</version>
-    <name>scrumtoys multi-module pom</name> 
+    <name>scrumtoys flows multi-module pom</name> 
     <modules>
-        <module>flows</module>
-        <module>app</module>
+        <module>manageStoryAttachments</module>
     </modules>
 </project>
 
