@@ -63,6 +63,7 @@ import javax.faces.context.FacesContext;
 public class SkinValuesManager implements Serializable {
 
     private Map<String, String> values;
+    private List<ColorTuple> displayNames;
 
     private String defaultSkin = "blue";
     private static final long serialVersionUID = 2238251086172648511L;
@@ -70,10 +71,15 @@ public class SkinValuesManager implements Serializable {
     @PostConstruct
     public void construct() {
         values = new LinkedHashMap<String, String>();
+        displayNames = new ArrayList<ColorTuple>();
         values.put("yellow", "appYellowSkin.css");
+        displayNames.add(new ColorTuple("Yellow", "yellow"));
         values.put("orange", "appOrangeSkin.css");
+        displayNames.add(new ColorTuple("Orange", "orange"));
         values.put("red", "appRedSkin.css");
+        displayNames.add(new ColorTuple("Red", "red"));
         values.put(defaultSkin, "appBlueSkin.css");
+        displayNames.add(new ColorTuple("Blue", defaultSkin));
     }
 
     @PreDestroy
@@ -104,9 +110,30 @@ public class SkinValuesManager implements Serializable {
         return values.get(defaultSkin);
     }
 
-    public List<String> getNames() {
-        return new ArrayList<String>(values == null ? null : values.keySet());
+    public List<ColorTuple> getColorTuples() {
+        return displayNames;
     }
+    
+    public static class ColorTuple {
+        private String displayName;
+        private String value;
+
+        public ColorTuple(String displayName, String value) {
+            this.displayName = displayName;
+            this.value = value;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public String getValue() {
+            return value;
+        }
+        
+        
+    }
+    
 
     public int getSize() {
         return values.keySet().size();

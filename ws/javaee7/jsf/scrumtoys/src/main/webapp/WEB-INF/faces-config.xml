@@ -86,11 +86,11 @@
         </navigation-case>
         <navigation-case>
             <description>Go to Dashboard</description>
-            <from-outcome>showDashboard</from-outcome>
+                <from-outcome>showDashboard</from-outcome>
             <to-view-id>/dashboard/show.jsf</to-view-id>
         </navigation-case>
     </navigation-rule>
-
+    
     <navigation-rule>
         <description>
             dashboard navigation rules
