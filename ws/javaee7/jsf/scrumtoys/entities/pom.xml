@@ -48,37 +48,12 @@
         <artifactId>scrumtoys-module</artifactId>
         <version>4.0-SNAPSHOT</version>
     </parent>
-    <artifactId>scrumtoys</artifactId>
-    <packaging>war</packaging>
-    <name>scrumtoys JSF Sample Application</name>
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-          <groupId>org.glassfish-samples</groupId>
-          <artifactId>manageStoryAttachments</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-          <groupId>org.glassfish-samples</groupId>
-          <artifactId>scrumtoys-entities</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-
-    </dependencies>
+    <artifactId>scrumtoys-entities</artifactId>
+    <packaging>jar</packaging>
+    <name>scrumtoys entities</name>
     <build>
-        <finalName>scrumtoys</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <finalName>scrumtoys-entities</finalName>
     </build>
+
 </project>
 
