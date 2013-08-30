@@ -60,6 +60,9 @@
         <view id="show">
             <vdl-document>/manageStoryAttachments/show.xhtml</vdl-document>
         </view>
+        <view id="create">
+            <vdl-document>/manageStoryAttachments/create.xhtml</vdl-document>
+        </view>
         
     </flow-definition>
     
