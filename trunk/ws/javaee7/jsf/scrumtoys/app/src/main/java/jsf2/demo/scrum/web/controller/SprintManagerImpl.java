@@ -58,13 +58,14 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import jsf2.demo.scrum.model.entities.SprintManager;
 
 /**
  * @author Dr. Spock (spock at dev.java.net)
  */
 @Named("sprintManager")
 @SessionScoped
-public class SprintManager extends AbstractManager implements Serializable {
+public class SprintManagerImpl extends AbstractManager implements Serializable, SprintManager {
 
     private static final long serialVersionUID = 1L;
     private Sprint currentSprint;

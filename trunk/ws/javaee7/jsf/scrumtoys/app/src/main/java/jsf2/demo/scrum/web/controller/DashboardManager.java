@@ -52,14 +52,13 @@ import javax.faces.model.ListDataModel;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import jsf2.demo.scrum.model.entities.SprintManager;
 import jsf2.demo.scrum.model.entities.TaskStatus;
 
 
