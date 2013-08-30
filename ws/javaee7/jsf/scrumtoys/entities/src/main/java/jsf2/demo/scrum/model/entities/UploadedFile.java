@@ -1,8 +1,8 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
- *
+ * 
+ * Copyright (c) 1997-2013 Oracle and/or its affiliates. All rights reserved.
+ * 
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
@@ -11,20 +11,20 @@
  * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
  * or packager/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
- *
+ * 
  * When distributing the software, include this License Header Notice in each
  * file and include the License file at packager/legal/LICENSE.txt.
- *
+ * 
  * GPL Classpath Exception:
  * Oracle designates this particular file as subject to the "Classpath"
  * exception as provided by Oracle in the GPL Version 2 section of the License
  * file that accompanied this code.
- *
+ * 
  * Modifications:
  * If applicable, add the following below the License Header, with the fields
  * enclosed by brackets [] replaced by your own identifying information:
  * "Portions Copyright [year] [name of copyright owner]"
- *
+ * 
  * Contributor(s):
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding "[Contributor]
@@ -36,37 +36,66 @@
  * and therefore, elected the GPL Version 2 license, then the option applies
  * only if the new code is made subject to such option by the copyright
  * holder.
- */
 
+ */
 package jsf2.demo.scrum.model.entities;
 
-import jsf2.demo.scrum.web.controller.SprintManager;
-import javax.inject.Inject;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
-public class SprintNameUniquenessConstraintValidator implements ConstraintValidator<SprintNameUniquenessConstraint, String> {
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "uploadedFile.filesByStory", query = "select uf from UploadedFile as uf where uf.story = :storyId")
+})
+public class UploadedFile implements Serializable {
     
-    @Inject
-    private SprintManager sprintManager;
+    @Id @GeneratedValue private long id;
 
-    public boolean isValid(String value, ConstraintValidatorContext ctx) {
-        
-        boolean result = true;
-        String message = sprintManager.
-                checkUniqueSprintNameApplicationValidatorMethod(value);
-        if (message != null) {
-            result = false;
-            ConstraintValidatorContext.ConstraintViolationBuilder builder =
-                    ctx.buildConstraintViolationWithTemplate(message);
-            builder.addConstraintViolation();
-        }
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte [] bytes;
+    
+    @Column(name="file_name")
+    private String fileName;
 
-        
-        return result;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void initialize(SprintNameUniquenessConstraint arg0) {
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
+    }
+    
+    public int getLength() {
+        int result = 0;
+        if (null != bytes) {
+            result = bytes.length;
+        }
+        return result;
+    }
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "story_id")
+    private Story story;
+
+    public void setStory(Story story) {
+        this.story = story;
     }
     
 }

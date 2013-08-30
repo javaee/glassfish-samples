@@ -58,7 +58,6 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import jsf2.demo.scrum.model.entities.SprintManager;
 
 /**
  * @author Dr. Spock (spock at dev.java.net)

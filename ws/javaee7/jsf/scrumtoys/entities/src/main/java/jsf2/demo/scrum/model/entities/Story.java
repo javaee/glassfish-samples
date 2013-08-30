@@ -42,6 +42,7 @@ package jsf2.demo.scrum.model.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
@@ -78,6 +79,16 @@ public class Story extends AbstractEntity implements Serializable {
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     private List<Task> tasks;
 
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
+    private List<UploadedFile> uploadedFiles;
+
+    public List<UploadedFile> getUploadedFiles() {
+        if (null == uploadedFiles) {
+            uploadedFiles = new ArrayList<UploadedFile>();
+        }
+        return uploadedFiles;
+    }
+    
     public Story() {
         this.startDate = new Date();
     }
