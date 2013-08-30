@@ -56,6 +56,11 @@
     </application>
 
     <flow-definition id="manageStoryAttachments">
+        <start-node>show</start-node>
+        <view id="show">
+            <vdl-document>/manageStoryAttachments/show.xhtml</vdl-document>
+        </view>
+        
     </flow-definition>
     
 </faces-config>

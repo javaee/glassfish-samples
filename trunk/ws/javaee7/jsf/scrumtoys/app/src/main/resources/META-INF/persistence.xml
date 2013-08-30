@@ -50,6 +50,7 @@
         <class>jsf2.demo.scrum.model.entities.Sprint</class>
         <class>jsf2.demo.scrum.model.entities.Story</class>
         <class>jsf2.demo.scrum.model.entities.Task</class>
+        <class>jsf2.demo.scrum.model.entities.UploadedFile</class>
         <validation-mode>NONE</validation-mode>
         <properties>
             <property name="eclipselink.target-database" value="Auto"/>

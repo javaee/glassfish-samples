@@ -52,7 +52,6 @@ import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
-import java.util.logging.Level;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.persistence.PersistenceContext;
@@ -171,7 +170,7 @@ public class TaskManager extends AbstractManager implements Serializable {
         return storyManager;
     }
 
-    public void setStoryManager(StoryManager storyManager) {
+    public void setStoryManager(StoryManagerImpl storyManager) {
         this.storyManager = storyManager;
     }
 

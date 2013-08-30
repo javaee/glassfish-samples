@@ -41,8 +41,6 @@
 
 -->
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -50,8 +48,12 @@
 
     <ui:composition>
       
+            <h:outputLabel value="#{manageStoryAttachments['manageStoryAttachments.uploadedFile']}:" for="itUploadedFile"  />
+            <h:inputFile id="itUploadedFile" value="#{uploadManager.uploadedFile}">
+                <f:validator validatorId="FileValidator" />
+            </h:inputFile>
+            <h:message for="itUploadedFile" styleClass="errorMessage"/>
 
-            manage attachments
         
     </ui:composition>
 

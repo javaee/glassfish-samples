@@ -58,7 +58,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
-import jsf2.demo.scrum.model.entities.SprintManager;
 import jsf2.demo.scrum.model.entities.TaskStatus;
 
 
@@ -213,7 +212,7 @@ public class DashboardManager extends AbstractManager implements Serializable {
         return storyManager;
     }
 
-    public void setStoryManager(StoryManager storyManager) {
+    public void setStoryManager(StoryManagerImpl storyManager) {
         this.storyManager = storyManager;
     }
 

@@ -59,4 +59,13 @@
         <finalName>manageStoryAttachments</finalName>
     </build>
 
+    <dependencies>
+        <dependency>
+          <groupId>org.glassfish-samples</groupId>
+          <artifactId>scrumtoys-entities</artifactId>
+          <version>${project.version}</version>
+          <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
 </project>

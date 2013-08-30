@@ -1,8 +1,8 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
- *
- * Copyright (c) 1997-2010 Oracle and/or its affiliates. All rights reserved.
- *
+ * 
+ * Copyright (c) 1997-2012 Oracle and/or its affiliates. All rights reserved.
+ * 
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
@@ -11,20 +11,20 @@
  * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
  * or packager/legal/LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
- *
+ * 
  * When distributing the software, include this License Header Notice in each
  * file and include the License file at packager/legal/LICENSE.txt.
- *
+ * 
  * GPL Classpath Exception:
  * Oracle designates this particular file as subject to the "Classpath"
  * exception as provided by Oracle in the GPL Version 2 section of the License
  * file that accompanied this code.
- *
+ * 
  * Modifications:
  * If applicable, add the following below the License Header, with the fields
  * enclosed by brackets [] replaced by your own identifying information:
  * "Portions Copyright [year] [name of copyright owner]"
- *
+ * 
  * Contributor(s):
  * If you wish your version of this file to be governed by only the CDDL or
  * only the GPL Version 2, indicate your decision by adding "[Contributor]
@@ -36,37 +36,36 @@
  * and therefore, elected the GPL Version 2 license, then the option applies
  * only if the new code is made subject to such option by the copyright
  * holder.
+
  */
+package jsf2.demo.scrum.web.controller;
 
-package jsf2.demo.scrum.model.entities;
+import jsf2.demo.scrum.model.entities.Project;
+import jsf2.demo.scrum.model.entities.Sprint;
 
-import jsf2.demo.scrum.web.controller.SprintManager;
-import javax.inject.Inject;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
-public class SprintNameUniquenessConstraintValidator implements ConstraintValidator<SprintNameUniquenessConstraint, String> {
+public interface SprintManager {
     
-    @Inject
-    private SprintManager sprintManager;
+    /*
+     * This method is called by the JSR-303 SprintNameUniquenessConstraintValidator.
+     * If it returns non-null, the result must be interpreted as the localized
+     * validation message.
+     *
+     */
+    public String checkUniqueSprintNameApplicationValidatorMethod(String newValue);
+    
+    public Sprint getCurrentSprint();
 
-    public boolean isValid(String value, ConstraintValidatorContext ctx) {
-        
-        boolean result = true;
-        String message = sprintManager.
-                checkUniqueSprintNameApplicationValidatorMethod(value);
-        if (message != null) {
-            result = false;
-            ConstraintValidatorContext.ConstraintViolationBuilder builder =
-                    ctx.buildConstraintViolationWithTemplate(message);
-            builder.addConstraintViolation();
-        }
-
-        
-        return result;
-    }
-
-    public void initialize(SprintNameUniquenessConstraint arg0) {
-    }
+    public void setCurrentSprint(Sprint currentSprint);
+    
+    public Project getProject();
+    
+    public String edit(Sprint sprint);
+    
+    public String showStories(Sprint sprint);
+    
+    public String remove(final Sprint sprint);
+    
+    public String showDashboard(Sprint sprint);
+    
     
 }

@@ -38,31 +38,23 @@
  * holder.
 
  */
-package jsf2.demo.scrum.model.entities;
+package jsf2.demo.scrum.web.controller;
 
-public interface SprintManager {
-    
-    /*
-     * This method is called by the JSR-303 SprintNameUniquenessConstraintValidator.
-     * If it returns non-null, the result must be interpreted as the localized
-     * validation message.
-     *
-     */
-    public String checkUniqueSprintNameApplicationValidatorMethod(String newValue);
-    
-    public Sprint getCurrentSprint();
+import jsf2.demo.scrum.model.entities.Sprint;
+import jsf2.demo.scrum.model.entities.Story;
+import jsf2.demo.scrum.model.entities.UploadedFile;
 
-    public void setCurrentSprint(Sprint currentSprint);
+public interface StoryManager {
     
-    public Project getProject();
+    public Story getCurrentStory();
+    public void setCurrentStory(Story story);
     
-    public String edit(Sprint sprint);
+    public String edit(Story story);
+    public String remove(final Story story);
+    public String remove(Story story, UploadedFile file);
+
+    public String showTasks(Story story);
     
-    public String showStories(Sprint sprint);
-    
-    public String remove(final Sprint sprint);
-    
-    public String showDashboard(Sprint sprint);
-    
+    public Sprint getSprint();
     
 }

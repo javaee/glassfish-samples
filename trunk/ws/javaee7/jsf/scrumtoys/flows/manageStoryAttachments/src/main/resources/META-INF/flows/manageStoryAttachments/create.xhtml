@@ -22,18 +22,14 @@
             <h:commandLink rendered="#{storyManager.currentStory.name != null}" immediate="true" action="/story/edit"   value="#{storyManager.currentStory.name}"></h:commandLink>
         </ui:define>
         <ui:define name="content">
-            <h:form styleClass="scrumForm" id="manageAttachmentsForm">
+            <h:form styleClass="scrumForm" id="manageAttachmentsForm" enctype="multipart/form-data" >
                 <h:panelGrid columns="3" columnClasses="formLabel, formInput, formErrorMessage" styleClass="postItFormTable">
                     <ui:include src="form.xhtml" />
                     <f:facet name="footer">
-                        <h:commandButton rendered="#{storyManager.currentStory.name != null}" id="btnEditUpdate" action="#{storyManager.save}" value="#{i18n['story.edit.button.update']}" styleClass="botaoPostIt" />
+                        <h:commandButton rendered="#{storyManager.currentStory.name != null}" id="btnEditUpdate" action="#{storyManager.save}" value="#{i18n['story.edit.button.update']}" styleClass="botaoPostIt">
+                            <f:ajax execute="@all" render="@all"/>
+                        </h:commandButton>                            
                         <h:commandButton rendered="#{storyManager.currentStory.name != null}" id="btnEditCancel" action="#{storyManager.cancelEdit}" immediate="true" value="#{i18n['story.edit.button.cancel']}" styleClass="botaoPostIt" />
-                        <h:button rendered="#{storyManager.currentStory.name != null}" styleClass="botaoPostIt" outcome="/dashboard/show" value="#{i18n['sprint.show.button.showDashboard']}" />
-                        <h:commandButton rendered="#{featureManager.getFlowEnabled('manageStoryAttachments') != null}" 
-                                         id="btnManageAttachments" action="manageStoryAttachments"
-                                         value="#{i18n['story.edit.button.manageStoryAttachments']}" styleClass="botaoPostIt"
-                                         />
-                        
                         
                     </f:facet>
                 </h:panelGrid>

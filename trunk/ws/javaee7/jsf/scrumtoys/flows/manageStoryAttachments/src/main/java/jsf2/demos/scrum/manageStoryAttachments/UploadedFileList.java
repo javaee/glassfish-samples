@@ -38,10 +38,9 @@
  * holder.
  */
 
-package jsf2.demo.scrum.web.controller;
+package jsf2.demos.scrum.manageStoryAttachments;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -51,25 +50,25 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import jsf2.demo.scrum.model.entities.Project;
-import jsf2.demo.scrum.model.entities.Sprint;
+import jsf2.demo.scrum.model.entities.Story;
+import jsf2.demo.scrum.model.entities.UploadedFile;
+import jsf2.demo.scrum.web.controller.StoryManager;
 
 /**
  *
  * @author Eder Magalhaes
  */
-@Named("sprintList")
+@Named("uploadedFileList")
 @ViewScoped
-public class SprintList extends AbstractManager implements Serializable {
+public class UploadedFileList implements Serializable {
     
-    @Inject
-    private SprintManager sprintManager;
+    @Inject StoryManager storyManager;
     
-    private DataModel<Sprint> sprints;
+    private DataModel<UploadedFile> uploadedFiles;
     
-    private List<Sprint> sprintList;
+    private List<UploadedFile> uploadedFileList;
     
     @PersistenceContext
     private EntityManager em;
@@ -77,57 +76,38 @@ public class SprintList extends AbstractManager implements Serializable {
     @PostConstruct
     @Transactional
     public void init() {
-        List<Sprint> temp = Collections.EMPTY_LIST;
-        Project p = sprintManager.getProject();
-        if (p != null) {
-            Query query = em.createNamedQuery("sprint.getByProject");
-            query.setParameter("project", p);
-            temp = (List<Sprint>) query.getResultList();
-        }
-        setSprintList(temp);
+        List<UploadedFile> result = null;
+        
+        Story story = storyManager.getCurrentStory();
+        TypedQuery<UploadedFile> q = em.createNamedQuery("uploadedFile.filesByStory", UploadedFile.class);
+        q.setParameter("storyId", story);
+        result = q.getResultList();
+        setUploadedFileList(result);
     }
     
-    public DataModel<Sprint> getSprints() {
-        this.sprints = new ListDataModel<Sprint>(sprintList);
-        return this.sprints;
+    public DataModel<UploadedFile> getUploadedFiles() {
+        this.uploadedFiles = new ListDataModel<UploadedFile>(uploadedFileList);
+        return this.uploadedFiles;
     }
 
-    public void setSprints(DataModel<Sprint> sprints) {
-        this.sprints = sprints;
-    }
-
-    public void setSprintList(List<Sprint> sprintList) {
-        this.sprintList = sprintList;
-    }
-
-    public List<Sprint> getSprintList() {
-        return sprintList;
+    public List<UploadedFile> getUploadedFileList() {
+        return uploadedFileList;
     }
     
-    public SprintManager getSprintManager() {
-        return sprintManager;
+    public void setUploadedFiles(DataModel<UploadedFile> uploadedFiles) {
+        this.uploadedFiles = uploadedFiles;
     }
 
-    public void setSprintManager(SprintManager sprintManager) {
-        this.sprintManager = sprintManager;
+    public void setUploadedFileList(List<UploadedFile> uploadedFileList) {
+        this.uploadedFileList = uploadedFileList;
     }
     
-    public String edit() {
-        return sprintManager.edit(sprints.getRowData());
-    }
-    
+    @Transactional
     public String remove() {
-        String result = sprintManager.remove(sprints.getRowData());
+        String result = storyManager.remove(storyManager.getCurrentStory(), uploadedFiles.getRowData());
         init();
         return result;
-    }
-    
-    public String showStories() {
-        return sprintManager.showStories(sprints.getRowData());
+        
     }
 
-    public String showDashboard() {
-        return sprintManager.showDashboard(sprints.getRowData());
-    }
-    
 }
