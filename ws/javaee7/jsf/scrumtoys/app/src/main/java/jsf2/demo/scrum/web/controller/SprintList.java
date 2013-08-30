@@ -55,6 +55,7 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 import jsf2.demo.scrum.model.entities.Project;
 import jsf2.demo.scrum.model.entities.Sprint;
+import jsf2.demo.scrum.model.entities.SprintManager;
 
 /**
  *
