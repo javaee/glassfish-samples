@@ -42,7 +42,6 @@ package jsf2.demo.scrum.web.controller;
 
 import jsf2.demo.scrum.model.entities.Sprint;
 import jsf2.demo.scrum.model.entities.Story;
-import jsf2.demo.scrum.model.entities.UploadedFile;
 
 public interface StoryManager {
     
@@ -51,7 +50,6 @@ public interface StoryManager {
     
     public String edit(Story story);
     public String remove(final Story story);
-    public String remove(Story story, UploadedFile file);
 
     public String showTasks(Story story);
     

@@ -76,12 +76,7 @@ public class UploadedFileList implements Serializable {
     @PostConstruct
     @Transactional
     public void init() {
-        List<UploadedFile> result = null;
-        
-        Story story = storyManager.getCurrentStory();
-        TypedQuery<UploadedFile> q = em.createNamedQuery("uploadedFile.filesByStory", UploadedFile.class);
-        q.setParameter("storyId", story);
-        result = q.getResultList();
+        List<UploadedFile> result = storyManager.getCurrentStory().getUploadedFiles();
         setUploadedFileList(result);
     }
     
@@ -104,9 +99,16 @@ public class UploadedFileList implements Serializable {
     
     @Transactional
     public String remove() {
-        String result = storyManager.remove(storyManager.getCurrentStory(), uploadedFiles.getRowData());
-        init();
-        return result;
+        Story managedStory = em.find(Story.class, storyManager.getCurrentStory().getId());
+        UploadedFile managedFile = em.find(UploadedFile.class, uploadedFiles.getRowData().getId());
+        
+        managedStory.removeUploadedFile(managedFile);
+        managedFile.setStory(null);
+        storyManager.setCurrentStory(managedStory);
+        
+        em.remove(managedFile);
+        
+        return "show";
         
     }
 

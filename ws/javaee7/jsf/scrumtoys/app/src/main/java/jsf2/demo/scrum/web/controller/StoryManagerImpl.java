@@ -54,12 +54,10 @@ import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import jsf2.demo.scrum.model.entities.UploadedFile;
 
 
 @Named("storyManager")
@@ -117,16 +115,8 @@ public class StoryManagerImpl extends AbstractManager implements Serializable, S
     @Transactional
     public String save() {
         if (currentStory != null) {
-            Story merged = currentStory;
-            
-            if (currentStory.isNew()) {
-                em.persist(currentStory);
-            } else if (!em.contains(currentStory)) {
-                merged = em.merge(currentStory);
-            }
-            if (!currentStory.equals(merged)) {
-                setCurrentStory(merged);
-            }
+            Story merged = em.merge(currentStory);
+            setCurrentStory(merged);
             sprintManager.getCurrentSprint().addStory(merged);
         }
         return "show";
@@ -141,35 +131,13 @@ public class StoryManagerImpl extends AbstractManager implements Serializable, S
     public String remove(final Story story) {
         if (story != null) {
 
-            if (em.contains(story)) {
-                em.remove(story);
-            } else {
-                em.remove(em.merge(story));
-            }
+            em.remove(em.merge(story));
 
             sprintManager.getCurrentSprint().removeStory(story);
         }
         return "show";
     }
     
-    @Transactional
-    public String remove(Story story, UploadedFile file) {
-        List<UploadedFile> files = story.getUploadedFiles();
-        int i = -1;
-        for (UploadedFile cur : files) {
-            if (cur.equals(file)) {
-                break;
-            }
-            i++;
-        }
-        if (-1 != i) {
-            files.remove(i);
-            em.merge(story);
-        }
-        
-        return "show";
-    }
-
     @Transactional(dontRollbackOn=ValidatorException.class)
     public void checkUniqueStoryName(FacesContext context, UIComponent component, Object newValue) {
         final String newName = (String) newValue;

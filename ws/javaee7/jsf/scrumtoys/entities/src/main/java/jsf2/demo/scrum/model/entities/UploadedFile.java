@@ -51,17 +51,38 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "uploadedFile.filesByStory", query = "select uf from UploadedFile as uf where uf.story = :storyId")
-})
 public class UploadedFile implements Serializable {
     
     @Id @GeneratedValue private long id;
 
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UploadedFile other = (UploadedFile) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+    
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte [] bytes;
