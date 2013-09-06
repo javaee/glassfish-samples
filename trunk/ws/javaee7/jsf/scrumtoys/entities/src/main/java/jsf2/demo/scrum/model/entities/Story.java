@@ -89,6 +89,12 @@ public class Story extends AbstractEntity implements Serializable {
         return uploadedFiles;
     }
     
+    public void removeUploadedFile(UploadedFile toRemove) {
+        if (null != uploadedFiles) {
+            uploadedFiles.remove(toRemove);
+        }
+    }
+    
     public Story() {
         this.startDate = new Date();
     }
