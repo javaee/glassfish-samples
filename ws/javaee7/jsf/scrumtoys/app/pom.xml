@@ -53,6 +53,16 @@
     <name>scrumtoys JSF Sample Application</name>
     <dependencies>
         <dependency>
+            <groupId>org.glassfish-samples</groupId>
+            <artifactId>appYellowSkin</artifactId>
+            <version>4.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish-samples</groupId>
+            <artifactId>appOrangeSkin</artifactId>
+            <version>4.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
@@ -62,6 +72,12 @@
         <dependency>
           <groupId>org.glassfish-samples</groupId>
           <artifactId>manageStoryAttachments</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.glassfish-samples</groupId>
+          <artifactId>appRedSkin</artifactId>
           <version>${project.version}</version>
         </dependency>
 

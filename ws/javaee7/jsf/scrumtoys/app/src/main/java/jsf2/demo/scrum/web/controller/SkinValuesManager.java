@@ -50,8 +50,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ArrayList;
 import javax.annotation.PreDestroy;
+import javax.faces.FactoryFinder;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewDeclarationLanguage;
+import javax.faces.view.ViewDeclarationLanguageFactory;
 
 
 /**
@@ -65,23 +68,32 @@ public class SkinValuesManager implements Serializable {
     private Map<String, String> values;
     private List<ColorTuple> displayNames;
 
-    private String defaultSkin = "blue";
+    private final String defaultSkin = "blue";
     private static final long serialVersionUID = 2238251086172648511L;
 
     @PostConstruct
     public void construct() {
         values = new LinkedHashMap<String, String>();
         displayNames = new ArrayList<ColorTuple>();
-        values.put("yellow", "appYellowSkin.css");
-        displayNames.add(new ColorTuple("Yellow", "yellow"));
-        values.put("orange", "appOrangeSkin.css");
-        displayNames.add(new ColorTuple("Orange", "orange"));
-        values.put("red", "appRedSkin.css");
-        displayNames.add(new ColorTuple("Red", "red"));
-        values.put(defaultSkin, "appBlueSkin.css");
-        displayNames.add(new ColorTuple("Blue", defaultSkin));
+        
+        ViewDeclarationLanguageFactory vdlFactory = (ViewDeclarationLanguageFactory) FactoryFinder.getFactory(FactoryFinder.VIEW_DECLARATION_LANGUAGE_FACTORY);
+        ViewDeclarationLanguage vdl = vdlFactory.getViewDeclarationLanguage("home.xhtml");
+        FacesContext context = FacesContext.getCurrentInstance();
+        List<String> availableContracts = vdl.calculateResourceLibraryContracts(context, "home.xhtml");
+        
+        
+        String key;
+        String displayName;
+        int len;
+        for (String cur : availableContracts) {
+            len = cur.length();
+            displayName = cur.substring(3, len - 4);
+            key = displayName.toLowerCase();
+            values.put(key, cur + ".css");
+            displayNames.add(new ColorTuple(displayName, key));
+        }
     }
-
+    
     @PreDestroy
     public void destroy() {
         if (null != values) {
