@@ -181,8 +181,6 @@ public class ManagedConnectionImpl implements ManagedConnection {
 
         testCounter--;
 
-        invalidateJavaMailConnections();
-
         try {
             store.closeStore();
         } catch (Exception e) {
