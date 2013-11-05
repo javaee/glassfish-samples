@@ -59,6 +59,7 @@
         <module>flows</module>
         <module>fileUpload</module>
         <module>html5</module>
+        <module>overrideRenderer</module>
         <module>scrumtoys</module>
     </modules>
 </project>
