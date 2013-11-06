@@ -61,5 +61,6 @@
         <module>html5</module>
         <module>overrideRenderer</module>
         <module>scrumtoys</module>
+        <module>stateless</module>
     </modules>
 </project>
