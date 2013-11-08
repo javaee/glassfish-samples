@@ -55,6 +55,7 @@
     <version>4.0-SNAPSHOT</version>
     <name>Java EE 7 JSF Samples</name> 
     <modules>
+        <module>annotatedflow</module>
         <module>contracts</module>
         <module>flows</module>
         <module>fileUpload</module>
