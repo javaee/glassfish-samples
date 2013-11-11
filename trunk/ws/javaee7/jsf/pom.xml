@@ -57,6 +57,7 @@
     <modules>
         <module>annotatedflow</module>
         <module>contracts</module>
+	<module>customValidator</module>
         <module>flows</module>
         <module>fileUpload</module>
         <module>html5</module>
