@@ -65,5 +65,6 @@
         <module>overrideRenderer</module>
         <module>scrumtoys</module>
         <module>stateless</module>
+        <module>viewrlc</module>
     </modules>
 </project>
