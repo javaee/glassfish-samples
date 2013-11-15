@@ -10,7 +10,7 @@
         <version>4.0-SNAPSHOT</version>
     </parent>
     <groupId>org.glassfish-samples.jsf</groupId>
-    <artifactId>viewrlc</artifactId>
+    <artifactId>filesystemrlc</artifactId>
     <packaging>war</packaging>
     <name>Filesystem Resource Library Contract Sample</name>
     <dependencies>
