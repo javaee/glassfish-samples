@@ -60,6 +60,7 @@
         <module>contracts</module>
 	<module>customValidator</module>
         <module>flows</module>
+        <module>filesystemrlc</module>
         <module>fileUpload</module>
         <module>html5</module>
         <module>overrideRenderer</module>
