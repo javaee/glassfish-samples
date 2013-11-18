@@ -59,6 +59,7 @@
         <module>compositeComponent</module>
         <module>contracts</module>
 	<module>customValidator</module>
+        <module>enterexitflow</module>
         <module>flows</module>
         <module>filesystemrlc</module>
         <module>fileUpload</module>
