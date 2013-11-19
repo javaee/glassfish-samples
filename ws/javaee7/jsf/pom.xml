@@ -69,5 +69,6 @@
         <module>stateless</module>
         <module>stylelayoutrlc</module>
         <module>viewrlc</module>
+        <module>passthrough</module>
     </modules>
 </project>
