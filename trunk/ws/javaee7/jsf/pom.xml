@@ -65,10 +65,10 @@
         <module>fileUpload</module>
         <module>html5</module>
         <module>overrideRenderer</module>
+        <module>passthrough</module>
         <module>scrumtoys</module>
         <module>stateless</module>
         <module>stylelayoutrlc</module>
         <module>viewrlc</module>
-        <module>passthrough</module>
     </modules>
 </project>
