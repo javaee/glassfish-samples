@@ -71,6 +71,7 @@
         <module>scrumtoys</module>
         <module>stateless</module>
         <module>stylelayoutrlc</module>
+        <module>usePackagedCompositeComponent</module>
         <module>viewrlc</module>
     </modules>
 </project>
