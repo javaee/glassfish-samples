@@ -58,6 +58,7 @@
         <module>annotatedflow</module>
         <module>compositeComponent</module>
         <module>contracts</module>
+        <module>customConverter</module>
         <module>customNamespaceCompositeComponent</module>
 	<module>customValidator</module>
         <module>enterexitflow</module>
