@@ -69,6 +69,7 @@
         <module>html5</module>
         <module>overrideRenderer</module>
         <module>packageCompositeComponent</module>
+        <module>packageCustomConverter</module>
         <module>passthrough</module>
         <module>scrumtoys</module>
         <module>stateless</module>
