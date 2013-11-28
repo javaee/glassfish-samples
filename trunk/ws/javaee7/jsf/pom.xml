@@ -75,6 +75,7 @@
         <module>stateless</module>
         <module>stylelayoutrlc</module>
         <module>usePackagedCompositeComponent</module>
+        <module>usePackagedCustomConverter</module>
         <module>viewrlc</module>
     </modules>
 </project>
