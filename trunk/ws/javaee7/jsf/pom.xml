@@ -61,6 +61,7 @@
         <module>customConverter</module>
         <module>customNamespaceCompositeComponent</module>
 	<module>customValidator</module>
+        <module>dateTimeConverter</module>
         <module>enterexitflow</module>
         <module>eventSource</module>
         <module>flows</module>
