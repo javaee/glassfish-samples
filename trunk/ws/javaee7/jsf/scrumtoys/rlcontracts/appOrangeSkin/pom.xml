@@ -54,7 +54,7 @@
     <artifactId>appOrangeSkin</artifactId>
 
     <packaging>jar</packaging>
-    <name>scrumtoys appOrangeSkin</name>
+    <name>Scrumtoys Orange Skin</name>
     <build>
         <finalName>appOrangeSkin</finalName>
     </build>

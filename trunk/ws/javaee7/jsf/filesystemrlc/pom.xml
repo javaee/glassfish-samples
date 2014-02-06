@@ -12,7 +12,7 @@
     <groupId>org.glassfish-samples.jsf</groupId>
     <artifactId>filesystemrlc</artifactId>
     <packaging>war</packaging>
-    <name>Filesystem Resource Library Contract Sample</name>
+    <name>Filesystem Resource Library Contract</name>
     <dependencies>
         <dependency>
             <groupId>javax</groupId>

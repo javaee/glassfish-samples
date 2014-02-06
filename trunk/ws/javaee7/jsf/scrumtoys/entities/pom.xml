@@ -50,7 +50,7 @@
     </parent>
     <artifactId>scrumtoys-entities</artifactId>
     <packaging>jar</packaging>
-    <name>scrumtoys entities</name>
+    <name>Scrumtoys Entities</name>
     <build>
         <finalName>scrumtoys-entities</finalName>
     </build>

@@ -51,7 +51,7 @@
     <artifactId>scrumtoys-flows-module</artifactId>
     <packaging>pom</packaging>
     <version>4.0-SNAPSHOT</version>
-    <name>scrumtoys flows multi-module pom</name> 
+    <name>Scrumtoys Flows POM</name> 
     <modules>
         <module>manageStoryAttachments</module>
     </modules>

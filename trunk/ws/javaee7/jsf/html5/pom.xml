@@ -51,7 +51,7 @@
     </parent>
     <artifactId>html5</artifactId>
     <packaging>war</packaging>
-    <name>HTML5 JSF Sample Application</name>
+    <name>HTML5 JSF Sample</name>
     <build>
         <finalName>html5</finalName>
     </build>

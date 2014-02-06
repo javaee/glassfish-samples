@@ -50,7 +50,7 @@
     </parent>
     <artifactId>scrumtoys</artifactId>
     <packaging>war</packaging>
-    <name>scrumtoys JSF Sample Application</name>
+    <name>Scrumtoys JSF Sample</name>
     <dependencies>
         <dependency>
             <groupId>org.glassfish-samples</groupId>

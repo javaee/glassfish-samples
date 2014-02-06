@@ -54,7 +54,7 @@
     <artifactId>appRedSkin</artifactId>
 
     <packaging>jar</packaging>
-    <name>scrumtoys appRedSkin</name>
+    <name>Scrumtoys Red Skin</name>
     <build>
         <finalName>appRedSkin</finalName>
     </build>
