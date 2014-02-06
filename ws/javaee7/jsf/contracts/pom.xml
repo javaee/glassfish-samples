@@ -51,7 +51,7 @@
     </parent>
     <artifactId>contracts</artifactId>
     <packaging>war</packaging>
-    <name>Resource Library Contracts JSF Sample Application</name>
+    <name>Resource Library Contracts JSF Sample</name>
     <build>
         <finalName>contracts</finalName>
     </build>

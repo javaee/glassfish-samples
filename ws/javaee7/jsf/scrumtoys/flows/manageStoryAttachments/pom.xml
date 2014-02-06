@@ -54,7 +54,7 @@
     <artifactId>manageStoryAttachments</artifactId>
 
     <packaging>jar</packaging>
-    <name>scrumtoys manageStoryAttachments</name>
+    <name>Scrumtoys ManageStoryAttachments</name>
     <build>
         <finalName>manageStoryAttachments</finalName>
     </build>

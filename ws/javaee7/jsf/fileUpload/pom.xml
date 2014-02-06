@@ -51,7 +51,7 @@
     </parent>
     <artifactId>fileupload</artifactId>
     <packaging>war</packaging>
-    <name>File Upload JSF Sample Application</name>
+    <name>File Upload JSF Sample</name>
     <build>
         <finalName>fileUpload</finalName>
     </build>
