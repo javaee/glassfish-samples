@@ -9,50 +9,49 @@
 		    <td style="width: 100%;">
 		      <div style="z-index: 11;" id="qm0" class="qmmc">
 			<a id="regions-leadin">&nbsp;</a>
-			<a id="" class="qmparent" href="http://blogs.sun.com/theaquarium/">Aquarium</a>
-			<a id="current-region" class="qmparent" href="http://glassfish.java.net/">Core</a>
+			<a id="" class="qmparent" href="https://blogs.oracle.com/theaquarium/">Aquarium</a>
+			<a id="current-region" class="qmparent" href="https://glassfish.java.net/">Core</a>
 		        <div style="z-index: 21;" id="">
-			  <a id="" href="http://glassfish.java.net/">GlassFish</a>
-			  <a id="" href="http://glassfish-samples.java.net/">Samples</a>
-			  <a id="" href="http://grizzly.java.net/">Grizzly</a>
-			  <a id="" href="http://jersey.java.net/">Jersey</a>
-			  <a id="" href="http://mq.java.net/">OpenMQ</a>
-			  <a id="" href="http://sailfin.java.net/">SailFin</a>
-			  <a id="" href="http://shoal.java.net/">Shoal</a>
-			  <a id="" href="http://hk2.java.net/">HK2</a>
-			  <a id="" href="http://wikis.sun.com/display/GlassFish/GlassFishWiki">Wiki</a>
+			  <a id="" href="https://glassfish.java.net/">GlassFish</a>
+			  <a id="" href="https://glassfish-samples.java.net/">Samples</a>
+			  <a id="" href="https://grizzly.java.net/">Grizzly</a>
+			  <a id="" href="https://jersey.java.net/">Jersey</a>
+			  <a id="" href="https://mq.java.net/">OpenMQ</a>
+			  <a id="" href="https://sailfin.java.net/">SailFin</a>
+			  <a id="" href="https://shoal.java.net/">Shoal</a>
+			  <a id="" href="https://hk2.java.net/">HK2</a>
 			</div>
-			<a id="" class="qmparent" href="http://glassfish.java.net/javaee5/webtier/webtierhome.html">Webtier</a>
+			<a id="" class="qmparent" href="https://glassfish.java.net/javaee5/webtier/webtierhome.html">Webtier</a>
 			<div style="z-index: 21;" id="">
-			  <a id="" href="http://jsp.java.net/">JSP</a>
-			  <a id="" href="http://uel.java.net/">EL</a>
-			  <a id="" href="http://jstl.java.net/">JSTL</a>
-			  <a id="" href="http://javaserverfaces.java.net/">JSF</a>
-			  <a id="" href="http://jsftemplating.java.net/">JSFTemplating</a>
-			  <a id="" href="http://woodstock.java.net/">Woodstock</a>
-			  <a id="" href="http://jersey.java.net/">Jersey</a>
-			  <a id="" href="http://phobos.java.net/">Phobos</a>
-			  <a id="" href="http://wadl.java.net/">WADL</a>
-			  <a id="" href="http://lrwpinjava.java.net/">LRWPinJava</a>
+			  <a id="" href="https://jsp.java.net/">JSP</a>
+			  <a id="" href="https://uel.java.net/">EL</a>
+			  <a id="" href="https://jstl.java.net/">JSTL</a>
+			  <a id="" href="https://javaserverfaces.java.net/">JSF</a>
+			  <a id="" href="https://jsftemplating.java.net/">JSFTemplating</a>
+			  <a id="" href="https://woodstock.java.net/">Woodstock</a>
+			  <a id="" href="https://jersey.java.net/">Jersey</a>
+			  <a id="" href="https://phobos.java.net/">Phobos</a>
+			  <a id="" href="https://wadl.java.net/">WADL</a>
+			  <a id="" href="https://lrwpinjava.java.net/">LRWPinJava</a>
 			</div>
-			<a id="" class="qmparent" href="http://metro.java.net/">WS/XML</a>
+			<a id="" class="qmparent" href="https://metro.java.net/">WS/XML</a>
 			<div style="z-index: 21;" id="">
-			  <a id="" href="http://jersey.java.net/">Jersey</a>
-			  <a id="" href="http://metro.java.net/">Metro</a>
-			  <a id="" href="http://jax-ws.java.net/">JAX-WS</a>
-			  <a id="" href="http://wsit.java.net/">WSIT</a>
-			  <a id="" href="http://jaxb.java.net/">JAXB</a>
-			  <a id="" href="http://jaxp.java.net/">JAXP</a>
-			  <a id="" href="http://wiseman.java.net/">Wiseman</a>
+			  <a id="" href="https://jersey.java.net/">Jersey</a>
+			  <a id="" href="https://metro.java.net/">Metro</a>
+			  <a id="" href="https://jax-ws.java.net/">JAX-WS</a>
+			  <a id="" href="https://wsit.java.net/">WSIT</a>
+			  <a id="" href="https://jaxb.java.net/">JAXB</a>
+			  <a id="" href="https://jaxp.java.net/">JAXP</a>
+			  <a id="" href="https://wiseman.java.net/">Wiseman</a>
 			</div>
-			<a id="" class="qmparent" href="http://glassfish.java.net/">Tools</a>
+			<a id="" class="qmparent" href="https://glassfish.java.net/">Tools</a>
 			<div style="z-index: 21;" id="">
-			  <a id="" href="http://hudson.java.net/">Hudson</a>
-			  <a id="" href="http://japex.java.net/">Japex</a>
-			  <a id="" href="http://openinstaller.java.net/">openInstaller</a>
-			  <a id="" href="http://glassfishplugins.java.net/">IDE Plugins</a>
-			  <a id="" href="http://wsmonitor.java.net/">WSMonitor</a>
-			  <a id="" href="http://license-tool.java.net/">License Tool</a>
+			  <a id="" href="https://hudson.java.net/">Hudson</a>
+			  <a id="" href="https://japex.java.net/">Japex</a>
+			  <a id="" href="https://openinstaller.java.net/">openInstaller</a>
+			  <a id="" href="https://glassfishplugins.java.net/">IDE Plugins</a>
+			  <a id="" href="https://wsmonitor.java.net/">WSMonitor</a>
+			  <a id="" href="https://license-tool.java.net/">License Tool</a>
 			</div>
 			<span class="qmclear">&nbsp;</span>
                       </div>
@@ -67,7 +66,7 @@
 	      <tr>
 		<td>
 		  <div>
-		    <a href="http://www.java.net"><img src="http://glassfish-theming.java.net/branding/images/header_jnet_new.jpg" alt="The Source for Java Technology Collaboration" height="60" width="500"></a>
+		    <a href="https://www.java.net"><img src="https://glassfish-theming.java.net/branding/images/header_jnet_new.jpg" alt="The Source for Java Technology Collaboration" height="60" width="500"></a>
 		  </div>
 		</td>
 	  	<td class="right" style="vertical-align: middle;">
@@ -78,20 +77,20 @@
 			    |
 			    <a href="https://java.net/people/new">Register</a>
                             |
-                            <a id="joinbutton1" href="http://java.net/projects/grizzly/watch">Join</a>
+                            <a id="joinbutton1" href="https://java.net/projects/grizzly/watch">Join</a>
                             |
-                            <a href="http://java.net/projects/help/pages/Home">Help</a>
+                            <a href="https://java.net/projects/help/pages/Home">Help</a>
 		      </div>
 		    </div>
             <div id="loggedin">
               <div>
-                <a id="username" href="http://java.net/mypage"></a>
+                <a id="username" href="https://java.net/mypage"></a>
                 |
-                <a href="http://java.net/people/logout">Log out</a>
+                <a href="https://java.net/people/logout">Log out</a>
                             |
-                            <a id="joinbutton2" href="http://java.net/projects/grizzly/watch">Join</a>
+                            <a id="joinbutton2" href="https://java.net/projects/grizzly/watch">Join</a>
                             |
-                            <a href="http://java.net/projects/help/pages/Home">Help</a>
+                            <a href="https://java.net/projects/help/pages/Home">Help</a>
               </div>
             </div>
 		  </div>
@@ -108,7 +107,7 @@
 
     <script>
 
-if(window.location.href.indexOf("http://glassfish.java.net/ja/")==0) {
+if(window.location.href.indexOf("https://glassfish.java.net/ja/")==0) {
   document.getElementById("main-menubar").style.display = "none";
   document.getElementById("ja-menubar").style.display = "";
 }
@@ -132,13 +131,13 @@ if (window.location.href.indexOf("://java.net/projects/") > 3) {
 } else {
     var vbkpatt2 = window.location.href.match(/\/\/[^.]+/);
     try {
-        document.getElementById("joinbutton1").setAttribute("href","http://java.net/projects" +
+        document.getElementById("joinbutton1").setAttribute("href","https://java.net/projects" +
             vbkpatt2.toString().match(/\/[^/]+/i) + "/watch");
     } catch (err) {
         // ignore it
     }
     try {
-        document.getElementById("joinbutton2").setAttribute("href","http://java.net/projects" +
+        document.getElementById("joinbutton2").setAttribute("href","https://java.net/projects" +
             vbkpatt2.toString().match(/\/[^/]+/i) + "/watch");
     } catch (err) {
         // ignore it

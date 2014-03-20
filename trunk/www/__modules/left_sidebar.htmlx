@@ -22,7 +22,7 @@ var info = {
 <div id="navcol">
 <dl id="projecttools" class="navgroup" style="text-align: left;">
  <dt id="current-zone" class="depth0">
- <a href="http://shoal.java.net/">Shoal</a>
+ <a href="https://shoal.java.net/">Shoal</a>
  </dt>
  <dd class="depth0 parent parent" id="menubar">
 <!--
@@ -32,14 +32,14 @@ to create submenus.
 <!--    <ul>  -->
 <!-- menubar for the main site -->
       <ul id="main-menubar">
-        <li><a href="http://glassfish-samples.java.net" match="/|/sub.html">Overview</a></li>
-        <li><a href="http://java.net/downloads/glassfish-samples/">Downloads</a></li>
-		<li><a href="http://java.net/projects/glassfish-samples/watch">Watch</a></li>
+        <li><a href="https://glassfish-samples.java.net" match="/|/sub.html">Overview</a></li>
+        <li><a href="https://java.net/downloads/glassfish-samples/">Downloads</a></li>
+		<li><a href="https://java.net/projects/glassfish-samples/watch">Watch</a></li>
 		<li><a href="mailto:users@glassfish-samples.java.net">Send us feedback</a></li>
-        <li><a href="http://java.net/projects/glassfish-samples/lists/announce/archive">Announcements</a></li>
-        <li><a href="http://java.net/projects/glassfish-samples/lists/">Mailing lists</a></li>
-		<li><a href="http://java.net/projects/glassfish-samples/sources"Source code - SVN</a></li>
-        <li><a href="http://java.net/jira/browse/GLASSFISH_SAMPLES">Issues</a></li>
+        <li><a href="https://java.net/projects/glassfish-samples/lists/announce/archive">Announcements</a></li>
+        <li><a href="https://java.net/projects/glassfish-samples/lists/">Mailing lists</a></li>
+		<li><a href="https://java.net/projects/glassfish-samples/sources"Source code - SVN</a></li>
+        <li><a href="https://java.net/jira/browse/GLASSFISH_SAMPLES">Issues</a></li>
 		<!-- TODO
 		Add project issue search form for Jira.
 		Add Java EE 5 Browse link: 	<a href="/source/browse/*checkout*/glassfish-samples/trunk/ws/javaee5/docs/DeveloperREADME.html" target="gfsamples">Develop samples</a>
@@ -57,8 +57,8 @@ var info = {
 	title: "Glassfish Samples"
 }
     </script>
-    <script src="http://glassfish-theming.java.net/zone-core.js"></script>
-    <script src="http://glassfish-theming.java.net/theme.js"></script><!--
+    <script src="https://glassfish-theming.java.net/zone-core.js"></script>
+    <script src="https://glassfish-theming.java.net/theme.js"></script><!--
 If your project uses a site traffic tracker like Google Analytics, this is a good place
 to inject it.
 -->
