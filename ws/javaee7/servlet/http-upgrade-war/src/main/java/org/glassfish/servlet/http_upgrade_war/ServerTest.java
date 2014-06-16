@@ -73,7 +73,7 @@ public class ServerTest extends HttpServlet {
             System.out.println("Accept to upgrade");
             response.setStatus(101);
             response.setHeader("X-Powered-By", "Servlet/3.1 "
-                    + "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");
+                    + "(GlassFish Server Open Source Edition 4.x Java/Oracle Corporation");
             response.setHeader("Upgrade", "Dummy Protocol");
             response.setHeader("Connection", "Upgrade");
             response.flushBuffer();
@@ -83,7 +83,7 @@ public class ServerTest extends HttpServlet {
         } else {
             response.setStatus(400);
             response.setHeader("X-Powered-By", "Servlet/3.1 "
-                    + "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");
+                    + "(GlassFish Server Open Source Edition 4.x Java/Oracle Corporation)");
             response.setHeader("Connection", "Refused");
             response.sendError(400, "The Upgrade request sent by the client was incorrect or can not be accept by the server");
             System.out.println("Upgrade field is: " + request.getHeader("Upgrade"));
