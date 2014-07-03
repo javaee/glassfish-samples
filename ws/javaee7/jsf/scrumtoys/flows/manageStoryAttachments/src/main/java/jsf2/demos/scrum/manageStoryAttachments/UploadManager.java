@@ -43,6 +43,7 @@ package jsf2.demos.scrum.manageStoryAttachments;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.flow.FlowScoped;
@@ -57,7 +58,7 @@ import jsf2.demo.scrum.web.controller.StoryManager;
 
 @Named
 @FlowScoped(definingDocumentId="manageStoryAttachments", value="manageStoryAttachments")
-public class UploadManager {
+public class UploadManager implements Serializable {
     
     @PersistenceContext
     private EntityManager em;
