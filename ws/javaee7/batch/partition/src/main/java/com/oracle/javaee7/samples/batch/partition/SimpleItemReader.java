@@ -64,11 +64,16 @@ public class SimpleItemReader
 
     public void open(Serializable e) throws Exception {
         Properties jobParameters = BatchRuntime.getJobOperator().getParameters(jobContext.getExecutionId());
-        ConcurrentSkipListMap<Integer, PayrollInputRecord> records = dataBean.getPayrollInputRecords(
-                (String) jobParameters.get("monthYear"));
+        String monthYear = (String) jobParameters.get("monthYear");
+        Integer partitionNumber = (Integer) jobParameters.get("partitionNumber");
         Integer fromKey = (Integer) jobParameters.get("startEmpID");
         Integer toKey = (Integer) jobParameters.get("endEmpID");
-        payrollInputRecords = records.subMap(fromKey, true, toKey, false).values().iterator();
+        
+        System.out.println("SimpleItemReader[partition #" + partitionNumber + " will process "
+                + " from employeeId: " + fromKey + " to " + toKey
+                + " for the month of " + monthYear);
+        
+        payrollInputRecords = dataBean.getPayrollInputRecords(monthYear, fromKey, toKey);
     }
 
     public Object readItem() throws Exception {

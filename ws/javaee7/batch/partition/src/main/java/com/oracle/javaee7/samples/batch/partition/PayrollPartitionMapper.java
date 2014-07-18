@@ -30,18 +30,26 @@ public class PayrollPartitionMapper
             }
 
             @Override
-            public Properties[] getPartitionProperties() {Properties jobParameters = BatchRuntime.getJobOperator().getParameters(jobContext.getExecutionId());
+            public Properties[] getPartitionProperties() {
+                Properties jobParameters = BatchRuntime.getJobOperator().getParameters(jobContext.getExecutionId());
+
                 String monthYear = (String) jobParameters.get("monthYear");
                 int partitionSize = bean.getMaxEmployees() / getPartitions();
+                                
+                System.out.println("**[PayrollPartitionMapper] jobParameters: " + jobParameters
+                    + "; executionId: " + jobContext.getExecutionId() + "; partitionSize = " + partitionSize);
 
                 Properties[] props = new Properties[getPartitions()];
                 for (int i=0; i<getPartitions(); i++) {
                     Properties partProps = new Properties();
-                    partProps.put("monthYear", ""+monthYear);
+                    partProps.put("monthYear", monthYear);
+                    partProps.put("partitionNumber", i);
                     partProps.put("startEmpID", i * partitionSize);
                     partProps.put("endEmpID", (i + 1) * partitionSize);
 
                     props[i] = partProps;
+                    System.out.println("**[PayrollPartitionMapper[" + i + "/" + getPartitions()
+                                + "] : " + partProps);
                 }
 
                 return props;
