@@ -120,10 +120,21 @@
 
 <p>This sample application demonstrates how to use the Batch Processing API (JSR 352)
    to submit batch jobs and how to obtain information about submitted jobs using the
-   <code>JobOperator</code> interface.</p>
+   <code>JobOperator</code> interface. This sample also demostrates how to perform
+   batch processing using multiple partitioned chunks. </p>
 
 The job xml contains one step called 'process'. This step uses three batch artifacts:
 <ul>
+    <li>PayrollPartitionMapper (that implements PartitionMapper) is a class that tells
+	the Batch runtime about the number of partitions that must be created and also
+	the set of partition specific input data. This is communicated to the Batch
+	Runtime by returing a PartitionPlanImpl from the mapPartitions() method.
+
+	<p>The PayrollPartitionMapper creates 5 partitions to process 30 payroll records.
+	Each Partition is run on a separate thread by the Batch runtime, but each Partition
+	runs the same Chunk (meaning same ItemReader, same ItemWriter and same ItemProcessor).
+	In order to let each Partition to work on different payroll records, the PayrollPartitionMapper
+	sets the starting and ending employee numbers that each Partitioned step must process.</li>
     <li>SimpleItemReader (that implements ItemReader): An ItemReader reads input records. The
         Batch runtime calls ItemReader.readItem() to read input records. The ItemReader can
         read input records from a variety of sources like Database, a CSV flat file, from
@@ -174,11 +185,11 @@ The job xml contains one step called 'process'. This step uses three batch artif
     <li><code><i>samples_install_dir</i></code> is the sample application base directory. Go to: <code><i>samples_install_dir</i>/javaee7/batch/joboperator-api</code>.
     </li>
     <li>Build the sample application by running <code>mvn package</code> command from a command line terminal.</li>
-    <li>Deploy the sample application by running <code>asadmin deploy --force target/joboperator-api.war</code> command from a command line terminal.</li>
-    <li>The front page of this sample is at <a href="http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet">http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet</a>.
+    <li>Deploy the sample application by running <code>asadmin deploy --force target/partition.war</code> command from a command line terminal.</li>
+    <li>The front page of this sample is at <a href="http://localhost:8080/partition/PartitionedJobSubmitterServlet">http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet</a>.
         (The port number might vary.)</li>
     <li>Use <code>mvn clean</code> command from a command line terminal to clean up the target directory.</li>
-    <li>Undeploy the sample application by running <code>asadmin undeploy joboperator-api</code> command from a command line terminal.</li>
+    <li>Undeploy the sample application by running <code>asadmin undeploy partition</code> command from a command line terminal.</li>
     </li>
 </ol>
 

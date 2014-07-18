@@ -39,8 +39,10 @@
  */
 package com.oracle.javaee7.samples.batch.partition;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -56,7 +58,7 @@ import javax.ejb.Startup;
 @Startup
 public class SampleDataHolderBean {
 
-    private static final int MAX_EMPLOYEES = 20;
+    private static final int MAX_EMPLOYEES = 30;
 
     private Map<String, ConcurrentSkipListMap<Integer, PayrollInputRecord>> payrollInputRecords
             = new HashMap<>();
@@ -66,6 +68,7 @@ public class SampleDataHolderBean {
     
     @PostConstruct
     public void onApplicationStartup() {
+        try {
         String[] monthYear = new String[] {"JAN-2013", "FEB-2013", "MAR-2013"};
         for (int monthIndex = 0; monthIndex < monthYear.length; monthIndex++) {
             ConcurrentSkipListMap<Integer, PayrollInputRecord> inputRecords = new ConcurrentSkipListMap<>();
@@ -78,8 +81,11 @@ public class SampleDataHolderBean {
             }
 
             payrollInputRecords.put(monthYear[monthIndex], inputRecords);
+            System.out.println("**Added " + monthYear + ": " + inputRecords);
         }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getMaxEmployees() {
@@ -90,8 +96,14 @@ public class SampleDataHolderBean {
         return payrollInputRecords.keySet().toArray(new String[0]);
     }
 
-    public ConcurrentSkipListMap<Integer, PayrollInputRecord> getPayrollInputRecords(String monthYear) {
-        return payrollInputRecords.get(monthYear);
+    public Collection<PayrollInputRecord> getPayrollInputRecords(String monthYear) {
+        return payrollInputRecords.get(monthYear).values();
+    }
+
+    public Iterator<PayrollInputRecord> getPayrollInputRecords(String monthYear,
+            int startId, int endId) {
+        ConcurrentSkipListMap<Integer, PayrollInputRecord> map = payrollInputRecords.get(monthYear);       
+        return map.subMap(startId, endId).values().iterator();
     }
     
     public void addPayrollRecord(PayrollRecord r) {
