@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<domain-info xmlns="http://xmlns.oracle.com/cie/glassfish/domain-info" xmlns:ns2="http://xmlns.oracle.com/cie/glassfish/domain-template" javahome="/usr/lib/jdk1.8.0_45" mwhome="/home/debayan/glassfish_github/glassfish_sample/glassfish-samples/ws/javaee8/concurrency/executor/target/cargo/installs/latest-glassfish/glassfish5">
+    <domain-template-ref name="Basic GlassFish Server Domain" version="4.0.0.0" location="/home/debayan/glassfish_github/glassfish_sample/glassfish-samples/ws/javaee8/concurrency/executor/target/cargo/installs/latest-glassfish/glassfish5/glassfish/common/templates/gf/appserver-domain.jar"/>
+</domain-info>

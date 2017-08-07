@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<table border="1" bgcolor="#ffffcc">
+<font color="black" size="-1">
+<tr><th>Facelets Page</th><th>SSE Composite Component Page</th></tr>
+<tr><td><pre><![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h5="http://java.sun.com/jsf/composite/h5"
+      xmlns:ez="http://java.sun.com/jsf/composite/stockinfo">
+<h:head>
+        <title>Stock Ticker Sample</title>
+</h:head>
+<body>
+        <h:form>
+           <h:panelGrid styleClass="title-panel">
+              <h:panelGrid columns="2" cellpadding="20">
+                 <h:outputText value="S t o c k V i e w" styleClass="title-panel-text"/>
+              </h:panelGrid>
+              <h:outputText value="Powered By JavaServer Faces 2.1 and Html 5 Server Sent Events " 
+                 styleClass="title-panel-subtext"/>
+           </h:panelGrid>
+
+            <h:outputStylesheet name="stylesheet.css" />
+]]></pre>
+<font color="red" size="-1">
+<pre><![CDATA[
+            <h5:sse url="/JSFStockTicker/sse/stockticker" handler="messageHandler"/>
+]]></pre>
+</font>
+<pre><![CDATA[
+
+            <ez:stock/>
+
+            <h:messages/>
+
+        </h:form>
+</body>
+</html>
+]]></pre></td>
+<td><pre><![CDATA[
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+<head>
+
+<title>This will not be present in rendered output</title>
+
+</head>
+
+<body>
+
+<composite:interface>
+    <composite:attribute name="url" required="true"/>
+    <composite:attribute name="handler" required="true"/>
+</composite:interface>
+
+<composite:implementation>
+    <h:outputScript name="js/jsf-sse.js" target="head" />
+    <script type="text/javascript">
+         JSF.sse.connect("#{cc.attrs.url}", #{cc.attrs.handler});
+    </script>
+</composite:implementation>
+
+</body>
+
+</html>
+]]></pre></td>
+</tr>
+<tr><th>JSF Stock Application Composite Component</th>
+<th>JSF SSE JavaScript API</th></tr>
+<tr><td><pre><![CDATA[
+<td><pre><![CDATA[
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+<head>
+
+<title>This will not be present in rendered output</title>
+
+</head>
+
+<body>
+
+<composite:interface>
+
+</composite:interface>
+
+<composite:implementation>
+    <br/>
+    <h:panelGrid columns="4">
+       <h:outputText value="Space delimited symbol(s):" style="font-size: 18px;"/>
+       <h:inputText id="symbol" value="#{stockTickerBean.symbols}"/>
+       <h:commandButton id="submit" value="Get Quotes" action="#{stockTickerBean.getStockInfo}">
+          <f:ajax execute="@this symbol"/>
+       </h:commandButton>
+       <h:commandButton id="clear" value="Reset" action="#{stockTickerBean.reset}">
+          <f:ajax execute="@this symbol" render="symbol"/>
+       </h:commandButton>
+    </h:panelGrid>
+ 
+    <br/>
+
+    <div id="stockInfo" style="font-size: 16px;">
+        <table id="stockTable" border="8" bordercolor="#000080" cellspacing="10" style="visibility:hidden">
+            <tr><th style="background-color:#b0c4de;text-align:left">Symbol</th><th style="background-color:#b0c4de;text-align:left">Open</th>
+             <th style="background-color:#b0c4de;text-align:left">Trade</th><th style="background-color:#b0c4de;text-align:left">Chg</th></tr>
+        </table>
+    </div>
+
+    <h:outputScript name="js/app.js" target="head"/>
+
+
+</composite:implementation>
+
+</body>
+
+</html>
+]]></pre></td>
+<td><pre><![CDATA[
+if (!JSF) {
+
+    /**
+     * The top level global namespace for JavaServer Faces Server Sent Event
+     * functionality.
+     * @name JSF
+     * @namespace
+     */
+    var JSF = {};
+
+    /**
+     * The namespace for Server Sent Event functionality.
+     * @name JSF.sse
+     * @namespace
+     * @exec
+     */
+    JSF.sse = function() {
+
+        var eventSource = null;
+        
+        var getEventSource = function getEventSource(url) {
+            url = 'http://' + document.location.host + url;
+            eventSource = new EventSource(url);
+        };
+
+        return {
+
+            /**
+             * Connect to a server end point.
+             * <p><b>Usage:</b></p>
+             * <pre><code>
+             * JSF.sse.connect(url, handleMessage);
+             * ...
+             * var messageHandler = function handleMessage(event) {
+             * ...
+             * }
+             * </pre></code>
+             *
+             * @member JSF.sse
+             * @param url The URL of a valid server end point that will deliver messages.
+             * @param callback a reference to a function to call for processing server messages.
+             */
+            connect: function connect(url, callback) {
+                if (url === null || callback === null) {
+                    throw new Error("Must specify URL and callback function name");
+                }
+                if (typeof callback !== 'function') {
+                    throw new Error("The argument 'callback' must be a function");
+                }
+                getEventSource(url);
+                if (eventSource !== null) {
+                    eventSource.addEventListener('message', callback, false);
+                }
+
+            }
+        };
+
+    }();
+}
+]]></pre></td>
+</tr>
+</font>
+</table>
+</body>
+</html>

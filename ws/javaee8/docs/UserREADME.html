@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2010-2013 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>Common Build Instructions for Sample Applications</title>
+  <style type="text/css">
+  body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+  {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+  h1 {font-size:18pt}
+  h2 {font-size:14pt}
+  h3 {font-size:12pt}
+  code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+  li {padding-bottom: 8px}
+  p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+  p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<h1>Common Build Instructions for Sample Applications</h1>
+<p>The sample applications depend on the following software:</p>
+<ul>
+<li>Java SE Development Kit (JDK) version 1.7.0_21.</li>
+<li>Apache Maven version 3.0.5.</li>
+<li>The Java DB database included in the Java EE SDK.</li>
+</ul>
+
+<p>Due to these dependencies, you must perform some one-time setup tasks 
+before building and running the individual samples.</p>
+
+<h3>One-Time Setup Tasks</h3>
+<p><b>Note:</b> In the following instructions, <code>&lt;javee.home&gt;</code> 
+refers to the directory where the Java EE SDK is installed; for example, 
+<code>C:\glassfish4</code>.</p>
+<ol>
+  <li>
+    <b>Download and install JDK version 1.7.0_21, if necessary.</b>
+    If JDK version 1.7.0_21 is not already on your system, you must 
+    download and install it. The download is available at the 
+    <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
+    Java SE Downloads</a> page.
+  </li>
+  <li>
+    <b>Download and install Apache Maven version 3.0.5, if necessary.</b>
+	If Apache Maven version 3.0.5 is not already installed on your system, 
+	the download is available at the <a href="http://maven.apache.org/download.cgi">
+	Maven download</a> page.
+  </li>
+</ol>
+<p>Refer to the <a href="http://maven.apache.org/guides/index.html">Maven documentation 
+page</a> for information on configuring and using Maven. For example, you may
+have to specify a proxy server if your network environment requires it.</p>
+
+<h3>Building and Running a Sample Application</h3>
+
+<p>After performing the one-time setup tasks, you can build and run a 
+sample application as follows:</p>
+
+<ol>
+  <li>
+    Add the JDK 1.7.0_21 <code>bin</code> directory to your 
+	<code>PATH</code> environment variable. For example:
+    <p><code>set PATH=C:\Program Files\Java\jdk1.7.0_21\bin;%PATH%</code></p>
+  </li>
+  <li>
+    Add the Maven 3.0.5 <code>bin</code> directory to your <code>PATH</code> 
+	environment variable. For example:
+    <p><code>set PATH=C:\Program Files\apache-maven-3.0.5\bin;%PATH%</code></p>
+  </li>
+  <li>
+    Follow the instructions for the specific sample to build and run it. 
+	Note that many of the samples use the following common Maven goals: <p> </p>
+	<ul>
+	  <li><code>compile</code> - compiles the sample application.</li>
+	  <li><code>install</code> - packages the archive and installs it in the local Maven repository.</li>
+	  <li><code>verify</code> - verifies that the package is valid.</li>
+	  <li><code>cargo:run -Dglassfish.home=<i>&lt;gf_install_dir&gt;</i></code> - runs the application 
+	      using the application server in the SDK.</li> 
+	  <li><code>clean</code> - deletes the compilation artifacts.</li>
+	</ul>
+  </li>
+</ol>
+
+<p>To specify the installation directory of the Glassfish server,
+use the <code>-Dglassfish.home=<i>&lt;gf_install_dir&gt;</i></code> option with the <code>cargo:run</code>
+goal.</p> 
+
+<h3>Sample Applications as NetBeans Projects</h3>
+
+<p>You can open the sample applications as projects in the NetBeans IDE. 
+To do so, follow these steps after downloading and installing 
+NetBeans from the 
+<a href="http://www.netbeans.org/downloads/index.html">NetBeans Download</a> 
+page:</p>
+<ol>
+ <li>
+   Set JDK 1.7.0 as the default Java platform by changing the 
+   <code>netbeans_jdkhome</code> property in the 
+   <code><i>&lt;netbeans.home&gt;</i>\etc\netbeans.conf</code> file.
+ </li>
+ <li>
+   Configure the browser that the NetBeans IDE will use by
+   selecting <b>Tools</b>-&gt;<b>Options</b>-&gt;<b>General</b>-&gt;<b>WebBrowser</b>.
+ </li>
+ <li>
+   Configure the GlassFish 4 server to use JDK 1.7.0 by selecting 
+   <b>Tools</b>-&gt;<b>Servers</b> and then clicking on the <b>Java</b> tab for the GlassFish 4 Domain.
+ </li>
+ <li>
+   Start the GlassFish server:<p> </p>
+   <ol>
+     <li>Choose <b>Windows</b>-&gt;<b>Services</b>.</li>
+     <li>Expand the Servers group.</li>
+     <li>Right-click on the GlassFish domain and choose <b>Start</b> from the context menu.</li>
+   </ol>
+ </li>
+ <li>Open one of the sample applications:<p> </p>
+   <ol>
+     <li>Choose <b>File</b>-&gt;<b>Open Project</b>.</li>
+     <li>Navigate to the <code><i>&lt;javaee.home&gt;</i>\glassfish\samples\javaee7</code> directory and then to the appropriate sample project.</li>
+     <li>Select the sample project.</li>
+     <li>After NetBeans scans the project, select <b>Open Required Projects</b> if projects appear in the box below the option, 
+	 and then click on <b>Open Project</b>.</li> 
+   </ol>
+ </li>
+ <li>Check the sample's <code>docs/index.html</code> file for any special prerequisites or build instructions.</li>
+ <li>Right-click on the sample project and execute one of the Maven targets; for example, <b>Run</b>.</li>
+</ol>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1"><!-- start copyright -->
+<p class="copy"> Copyright &copy; 1997-2013 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

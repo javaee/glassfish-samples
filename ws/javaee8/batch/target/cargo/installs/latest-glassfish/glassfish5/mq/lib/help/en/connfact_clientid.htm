@@ -1,0 +1,86 @@
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2000-2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<HTML>
+<HEAD>
+ <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+ <TITLE>connfact clientid</TITLE>
+ <LINK rel="StyleSheet" href="ide.css">
+ 
+</HEAD>
+<BODY>
+ 
+<H2>Connection Factory Object Properties &gt; <BR>
+  Client Identification</H2>
+ 
+<P>Use this tab to re-specify default values of user name and password and to 
+  re-specify how a client will be identified (ClientID) to a broker. ClientId 
+  values are used mainly to keep track of durable subscribers.</P>
+
+<p><b>Default Username</b> Specifies the default user name that will be used to 
+  authenticate with the broker. The default value is <code>guest</code>.</p>
+
+<p><b>Default Password</b> Specifies the default password that will be used to 
+  authenticate with the broker. The default value is <code>guest</code>.</p>
+
+<p><b>Disable setClientID() JMS API </b>Specifies that client application is prevented 
+  from using API calls to change ClientID. It is generally better for you, the 
+  administrator, to control the assignment of ClientIDs.</p>
+
+<p> If you check the box, you can use the <b>Configure ClientID as</b> field to 
+  specify a ClientID for the client. If you don't specify such a value, a default 
+  value consisting of the client' host's IP address is assigned by the system. 
+  While this is done as a convenience for developers, it prohibits a client application 
+  from creating more than one connection: the system does not allow two connections 
+  with the same ClientID.</p>
+
+<p><b>Configure ClientID as</b> Specifies an identifier for the client. If you 
+  don't specify this value and you have disabled the api call that sets the ClientID, 
+  a default value consisting of the client host's IP address is assigned by the 
+  system. While this is done as a convenience for developers, it prohibits a client 
+  application from creating more than one connection: the system does not allow 
+  two connections with the same ClientID.</p>
+
+<P>&nbsp;</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,107 @@
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2000-2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<html>
+<head>
+ <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+ <title>add connection fact</title>
+ <link rel="StyleSheet" href="ide.css">
+ 
+</head>
+<body>
+ <h2>Add Connection Factory Object</h2>
+ 
+<p>Use this dialog to configure a connection factory object and to add it to an 
+  object store.</p>
+
+<p><i>Connection factories</i> are administered objects used by JMS clients to 
+  connect to the broker. This object is also used to specify how the connection 
+  behaves and how the client runtime using it accesses the broker.</p>
+
+<p><b>Lookup Name</b> Use this field to specify the JNDI lookup name of the connection 
+  factory object. </p>
+
+<p><b>Factory Type</b> Choose the menu item that specifies which type of connections 
+  the factory produces: ConnectionFactory, QueueConnectionFactory, or TopicConnectionFactory. 
+  If the message must be part of a distributed 
+  transaction, choose XAConnectionFactory, XAQueueConnectionFactory or XATopicConnectionFactory.</p>
+
+<p><b>Read-Only</b> Click this check box to make the factory connection object 
+  read-only. If the object is read only, client applications will not be able 
+  to modify connection factory attributes through api calls. </p>
+
+<p>By configuring a connection factory object, you specify the properties common 
+  to all the connections that the factory produces. You use the tabs shown in 
+  the dialog to configure the connection factory. Click one of the following links 
+  for information about a particular tab.</p>
+
+	
+<a HREF="add_connfact_rel.htm">Reliability and Flow Control</a> <br>
+  	<a HREF="add_connfact_queue.htm">QueueBrowsers and ServerSessions</a><br>
+  	<a HREF="add_connfact_handling.htm">Connection Handling</a><br>
+  	<a HREF="add_connfact_clientid.htm">Client Identification</a> <br>
+  	<a HREF="add_connfact_jmsx.htm">JMSX Properties</a> <br>
+	<a HREF="add_connfact_message_header_overrides.htm">Message Header Overrides</a><br>
+	<a HREF="add_connfact_handling_old.htm">3.0 Connection Handling</a><br>
+  	 
+
+<ul>
+  <li>Click the <b>Reset To Defaults</b> button to reset all fields in all dialog 
+    tabs to their default value. </li>
+  <li> Click <b>OK</b> to create the connection factory object. </li>
+</ul>
+
+<p>To change the properties of a connection factory object:</p>
+
+<ol>
+  <li>Select the Connection Factories folder in the navigational pane of the administrative 
+    console. </li>
+  <li>Select the connection factory object in the results pane of the administrative 
+    console. </li>
+  <li>Choose <b>Actions > Properties</b> to bring up the Connection Factory Object 
+    Properties dialog. </li>
+</ol>
+
+<p>&nbsp;</p>
+
+</body>
+</html>

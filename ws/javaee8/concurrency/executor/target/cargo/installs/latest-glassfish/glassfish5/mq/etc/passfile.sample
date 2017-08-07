@@ -1,0 +1,157 @@
+#
+# DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+#
+# Copyright (c) 2000-2013 Oracle and/or its affiliates. All rights reserved.
+#
+# The contents of this file are subject to the terms of either the GNU
+# General Public License Version 2 only ("GPL") or the Common Development
+# and Distribution License("CDDL") (collectively, the "License").  You
+# may not use this file except in compliance with the License.  You can
+# obtain a copy of the License at
+# https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+# or packager/legal/LICENSE.txt.  See the License for the specific
+# language governing permissions and limitations under the License.
+#
+# When distributing the software, include this License Header Notice in each
+# file and include the License file at packager/legal/LICENSE.txt.
+#
+# GPL Classpath Exception:
+# Oracle designates this particular file as subject to the "Classpath"
+# exception as provided by Oracle in the GPL Version 2 section of the License
+# file that accompanied this code.
+#
+# Modifications:
+# If applicable, add the following below the License Header, with the fields
+# enclosed by brackets [] replaced by your own identifying information:
+# "Portions Copyright [year] [name of copyright owner]"
+#
+# Contributor(s):
+# If you wish your version of this file to be governed by only the CDDL or
+# only the GPL Version 2, indicate your decision by adding "[Contributor]
+# elects to include this software in this distribution under the [CDDL or GPL
+# Version 2] license."  If you don't indicate a single choice of license, a
+# recipient has the option to distribute your version of this file under
+# either the CDDL, the GPL Version 2 or to extend the choice of license to
+# its licensees as provided above.  However, if you add GPL Version 2 code
+# and therefore, elected the GPL Version 2 license, then the option applies
+# only if the new code is made subject to such option by the copyright
+# holder.
+#
+
+#---------------------------------------------------------------------
+#
+# This file is an example of a passfile.
+#
+# A passfile is used to store passwords so that the same passwords
+# do not have to be entered on the command line or as an interactive
+# response to a system prompt for a password.
+#
+# Note that directly entering a password on the command line has been
+# removed beginning with the MQ 4.0 release.
+#
+# i.e. the use of the -p or -password option is removed
+#
+# e.g.
+# % imqcmd ............. -u <username> -p <password>
+# 
+# The above command line operation no longer accepts the -p option.
+# However, the -passfile option can be used in it's place as shown below.
+#
+# e.g.
+# % imqcmd ............. -u <username> -passfile <password_filename>
+# 
+# 
+# After you add password(s) to a passfile,  you should run
+#
+# imqusermgr encode -src <original-passfile> -target <new-passfile> 
+#
+# to encode the password(s) in the passfile and save the <new-passfile>
+# for MQ command line use.  The <new-passfile> is not encrypted, so you
+# should set the file permissions to protected it from unauthorized access.
+# Alternatively, when you interactively enter a command you can let the 
+# system prompt you for a password. 
+#
+# The following passwords can be stored in a passfile --
+# 
+#   o keystore password
+#   o LDAP repository password
+#   o JDBC database password
+#   o imqcmd password
+#   o broker bridge service manager administrator password
+#
+#
+# Using a passfile
+# ----------------
+#
+# A passfile is used in the following cases --
+# 
+#   o By the broker when the broker is configured to do so.
+#
+#   o By a MQ command when the -passfile option is specified
+#
+#
+# To configure the broker to use a passfile, do one of the following: 
+#
+#    o Set the following properties in the broker config.properties file:
+#          imq.passfile.enabled=true
+#          imq.passfile.dirpath=<directory of the file e.g. ${imq.etchome}>
+#          imq.passfile.name=<name of the passfile>
+# 
+#    o Use the -passfile option of the broker:  
+#	   imqbrokerd -passfile <full name of the encoded passfile>
+#
+#
+#
+#
+# A passfile can contain the following passwords: 
+#
+#       imq.keystore.password
+#                - Opens the SSL keystore  
+# 
+#       imq.user_repository.ldap.password
+#                - Used to connect securely with an LDAP
+#                  directory if the connection is not anonymous
+# 
+#       imq.persist.jdbc.password
+#                - Used to connect with a JDBC database
+#              
+#       imq.imqcmd.password
+#                - Used to perform broker administration tasks
+#                  using imqcmd
+#
+#       imq.bridge.admin.password
+#                - Used by the broker's bridge service manager
+#
+#
+# You add password in name=value format to a passfile, for example:
+#
+#       imq.keystore.password=<keystore password>
+#       imq.user_repository.ldap.password=<ldap user repository password>
+#       imq.persist.jdbc.password=<jdbc password>
+#       imq.imqcmd.password=<administrator password>
+#       imq.bridge.admin.password=<administrator password for bridge service manager>
+#
+# 
+#---------------------------------------------------------------------
+# The keystore password when the broker is configured to use SSL.
+# A dummy password has been configured as an example.
+#
+
+imq.keystore.password=mypassword
+
+#
+#---------------------------------------------------------------------
+# The administration password for broker administration tasks using imqcmd
+# A dummy password has been configured as an example
+# 
+
+imq.imqcmd.password=myadminpassword
+
+#
+# Note: imqcmd is a remote administration tool. A passfile used by 
+# the broker can also be used by imqcmd only if it is accessible 
+# from where imqcmd is executed. This may not be possible if imqcmd 
+# is run from a machine that is remote relative to the broker.
+#
+#---------------------------------------------------------------------
+#

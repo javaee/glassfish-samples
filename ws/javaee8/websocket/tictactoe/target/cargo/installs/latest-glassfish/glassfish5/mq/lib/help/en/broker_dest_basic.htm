@@ -1,0 +1,145 @@
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2000-2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<HTML>
+<HEAD>
+ <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+ <TITLE>broker dest basic</TITLE>
+ <LINK rel="StyleSheet" href="ide.css">
+ 
+</HEAD>
+<BODY>
+ 
+<H2>Broker Destination Properties &gt; <BR>Basic</H2>
+ 
+<P>This tab displays information about a broker destination. You can also use 
+  it to change properties that you defined for a destination using the <b>Add 
+  Broker Destination</b> dialog.</P>
+
+<p><b>Destination Name</b> Specifies the name of the physical destination.</p>
+<p><b>Destination Type</b> Specifies the destination type (queue or topic). </p>
+<p><b>Destination State</b> Specifies whether the destination is active or paused 
+  (paused producers, paused consumers, or both)</p>
+
+<P>
+<hr>
+<p><b>Current Number of Messages</b> Specifies the number of unconsumed messages 
+  currently in this destination.</p>
+<p><b>Current Total Message Bytes</b> Specifies the total amount of memory used 
+  by unconsumed messages currently in this destination.</p>
+<p><b>Current Number of Producers</b> Specifies the number of producers currently 
+  associated with this destination.</p>
+<p><b>Current Number of Consumers</b> Specifies the number of consumers currently 
+  associated with this destination. This includes non-durables, and active/inactive 
+  durables (topic only).</p>
+<p><b>Current Number of Active Consumers</b> Specifies the number of active consumers currently associated with this destination (queue only).</p>
+<p><b>Current Number of Backup Consumers</b>: Specifies the number of backup consumers 
+  currently associated with this destination (queue only).</p>
+<P>
+<hr>
+<p><b>Max Number of Messages</b> Specifies the maximum number of unconsumed messages 
+  allowed in this destination. </p>
+<p><b>Max Total Message Bytes </b> Specifies the maximum total amount of memory 
+  allowed for unconsumed messages in this destination. Use the drop down list 
+  to select the unit of measurement: bytes, kbytes, or megabytes.</p>
+<p><b>Max Bytes per Message</b> Specifies the maximum size of any single message 
+  allowed in this destination. Use the drop down list to select the unit of measurement: 
+  bytes, kbytes, or megabytes.</p>
+<p><b>Max Number of Producers</b> Specifies the maximum number of producers allowed 
+  for this destination.</p>
+<p><b>Max Number of Active Consumers </b> Applies to queue destinations only. 
+  Specifies the maximum number of consumers that can be active in load-balanced 
+  delivery from this destination.</p>
+<p><b>Max Number of Backup Consumers </b> Applies to queue destinations only. 
+  Specifies the maximum number of backup consumers that can take the place of 
+  active consumers, should any active consumers fail during load-balanced delivery 
+  from this destination.</p>
+<P>
+<hr>
+<P><b>Limit Behavior</b>
+Specifies how the broker responds when a memory-limit threshold is reached for this destination. Values are: 
+<UL>
+  <li>FLOW_CONTROL - slows down producers</li>
+  <li>REMOVE_OLDEST - throws out oldest messages</li>
+  <li>REMOVE_LOW_PRIORITY - throws out lowest priority messages according to age of the messages (producing client receives no notification of message deletion)</li>  
+  <li>REJECT_NEWEST - rejects the newest messages (producing client gets exception for rejection of persistent messages, but no notification for rejection of non-persistent messages</li>
+  
+</ul>
+
+<p><b>Use Dead Message Queue</b> Specifies the use of a dead message queue for the destination.</p>
+
+<p>When a message is deemed undeliverable, it is automatically placed on a special 
+  queue called the dead message queue. A message placed on this queue retains 
+  all of its original headers (including its original destination) and information 
+  is added to the message's properties to explain why it became a dead message. 
+  An administrator or a developer can access this queue, remove a message, and 
+  determine why it was placed on the queue.</p>
+
+<p>The dead message queue is automatically created by the system and is named
+<code>mq.sys.dmq</code>.</p>
+
+<hr>
+
+<p><b>To purge messages from a destination:</b></p>
+<ol>
+  <li>Select the destination in the console's results pane.</li>
+  <li>Choose <b>Actions &gt; Purge Messages</b>.</li>
+</ol>
+<p><b>To delete a destination:</b></p>
+<ol>
+  <li>Select the destination in the console's results pane.</li>
+  <li>Choose <b>Edit &gt; Delete</b>.</li>
+</ol>
+<p><b>To pause a destination:</b></p>
+<ol>
+  <li>Select the destination in the console's results pane.</li>
+  <li>Choose <b>Actions &gt; Pause Producers | Pause Consumers | Pause All</b>.</li>
+</ol>
+<p><b>To resume a paused destination:</b></p>
+<ol>
+  <li>Select the destination in the console's results pane.</li>
+  <li>Choose <b>Actions &gt; Resume</b></li>
+</ol>
+<p>&nbsp;</p>
+
+</BODY>
+</HTML>

@@ -1,0 +1,90 @@
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2000-2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<HTML>
+<HEAD>
+ <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+ <TITLE>object store properties</TITLE>
+ <LINK rel="StyleSheet" href="ide.css">
+ 
+</HEAD>
+<BODY>
+ <H2>Object Store Properties</H2>
+ 
+<P>Use this dialog to add, delete, or update the properties of an object store you have already 
+  added to the navigational pane of the administrative console.  To edit the fields of this dialog, you must disconnect the administration console from the object store and then display the dialog again.</P>
+
+<P><b>JNDI Naming Service Properties</b>: Use the controls in this area to define the
+  list of JNDI properties for this object store. Use the <b>Name</b> drop down list 
+  to select a property name. After selecting the property name, use the <b>Value</b> 
+  field to enter the property value.</P>
+<P> See <code>http://java.sun.com/products/jndi/1.2/javadoc/</code> for information about the 
+  JNDI application programming interface. You are required to set the 
+  <code>java.naming.factory.initial and java.naming.provider.url</code> 
+  properties. </P>
+<p>The initial context property (<code>java.naming.factory.initial</code>) 
+  can have two values:</p>
+<ul> 
+  <li> File system store: <code>com.sun.jndi.fscontext.RefFSContextFactory</code></li>
+  <li>LDAP server: <code>com.sun.jndi.ldap.LdapCtxFactory</code></li>
+</ul>
+<p>You are also required to specify authentication 
+  information. However, if you are concerned about security, you can wait to be 
+  prompted for this information at connect time.</p>
+<ul>
+  <li> After specifying the property name and value, click the <b>Add</b> button 
+    to add the property to the table.</li>
+  <li> To delete an existing property, select the property in the table, and click 
+    the <b>Delete</b> button to delete that property. </li>
+  <li>Use the <b>Clear</b> button to clear all entries. </li>
+  <li>Select an entry, change its value, and use the <b>Change</b> button to reconfigure 
+    that property. </li>
+  <li>Use the <b>OK</b> button to commit all property settings. </li>
+</ul>
+
+<p>To reconnect to the object store after reconfiguring it: Select the 
+  object store in the navigational pane and choose <b>Actions &gt; Connect to Object 
+  Store</b>. </p>
+
+<P>&nbsp;</P>
+</BODY>
+</HTML>

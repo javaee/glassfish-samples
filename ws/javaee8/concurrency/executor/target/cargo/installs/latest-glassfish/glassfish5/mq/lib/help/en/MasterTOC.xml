@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+                     "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2000-2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<toc version="1.0">
+	<tocitem image="IMQ_TOP_FOLDER_IMG" text="Message Queue Administration Console" target="IMQ_INDEX">
+		<tocitem text="Overview" target="overview" />
+	</tocitem>
+	<tocitem image="OBJSTORE_TOP_FOLDER_IMG" text="Message Queue Object Store Management" target="OS_INDEX">
+		<tocitem text="Add Object Store" target="add_object_store" />
+		<tocitem text="Object Store Properties" target="object_store_properties" />
+		<tocitem text="Connect/Disconnect Object Store" target="conndis_object_store" />
+		<tocitem text="Add Destination Object" target="add_destination_obj" />
+		<tocitem text="Destination Object Properties" target="destination_obj_properties" />
+		<tocitem text="Add Connection Factory Object" target="add_connection_fact">
+			<tocitem text="Reliability and Flow Control" target="add_connfact_rel_htm" />
+			<tocitem text="QueueBrowsers and ServerSessions" target="add_connfact_queue_htm" />
+			<tocitem text="Connection Handling" target="add_connfact_handling_htm" />
+			<tocitem text="Client Identification" target="add_connfact_clientid_htm" />
+			<tocitem text="JMSX Properties" target="add_connfact_jmsx_htm" />
+			<tocitem text="Message Header Overrides" target="add_connfact_message_header_overrides_htm" />
+			<tocitem text="3.0 Connection Handling" target="add_connfact_handling_old_htm" />
+		</tocitem>
+		<tocitem text="Connection Factory Object Properties" target="connection_factory_prop">
+			<tocitem text="Reliability and Flow Control" target="connfact_rel_htm" />
+			<tocitem text="QueueBrowsers and ServerSessions" target="connfact_queue_htm" />
+			<tocitem text="Connection Handling" target="connfact_handling_htm" />
+			<tocitem text="Client Identification" target="connfact_clientid_htm" />
+			<tocitem text="JMSX Properties" target="connfact_jmsx_htm" />
+			<tocitem text="Message Header Overrides" target="connfact_message_header_overrides_htm" />
+			<tocitem text="3.0 Connection Handling" target="connfact_handling_old_htm" />
+		</tocitem>
+	</tocitem>
+	<tocitem image="BROKER_TOP_FOLDER_IMG" text="Message Queue Broker Management" target="BROKER_INDEX">
+		<tocitem text="Add Broker" target="add_broker" />
+		<tocitem text="Broker Properties" target="broker_information" />
+		<tocitem text="Connect/Disconnect Broker" target="conndis_broker" />
+		<tocitem text="Query/Update Broker" target="broker_configuration">
+			<tocitem text="Basic" target="broker_config_basic_htm" />
+			<tocitem text="Logging" target="broker_config_logging_htm" />
+			<tocitem text="Messaging" target="broker_config_messaging_htm" />
+		</tocitem>
+		<tocitem text="Add Broker Destination" target="add_broker_destination" />
+		<tocitem text="Destination Properties" target="broker_destination_properties">
+			<tocitem text="Basic" target="broker_dest_basic_htm" />
+			<tocitem text="Durable Subscriptions" target="broker_dest_durable_htm" />
+		</tocitem>
+		<tocitem text="Service Properties" target="service_properties" />
+	</tocitem>
+</toc>

@@ -1,0 +1,133 @@
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2000-2010 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<HTML>
+<HEAD>
+ <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+ <TITLE>add connfact rel</TITLE>
+ <LINK rel="StyleSheet" href="ide.css">
+ 
+</HEAD>
+<BODY>
+ <H2>Add Connection Factory Object &gt; <BR>
+  Reliability and Flow Control</H2>
+ 
+<P>Use this tab to specify the use of Message Queue control messages (broker acknowledgements) 
+  and flow control measures by the client runtime..</P>
+
+<p><b>Message Service Acknowledgement of Produced Messages</b> Specifies broker 
+  acnowledgement of messages from producing client:</p>
+<ul>
+  <li>If set to true, the broker acknowledges receipt of all JMS messages (persistent 
+    and non-persistent) from producing client, and producing client thread will 
+    block waiting for those acknowledgements.</li>
+  <li>If set to false, broker does not acknowledge receipt of any JMS message 
+    (persistent or non-persistent) from producing client, and producing client 
+    thread will not block waiting for broker acknowledgements.</li>
+  <li> If not specified, broker acknowledges receipt of persistent messages only, 
+    and producing client thread will block waiting for those acknowledgements.</li>
+</ul>
+<p><b>Message Service Acknowledgement of Client Acknowledgements </b>Specifies 
+  broker acnowledgement of consuming client acknowledements:</p>
+<ul>
+  <li>If set to true, broker acknowledges all consuming client acknowledgements, 
+    and consuming client thread will block waiting for such broker acknowledgements.</li>
+  <li>If set to false, broker does not acknowledge any consuming client acknowledgements, 
+    and consuming client thread will not block waiting for such broker acknowledgements.</li>
+  <li> If not specified, broker acknowledges consuming client acknowledgements 
+    for AUTO_ACKNOWLEDGE and CLIENT_ACKNOWLEDGE mode (and consuming client thread 
+    will block waiting for such broker acknowledgements), but does not acknowledge 
+    consuming client acknowledgements for DUPS_OK_ACKNOWLEDGE mode (and consuming 
+    client thread will not block.)</li>
+</ul>
+<p><b>Message Service Acknowledgement Timeout (milliseconds) </b>Specifies the 
+  maximum time in milliseconds that the client runtime will wait for any broker 
+  acknowledgement before throwing an exception. The default value of 0 means that 
+  there is no timeout - in other words, the client runtime will wait forever.</p>
+<p><b>Connection Flow Count </b> Specifies the maximum number of JMS messages 
+  in a metered batch. When this number of JMS messages is delivered to the client 
+  runtime, delivery is temporarily suspended, allowing any control messages that 
+  had been held up to be delivered. JMS message delivery is resumed upon notification 
+  by the client runtime, and continues until the count is again reached. If the 
+  count is set to 0 then there is no restriction in the number of JMS messages 
+  in a metered batch. A non-zero setting allows the client runtime to meter message 
+  flow so that Message Queue control messages are not blocked by heavy JMS message delivery 
+  and are allowed to flow to the client between metered batches.</p>
+<p><b>Connection Flow Limit Enabled</b> Specifies whether to enable a connection 
+  flow limit (on the number of unconsumed messages delivered to the client runtime). 
+  If this box is checked, you must specify a positive number for the <b>Connection 
+  Flow Limit </b>field.</p>
+<p><b>Connection Flow Limit (Unconsumed Messages per Connection) </b>Specifies 
+  a limit on the number of messages that can be delivered over a connection and 
+  buffered in the client runtime, waiting to be consumed (only used if <b>Connection 
+  Flow Limits Enabled </b>is checked). When the number of JMS messages delivered 
+  to the client runtime (in accordance with the flow metering governed by <b>Connection 
+  Flow Count</b>) exceeds this limit, message delivery stops. It is resumed only 
+  when the number of unconsumed messages drops below the value set with this property. 
+  This limit prevents a consuming client that is taking a long time to process 
+  messages from being overwhelmed with pending messages that might cause it to 
+  run out of memory. </p>
+<p><b>Consumer Flow Limit (Unconsumed Messages per Consumer) </b>Specifies a limit 
+  on the number of messages per consumer that can be delivered over a connection 
+  and buffered in the client runtime. This limit has two uses: it can improve 
+  load-balancing among consumers in multi-consumer queue delivery situations (no 
+  one consumer can be sent a disproportionate number of messages), and it helps 
+  prevent any one consumer on a connection from overwhelming other consumers on 
+  the connection. When the number of JMS messages delivered to the client runtime 
+  exceeds this limit for any consumer, message delivery for that consumer stops. 
+  It is resumed only when the number of unconsumed messages for that consumer 
+  drops below the value set with the <b>Consumer Flow Threshold</b>. </p>
+<p>Note that if the total number of messages buffered for all consumers on a connection 
+  exceeds the <b>Connection Flow Limit</b>, then delivery of messages through 
+  the connection will stop until that total drops below that limit. If you specify 
+  a Consumer Flow Limit, there is little need to set Connection Flow Limit except 
+  in the most specialized of cases and most application requirements for message 
+  flow metering will be met by setting Consumer Flow Limit instead of enabling 
+  the Connection Flow Limit.</p>
+<P><b>Consumer Flow Threshold (Percent) </b>Specifies, as a percentage of <b>Consumer 
+  Flow Limit</b>, the number of messages per consumer buffered in the client runtime, 
+  below which delivery of messages for a consumer will resume. </P>
+<P>&nbsp;</P>
+<p>&nbsp;</p>
+
+</BODY>
+</HTML>

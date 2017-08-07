@@ -1,0 +1,22 @@
+/* AUTOMATICALLY GENERATED ON Mon Aug 07 12:19:14 IST 2017*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.WebUserDataPermission "/";
+  permission javax.security.jacc.WebResourcePermission "/";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "**";
+  permission javax.security.jacc.WebRoleRefPermission "", "**";
+  permission javax.security.jacc.WebRoleRefPermission "org.glassfish.executor.TestResourceServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "TestInvokeAllServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "TestTransactionServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "TestEJBServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "TestInvokeAnyServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "default", "**";
+  permission javax.security.jacc.WebRoleRefPermission "TestListenerServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "TestJNDIServlet", "**";
+};
+

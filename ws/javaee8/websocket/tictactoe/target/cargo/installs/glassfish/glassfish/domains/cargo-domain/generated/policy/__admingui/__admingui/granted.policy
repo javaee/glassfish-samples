@@ -1,0 +1,44 @@
+/* AUTOMATICALLY GENERATED ON Mon Aug 07 14:48:16 IST 2017*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.WebUserDataPermission "/theme/META-INF/*", "GET";
+  permission javax.security.jacc.WebUserDataPermission "/resource/*", "GET";
+  permission javax.security.jacc.WebUserDataPermission "/theme/org/*", "GET";
+  permission javax.security.jacc.WebUserDataPermission "/*:/theme/com/*:/theme/org/*:/theme/META-INF/*:/resource/*";
+  permission javax.security.jacc.WebUserDataPermission "/theme/com/*", "GET";
+  permission javax.security.jacc.WebResourcePermission "/theme/META-INF/*", "GET";
+  permission javax.security.jacc.WebResourcePermission "/theme/org/*", "GET";
+  permission javax.security.jacc.WebResourcePermission "/theme/com/*", "GET";
+  permission javax.security.jacc.WebResourcePermission "/resource/*", "GET";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "**";
+  permission javax.security.jacc.WebRoleRefPermission "", "**";
+  permission javax.security.jacc.WebRoleRefPermission "ThemeServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "DownloadServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "default", "**";
+};
+
+grant      principal org.glassfish.security.common.Group "asadmin" {
+  permission javax.security.jacc.WebRoleRefPermission "default", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "DownloadServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "ThemeServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "", "admin";
+  permission javax.security.jacc.WebResourcePermission "/*:/theme/com/*:/theme/org/*:/theme/META-INF/*:/resource/*";
+};
+
+grant      principal org.glassfish.security.common.PrincipalImpl "admin" {
+  permission javax.security.jacc.WebRoleRefPermission "default", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "DownloadServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "ThemeServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "", "admin";
+  permission javax.security.jacc.WebResourcePermission "/*:/theme/com/*:/theme/org/*:/theme/META-INF/*:/resource/*";
+};
+

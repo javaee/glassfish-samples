@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2008-2012 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+    or packager/legal/LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at packager/legal/LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+<!--
+A JMS bridge configuration instance document is validated against this DTD.
+-->
+
+<!-- jmsbridge 
+     Top level element
+
+     attributes:
+     name - unique identifier for the bridge
+
+     message-transfer-tag-bridge-name
+         When set to "true" (default "false"), each message that is to be
+         transfered to target will be tagged with the jmsbridge name as following
+
+         Message.setStringProperty("JMS_SUN_JMSBRIDGE_NAME", <jmsbridge-name>)
+
+         right before the transfer, where <jmsbridge-name> is the value of 
+         the name attribute of the jmsbridge element
+
+     log-message-transfer
+         When set to "true" (defalut), each successful message transfer
+         will be logged at INFO log level
+    
+-->
+<!ELEMENT jmsbridge (link*,
+                     dmq*,
+                     connection-factory*,
+                     destination*)>
+<!ATTLIST jmsbridge name CDATA #REQUIRED
+                    message-transfer-tag-bridge-name (true | false) "false"
+                    log-message-transfer (true | false) "true"
+>
+
+<!-- link
+     attributes: 
+
+     name - Unique identifier for the link
+     enabled - When set to "false", the link will not be started
+
+     transacted
+         When set to "true", source and target connection factory
+         object must be a type of XAConnectionFactory, otherwise 
+         must be a type of ConnectionFactory
+             
+-->
+<!ELEMENT link (description?, source, target)>
+<!ATTLIST link name CDATA #REQUIRED 
+               enabled (true | false) "true"
+               transacted (true | false) "true"
+>
+
+<!-- source
+     attributes:
+
+     connection-factory-ref - Reference to a connection-factory element
+     destination-ref - Reference to destination element
+     selector - JMS selector for message consumer
+     durable-sub - JMS durable subscription name
+     clientid - JMS client identifier for message consumer connection 
+
+-->
+<!ELEMENT source (description?)>
+<!ATTLIST source 
+  connection-factory-ref CDATA #REQUIRED
+  destination-ref CDATA #REQUIRED
+  selector CDATA #IMPLIED 
+  durable-sub CDATA #IMPLIED 
+  clientid CDATA #IMPLIED 
+>
+
+<!-- target
+     The property element(s), if any, will be passed to the message-transformer-class
+
+     attributes:
+
+     connection-factory-ref - Reference to a connection-factory element
+
+     destination-ref
+         Reference to a destination element or "AS_SOURCE"
+         When set to "AS_SOURCE", the target destination name and type by
+         default will be the same as that of the source message's 
+         javax.jms.Message.getJMSDestination() unless it's overrided
+         by MessageTransformer.branchTo() when message-transformer-class
+         is specified
+
+     stay-connected
+         When set to "true", the message producer connection will
+         stay connected and be dedicated.
+
+     clientid
+         JMS client identifier for message producer connection
+         (if set use dedicated connection)
+
+     retain-replyto - Whether retain JMSReplyTo header of source message 
+
+     message-transformer-class
+         The fully qualified class name of subclass of
+         com.sun.messaging.bridge.service.MessageTransformer 
+
+     consume-no-transfer-on-transform-error
+         When set to "true", on MessageTransformer.transform() error (throws
+         java.lang.Throwable or return null), send the message to DMQ, then
+         consume the message from the source and no transfer to target;
+
+         When set to "false", on MessageTransformer.transform() error, the 
+         link will be stopped and the message is neither consumed from the 
+         source nor transfered to the target
+   
+-->
+<!ELEMENT target (description?, property*)>
+<!ATTLIST target 
+  connection-factory-ref CDATA #REQUIRED
+  destination-ref CDATA #REQUIRED
+  stay-connected (true | false) "true"
+  clientid CDATA #IMPLIED
+  retain-replyto (true | false) "false"
+  message-transformer-class CDATA #IMPLIED
+  consume-no-transfer-on-transform-error (true | false) "false"
+> 
+
+<!--
+The dmq element specifies additional places, other than the built-in
+dmq, where undeliverable indoubt messages to be sent.  If multiple dmq elements
+specified, each will be tried,  in the order it appears in the jmsbridge 
+configuration XML document instance of this DTD, to delivery a undeliverable
+indoubt message until one succeeds
+
+The property element(s), if any, will be passed to the message-transformer-class
+
+    attributes:
+
+    name - Unique identifier for this dmq
+    enabled - If this dmq is enabled
+    connection-factory-ref - Reference to a non-XA connection-factory element
+    destination-ref - Reference to destination element
+
+    stay-connected - 
+        When set to "true", the message producer connection will
+        stay connected and be dedicated.
+
+    time-to-live-in-millis 
+        Time-to-live in milliseconds (0 means forever) for messages
+        going to this dmq 
+
+    clientid 
+        JMS client identifier for the dmq connection 
+        (if set, use dedicated connection)
+
+    send-attempts
+        The number of attempts in sending a undeliverable indoubt
+        message to a dmq 
+
+    send-attempt-interval-in-seconds 
+        How long to wait before next retry in sending to dmq
+
+    message-transformer-class 
+        The fully qualified subclass name of 
+        com.sun.messaging.bridge.service.MessageTransformer
+                                      
+-->
+<!ELEMENT dmq (description?, property*)>
+<!ATTLIST dmq 
+  name CDATA #REQUIRED  
+  enabled (true | false) "true"  
+  connection-factory-ref CDATA #REQUIRED
+  destination-ref CDATA #REQUIRED
+  stay-connected (true | false) "true"
+  time-to-live-in-millis CDATA "0" 
+  clientid CDATA #IMPLIED
+  send-attempts CDATA "3" 
+  send-attempt-interval-in-seconds CDATA "5"
+  message-transformer-class CDATA #IMPLIED
+>
+
+<!--
+The connection-factory element specifies a ConnectionFactory or 
+a XAConnectionFactory for creating JMS Connections.  The ref-name 
+specifies a reference name which can be used in another element to 
+reference it.  If lookup-name is specified, the connection factory 
+object will be looked up in a repository via JNDI and the required 
+JNDI environment properties must be specified in property elements.
+If no lookup-name is specified, a default MQ connection factory 
+to the MQ broker with properties in property elements will be created.
+
+    attributes:
+
+    ref-name - Reference name for this element
+    lookup-name - JNDI lookup name for the connection factory 
+
+    multi-rm 
+        Ignored if javax.jms.ConnectionFactory type;
+        Set to "true" if the XAConnectionFactory can create connections
+        to more than one XA resource managers (ie. XAResource.isSameRM 
+        false among them);
+        If set to "true", add separate connection-factory element for 
+        each possible distinct resource manager
+
+    connect-attempts
+        The number of connect attempts (-1 means attempts forever)
+
+    connect-attempt-interval-in-seconds
+        The number of seconds to wait before each connect attempt
+
+    idle-timeout-in-seconds
+        Close a connection if it is idle for more than this long. 
+        0 means no idle tmeout.
+
+    username
+        The username to be used to create connections from the 
+        connection-factory.  If specified, password must be specified.
+        When not specified, connections will be created by the no 
+        argument createConnection() method of the connection factory
+
+    password 
+        The password for the username
+
+-->
+<!ELEMENT connection-factory (description?, property*)>
+<!ATTLIST connection-factory
+ ref-name CDATA #REQUIRED 
+ lookup-name CDATA #IMPLIED
+ multi-rm (true | false) "false"
+ connect-attempts CDATA "-1" 
+ connect-attempt-interval-in-seconds CDATA "5"
+ idle-timeout-in-seconds CDATA "1800"
+ username CDATA #IMPLIED
+ password CDATA #IMPLIED
+>
+
+<!--
+The destination element specifies a JMS Destination for 
+consuming or producing messages.  The ref-name specifies 
+a reference name which canbe used in another element to 
+reference it.   Either name or lookup-name must be specified.
+If lookup-name is specified, the name and type attributes
+will be ignored, and the Destination object will be looked 
+up in a repository via JNDI and the required JNDI environment 
+properties must be specified in property elements. If lookup-name
+is not specified, a default javax.jms.Destination object with 
+destination name as the name attribute and type as the type
+attribute will be created at runtime. 
+
+    attributes: 
+
+    ref-name - Reference name for this element
+    name - JMS destination name
+    type - JMS destination Type
+    lookup-name - JNDI lookup name for the destination
+  
+-->
+<!ELEMENT destination (description?, property*)> 
+<!ATTLIST destination
+ ref-name CDATA #REQUIRED
+ name CDATA #IMPLIED
+ type (queue | topic) #IMPLIED
+ lookup-name CDATA #IMPLIED
+>
+
+<!ELEMENT property EMPTY>
+<!ATTLIST property name CDATA #REQUIRED 
+                   value CDATA #REQUIRED >
+
+<!ELEMENT description (#PCDATA)>
+
