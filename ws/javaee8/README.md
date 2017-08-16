@@ -1,15 +1,13 @@
 ## Java EE 8 Sample Applications README
 
-This README file contains step-by-step instructions which can be used to migrate existing Java EE 7 sample applications to Java EE 8 sample application workspace. Also describes how to add a new example.
+This README file contains step-by-step instructions which can be used to create new example projects  for  Java EE 8 sample application workspace. Also describes how to add a new example.
 
 
-Java EE 7 sample applications are located in `javaee7` subdirectory and Java EE 8 samples workspace is in `javaee8` subdirectory.
+Java EE 8 samples workspace is in `javaee8` subdirectory.
 
-To port an existing Java EE 7 sample application:
+To creat a new Java EE 8 sample application:
 
-* Locate the application in Java EE 7 sample workspace and create corresponding directory structure in Java EE 8 workspace, if not already in place. 
-
-* Create the `pom.xml` file for sample group, if not already in place. For instance, `javaee8/cdi/pom.xml`. Use one of existing sample group poms for reference, for instance `javaee7/jsf/pom.xml`. Adjust artifact name to match the technology name.
+* Create the `pom.xml` file for sample group. For instance, `javaee8/cdi/pom.xml`. Use one of existing sample group poms for reference, for instance `javaee7/jsf/pom.xml`. Adjust artifact name to match the technology name and new version.
 
 * Create the `pom.xml` file for the individual module using one of existing module poms as reference. Most of the sample apps should create Maven `war` module. It should be sufficient to use `javaee-api` as the only compile time dependency, with "provided" scope. At the end of this document you will find several links to Maven plugin and pom documentation which may be useful for this step.
 
@@ -19,21 +17,13 @@ To port an existing Java EE 7 sample application:
  	+ `src/main/resources`
  	+ `src/main/webapp`
 
-* Copy sample documentation and code from Java EE 7 sample module to Java EE 8 sample module. In general, the directory structure remains same between javaee7 and javaee8 directories:
-	+ `<Java EE 7 Sample dir>/src/docs` -> `<Java EE 8 Sample dir>/src/docs`
-	+ `<Java EE 7 Sample dir>/src/main/java` -> `<Java EE 8 Sample dir>/src/main/java`
-	+ `<Java EE 7 Sample dir>/src/main/resources` -> `<Java EE 8 Sample dir>/src/main/resources`
-	+ `<Java EE 7 Sample dir>/main/webapp` -> `<Java EE 8 Sample dir>/src/main/webapp`
-
-	For more guidance on recommended Maven module directory structure see links at the end of the document.
-
 * At this point, you should be able to run `mvn install` from the module directory and build the application. Resulting war file will be present in the `target` subdirectory.
 
 	To run your application, you can deploy it manually to a GlassFish instance using asadmin. The recommended method of telling users of the sample how to deploy it is to use Cargo. The top-level pom.xml is configured with the [Cargo](http://cargo.codehaus.org/) maven plugin. There are several ways to use it:
 
 	+ Run it using the `cargo:run` goal - this downloads a GlassFish build from the public web site, installs it under the target directory, creates a domain, starts the server, and deploys the application.
 	+ To use a local glassfish.zip file, provide a value for the cargo.maven.containerUrl property. For example: `-Dcargo.maven.containerUrl=file:$HOME/test/glassfish/glassfish.zip`
-	+ To run it using an already installed GlassFish, provide a value for the glassfish.home property. For example: `-Dglassfish.home=$HOME/test/glassfish/glassfish3`
+	+ To run it using an already installed GlassFish, provide a value for the glassfish.home property. For example: `-Dglassfish.home=$HOME/test/glassfish/glassfish5`
 
 	Besides the `cargo:run` goal, which runs the application in the foreground, you can also use the `cargo:start` goal which will create a domain, start the server in the background and deploy the application. The `cargo:stop` goal can be used to stop the domain.
 
