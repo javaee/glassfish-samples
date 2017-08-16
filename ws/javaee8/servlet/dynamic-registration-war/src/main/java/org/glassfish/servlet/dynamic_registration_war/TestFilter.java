@@ -1,19 +1,19 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 1997-2013 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1997-2017 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
  * and Distribution License("CDDL") (collectively, the "License").  You
  * may not use this file except in compliance with the License.  You can
  * obtain a copy of the License at
- * https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
- * or packager/legal/LICENSE.txt.  See the License for the specific
+ * https://oss.oracle.com/licenses/CDDL+GPL-1.1
+ * or LICENSE.txt.  See the License for the specific
  * language governing permissions and limitations under the License.
  *
  * When distributing the software, include this License Header Notice in each
- * file and include the License file at packager/legal/LICENSE.txt.
+ * file and include the License file at LICENSE.txt.
  *
  * GPL Classpath Exception:
  * Oracle designates this particular file as subject to the "Classpath"
@@ -46,14 +46,12 @@ import javax.servlet.*;
 /**
  * Filter that is registered by the
  * <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>.
- *
  * <p>This Filter retrieves (from its <tt>FilterConfig</tt>) the
  * initialization parameter that was added by the
  * <tt>web.servlet.dynamicregistration_war.TestServletContextListener</tt>
  * when it registered the Filter, and stores this initialization parameter
  * in the request (as a request attribute), so it can be read by the Servlet
  * to which this Filter was mapped.
- *
  * @author Jan Luehe
  */
 public class TestFilter implements Filter {
