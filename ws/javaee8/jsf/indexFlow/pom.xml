@@ -47,11 +47,11 @@
     <parent>
         <artifactId>jsf-samples</artifactId>
         <groupId>org.glassfish-samples</groupId>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
     <groupId>org.glassfish-samples</groupId>
     <artifactId>indexFlow</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Index Flow Sample</name>
     <dependencies>

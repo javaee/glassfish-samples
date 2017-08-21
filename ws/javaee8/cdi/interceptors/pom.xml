@@ -46,7 +46,7 @@
     <parent>
 	<groupId>org.glassfish-samples</groupId>
         <artifactId>cdi-samples</artifactId>
-        <version>4.0</version>
+        <version>5.0</version>
     </parent>
     <artifactId>interceptors</artifactId>
     <packaging>war</packaging>

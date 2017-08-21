@@ -47,17 +47,17 @@
     <parent>
         <groupId>org.glassfish-samples</groupId>
         <artifactId>glassfish-samples-parent</artifactId>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
     <artifactId>connector-samples</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>connector samples</name>
 
     <properties>
-        <connector.sample.version>4.0-SNAPSHOT</connector.sample.version>
+        <connector.sample.version>5.0-SNAPSHOT</connector.sample.version>
     </properties>
 
     <modules>

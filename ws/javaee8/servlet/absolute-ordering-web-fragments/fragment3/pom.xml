@@ -46,12 +46,12 @@
         <groupId>org.glassfish-samples</groupId>
         <artifactId>absolute-ordering-web-fragments</artifactId>
         <relativePath>../pom.xml</relativePath>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.glassfish-samples</groupId>
     <artifactId>fragment3</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>fragment3</name>

@@ -48,13 +48,13 @@
     <parent>
       	<groupId>org.glassfish-samples</groupId>
         <artifactId>mailconnector-app</artifactId>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
     <artifactId>mailconnector-ra</artifactId>
     <packaging>rar</packaging>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <name>MailConnector Resource Adapter</name>
 
     <build>

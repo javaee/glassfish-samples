@@ -45,12 +45,12 @@
     <parent>
     <artifactId>servlet-samples</artifactId>
     <groupId>org.glassfish-samples</groupId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
   </parent>
 
     <groupId>org.glassfish-samples</groupId>
     <artifactId>absolute-ordering-web-fragments</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>absolute-ordering-web-fragments</name>

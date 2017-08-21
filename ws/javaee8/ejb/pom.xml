@@ -47,13 +47,13 @@
     <parent>
         <groupId>org.glassfish-samples</groupId>
         <artifactId>glassfish-samples-parent</artifactId>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>ejb-samples</artifactId>
     <packaging>pom</packaging>
-    <version>4.0-SNAPSHOT</version>
-    <name>Java EE 7 EJB Samples</name>
+    <version>5.0-SNAPSHOT</version>
+    <name>Java EE 8 EJB Samples</name>
 
     <modules>
 	      <module>automatic-timer</module>

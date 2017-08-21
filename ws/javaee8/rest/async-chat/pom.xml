@@ -46,7 +46,7 @@
     <parent>
 	<groupId>org.glassfish-samples</groupId>
         <artifactId>rest-samples</artifactId>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
     <artifactId>async-chat</artifactId>
     <packaging>war</packaging>

@@ -49,12 +49,12 @@
     <parent>
       	<groupId>org.glassfish-samples</groupId>
         <artifactId>mailconnector-app</artifactId>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mailconnector-ear</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>ear</packaging>
 
     <name>Mail Enterprise Application</name>
@@ -144,19 +144,19 @@
         <dependency>
           	<groupId>org.glassfish-samples</groupId>
             <artifactId>mailconnector-mdb</artifactId>
-            <version>4.0-SNAPSHOT</version>
+            <version>5.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
           	<groupId>org.glassfish-samples</groupId>
             <artifactId>mailconnector-web</artifactId>
-            <version>4.0-SNAPSHOT</version>
+            <version>5.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
         <dependency>
           	<groupId>org.glassfish-samples</groupId>
             <artifactId>mailconnector-ra</artifactId>
-            <version>4.0-SNAPSHOT</version>
+            <version>5.0-SNAPSHOT</version>
             <type>rar</type>
         </dependency>
     </dependencies>

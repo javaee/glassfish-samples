@@ -46,11 +46,11 @@
     <parent>
         <groupId>org.glassfish-samples</groupId>
         <artifactId>tictactoe-sample</artifactId>
-        <version>4.0-SNAPSHOT</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>tictactoe-server</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>tictactoe-server</name>

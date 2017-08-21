@@ -45,12 +45,12 @@
     <parent>
     <artifactId>servlet-samples</artifactId>
     <groupId>org.glassfish-samples</groupId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
   </parent>
 
     <groupId>org.glassfish-samples</groupId>
     <artifactId>non-blocking-io-read-war</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>non-blocking-io-read-war</name>
