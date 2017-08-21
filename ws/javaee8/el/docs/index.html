@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+    <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+        <title>The Expression Language Sample Application</title>
+        <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+    </head>
+    <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+          alink="#333366" 
+          link="#594fbf" 
+          marginwidth="10" 
+          vlink="#1005fb">
+        <table border="0" 
+               cellpadding="2" 
+               cellspacing="4" 
+               width="100%">
+            <tbody>
+                <tr>
+                    <td align="right" bgcolor="#587993" valign="top"><font color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Don't modify anything above this line, except for the title tag -->
+        <p><a href="../../docs/list.html">Samples Main Page</a></p>
+        <h1>The Expression Language Sample Application</h1>
+        <p>This sample demonstrates some of the new features in Expression Language (EL) 3.0.</p>
+
+        <h2>Description</h2>
+        <p><a href="http://www.jcp.org/en/jsr/detail?id=341">
+        Expression Language 3.0 (JSR 341)</a> includes many new features. This sample
+        contains Java code that illustrates how expressions can be evaluated in a
+        stand-alone environment, outside of a web container.  It also includes
+        examples of some the new syntax in EL expressions, as detailed in
+        <a href="#KeyFeatures">Key Features</a> below.</p>
+
+        <h2><a name="KeyFeatures">Key Features</h2>
+		<p>This sample demonstrates the following key features:</p>
+        <ul>
+            <li>Support for a standalone environment</li>
+            <li>Static field or method references</li>
+            <li>New operators: concatenation, semicolon, and assignment</li>
+            <li>Lambda expressions</li>
+            <li>Collection constructions and operations</li>
+        </ul>
+
+        <h2>Building, Deploying, and Running the Application</h2>
+        <p>The sample runs without a web container. Perform the following steps to clean, build and run the application:</p>
+        <ol>
+		    <li>Change directory to <code><i>samples_install_dir</i>/el</code></li>
+            <li>Execute the following command:
+                <p><code>mvn clean compile exec:java</code></p>
+            </li>
+        </ol>
+
+        <h2>Troubleshooting</h2>
+        <p>If you have problems when running the application, refer to the <a href="../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
+        <br>
+        <!--- Do not modify the rest of the document -->
+        <hr noshade="noshade" size="1">
+        <!-- start copyright -->
+        <p class="copy">Copyright &copy; 1997-2017 Oracle and/or its affiliates. All rights reserved. </p>
+        <!--  end copyright  -->
+    </body>
+</html>

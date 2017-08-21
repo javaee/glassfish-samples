@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h2>Show Timings for <font color="red">#{booking.movieName}</font></h2>
+                <h:form>
+                    <h:selectOneRadio value="#{booking.startTime}" layout="pageDirection" required="true">
+                        <c:forEach items="#{timeslotFacadeREST.all}" var="s">
+                            <f:selectItem itemValue="#{s.id},#{s.startTime}" itemLabel="#{s.startTime}"/>
+                        </c:forEach>
+                    </h:selectOneRadio>
+                    <h:commandButton value="Confirm" action="confirm" />
+                    <h:commandButton id="back" value="Back" action="booking" />
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

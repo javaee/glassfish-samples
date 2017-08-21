@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+    <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+        <title>The Resource Library Contracts JSF Sample Application</title>
+        <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+    </head>
+    <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+          alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+        <table border="0" cellpadding="2" cellspacing="4" width="100%">
+            <tbody>
+                <tr>
+                    <td align="right" bgcolor="#587993" valign="top"> <font
+                            color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp; 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!---- Don't modify anything above this line, except for the title tag -------->
+        <p><a href="../../../docs/list.html">Samples Main Page<br>
+            </a></p>
+        <h1>The Resource Library Contracts JSF Sample Application</h1>
+        This is a JavaServer Faces 2.2 application that uses Resource Library Contracts.<br>
+        <br>
+        <h2>Description</h2>
+        <p>This sample demonstrates how to use Resource Library Contracts in Java ServerFaces 2.2.</p>
+
+        <h2>Key Features</h2>
+    <ul>
+	<li>
+        Resoure Library Contracts
+    </li>
+	</ul>
+	
+    <h2>Building, Deploying, and Running the Application</h2>
+    <p>
+    </p>
+    <p>Following are the instructions for building, deploying, and running
+        this sample application. <br>
+    </p>
+    <ol>
+        <li>
+            Set up your build environment and configure the application
+            server with which the build system has to work by following the <a
+                href="../../../docs/UserREADME.html"> common build instructions.</a>
+        </li>
+        <li>
+            <code><i>app_dir</i></code> is the sample application base
+            directory: <code><i>samples_install_dir</i>/javaee8/jsf/contracts</code>.
+        </li>
+        <li>
+            <code></code><code></code>Change directory to <code><i>app_dir.<br></i></code>
+        </li>
+        <li>
+            Build, deploy, the sample application using the <code>mvn</code> target:
+        </li>
+        <p>
+            <code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code>
+        </p>
+        <p>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;To deploy the project, you can 
+            go to<code><span style="font-style: italic;"> app_dir </span></code> 
+            and use the command line below:<br>
+        </p>
+        <p>
+            <code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/contracts.war</code>
+        </p>
+        </li>
+        <li>Use the glassfish command line to undeploy the application.
+            <p><code><span style="font-style: italic;">app_dir&gt; </span>
+                    asadmin undeploy</code> &lt;app_name&gt;</p>
+        </li>
+        <li>Use the target <code>clean</code> to remove the temporary directories
+            like /target.
+            <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn
+                    clean</code> </p>
+        </li>
+    </ol>
+
+    <h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+    <p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+    <ol>
+        <li> Refer to the <a href="../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 8 SDK.</li>
+        <li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee8/jsf</code> directory, select <code>contracts</code>, select Open Required Projects, and click Open Project.</li>
+        <li> In the Projects tab, right click <code>contracts</code> and select Run to build, deploy, and run the project.</li>
+    </ol>
+    <h2>Troubleshooting</h2>
+    <p>If you have problems when running the application, refer the <a
+            href="../../../docs/UserTroubleShooting.html">
+            troubleshooting document</a>. </p>
+    &nbsp;
+    <!--- Do not modify the rest of the document -->
+    <hr noshade="noshade" size="1"><!-- start copyright -->
+    <p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+    <!--  end copyright  -->
+</body>
+</html>

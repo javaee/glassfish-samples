@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+    <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+        <title>The JavaServer Faces CDI Sample Application</title>
+        <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+    </head>
+    <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+          alink="#333366" 
+          link="#594fbf" 
+          marginwidth="10" 
+          vlink="#1005fb">
+        <table border="0" 
+               cellpadding="2" 
+               cellspacing="4" 
+               width="100%">
+            <tbody>
+                <tr>
+                    <td align="right" bgcolor="#587993" valign="top"><font color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Don't modify anything above this line, except for the title tag -->
+        <p><a href="../../../docs/list.html">Samples Main Page</a></p>
+        <h1>The JavaServer Faces CDI Sample Application</h1>
+        <p>This sample application demonstrates how to use CDI (Contexts and Dependency Injection) with JavaServer Faces.</p>
+
+<h2>Description</h2>
+        <p>This sample application gives you 10 attempts to guess a number between 1 an 100. After each attempt, the application tells you whether your guess was too high
+		   or too low.</p>
+
+        <p>The example consists of two qualifiers, an application scopped bean, and a session-scoped bean:</p>
+
+        <ul>
+          <li>The <code>@Random</code> qualifier injects a random number.</li>
+          <li>The <code>@MaxNumber</code> qualifier injects the maximum number allowed.</li>
+		  <li>The application-scoped <code>Generator</code> bean generates a random number and the maximum number using producer methods.</li>
+		  <li>The session-scoped <code>Game</code> bean sets up or resets the game, captures and validates the user's guess, and provides feedback with a <code>FacesMessage</code>. This bean
+		  is the primary entry point of the application.</li>
+		</ul>
+	
+        <h2>Building, Deploying, and Running the Application</h2>
+        <!-- Modify this section as needed -->
+        <p>Perform the following steps to build, deploy, and run the application:</p>
+        <ol>
+            <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
+            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee8/cdi/cdi-guess</code>.</li>
+            <li>Change directory to <code><i>app_dir.</i></code></li>
+            <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
+                <p><code>mvn clean verify cargo:run</code></p>
+            </li>
+            <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as <code>build</code> and <code>dist</code>.
+                <p><code>mvn clean</code></p>
+            </li>
+        </ol>
+
+        <h2>Troubleshooting</h2>
+        <p>If you have problems when running the application, refer to the <a href="../../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
+        <br>
+        <!--- Do not modify the rest of the document -->
+        <hr noshade="noshade" size="1">
+        <!-- start copyright -->
+        <p class="copy">Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+        <!--  end copyright  -->
+    </body>
+</html>

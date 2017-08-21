@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+  <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The HTTP Upgrade Servlet Sample Application</title>
+  <style type="text/css">
+body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 10pt
+}
+h1 {
+	font-size: 18pt
+}
+h2 {
+	font-size: 14pt
+}
+h3 {
+	font-size: 12pt
+}
+code, kbd, tt, pre {
+	font-family: monaco, courier, "courier new";
+	font-size: 10pt;
+	color: #666
+}
+li {
+	padding-bottom: 8px
+}
+p.copy, p.copy a {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 8pt
+}
+p.copy {
+	text-align: center
+}
+</style>
+  </head>
+  <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+    <tr>
+        <td align="right" bgcolor="#587993" valign="top"><font
+ color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp; </td>
+      </tr>
+  </tbody>
+  </table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Main Page<br>
+  </a></p>
+<h1>The HTTP Upgrade Servlet Sample Application</h1>
+<p>This sample application demonstrates how to use the HTTP Protocol Upgrade API from the 
+Servlet specification.</p>
+
+<h2>Description</h2>
+<p>HTTP/1.1 allows the client to specify additional communication protocols that it supports
+and would like to use. The Servlet specification includes support for the HTTP protocol upgrade
+mechanism. The client (<code>ClientTest</code>) initiates the upgrade request. The server
+(<code>ServerTest</code>) receives the upgrade request and invokes the 
+<code>HttpServletRequest.upgrade()</code> method, which instantiates the 
+<code>HttpUpgradeHandler</code> implementation (<code>ProtocolUpgradeHandler</code>).
+The <code>HttpUpgradeHandler.init()</code> method is invoked after exiting the 
+<code>ProcessRequest()</code> method of the servlet.</p>
+
+<p>In this sample, the client sends the request to the server. The server accepts the request,
+sends back the response, and then invokes the <code>HttpUpgradeHandler.init()</code> method
+and continues the communication using a dummy protocol. The client shows the request and response
+headers during the handshake process.</p>
+
+<p><b>Client</b></p>
+
+<p>In <code>ClientTest.java</code>, the client initiates the HTTP upgrade request.</p>
+
+<pre>
+@WebServlet(name = "ClientTest", urlPatterns = {"/"})
+public class ClientTest extends HttpServlet {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                  throws ServletException, IOException {
+	    ...
+        String reqStr = "POST " + contextRoot + "/ServerTest HTTP/1.1" + CRLF;
+        reqStr += "User-Agent: Java/1.7" + CRLF;
+        reqStr += "Host: " + host + ":" + port + CRLF;
+        reqStr += "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2" + CRLF;
+        reqStr += "Upgrade: Dummy Protocol" + CRLF;
+        reqStr += "Connection: Upgrade" + CRLF;
+        reqStr += "Content-type: application/x-www-form-urlencoded" + CRLF;
+        reqStr += "Transfer-Encoding: chunked" + CRLF;
+        reqStr += CRLF;
+        reqStr += Data + CRLF;
+
+        // Create socket connection to ServerTest
+        s = new Socket(host, port);
+        input = s.getInputStream();
+        output = s.getOutputStream();
+		// Send request header with data
+        output.write(reqStr.getBytes());
+        output.flush();
+   }
+}
+</pre>
+
+<p>The header <code>Upgrade: Dummy Protocol</code> is an HTTP/1.1 header field set to
+<code>Dummy Protocol</code> in this sample. The server decides whether to accept the protocol
+upgrade request.</p>
+
+<p><b>Server</b></p>
+
+<p><code>ServerTest.java</code> checks the <code>Upgrade</code> field in the request header.
+When it accepts the upgrade requests, the server instantiates <code>ProtocolUpgradeHandler</code>,
+which is the implementation of <code>HttpUpgradeHandler</code>. If the server does not support
+the <code>Upgrade</code> protocol specified by the client, it sends a response with 404 Status.</p>
+
+<pre>
+@WebServlet(name=&quot;ServerTest&quot;, urlPatterns={&quot;/ServerTest&quot;})
+public class ServerTest extends HttpServlet {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                  throws ServletException, IOException { 
+        // Checking request header
+        if ("Dummy Protocol".equals(request.getHeader("Upgrade"))) {
+            System.out.println("Accept to upgrade");
+            response.setStatus(101);
+            response.setHeader("X-Powered-By", "Servlet/3.1 "
+                + "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");
+            response.setHeader("Upgrade", "Dummy Protocol");
+            response.setHeader("Connection", "Upgrade");
+            response.flushBuffer();
+            // Call the upgrade API, and invoke the upgrade handler
+            ProtocolUpgradeHandler handler = request.upgrade(ProtocolUpgradeHandler.class);
+        } else {
+            response.setStatus(400);
+            response.setHeader("X-Powered-By", "Servlet/3.1 "
+                + "(GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)");
+            response.setHeader("Connection", "Refused");
+            response.sendError(400, "The Upgrade request sent by the client was incorrect or can not be accept by the server");
+            System.out.println("Upgrade field is: " + request.getHeader("Upgrade"));
+            System.out.println("Upgrade refused");
+        }
+    }
+    ...
+}
+</pre>
+
+<p><code>ProtocolUpgradeHandler</code> is the implementation of <code>HttpUpgradeHandler</code>, 
+which processes the upgrade request and switchs the comminication protocol.
+The server checks the value of the <code>Upgrade</code> header to determine if it supports 
+  that protocol. Once server accepts the request, it must use the <code>Upgrade</code> header 
+  field within a 101 (Switching Protocols) response to indicate which protocol(s) are being 
+  switched.</p>
+  
+<p><b>Implementation of HttpUpgradeHandler</b></p>
+
+<p><code>ProtocolUpgradeHandler</code> is the implementation of <code>HttpUpgradeHandler</code>.</p>
+<pre>
+public class ProtocolUpgradeHandler implements HttpUpgradeHandler {
+    @Override
+    public void init(WebConnection wc) {
+        this.wc = wc;
+        try {
+            ServletOutputStream output = wc.getOutputStream();
+            ServletInputStream input = wc.getInputStream();
+            Calendar calendar = Calendar.getInstance();
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			
+            // Reading the data into byte array
+            input.read(echoData);
+
+            // Setting new protocol header
+            String resStr = "Dummy Protocol/1.0 " + CRLF;
+            resStr += "Server: Glassfish/ServerTest" + CRLF;
+            resStr += "Content-Type: text/html" + CRLF;
+            resStr += "Connection: Upgrade" + CRLF;
+            resStr += "Date: " + dateFormat.format(calendar.getTime()) + CRLF;
+            resStr += CRLF;
+            
+			// Appending data with new protocol
+            resStr += new String(echoData) + CRLF;
+            
+            // Sending back to client
+            ...
+            output.write(resStr.getBytes());
+            output.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ProtocolUpgradeHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+	    ...
+    }
+	
+    @Override
+    public void destroy() {
+        ...
+    
+        try {
+            wc.close();
+        } catch (Exception ex) {
+            Logger.getLogger(ProtocolUpgradeHandler.class.getName()).log(Level.SEVERE, 
+                             "Failed to close connection", ex);
+        }
+		...
+    }
+}
+</pre>
+
+<p>The <code>init()</code> method sets up the new protocol headers. The new protocol is used 
+for subsequent comminications. This sample uses a dummy protocol. The <code>destroy()</code> 
+method is invoked when the upgrade process is done.</p>
+
+<p>This sample shows the handshake process of the protocol upgrade. After the handshake process, 
+the subsequent communications use the new protocol. This mechanism only applies to upgrading 
+application-layer protocols upon the existing transport-layer connection. This feature 
+is normally most useful for Java EE Platform providers.</p>
+
+<h2>Key Features</h2>
+<p>This sample application demonstrates how to handle HTTP Protocol Upgrade requests in Java EE Servlets.</p>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<p> </p>
+<p>Following are the instructions for building, deploying, and running
+    this sample application. <br>
+    
+  </p>
+<ol>
+    <li> Set up your build environment and configure the application
+    server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html"> common build instructions.</a></li>
+    <li><code><i>app_dir</i></code> is the sample application base
+    directory: <code><i>samples_install_dir</i>/servlet/http-upgrade-war</code>.</li>
+    <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+    <li>Build and deploy the sample application using the <code>mvn</code> target:</li>
+      <p>Use the command below to run this sample which is using Cargo framework:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	  mvn clean verify cargo:run </code></p>
+	  <p>You can point Cargo to an already installed and running Glassfish server:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish5)</p>
+      <p>You can also build, deploy the sample application without Cargo:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+	</li>
+    
+  <li>Run the sample as follows:<br><br>
+    <ul>
+        <li>Use the browser to access<br>
+        <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/http-upgrade-war </code><br><br>
+        The expected message in the browser is as follows:
+<pre>
+Http Upgrade Process
+
+Sending upgrade request to server......
+
+Request header with data:
+
+POST /http-upgrade-war/ServerTest HTTP/1.1
+User-Agent: Java/1.7
+Host: localhost:8080
+
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Upgrade: Dummy Protocol
+Connection: Upgrade
+Content-type: application/x-www-form-urlencoded
+Transfer-Encoding: chunked
+
+Hello World
+---------------------------------------
+
+
+Server accept upgrade request, send back the response:
+
+Response header:
+
+HTTP/1.1 101 Web Socket Protocol Handshake
+X-Powered-By: Servlet/3.1 (GlassFish Server Open Source Edition 4.0 Java/Oracle Corporation/1.7)
+Server: GlassFish Server Open Source Edition 4.0
+Upgrade: Dummy Protocol
+Connection: Upgrade
+--------------------------------------- 
+
+Server send back the response with new protocol and data:
+
+Response header with data:
+
+Dummy Protocol/1.0
+Server: Glassfish/ServerTest
+Content-Type: text/html
+Connection: Upgrade
+Date: 02/13/2013 18:03:28
+
+Hello World
+---------------------------------------
+
+Connection with new protocol established
+</pre>
+      </li>  
+    </ul>
+  </li>
+    <li>Use the glassfish command line to undeploy the application.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>
+      asadmin undeploy</code> &lt;app_name&gt;</p>
+  </li>
+    <li>Use the target <code>clean</code> to remove the temporary directories
+    like /target.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn
+      clean</code> </p>
+  </li>
+  </ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+<ol>
+    <li> Refer to the <a href="../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 8 SDK.</li>
+    <li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/servlet/</code> directory, select <code>http-upgrade-war</code>, and click Open Project.</li>
+    <li> In the Projects tab, right click <code>http-upgrade-war</code> and select Run to build, deploy, and run the project.</li>
+  </ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the <a
+ href="../../../docs/UserTroubleShooting.html"> troubleshooting document</a>. </p>
+&nbsp; 
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

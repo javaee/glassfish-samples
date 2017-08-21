@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+    <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+        <title>The WAR-based EJB Sample Application</title>
+        <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+    </head>
+    <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+          alink="#333366" 
+          link="#594fbf" 
+          marginwidth="10" 
+          vlink="#1005fb">
+        <table border="0" 
+               cellpadding="2" 
+               cellspacing="4" 
+               width="100%">
+            <tbody>
+                <tr>
+                    <td align="right" bgcolor="#587993" valign="top"><font color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Don't modify anything above this line, except for the title tag -->
+        <p><a href="../../../docs/list.html">Samples Main Page</a></p>
+        <h1>The WAR-based EJB Sample Application</h1>
+        <p>This is a simple EJB 3.2 application that shows the use of WAR-based packaging, 
+		the no-interface local view, singleton session beans, and startup/shutdown callbacks.</p>
+
+        <h2>Description</h2>
+        <p>The application is composed of a servlet, a singleton session bean, and a 
+		stateless session bean. Each session bean exposes a no-interface view. The singleton 
+		defines a callback that is called by the container during application initialization. 
+		Both the servlet and stateless bean use the singleton to access common application 
+		configuration information. When the servlet is accessed, it invokes the session beans 
+		and prints some messages containing the return values.</p>
+
+        <p>The entire application is packaged within a <code>.war</code> file, 
+		without any <code>.xml</code> files.</p>
+       
+		<h3>No-interface View</h3>
+
+		<p>Each session bean exposes a no-interface local view. This client view has the 
+		same semantics as the EJB 3.1 local business interface, except that it does not 
+		require a separate interface. All public methods of the bean class are automatically 
+		exposed to the caller. By default, any session bean that has an empty implements 
+		clause and does not define any other local/remote client views exposes a 
+		no-interface client view:</p>
+        <pre>
+@Stateless
+public class HelloBean {   
+
+	public String sayHello() {
+		String message = propertiesBean.getProperty("hello.message");
+		return message;
+	}
+}
+        </pre>
+        
+	      <p>A client of the no-interface view always acquires an EJB reference, either 
+		  through injection or JNDI lookup. The Java type of the EJB reference is the bean 
+		  class. The client never uses the <code>new()</code> operator to explicitly 
+		  instantiate the bean class:</p>
+	      <pre>
+	@EJB
+	private HelloBean helloBean;
+	
+	...
+	
+	String helloMsg = helloBean.sayHello();
+				</pre>
+	
+			<h3>Singleton Bean</h3>
+			<p>A singleton bean is a new kind of session bean component that is guaranteed 
+			to be instantiated once per application in a particular JVM. A singleton bean 
+			is defined using the <code>@Singleton</code> component-defining annotation.</p>
+
+			<p>By default, the container decides when to instantiate the singleton bean. 
+			However, the developer can force the container to instantiate the singleton 
+			bean during application initialization by using the <code>@Startup</code> 
+			annotation. This allows the bean to define a <code>@PostConstruct</code> method 
+			that is guaranteed to be called during startup time. In addition, regardless of 
+			eager vs. lazy instantiation, any singleton <code>@PostDestroy</code> method is 
+			guaranteed to be called when the application is shutting down.</p>
+			<pre>
+@Singleton
+@Startup
+public class PropertiesBean {
+  
+	@PostConstruct
+	private void startup() { ... }
+  
+	@PreDestroy
+	private void shutdown() { ... }
+
+	...  
+}
+			</pre>
+			<h3>Deployment Descriptor</h3>
+			<p>No deployment descriptors are needed, even for the servlet. All metadata is 
+			either defaulted or specified using annotations.</p>
+
+			<h3>Packaging</h3>
+			<p>The entire application is packaged in a single <code>.war</code> file. The 
+			EJB 3.2 specification allows any enterprise bean classes to be packaged directly 
+			in <code>WEB-INF/classes</code> (or in a <code>.jar</code> in 
+			<code>WEB-INF/lib</code>), just like other <code>.war</code> files.</p>
+  
+  			<h2>Key Features</h2>
+			    <p>This sample demonstrates the following key features:</p>
+				<ul>
+				    <li><code>@EJB</code></li>
+					<li><code>@Stateless</code></li>
+					<li><code>@Singleton</code></li>
+					<li><code>@Startup</code></li>
+					<li><code>@PostConstruct</code></li>
+					<li><code>@PreDestroy</code></li>
+				</ul>
+				
+        <h2>Building, Deploying, and Running the Application</h2>
+        <!-- Modify this section as needed -->
+        <p>Perform the following steps to build, deploy, and run the application:</p>
+        <ol>
+            <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
+            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee8/ejb/ejb32-war</code>.</li>
+            <li>Change directory to <code><i>app_dir.</i></code></li>
+            <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
+                <p><code>mvn clean verify cargo:run</code></p>
+            </li>
+          	<li>After deployment, the test servlet can be accessed at <code>http://&lt;host&gt;:&lt;http-port&gt;/ejb32-war</code>.
+			The default location is <code>http://localhost:8080/ejb32-war</code>.</li>
+            <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as <code>target</code>.
+                <p><code>mvn clean</code></p>
+            </li>
+        </ol>
+
+        <h2>Troubleshooting</h2>
+        <p>If you have problems when running the application, refer to the <a href="../../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
+        <br>
+        <!--- Do not modify the rest of the document -->
+        <hr noshade="noshade" size="1">
+        <!-- start copyright -->
+        <p class="copy">Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+        <!--  end copyright  -->
+    </body>
+</html>

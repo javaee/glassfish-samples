@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+    <meta content="text/html; charset=ISO-8859-1"
+          http-equiv="content-type">
+    <title>The Payroll Batch Sample Application</title>
+    <style type="text/css">
+        body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 10pt
+        }
+
+        h1 {
+            font-size: 18pt
+        }
+
+        h2 {
+            font-size: 14pt
+        }
+
+        h3 {
+            font-size: 12pt
+        }
+
+        code, kbd, tt, pre {
+            font-family: monaco, courier, "courier new";
+            font-size: 10pt;
+            color: #666
+        }
+
+        li {
+            padding-bottom: 8px
+        }
+
+        p.copy, p.copy a {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 8pt
+        }
+
+        p.copy {
+            text-align: center
+        }
+    </style>
+    <style>
+        .created {
+            color: green
+        }
+
+        .uniqueId {
+            color: red
+        }
+
+        .message {
+            color: black
+        }
+    </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+      alink="#333366" link="#594fbf" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+    <tr>
+        <td align="right" bgcolor="#587993" valign="top"><font
+                color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!--- Do not modify anything above this line, except for the title tag --->
+<p><a href="../../../docs/list.html">Samples Main Page</a></p>
+
+<h1>The Payroll Batch Sample Application</h1>
+
+<p>This sample demonstrates how to use the <code>javax.batch.operations.JobOperator</code> interface
+   to submit batch jobs.</p>
+
+<h2>Description</h2>
+<p>This sample application demonstrates how to use the Batch Processing API (JSR 352)
+to submit batch jobs. A batch job is typically a long-running process that involves a sequence
+of steps. This sample processes a simple payroll by submitting a <code>payroll</code>
+job to the batch runtime using the <code>JobOperator.start()</code> method. This sample
+also demonstrates how to use the <code>ItemReader</code>, <code>ItemProcessor</code>,
+and <code>ItemWriter</code> interfaces.</p>
+
+<p>The sample contains a singleton EJB that holds payroll records for
+    a set of employees for three months. The singleton bean also holds the processed
+    payroll records.</p>
+
+<p>The job XML file for this sample specifies the <code>process</code> step with three batch artifacts:</p>
+<ul>
+    <li><code>SimpleItemReader</code> is an <code>ItemReader</code> implementation that reads input records. The
+        batch runtime calls the <code>ItemReader.readItem()</code> method to read input records. <code>ItemReader</code>
+		implementations can
+        read input records from a variety of sources like databases, text files, other
+        Java EE components, etc. The batch runtime hands each record read in an <code>ItemReader</code>
+        to an <code>ItemProcessor</code>.
+        <p>In this sample, <code>SimpleItemReader</code> reads <code>PayrollInputRecord</code> objects from a singleton bean.</p></li>
+    <li><code>SimpleItemProcessor</code> is an <code>ItemProcessor</code> implementation that processes an input
+        record and returns an output record. The batch runtime calls
+        the <code>ItemProcessor.processItem()</code> method to process the records from the <code>ItemReader</code>.
+        <p>In this sample, <code>SimpleItemProcessor</code> receives <code>PayrollInputRecord</code> objects from the batch runtime,
+            computes the net pay, and returns a <code>PayrollRecord</code> to the batch runtime. The batch
+            runtime then uses an <code>ItemWriter</code> to store the results.</p></li>
+    <li><code>SimpleItemWriter</code> is an <code>ItemWriter</code> implementation that writes the output record
+        to some data storage resource such as a database, a text file, or another
+        Java EE component. The batch runtime calls the <code>ItemWriter.writeItems()</code> method
+        to write the records processed by the <code>ItemWriter</code>.
+        <p>In this sample, <code>SimpleItemWriter</code> stores the processed <code>PayrollRecord</code> objects in
+            a singleton bean.</p></li>
+</ul>
+
+
+<p>This sample application uses the embedded JavaDB database service included with the
+Glassfish server.</p>
+
+<p>The following is a list of servlets included in this sample:</p>
+<table border="1">
+    <tbody>
+    <tr>
+        <th>URI pattern</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>/payroll/JobSubmitterServlet</code></td>
+        <td>Displays payroll input records and allows starting a payroll processing job.
+    </tr>
+    </tbody>
+</table>
+
+<p>The application is built and deployed as a WAR file.</p>
+
+
+<h2>Key Features</h2>
+<p>This sample application demonstrates the following key features:</p>
+<ul>
+    <li>Defining a batch job using a job XML file. The batch job processes payroll records.</li>
+    <li>Using the <code>ItemReader</code>, <code>ItemProcessor</code>, and <code>ItemWriter</code> interfaces
+	    describe the logic of a steps in the payroll job.</li>
+    <li>Injecting <code>EJBs</code> and <code>JobContext</code> into implementations of
+	    the <code>ItemReader</code> and <code>ItemWriter</code> interfaces.</li>
+    <li>Using the <code>JobOperator.start()</code> method to start a batch job.</li>
+</ul>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<!-- Modify this section as needed -->
+<p>Perform the following steps to build, deploy, and run the application:</p>
+<ol>
+    <li> Set up your build environment and configure the application server with which the build system has to work by following
+        the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
+    <li><code><i>samples_install_dir</i></code> is the sample application base directory. Go to: <code><i>samples_install_dir</i>/javaee7/batch/payroll</code>.
+    </li>
+    <li>Build the sample application by running the <code>mvn package</code> command from a command line terminal.</li>
+    <li>Deploy the sample application by running the <code>asadmin deploy --force target/payroll.war</code> command from a command line terminal.</li>
+    <li>The front page of this sample is at <code>http://localhost:8080/payroll/JobSubmitterServlet</code>.<br>
+        (The port number might vary.)</li>
+    <li>Use the <code>mvn clean</code> command from a command line terminal to clean up the target directory.</li>
+    <li>Undeploy the sample application by running the <code>asadmin undeploy payroll</code> command from a command line terminal.</li>
+    </li>
+</ol>
+
+<h2>Troubleshooting</h2>
+
+<p>If you have problems when running the application, refer to the <a href="../../../docs/UserTroubleShooting.html">troubleshooting
+    document</a>.</p>
+<br>
+
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

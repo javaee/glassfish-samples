@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The Automatic Timer EJB Sample Application (Test Client)</title>
+	<style type="text/css">
+      body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+      {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+      h1 {font-size:18pt}
+      h2 {font-size:14pt}
+      h3 {font-size:12pt}
+      code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+      li {padding-bottom: 8px}
+      p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+      p.copy {text-align: center}
+  </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+      alink="#333366" 
+      link="#594fbf" 
+      marginwidth="10" 
+      vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+  <tbody>
+    <tr>
+      <td align="right" bgcolor="#587993" valign="top"> <font
+ 					color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../../docs/list.html">Samples Main Page</a></p>
+<h1>The Automatic Timer EJB Sample Application (Test Client)</h1>
+<p>This is the standalone Java client for a simple EJB module that demonstrates how to use the EJB automatic timer.</p>
+
+<h2>Description</h2>
+<p>This sample application consists of two parts: an <a href="../../automatic-timer-server/docs/index.html">EJB module</a> and a 
+test client (this project). The rest of this document describes the test client.</p>
+
+<p>
+<code>AutomaticTimerJavaClient</code> is a client that runs outside of a Java EE container.
+In this case, the client performs a global JNDI lookup since dependency injection is not
+available outside of a Java EE environment.
+</p>
+
+<p><b>Standalone Java Client</b></p>
+
+<pre>
+public class AutomaticTimerJavaClient {
+    public static void main(String args[]) {
+        try {
+            StatelessSession sless = (StatelessSession)
+                                      ic.lookup("java:global/automatic-timer-ejb/StatelessSessionBean");
+            System.out.println("Waiting for the timer to expire");
+            Thread.sleep(7000);
+            List&lt;String&gt; result = sless.getRecords();
+            System.out.println("Got " + result.size() + " log records:");
+            for (String s : result) {
+                System.out.println(s);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</pre>
+
+<h2>Building, Deploying, and Running the Java Client<br></h2>
+<p>Since this is the client of <code>automatic-timer-server</code>, so please first go to <code><i>samples_install_dir</i>/javaee8/ejb/automatic-timer/automatic-timer-server</code>, and run the instructions described in section "Building, Deploying, and Running the Application" in <a href="../../automatic-timer-server/docs/index.html">the sample's document</a>. <br><br>Following are the instructions for building and running
+the Java Client.<br>
+<br>
+</p>
+<ol>
+  <li> Setup your build environment and Configure the application
+server with which the build system has to work by following the <a href="../../../../docs/UserREADME.html">
+common build instructions.</a></li>
+  <li><code><i>app_dir</i></code> is the sample application base
+directory: <code><i>samples_install_dir</i>/javaee8/ejb/automatic-timer/automatic-timer-client</code>.</li>
+  <li><code></code><code></code>Change directory to <code><i>app_dir.</i></code></li>
+  <li>Make sure that the database has been started up and the project automatic-timer-server has been built and deployed. <br>
+  </li>
+  <li>Build and Run the standalone client.<p><code>mvn clean verify exec:java</code></p></li>
+</ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer to the <a href="../../../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
+<br>
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy">Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

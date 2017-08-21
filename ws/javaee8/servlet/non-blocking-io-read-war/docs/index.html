@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+  <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The Non-blocking I/O Read Servlet Sample Application</title>
+  <style type="text/css">
+body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 10pt
+}
+h1 {
+	font-size: 18pt
+}
+h2 {
+	font-size: 14pt
+}
+h3 {
+	font-size: 12pt
+}
+code, kbd, tt, pre {
+	font-family: monaco, courier, "courier new";
+	font-size: 10pt;
+	color: #666
+}
+li {
+	padding-bottom: 8px
+}
+p.copy, p.copy a {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 8pt
+}
+p.copy {
+	text-align: center
+}
+</style>
+  </head>
+  <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+    <tr>
+        <td align="right" bgcolor="#587993" valign="top"><font
+ color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp; </td>
+      </tr>
+  </tbody>
+  </table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Main Page<br>
+  </a></p>
+<h1>The Non-blocking I/O Read Servlet Sample Application</h1>
+
+<p>This sample application demonstrates how to use the non-blocking I/O functionality in servlets.</p>
+
+<h2>Description</h2>
+
+<p>In this sample application, the client (<code>ClientTest</code>) sends two parts of data to 
+the server (<code>ServerTest</code>). The server registers a <code>ReadListener</code>,
+whose methods are called when events related to the input stream occur. The implementation of 
+<code>ReadListener</code> in this application collects data and echoes it back in reverse order.</p>
+
+<p><b>Client</b></p>
+
+<p>In <code>ClientTest</code>, the client initiates an HTTP connection to the server and writes 
+two parts of data with a two second pause between them, which simulates blocking from the client side.
+</p>
+
+<pre>
+@WebServlet(name = "ClientTest", urlPatterns = {"/"})
+public class ClientTest extends HttpServlet {
+    OutputStream output = null;
+    InputStream input = null;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                 throws ServletException, IOException {
+        ...
+        String urlPath = "http://"
+            + request.getServerName()
+            + ":" + request.getLocalPort() //default http port is 8080
+            + request.getContextPath()
+            + "/ServerTest";
+
+        URL url = new URL(urlPath);
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        ...
+        conn.connect();
+        ...
+        output = conn.getOutputStream();
+		String firstPart = "Hello";
+        writeData(output, firstPart);
+        Thread.sleep(2000);
+        ...
+		// Sending the second part
+        input = conn.getInputStream();
+        printEchoData(out, input);
+    }
+	
+    protected void writeData(OutputStream output, String data) throws IOException {
+        if (data != null && !data.equals("") && output != null) {
+            output.write(data.getBytes());
+            output.flush();
+        }
+    }
+	
+    protected void printEchoData(PrintWriter out, InputStream input) throws IOException {
+        while (input.available() > 0 && input != null && out != null) {
+            out.print((char) input.read());
+        }
+        out.println("&lt;/br&gt;");
+    }
+}
+</pre>
+
+<p>The servlet uses <code>OutputStream</code> and <code>InputStream </code> to write and read data,
+and <code>Thread.sleep()</code> to pause the thread for two seconds to simulate 
+I/O blocking. You can send larger blocks of data instead of &quot;Hello World&quot;.</p>
+
+<p><b>Server</b></p>
+
+<p>In <code>ServerTest</code>, the server receives the request, starts the asynchronous processing of
+the request, and registers a <code>ReadListener</code></p>
+
+
+<pre>
+@WebServlet(name=&quot;ServerTest&quot;, urlPatterns={&quot;/ServerTest&quot;}, asyncSupported = true)
+public class ServerTest extends HttpServlet {
+  
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                                  throws ServletException, IOException {
+        ...
+        final AsyncContext context = request.startAsync();
+        final ServletInputStream input = request.getInputStream();
+        final ServletOutputStream output = response.getOutputStream();
+        input.setReadListener(new ServerReadListenerImpl(input, output, context));
+    }
+    ...
+}
+</pre>
+
+<p><code>@WebServlet(..., asyncSupported = true)</code> is an annotation that specifies
+the servlet name, its URL, and enables asynchronous processing.
+The <code>setReadListener()</code> method registers a read listener for the input stream.</p>
+<p><b>Note</b>: Non-blocking I/O only works with asynchronous request processing in servlets and 
+filters.</p>
+
+<p><b>Implementation of the Read Listener</b></p>
+
+<p><code>ReadListenerImpl.java</code> is the implementation of the <code>ReadListener</code>
+interface:</p>
+
+<pre>
+public class ReadListenerImpl implements ReadListener {
+
+    public ServerReadListenerImpl() {
+        ...
+    }
+	
+    @Override
+    public void onDataAvailable() {
+        ...
+        while (input.isReady() && !input.isFinished()) {
+            sb.append((char) input.read()); // Use StringBuilder to append chars together
+        }
+    }
+
+    @Override
+    public void onAllDataRead() {
+        ...
+        output.print("Echo the reverse String from server: " + sb.reverse().toString() + "&lt;br&gt;");
+        output.flush();
+        ...
+    }
+    
+    @Override
+    public void onError(Throwable t) {
+        ...
+        System.out.println("--> onError");
+    }
+</pre>
+
+<p>The <code>onDataAvailable()</code> method is invoked when data is available to be read from the 
+input request stream. The container subsequently invokes the <code>read()</code> method 
+if and only if <code>isReady()</code> returns true. The <code>onAllDataRead()</code> method is 
+invoked when all the data from the request has been read. The <code>onError(Throwable t)</code> 
+method is invoked if there is any error or exceptions occurs while processing the request.
+The <code>isReady()</code> method returns true if the underlying data stream is not blocked. At 
+this point, the container invokes the <code>onDataAvailable()</code> method.</p>
+
+<p>You can customize the constructor to handle different parameters. Usually, the parameters 
+are <code>ServletInputStream</code>, <code>ServletOutputStream</code>, or <code>AsyncContext</code>. 
+This sample uses all of them to implement the <code>ReadListener</code> interface.</p>
+
+
+<h2>Key Features</h2>
+<p>This sample application demonstrates the following key features:</p>
+<ul>
+  <li>Implementation of the <code>ReadListener</code> interface to avoid waiting for data inside a loop.</li>
+  <li>Asynchronous processing in servlets.</li>
+</ul>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<p>Following these instructions for building, deploying, and running
+    this sample application: </p>
+<ol>
+    <li>Set up your build environment and configure the application
+    server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html"> common build instructions.</a></li>
+    <li><code><i>app_dir</i></code> is the sample application base
+    directory: <code><i>samples_install_dir</i>/servlet/non-blocking-io-read-war</code>.</li>
+    <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+    <li>Build, deploy, the sample application using the <code>mvn</code> target:</li>
+	
+	<p>Use the command below to run this sample using the Cargo framework:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	mvn clean verify cargo:run </code></p>
+	<p>You can point Cargo to an already installed and running Glassfish server:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish5)</p>
+	<p>You can also build, deploy the sample application without Cargo:</p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	<p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+    
+	</li>
+  <li>Run the sample as follows:<br><br>
+    <ul>
+        <li>Use the browser to access<br/>
+        <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/non-blocking-io-read-war</code> <br>
+        <br/>The expected message in the browser is the following: <br>
+        <code>Sending to server: Hello<br>
+        Sending to server: World
+        <br><br>Echo data from server: dlroW olleH<br><br>
+		Please check server log for details.</code> 
+		</li>
+    </ul>
+  </li>
+    <li>Use the glassfish command line to undeploy the application.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>
+      asadmin undeploy</code> &lt;app_name&gt;</p>
+  </li>
+    <li>Use the target <code>clean</code> to remove the temporary directories
+    like /target.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn
+      clean</code> </p>
+  </li>
+  </ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+<ol>
+    <li> Refer to the <a href="../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 8 SDK.</li>
+    <li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/servlet/</code> directory, select <code>non-blocking-io-read-war</code>, and click Open Project.</li>
+    <li> In the Projects tab, right click <code>non-blocking-io-read-war</code> and select Run to build, deploy, and run the project.</li>
+  </ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the <a
+ href="../../../docs/UserTroubleShooting.html"> troubleshooting document</a>. </p>
+&nbsp; 
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

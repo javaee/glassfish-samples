@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+  <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>Movieplex7: The Java EE 8 Platform Sample Application</title>
+    <style type="text/css">
+        body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 10pt
+        }
+
+        h1 {
+            font-size: 18pt
+        }
+
+        h2 {
+            font-size: 14pt
+        }
+
+        h3 {
+            font-size: 12pt
+        }
+
+        code, kbd, tt, pre {
+            font-family: monaco, courier, "courier new";
+            font-size: 10pt;
+            color: #666
+        }
+
+        li {
+            padding-bottom: 8px
+        }
+
+        p.copy, p.copy a {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 8pt
+        }
+
+        p.copy {
+            text-align: center
+        }
+    </style>
+    <style>
+        .created {
+            color: green
+        }
+
+        .uniqueId {
+            color: red
+        }
+
+        .message {
+            color: black
+        }
+    </style>
+  </head>
+  <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255,
+    255);" alink="#333366" link="#594fbf" vlink="#1005fb">
+    <table border="0" cellpadding="2" cellspacing="4" width="100%">
+      <tbody>
+        <tr>
+          <td align="right" bgcolor="#587993" valign="top"><font
+              color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;
+
+
+
+
+
+
+
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--- Do not modify anything above this line, except for the title tag --->
+    <p><a href="../../../docs/list.html">Samples Main Page</a></p>
+    <h1>Movieplex8: The Java EE 8 Platform Sample Application</h1>
+    <p>This sample application is a typical 3-tier end-to-end
+      application using the following Java EE 8 technologies:<br>
+      <br>
+    </p>
+    <ul>
+      <li> Java Persistence API 2.1 (JSR 338) </li>
+      <li> Java API for RESTful Web Services 2.0 (JSR 339) </li>
+      <li> Java Message Service 2.0 (JSR 343) </li>
+      <li> JavaServer Faces 2.2 (JSR 344) </li>
+      <li> Contexts and Dependency Injection 1.1 (JSR 346) </li>
+      <li> Bean Validation 1.1 (JSR 349) </li>
+      <li> Batch Applications for the Java Platform 1.0 (JSR 352) </li>
+      <li> Java API for JSON Processing 1.0 (JSR 353) </li>
+      <li> Java API for WebSocket 1.0 (JSR 356) </li>
+      <li> Java Transaction API 1.2 (JSR 907) </li>
+    </ul>
+    <br>
+    Together these APIs will allow you to be more productive by
+    simplifying enterprise development.<br>
+    <br>
+    Detailed instructions about building this sample are available at <a
+      href="http://glassfish.org/hol">glassfish.org/hol</a>.<br>
+    <h2>Description</h2>
+    <p>This hands-on lab builds a typical 3-tier Java EE 8 Web
+      application that allows customers to view the show timings for a
+      movie in a 7-theater Cineplex and make reservations. Users can add
+      new movies and delete existing movies. Customers can discuss the
+      movie in a chat room. Total sales from each showing are calculated
+      at the end of the day. Customers also accrue points for watching
+      movies.<br>
+    </p>
+    <img alt="" src="app-flow.png" height="310" width="750"><br>
+    <br>
+    The User Interface initiates all the flows in the application. Show
+    Booking, Add/Delete Movie and Ticket Sales interact with the
+    database; Movie Points may interact with the database, however, this
+    is out of scope for this application; and Chat Room does not
+    interact with the database.<br>
+    <br>
+    The different functions of the application, as detailed above,
+    utilize various Java technologies and web standards in their
+    implementation. The next figure shows how different Java EE
+    technologies are used in different flows.<br>
+    <br>
+    <img alt="" src="tech-flow.png" height="367" width="750"><br>
+    <p><br>
+    </p>
+    The table below details the components and the selected technology
+    used in its’ implementation.<br>
+    <br>
+    <table border="1" cellpadding="2" cellspacing="2" width="100%">
+      <tbody>
+        <tr>
+          <th>Flow</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td valign="top">User Interface</td>
+          <td>Written entirely in JavaServer Faces (JSF).</td>
+        </tr>
+        <tr>
+          <td valign="top">Show Booking</td>
+          <td>Uses lightweight Enterprise JavaBeans to communicate with
+            the database using Java Persistence API.</td>
+        </tr>
+        <tr>
+          <td valign="top">Add/Delete Movie</td>
+          <td>Implemented using RESTful Web Services. JSON is used as
+            on-the-wire data format.</td>
+        </tr>
+        <tr>
+          <td valign="top">Ticket Sales</td>
+          <td>Uses Batch Applications for the Java Platform to calculate
+            the total sales and persist to the database.</td>
+        </tr>
+        <tr>
+          <td valign="top">Movie Points</td>
+          <td>Uses Java Message Service (JMS) to update and obtain
+            loyalty reward points; an optional implementation using
+            database technology may be performed.</td>
+        </tr>
+        <tr>
+          <td valign="top">Chat Room</td>
+          <td>Utilizes client-side JavaScript and JSON to communicate
+            with a WebSocket endpoint</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The sample uses the embedded JavaDB database service included
+      with the GlassFish server. ????<br>
+    </p>
+    <p>The sample is built and deployed as a WAR file.</p>
+    <h2>Key Features</h2>
+    This sample demonstrates the following features of the platform:<br>
+    <ul>
+      <li>Java EE 7 Platform (JSR 342)</li>
+      <ul>
+        <li> Maven coordinates</li>
+        <li> Default DataSource</li>
+        <li> Default JMSConnectionFactory</li>
+      </ul>
+      <li> Java Persistence API 2.1 (JSR 338)</li>
+      <ul>
+        <li> Schema generation properties</li>
+      </ul>
+      <li> Java API for RESTful Web Services 2.0 (JSR 339)</li>
+      <ul>
+        <li> Client API</li>
+        <li> Custom Entity Providers</li>
+      </ul>
+      <li> Java Message Service 2.0 (JSR 343)</li>
+      <ul>
+        <li> Default ConnectionFactory</li>
+        <li> Injecting JMSContext</li>
+        <li> Synchronous message send and receive</li>
+      </ul>
+      <li> JavaServer Faces 2.2 (JSR 344)</li>
+      <ul>
+        <li> Faces Flow</li>
+      </ul>
+      <li> Contexts and Dependency Injection 1.1 (JSR 346)</li>
+      <ul>
+        <li> Automatic discovery of beans</li>
+        <li> Injection of beans</li>
+      </ul>
+      <li> Bean Validation 1.1 (JSR 349)</li>
+      <ul>
+        <li> Integration with JavaServer Faces</li>
+      </ul>
+      <li> Batch Applications for the Java Platform 1.0 (JSR 352)</li>
+      <ul>
+        <li> Chunk-style processing</li>
+        <li> Exception handling</li>
+      </ul>
+      <li> Java API for JSON Processing 1.0 (JSR 353)</li>
+      <ul>
+        <li> Streaming API for generating JSON</li>
+        <li> Streaming API for consuming JSON</li>
+      </ul>
+      <li> Java API for WebSocket 1.0 (JSR 356)</li>
+      <ul>
+        <li> Annotated server endpoint</li>
+        <li> JavaScript client</li>
+      </ul>
+      <li> Java Transaction API 1.2 (JSR 907)</li>
+      <ul>
+        <li> @Transactional</li>
+      </ul>
+    </ul>
+    <ul>
+    </ul>
+    <h2>Building, Deploying, and Running the Application</h2>
+    <!-- Modify this section as needed -->
+    <p>Perform the following steps to build, deploy, and run the
+      application:</p>
+    <ol>
+      <li> Set up your build environment and configure the application
+        server with which the build system has to work by following the
+        <a href="../../../docs/UserREADME.html">common build
+          instructions.</a></li>
+      <li><code><i>samples_install_dir</i></code> is the sample
+        application base directory. Go to: <code><i>samples_install_dir</i>/javaee7/platform/movieplex7</code>.
+      </li>
+      <li>Build the sample application by running the <code>mvn package</code>
+        command from a command line terminal.</li>
+      <li>Deploy the sample application by running the <code>asadmin
+          deploy --force target/movieplex7.war</code> command from a
+        command line terminal.</li>
+      <li>The front page of this sample is at <code>http://localhost:8080/movieplex7</code><br>
+        (The port number might vary.)</li>
+      <li>Use the <code>mvn clean</code> command from a command line
+        terminal to clean up the target directory.</li>
+      <li>Undeploy the sample application by running the <code>asadmin
+          undeploy moviexplex7</code> command from a command line
+        terminal.</li>
+    </ol>
+    <h2>Troubleshooting</h2>
+    <p>If you have problems when running the application, refer to the <a
+        href="../../../docs/UserTroubleShooting.html">troubleshooting
+        document</a>.</p>
+    <br>
+    &nbsp;
+    <!--- Do not modify the rest of the document -->
+    <hr noshade="noshade" size="1">
+    <!-- start copyright -->
+    <p class="copy"> Copyright © 2017 Oracle and/or its affiliates.
+      All rights reserved. </p>
+    <!--  end copyright  -->
+  </body>
+</html>

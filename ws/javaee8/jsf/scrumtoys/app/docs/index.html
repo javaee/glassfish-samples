@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+    <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+        <title>The ScrumToys JSF Sample Application</title>
+        <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+    </head>
+    <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+          alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+        <table border="0" cellpadding="2" cellspacing="4" width="100%">
+            <tbody>
+                <tr>
+                    <td align="right" bgcolor="#587993" valign="top"> <font
+                            color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp; 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!---- Don't modify anything above this line, except for the title tag -------->
+        <p><a href="../../../docs/list.html">Samples Main Page<br>
+            </a></p>
+        <h1>The ScrumToys JSF Sample Application</h1>
+        <p>This is a JavaServer Faces 2.2 application that demonstrates a more
+        complex example.</p>
+       
+        <h2>Description</h2>
+        <p>This sample demonstrates a more complex JavaServer Faces 2.2 application.</p>
+
+        <h2>Key Features</h2>
+    <ul>
+	<li>
+        Using JSF features in a more complex application.
+    </li>
+	</ul>
+
+    <h2>Building, Deploying, and Running the Application</h2>
+
+    <p><b>This application uses authentication and a database.  You must
+    configure the authentication and start the database service before
+    deploying the application.</b>
+
+	<br/>Use the following sequence of commands to configure
+	authentication as expected by the app:</p>
+
+<p>Let the text file <code>userpassword.txt</code> contain the
+following text only:</p>
+
+<code><pre>AS_ADMIN_USERPASSWORD=user1</pre></code>
+
+<p>Execute the following commands using <code>asadmin</code></p>
+
+<code><pre>
+asadmin set server.security-service.activate-default-principal-to-role-mapping=true 
+asadmin --passwordfile userpassword.txt delete-file-user user1 
+asadmin --passwordfile userpassword.txt create-file-user --groups user user1  
+</pre></code>
+
+<p>If the <code>user1</code> user does not exist,
+the <code>delete-file-user</code> command will fail. This failure is
+expected and can be safely ignored.</p>
+
+	<br/>Use the following command to start the database:</p>
+
+    <p>
+    <ul>
+    <li><code>asadmin start-database</code></li>
+    </ul>
+    </p>
+
+<p>Note: To remove the database created by this application, shut down
+the app server with <code>asadmin stop-domain domain1</code> and the database with
+<code>asadmin stop-database</code> and then delete the
+<code>sun-appserv-samples</code> directory within
+the <code>glassfish4/glassfish/databases</code> directory.</p>
+
+	
+    <p>Following are the instructions for building, deploying, and running
+        this sample application. <br>
+    </p>
+    <ol>
+        <li>
+            Set up your build environment and configure the application
+            server with which the build system has to work by following the <a
+                href="../../../docs/UserREADME.html"> common build instructions.</a>
+        </li>
+        <li>
+            <code><i>app_dir</i></code> is the sample application base
+            directory: <code><i>samples_install_dir</i>/javaee8/jsf/scrumtoys</code>.
+        </li>
+        <li>
+            <code></code><code></code>Change directory to <code><i>app_dir.<br></i></code>
+        </li>
+        <li>
+            Build, deploy, the sample application using the <code>mvn</code> target:
+        </li>
+        <p>
+            <code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>mvn install</code>
+        </p>
+        <p>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;To deploy the project, you can 
+            go to<code><span style="font-style: italic;"> app_dir </span></code> 
+            and use the command line below:<br>
+        </p>
+        <p>
+            <code><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp; app_dir&gt; </span>asadmin deploy ./target/scrumtoys.war</code>
+        </p>
+        </li>
+        <li>Use the glassfish command line to undeploy the application.
+            <p><code><span style="font-style: italic;">app_dir&gt; </span>
+                    asadmin undeploy</code> &lt;app_name&gt;</p>
+        </li>
+        <li>Use the target <code>clean</code> to remove the temporary directories
+            like /target.
+            <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn
+                    clean</code> </p>
+        </li>
+    </ol>
+
+    <h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+    <p><b>This application uses a database.  You must start the database service before deploying the application.</b>
+	<br/>Use the following command to start the database:</p>
+    <p>
+    <ul>
+    <li><code>asadmin start-database</code></li>
+    </ul>
+    </p>
+
+    <p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+    <ol>
+        <li> Refer to the <a href="../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 8 SDK.</li>
+        <li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/javaee8/jsf</code> directory, select <code>scrumtoys</code>, select Open Required Projects, and click Open Project.</li>
+        <li> In the Projects tab, right click <code>scrumtoys</code> and select Run to build, deploy, and run the project.</li>
+    </ol>
+    <h2>Troubleshooting</h2>
+
+<p>If you see the error <code>Error on try to save Project</code>, the database service
+may not be running.</p>
+<p>
+The <code>domains/domain1/log/server.log</code> file may contain the following errors:
+</p>
+<p>
+<pre>
+[#|2009-05-14T23:23:17.140-0700|SEVERE|glassfish|org.eclipse.persistence.session
+.file:/C:/sdk/glassfish/samples/javaee6/web/jsf/scrumtoys/build/web/WEB-INF/clas
+ses/-scrumtoysPU.ejb|_ThreadID=18;_ThreadName=Thread-1;|
+Local Exception Stack:
+Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.0.0.v20090424-r40
+50): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: java.sql.SQLException: Error in allocating a connection. Cau
+se: Connection could not be allocated because: java.net.ConnectException : Error
+ connecting to server localhost on port 1527 with message Connection refused: co
+nnect.</pre>
+
+or
+<pre>
+[#|2009-05-14T16:37:52.578-0700|WARNING|glassfish|org.eclipse.persistence.sessio
+n.file:/C:/sdk/glassfish/domains/domain1/applications/scrumtoys/WEB-INF/classes/
+-scrumtoysPU|_ThreadID=15;_ThreadName=Thread-1;|
+Local Exception Stack:
+Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.0.0.v20090424-r40
+50): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: java.sql.SQLSyntaxErrorException: Table/View 'PROJECTS' does
+ not exist.
+</pre>
+
+<p>Once the scrumtoys application is deployed while database is down, bringing
+database up will not fix the problem.  Restarting glassfish does not help
+either.  The only way to get the scrumtoys application working properly is to
+have the database up before <b>deploying</b> the application.  To remedy the
+problem of not being able to save a project, follow these steps:
+</p>
+
+<ol>
+<li>Run the following command: <code>asadmin start-database</code></li>
+<li>Repeat Step 4 above (Building, Deploying, and Running The Application).</li>
+</ol>
+
+    <!--- Do not modify the rest of the document -->
+    <hr noshade="noshade" size="1"><!-- start copyright -->
+    <p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+    <!--  end copyright  -->
+</body>
+</html>

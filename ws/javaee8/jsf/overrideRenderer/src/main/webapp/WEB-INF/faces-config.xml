@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <render-kit>
+        <render-kit-id>HTML_BASIC</render-kit-id>
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>javax.faces.Text</renderer-type>
+            <renderer-class>org.glassfish.jsf.overrideRenderer.MyTextRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+</faces-config>

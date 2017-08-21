@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+  <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The Servlet Container Initializer Sample Application</title>
+  <style type="text/css">
+body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 10pt
+}
+h1 {
+	font-size: 18pt
+}
+h2 {
+	font-size: 14pt
+}
+h3 {
+	font-size: 12pt
+}
+code, kbd, tt, pre {
+	font-family: monaco, courier, "courier new";
+	font-size: 10pt;
+	color: #666
+}
+li {
+	padding-bottom: 8px
+}
+p.copy, p.copy a {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 8pt
+}
+p.copy {
+	text-align: center
+}
+</style>
+  </head>
+  <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+    <tr>
+        <td align="right" bgcolor="#587993" valign="top"><font
+ color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp; </td>
+      </tr>
+  </tbody>
+  </table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../../docs/list.html">Samples Main Page<br>
+  </a></p>
+<h1>The Servlet Container Initializer Sample Application</h1>
+
+<p>This sample application demonstrates how the servlet container initializer
+feature can be used by libraries to register interest in certain types of
+applications and take whatever action as the library sees fit.</p>
+
+<h2>Description</h2>
+
+<p>This sample application has a (dummy) library with a class, <tt>Initializer</tt>, that implements 
+<tt>ServletContainerInitializer</tt>. This class declares interest in any
+    web application that has a class that uses the <tt>@WebServlet</tt> annotation. This
+    class registers such interest by using the <tt>@HandlesTypes</tt> annotation. The action 
+	performed by this (dummy) library is to set an attibute <tt>SHAREDLIB-1</tt> in the 
+	<tt>ServletContext</tt> whenever an application is deployed in which
+    at least one class uses <tt>@WebServlet</tt> annotation.</p>
+	
+<p>The main web application in this sample has a class that uses the <tt>@WebServlet</tt> 
+annotation. This class checks if the attribute <tt>SHAREDLIB-1</tt> is indeed set
+    in the <tt>ServletContext</tt> for this application.</p>
+	
+<p>When started, this sample stops GlassFish server (if it is already running), creates
+    the (dummy) library, and places this library JAR file in the <tt>$GLASSFISH_HOME/lib</tt> 
+	directory before restarting GlassFish server. During server start, the web container
+    scans the libraries and registers the <tt>ServletContainerInitializer</tt> implementations
+    and their respective interest. When the sample application (which uses <tt>@WebServlet</tt>)
+    is deployed, the web container recognizes that the <tt>ServletContainerInitializer</tt> 
+	implementation in the (dummy) library will be interested in this application. Hence the web
+    container calls the <tt>onStartUp</tt> method which sets the <tt>SHAREDLIB-1</tt> attribute 
+	in the <tt>ServletContext</tt> of the application. The application reads and prints the 
+	attribute on the browser.</p>
+	
+<h2>Key Features</h2>
+<p>This sample application demonstrates how to use the servlet container initializer.</p>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<p> Perform the following steps to build, deploy, and run the
+    sample application:<br>
+  </p>
+<ol>
+    <li> Set up your build environment and configure the application
+    server with which the build system has to work by following the <a
+ href="../../../../docs/UserREADME.html"> common build instructions.</a></li>
+    <li><code><i>app_dir</i></code> is the sample application base
+    directory: <code><i>samples_install_dir</i>/servlet/servlet-container-initializer</code>.</li>
+    <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+    <li>Build the sample application using the <code>mvn</code> target:</li>
+	
+    <p>Use the command below to compile the initializer library and build the main web application 
+	war file:</p>
+	
+    <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install </code></p>
+	
+    <p>The initializer library is under <code>app_dir/servlet-container-initializer-lib/target/</code>. 
+	The main web application war file is under <code>app_dir/servlet-container-initializer-war/target/</code></p>
+
+    <li>Copy <code>servlet-container-initializer-lib.jar</code> to <code>&lt;glassfish4_dir&gt;/glassfish/lib</code>.</li>
+    <li>Deploy the application:</li>
+    <p>Go to: <code>app_dir/servlet-container-initializer-war/target</code> to find the war file. 
+	Deploy the war file by using the command below: (you may have to start the server before deploying)</p>
+    <p><code><span style="font-style: italic;">servlet-container-initializer-war/&gt; 
+	</span>asadmin deploy ./target/servlet-container-initializer-war.war</code></p>
+
+  <p><b>Note</b>: You have to restart the server before running the application</p>
+    <li>Test the application as follows:<br><br>
+      <ul>
+        <li>Use the browser to access<br>
+        <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/servlet-container-initializer-war</code><br><br>
+        The following output is expected in the browser: <br>
+        <tt>ServletContainerInitializer says : Attribute successfully set by SharedLibrary class which has expressed interest in @WebServlet</tt> </li>
+      </ul>
+  </li>
+    <li>Use the glassfish command line to undeploy the application.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>
+      asadmin undeploy &lt;app_name&gt;</code></p>
+  </li>
+    <li>Use the target <code>clean</code> to remove the temporary directories
+    like /target.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn
+      clean</code> </p>
+  </li>
+  </ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+<ol>
+    <li> Refer to the <a href="../../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 8 SDK.</li>
+    <li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/servlet/</code> directory, select <code>servlet-container-initializer-war</code>, select Open Required Projects, and click Open Project.</li>
+    <li> In the Projects tab, right click <code>servlet-container-initializer-war</code> and select Run to build, deploy, and run the project.</li>
+    <p><b>Note</b>: You may have to copy the servlet-container-initializer-lib.jar to $GLASSFISH_HOME/lib and restart the server before running the application</p>
+  </ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the <a
+ href="../../../../docs/UserTroubleShooting.html"> troubleshooting document</a>. </p>
+&nbsp; 
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

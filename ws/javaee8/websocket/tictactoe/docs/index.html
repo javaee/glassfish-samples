@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+    <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+        <title>The Tic-tac-toe WebSocket Sample Application</title>
+        <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+    </head>
+    <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+          alink="#333366"
+          link="#594fbf"
+          marginwidth="10"
+          vlink="#1005fb">
+        <table border="0"
+               cellpadding="2"
+               cellspacing="4"
+               width="100%">
+            <tbody>
+                <tr>
+                    <td align="right" bgcolor="#587993" valign="top"><font color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Don't modify anything above this line, except for the title tag -->
+        <p><a href="../../../docs/list.html">Samples Main Page</a></p>
+        <h1>The Tic-tac-toe WebSocket Sample Application</h1>
+		<p>This sample application is a Tic-tac-toe game that demonstrates how to use the Java API for WebSocket.</p>
+
+        <h2>Description</h2>
+        <p>
+			This sample application is a Tic-tac-toe game that demonstrates how to use the basic features of the Java API for Websocket.
+			The application consists of a client and a server, and it uses the client API and the server API from JSR-356. 
+			The client is built with <a href='http://docs.oracle.com/javafx/index.html'>JavaFx</a>, and it is located in the 
+			<code>org.glassfish.samples.tictactoe.client</code> package. The server is a WebSocket endpoint as defined in JSR-356, and it
+			is located in the <code>org.glassfish.samples.tictactoe.server</code> package.
+		</p>
+		<p>
+			In this sample, two client instances create WebSocket connections to communicate with the server endpoint, which acts
+			like a hub. The server endpoint handles the interactions between the two clients. Once there is a winner, the clients
+			close the connection, and the <code>onClose()</code> method of the server endpoint is invoked.
+		</p>
+		<p>
+			This sample shows how to use the WebSocket Client API in Java and how to create a WebSocket connection from a standalone
+			client application and to server endpoint.
+		<p>
+		<p>
+			<b>Note:</b> Unlike the rest of the WebSocket samples, this sample does not use JavaScript code in an HTML page
+			to connect to a server endpoint.
+		</p>
+
+
+        <h2>Key Features</h2>
+		<p>This sample demonstrates the following key features:</p>
+		<ul>
+		  <li>
+		    <p>How to obtain a WebSocket container instance and how to connect to and endpoint from a Java client.</p>
+			<p>The following code is from <code>TicTacToeClient.java</code>:</p>
+			<pre>
+private void startGame() throws URISyntaxException, DeploymentException, IOException {
+   WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+   container.connectToServer(LocalEndpoint.class, null, new URI(SERVER));
+}
+			</pre>
+		  </li>
+		  <li>
+		    <p>How to implement a client endpoint in a Java client.</p>
+			<p>The following code is from <code>LocalEndpoint.java</code>:</p>
+			<pre>
+@Override
+public void onOpen(Session session, EndpointConfig config) {
+   ...
+}
+
+@Override
+public void onMessage(final String message) {
+   ...
+}
+		    </pre>
+			<p>The client endpoint class overrides two methods: <code>onOpen</code> and <code>onMessage</code>.
+			   The <code>onOpen</code> method is invoked when the WebSocket connection is established.
+			   The <code>onMessage</code> method is invoked when the client endpoints receives a message.
+			   These two methods serve the same purpose as their equivalents in the JavaScript WebSocket API.
+			</p>
+	      </li>
+		  <li>
+		    <p>How to implement a server endpoint in Java EE. The server endpoint uses WebSocket annotations 
+			as demonstrated in the other WebSocket sample applications.</p>
+          </li>
+        </ul>
+
+        <h2>Building, Deploying, and Running the Application</h2>
+        <!-- Modify this section as needed -->
+        <p>Perform the following steps to build, deploy, and run the application:</p>
+        <ol>
+            <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
+            <li><code><i>app_dir</i></code> is the sample application base directory: <code><i>samples_install_dir</i>/javaee8/websocket/tictactoe</code>.</li>
+            <li>Build, deploy, and run the <b>server</b> application using the <code>run</code> outcome.
+                <p>
+                    <code>cd server</code>
+                </p>
+                <p><code>mvn clean verify cargo:run</code></p>
+            </li>
+            <li>
+                Before running the client application, you should make sure JavaFx library has been installed into local maven repository.
+                <p>
+                    The following commands are going to install the JavaFx library into local maven repository:
+                </p>
+                <p>
+                    <code>
+                        mvn install:install-file -Dfile=$JAVA_HOME/jre/lib/jfxrt.jar -DgroupId=com.oracle -DartifactId=javafx -Dversion=2.2 -Dpackaging=jar
+                    </code>
+                </p>
+                <p><b>Note: </b> <code>$JAVA_HOME</code> is point to JDK repository</p>
+            </li>
+            <li>
+                Run the client standalone application. You need two client endpoints. To obtain two client instances,
+				type the following commands in two different terminal windows:
+                <p>
+                    <code>cd app_dir/client</code> 
+                </p>
+                <p>
+                    <code>mvn clean install</code>
+                </p>
+                <p>
+                    <b>Note: </b>You get two 3*3 chessboard dialogs if the sample runs successfully. 
+					Follow the instructions on the user interface to play Tic-tac-toe.</br> 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you get any <b>exceptions</b> from JavaFX, ensure that the client 
+					<code>pom.xml</code> contains the correct <b>PATH</b> to <code>jfxrt.jar</code>.
+                </p>
+            </li>
+            <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as <code>build</code> and <code>dist</code>.
+                <p><code>mvn clean</code></p>
+            </li>
+        </ol>
+        <b>Note: </b> In NetBeans IDE, open the sample application projects (client and server) and use the IDE to build and run them.
+
+        <h2>Troubleshooting</h2>
+        <p>If you have problems when running the application, refer to the <a href="../../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
+        <br>
+        <!--- Do not modify the rest of the document -->
+        <hr noshade="noshade" size="1">
+        <!-- start copyright -->
+        <p class="copy">Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+        <!--  end copyright  -->
+    </body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+    <meta content="text/html; charset=ISO-8859-1"
+          http-equiv="content-type">
+    <title>The Schedule Concurrency Sample Application</title>
+    <style type="text/css">
+        body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 10pt
+        }
+
+        h1 {
+            font-size: 18pt
+        }
+
+        h2 {
+            font-size: 14pt
+        }
+
+        h3 {
+            font-size: 12pt
+        }
+
+        code, kbd, tt, pre {
+            font-family: monaco, courier, "courier new";
+            font-size: 10pt;
+            color: #666
+        }
+
+        li {
+            padding-bottom: 8px
+        }
+
+        p.copy, p.copy a {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 8pt
+        }
+
+        p.copy {
+            text-align: center
+        }
+    </style>
+    <style>
+        .created {
+            color: green
+        }
+
+        .uniqueId {
+            color: red
+        }
+
+        .message {
+            color: black
+        }
+    </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+      alink="#333366" link="#594fbf" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+    <tr>
+        <td align="right" bgcolor="#587993" valign="top"><font
+                color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp;
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!--- Do not modify anything above this line, except for the title tag --->
+<p><a href="../../../docs/list.html">Samples Main Page</a></p>
+
+<h1>The Schedule Concurrency Sample Application</h1>
+
+<p>This sample demonstrates how to use <code>javax.enterprise.concurrent.ManagedScheduledExecutorService</code>
+   for submitting delayed or periodic tasks.</p>
+
+<h2>Description</h2>
+<p>The sample contains a collection of servlets showing the usage of the methods in the <code>ManagedScheduledExecutorService</code>
+   interface to submit delayed or periodic tasks to be processed asynchronously.</p>
+<p>
+   All the sample servlets in this demo use the
+   default <code>ManagedScheduledExecutorService</code> as defined in the Concurrency Utilities for Java EE 1.0 specification which is
+   available in all compliant Java EE Products. Thus no special configuration is required.</p>
+
+<p>The following is a list of servlets included in this demo:</p>
+<table border="1">
+    <tbody>
+    <tr>
+        <th>URI pattern</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>/TestScheduledServlet</td>
+        <td>Submit delayed tasks using the <code>schedule()</code> method of <code>ManagedScheduledExecutorService</code>.</td>
+    </tr>
+    <tr>
+        <td>/TestScheduleFixedRateServlet</td>
+        <td>Submit fixed-rate tasks using the <code>scheduleAtFixedRate()</code> method of <code>ManagedScheduledExecutorService</code>.</td>
+    </tr>
+    <tr>
+        <td>/TestScheduleWithFixedDelayServlet</td>
+        <td>Submit fixed-delay tasks using the <code>scheduleWithFixedDelay()</code> method of <code>ManagedScheduledExecutorService</code>.</td>
+    </tr>
+    <tr>
+        <td>/TestTriggerServlet</td>
+        <td>Submit custom periodic tasks with a <code>Trigger</code>.</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<p> The application is built and deployed as a WAR file.
+</p>
+
+
+<h2>Key Features</h2>
+<ul>
+    <li>Submit tasks using <code>schedule()</code>, <code>scheduleWithFixedDelay()</code>, <code>scheduleAtFixedRate()</code> methods of <code>ManagedScheduledExecutorService</code></li>
+    <li>Submit tasks with a custom schedule using a class that implements the <code>javax.enterprise.concurrent.Trigger</code> interface</li>
+</ul>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<!-- Modify this section as needed -->
+<p>Perform the following steps to build, deploy, and run the application:</p>
+<ol>
+    <li> Set up your build environment and configure the application server with which the build system has to work by following
+        the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
+    <li><code><i>samples_install_dir</i></code> is the sample application base directory. Go to: <code><i>samples_install_dir</i>/javaee7/concurrency/schedule</code>.
+    </li>
+    <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
+        <p><code>mvn clean verify cargo:run</code></p>
+    </li>
+    <li>Front page of this sample is at <code>http://localhost:8080/schedule</code><br>
+        (the port number might vary).
+    </li>
+    <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as
+        <code>build</code> and <code>dist</code>.
+        <p><code>mvn clean</code></p>
+    </li>
+</ol>
+
+<h2>Troubleshooting</h2>
+
+<p>If you have problems when running the application, refer to the <a href="../../../docs/UserTroubleShooting.html">troubleshooting
+    document</a>.</p>
+<br>
+
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>

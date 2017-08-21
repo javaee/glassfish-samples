@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+    <head>
+        <!--
+
+            DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+            Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+            The contents of this file are subject to the terms of either the GNU
+            General Public License Version 2 only ("GPL") or the Common Development
+            and Distribution License("CDDL") (collectively, the "License").  You
+            may not use this file except in compliance with the License.
+            You canobtain a copy of the License at
+            https://oss.oracle.com/licenses/CDDL+GPL-1.1
+            or LICENSE.txt.  See the License for the specific
+            language governing permissions and limitations under the License.
+
+            When distributing the software, include this License Header Notice in each
+            file and include the License file at packager/legal/LICENSE.txt.
+
+            GPL Classpath Exception:
+            Oracle designates this particular file as subject to the "Classpath"
+            exception as provided by Oracle in the GPL Version 2 section of the License
+            file that accompanied this code.
+
+            Modifications:
+            If applicable, add the following below the License Header, with the fields
+            enclosed by brackets [] replaced by your own identifying information:
+            "Portions Copyright [year] [name of copyright owner]"
+
+            Contributor(s):
+            If you wish your version of this file to be governed by only the CDDL or
+            only the GPL Version 2, indicate your decision by adding "[Contributor]
+            elects to include this software in this distribution under the [CDDL or GPL
+            Version 2] license."  If you don't indicate a single choice of license, a
+            recipient has the option to distribute your version of this file under
+            either the CDDL, the GPL Version 2 or to extend the choice of license to
+            its licensees as provided above.  However, if you add GPL Version 2 code
+            and therefore, elected the GPL Version 2 license, then the option applies
+            only if the new code is made subject to such option by the copyright
+            holder.
+
+        -->
+
+        <title>The Asynchronous Chat JAX-RS Sample Application</title>
+        <style type="text/css">
+            body,th,td,p,div,span,a,ul,ul li, ol, ol li, ol li b, dl,h1,h2,h3,h4,h5,h6,li
+            {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:10pt}
+            h1 {font-size:18pt}
+            h2 {font-size:14pt}
+            h3 {font-size:12pt}
+            code,kbd,tt,pre {font-family:monaco,courier,"courier new";font-size:10pt;color:#666}
+            li {padding-bottom: 8px}
+            p.copy, p.copy a {font-family:geneva,helvetica,arial,"lucida sans",sans-serif; font-size:8pt}
+            p.copy {text-align: center}
+        </style>
+    </head>
+    <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+          alink="#333366"
+          link="#594fbf"
+          marginwidth="10"
+          vlink="#1005fb">
+        <table border="0"
+               cellpadding="2"
+               cellspacing="4"
+               width="100%">
+            <tbody>
+                <tr>
+                    <td align="right" bgcolor="#587993" valign="top"><font color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Don't modify anything above this line, except for the title tag -->
+        <p><a href="../../../docs/list.html">Samples Main Page</a></p>
+        <h1>The Asynchronous Chat JAX-RS Sample Application</h1>
+        <p>This sample application uses JAX-RS asynchronous features to implement a simple 
+		producer/consumer chat.</p>
+
+        <h2>Description</h2>
+        <p>This sample demonstrates how to use <code>javax.ws.rs.container.AsyncResponse</code>. 
+		    The deployed resource (<code>ChatResource</code>) contains two asynchronous methods.
+            These methods have a response annotated with <code>@AsyncResponse</code> and run
+            in the suspended mode. In this mode, the response is not returned from the resource method
+			as a return value but must be resumed by calling the <code>AsyncResponse.resume()</code> method. 
+			Before the response is resumed, the execution thread is returned back to container.
+        </p>
+        <p>
+            The resource method that receives messages (<code>ChatResource.getMesssage()</code>) stores 
+			the asynchronous response in a blocking queue. After the message is sent to server 
+			(<code>ChatResource.posMesssage()</code>), the asynchronous response of the request that is waiting
+            for message is taken from the queue and resumed with the message. Instead of keeping messages in 
+			the queue, the queue stores the responses waiting for these messages, and the messages are directly 
+			delivered to these response when they are available.
+        </p>
+        <p>The front page shows the text input field for a message. Enter a message and click  on
+		<code>POST MESSAGE</code>. The POST request is sent to the server where it is blocked in the 
+		queue until a message is requested.</p> 
+		<p>After sending a message, click on <code>GET MESSAGE</code>, which sends a 
+		background asynchronous GET request to the server. This request will be suspended and 
+        resumed later with the message from the POST request that is stored in the blocking queue. 
+		The message is sent back to the browser and displayed in the box below the 
+		<code>GET MESSAGE</code> button.</p>
+		<p>If you click the buttons in the opposite order, 
+        the GET request is suspended waiting to be resumed by an incoming POST request.
+        </p>
+        <p>The page also contains the field with the status of an asynchronous queue 
+		that is stored in <code>ChatResource</code>. This
+            field is automatically refreshed in short intervals by calling the GET method on 
+			<code>/chat/queue</code> from <code>ChatResource</code>.
+        </p>
+        <p>
+        You can only send one GET and one POST request to the server from the page 
+		(the buttons are then disabled). To submit more
+        GET and POST requests, open new browser windows. The screen also contains a 
+		log of the asynchronous requests submitted by the browser.</p>
+
+
+        <h2>Key Features</h2>
+		<p>This sample application demonstrates the following key features:</p>
+        <ul>
+            <li><code>@AsyncResponse</code></li>
+            <li><code>@Path</code></li>
+			<li><code>@Singleton</code></li>
+        </ul>
+
+        <h2>Building, Deploying, and Running the Application</h2>
+        <!-- Modify this section as needed -->
+        <p>Perform the following steps to build, deploy, and run the application:</p>
+        <ol>
+            <li> Set up your build environment and configure the application server with which the build system has to work by following the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
+            <li><code><i>samples_install_dir</i></code> is the sample application base directory. Go to: <code><i>samples_install_dir</i>/javaee7/rest/async-chat</code>.</li>
+            <li>Build, deploy, and run the sample application using the <code>run</code> outcome.
+                <p><code>mvn clean verify cargo:run</code></p>
+            </li>
+            <li>The front page of this sample is at 
+			<code>http://localhost:8080/async-chat</code>.<br/>
+			(The port number might vary.)</li>
+            <li>Use the <code>clean</code> outcome to undeploy the sample application and to remove the temporary directories such as <code>build</code> and <code>dist</code>.
+                <p><code>mvn clean</code></p>
+            </li>
+        </ol>
+
+        <h2>Troubleshooting</h2>
+        <p>If you have problems when running the application, refer to the <a href="../../../docs/UserTroubleShooting.html">troubleshooting document</a>.</p>
+        <br>
+        <!--- Do not modify the rest of the document -->
+        <hr noshade="noshade" size="1">
+        <!-- start copyright -->
+        <p class="copy">Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+        <!--  end copyright  -->
+    </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+    <meta content="text/html; charset=ISO-8859-1"
+          http-equiv="content-type">
+    <title>Sample Batch application demonstrating parallel executions of batch job steps</title>
+    <style type="text/css">
+        body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 10pt
+        }
+
+        h1 {
+            font-size: 18pt
+        }
+
+        h2 {
+            font-size: 14pt
+        }
+
+        h3 {
+            font-size: 12pt
+        }
+
+        code, kbd, tt, pre {
+            font-family: monaco, courier, "courier new";
+            font-size: 10pt;
+            color: #666
+        }
+
+        li {
+            padding-bottom: 8px
+        }
+
+        p.copy, p.copy a {
+            font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+            font-size: 8pt
+        }
+
+        p.copy {
+            text-align: center
+        }
+    </style>
+    <style>
+        .created {
+            color: green
+        }
+
+        .uniqueId {
+            color: red
+        }
+
+        .message {
+            color: black
+        }
+    </style>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+      alink="#333366" link="#594fbf" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+    <tr>
+        <td align="right" bgcolor="#587993" valign="top"><font
+                color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!--- Do not modify anything above this line, except for the title tag --->
+<p><a href="../../../docs/list.html">Samples Main Page</a></p>
+
+<h1>Sample Batch application demonstrating JobOperator APIs</h1>
+
+<p>This sample demonstrates how to use the <code>javax.batch.operations.JobOperator</code> 
+   interface to submit batch jobs.</p>
+
+<h2>Description</h2>
+
+<p>This sample application demonstrates how to use the Batch Processing API (JSR 352)
+   to submit batch jobs and how to obtain information about submitted jobs using the
+   <code>JobOperator</code> interface. This sample also demostrates how to perform
+   batch processing using multiple partitioned chunks. </p>
+
+The job xml contains one step called 'process'. This step uses three batch artifacts:
+<ul>
+    <li>PayrollPartitionMapper (that implements PartitionMapper) is a class that tells
+	the Batch runtime about the number of partitions that must be created and also
+	the set of partition specific input data. This is communicated to the Batch
+	Runtime by returing a PartitionPlanImpl from the mapPartitions() method.
+
+	<p>The PayrollPartitionMapper creates 5 partitions to process 30 payroll records.
+	Each Partition is run on a separate thread by the Batch runtime, but each Partition
+	runs the same Chunk (meaning same ItemReader, same ItemWriter and same ItemProcessor).
+	In order to let each Partition to work on different payroll records, the PayrollPartitionMapper
+	sets the starting and ending employee numbers that each Partitioned step must process.</li>
+    <li>SimpleItemReader (that implements ItemReader): An ItemReader reads input records. The
+        Batch runtime calls ItemReader.readItem() to read input records. The ItemReader can
+        read input records from a variety of sources like Database, a CSV flat file, from
+        another JavaEE component etc. Each record that is read from a ItemReader is handed
+        to an ItemProcessor.
+        <p>In this sample, the SimpleItemReader reads PayrollInputRecord(s) from a Singleton bean.</p></li>
+    <li>SimpleItemProcessor (that implements ItemProcessor): An ItemProcessor processes an input
+        record and returns (possibly a different) output record. The Batch runtime calls
+        ItemProcessor.processItem() to process the record that was read by ItemReader.
+        <p>In this sample, SimpleItemProcessor receives PayrollInputRecord (from the batch runtime),
+            computes the net pay and returns a PayrollRecord (to the batch runtime). The batch
+            runtime then calls ItemWriter</p></li>
+    <li>SimpleItemWriter (that implements ItemWriter): An ItemWrites writes the output record
+        to some datastore. The datastore can range from Database, a CSV flat file, to another
+        JavaEE component. The Batch runtime calls ItemWriter.writeItems()
+        to write the records that were processed by ItemWriter.
+        <p>In this sample, SimpleItemWriter stores the processed PayrollRecord into an
+            EJB Singleton bean.</p></li>
+</ul>
+<p>The sample uses the embedded JavaDB database service included with the Glassfish server.</p>
+<p>The sample is built and deployed as a WAR file.</p>
+
+
+<h2>Key Features</h2>
+<p>This sample application demonstrates the following key features:</p>
+<ul>
+    <li>Defining a batch job using a job XML file.</li>
+    <li>Using the method <code>JobOperator.start()</code> to submit a batch job. This method returns the execution id for the job execution</li>
+    <li>Using the method <code>JobOperator.getJobInstances()</code> method to obtain all JobInstabnces for the "payroll" job</li>
+    <li>Using the method <code>jobOperator.getJobInstances()</code> to get a list of job instances submitted by this application.</li>
+    <li>Using the method <code>jobOperator.getJobExecutions(jobInstance)</code> to get a list of <code>JobExecution</code> objects.</li>
+    <li>Working with <code>JobExecution</code> objects:</li>
+    <ul>
+        <li>Using the method <code>JobExecution.getJobName()</code> to get the job name.</li>
+        <li>Using the method <code>JobExecution.getBatchStatus()</code> to get the batch status of the job execution.</li>
+        <li>Using the method <code>JobExecution.getExitStatus()</code> to get the exit status of the job execution.</li>
+        <li>Using the method <code>JobExecution.getStartTime()</code> to obtain the time when the job execution started.</li>
+        <li>Using the method <code>JobExecution.getEndTime()</code> to obtain the time when the job execution completed.</li>
+    </ul>
+</ul>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<!-- Modify this section as needed -->
+<p>Perform the following steps to build, deploy, and run the application:</p>
+<ol>
+    <li> Set up your build environment and configure the application server with which the build system has to work by following
+        the <a href="../../../docs/UserREADME.html">common build instructions.</a></li>
+    <li><code><i>samples_install_dir</i></code> is the sample application base directory. Go to: <code><i>samples_install_dir</i>/javaee7/batch/joboperator-api</code>.
+    </li>
+    <li>Build the sample application by running <code>mvn package</code> command from a command line terminal.</li>
+    <li>Deploy the sample application by running <code>asadmin deploy --force target/partition.war</code> command from a command line terminal.</li>
+    <li>The front page of this sample is at <a href="http://localhost:8080/partition/PartitionedJobSubmitterServlet">http://localhost:8080/joboperator-api/PayrollJobSubmitterServlet</a>.
+        (The port number might vary.)</li>
+    <li>Use <code>mvn clean</code> command from a command line terminal to clean up the target directory.</li>
+    <li>Undeploy the sample application by running <code>asadmin undeploy partition</code> command from a command line terminal.</li>
+    </li>
+</ol>
+
+<h2>Troubleshooting</h2>
+
+<p>If you have problems when running the application, refer to the <a href="../../../docs/UserTroubleShooting.html">troubleshooting
+    document</a>.</p>
+<br>
+
+</p>
+&nbsp;
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
