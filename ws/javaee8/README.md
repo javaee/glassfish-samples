@@ -1,11 +1,11 @@
 ## Java EE 8 Sample Applications README
 
-This README file contains step-by-step instructions which can be used to create new example projects  for  Java EE 8 sample application workspace. Also describes how to add a new example.
+This README file contains step-by-step instructions which can be used to create new sample projects for Java EE 8 sample application workspace. Also describes how to add a new example.
 
 
 Java EE 8 samples workspace is in `javaee8` subdirectory.
 
-To creat a new Java EE 8 sample application:
+To create a new Java EE 8 sample application:
 
 * Create the `pom.xml` file for sample group. For instance, `javaee8/cdi/pom.xml`. Use one of existing sample group poms for reference, for instance `javaee7/jsf/pom.xml`. Adjust artifact name to match the technology name and new version.
 
@@ -33,7 +33,7 @@ To creat a new Java EE 8 sample application:
 
 * If things work (or at least build), add your content to the repository and commit it. If you are unable to commit changes, you may have insufficient project privileges and in that case please contact one of project owners.
 
-* Please note, cargo does not support glassfish container above version 4.x,but using latest glassfish source which is of version 5.0, all the existing tests runs fine. The location of the glassfish source may change based on the actual release version and in that case, the base pom.xml has to be modified.
+* Please note, cargo does not support GlassFish container above version 4.x,but using latest GlassFish source which is of version 5.0, all the existing tests runs fine. The location of the GlassFish source may change based on the actual release version and in that case, the base pom.xml has to be modified.
 
 
 ## Some useful links
