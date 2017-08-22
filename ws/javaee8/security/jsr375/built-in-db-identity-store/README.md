@@ -194,6 +194,22 @@ In Glassfish 5.0, role to group mapping is enabled by default. Hence there is no
 
 In this example, we would be using credentials of user `reza` to make a request and see if response is according to credentails/roles defined in `DatabaseSetup.java` above.
 
+**Steps:**
+
+* Since we are using default datasource bundled with Glassfish for `DatabaseIdentityStore`, we need to start the default database by running following command:
+
+`asadmin start-database`
+
+* Start the domain
+
+`asadmin start-domain`
+
+* Deploy the application
+
+`asadmin deploy <project>/target/built-in-db-identity-store-5.0.war`
+
+Post which, a request can be made to the application using the URL shown below:
+
 ---
 
 **Request URL:**
