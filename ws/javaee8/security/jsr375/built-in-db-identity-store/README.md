@@ -1,5 +1,5 @@
 # Built-in Database Identity Store
-JSR 375 mandates that a Java EE container MUST support built-in `IdentityStore` based on Database.
+JSR 375 mandates that a Java EE container MUST support built-in `IdentityStore` backed by a database.
 
 To support this mandatory requirement, `DatabaseIdentityStore` comes bundled with Glassfish-RI.
 
@@ -67,7 +67,7 @@ public class DatabaseSetup {
 ```
 With `@Startup` annotation, this singleton enterprise bean gets initialized during application startup and with that credentials get set in the underlying database.
 
-Built-in `DatabaseIdentityStore` gets with the `DefaultDataSource` by definining the `IdentityStore` with the help of `@DatabaseIdentityStoreDefinition`.
+Built-in `DatabaseIdentityStore` gets mapped with the `DefaultDataSource` by definining the `ApplicationConfig` with the help of `@DatabaseIdentityStoreDefinition`.
 
 ```java
 // Database Definition for built-in DatabaseIdentityStore
@@ -194,14 +194,14 @@ In Glassfish 5.0, role to group mapping is enabled by default. Hence there is no
 
 In this example, we would be using credentials of user `reza` to make a request and see if response is according to credentails/roles defined in `DatabaseSetup.java` above.
 
-Request URL:
+---
+
+**Request URL:**
 
 ```bash
 http://localhost:8080/built-in-db-identity-store-5.0/servlet?name=reza&password=secret1
 ```
-Response:
-
----
+**Response:**
 
 ```bash
 web username: reza
@@ -211,17 +211,18 @@ web user has role "kaz": false
 ```
 ---
 
-If invalid credentials are used:
+**If invalid credentials are used:**
 
-Request URL:
+---
+
+**Request URL:**
 
 ```bash
 http://localhost:8080/built-in-db-identity-store-5.0/servlet?name=reza&password=secret3
 ```
 
-Response:
+**Response:**
 
----
 
 **`HTTP Status 401 - Unauthorized`**
 
