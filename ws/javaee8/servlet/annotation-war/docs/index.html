@@ -107,7 +107,8 @@ public class TestServlet extends HttpServlet {
         // read the context attribute
         ...
     }
-    public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        ...
     } 
 }</pre>
 
