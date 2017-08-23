@@ -6,7 +6,7 @@
  * https://github.com/javaee/tutorial-examples/LICENSE.txt
  */
 
-package javaeetutorial.built_in_db_identity_store;
+package security.identitystore.built_in_db_identity_store;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
