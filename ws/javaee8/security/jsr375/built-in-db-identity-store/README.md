@@ -169,8 +169,6 @@ public class Servlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.getWriter().write("This is a servlet \n");
-
         String webName = null;
         if (request.getUserPrincipal() != null) {
             webName = request.getUserPrincipal().getName();
