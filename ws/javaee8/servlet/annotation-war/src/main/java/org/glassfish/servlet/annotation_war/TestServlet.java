@@ -55,7 +55,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class illustrate WebServlet annotation
+ * This class illustrates WebServlet annotation.
  *
  * @author Shing Wai Chan
  */
