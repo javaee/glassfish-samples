@@ -56,7 +56,6 @@
     <module>annotation-war</module>  
     <module>async-request-war</module>
     <module>dynamic-registration-war</module>
-    <module>mapping-discovery-war</module>
     <module>multipart-war</module>
     <module>session-cookie-config-war</module>
     <module>jsp-resource-in-bundled-jar-war</module>
@@ -65,5 +64,8 @@
     <module>non-blocking-io-read-war</module>
     <module>non-blocking-io-write-war</module>
     <module>http-upgrade-war</module>
+    <module>mapping-discovery-war</module>
+    <module>push-war</module>
+    <module>trailer-war</module>
   </modules>
 </project>
