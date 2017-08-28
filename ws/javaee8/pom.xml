@@ -57,7 +57,9 @@
     
     <name>Java EE 8 Samples Main Parent Project</name>
     <properties>
-	<glassfish.version>4.0</glassfish.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <glassfish.version>5.0</glassfish.version>
         <integration.container.id>glassfish4x</integration.container.id>
         <glassfish.home>${basedir}/target/cargo/installs/glassfish</glassfish.home>
         <cargo.maven.containerUrl>http://download.oracle.com/glassfish/5.0/promoted/latest-glassfish.zip</cargo.maven.containerUrl>
