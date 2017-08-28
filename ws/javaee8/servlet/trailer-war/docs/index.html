@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+  <head>
+<!--
+
+    DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+    Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+
+    The contents of this file are subject to the terms of either the GNU
+    General Public License Version 2 only ("GPL") or the Common Development
+    and Distribution License("CDDL") (collectively, the "License").  You
+    may not use this file except in compliance with the License.  You can
+    obtain a copy of the License at
+    https://oss.oracle.com/licenses/CDDL+GPL-1.1
+    or LICENSE.txt.  See the License for the specific
+    language governing permissions and limitations under the License.
+
+    When distributing the software, include this License Header Notice in each
+    file and include the License file at LICENSE.txt.
+
+    GPL Classpath Exception:
+    Oracle designates this particular file as subject to the "Classpath"
+    exception as provided by Oracle in the GPL Version 2 section of the License
+    file that accompanied this code.
+
+    Modifications:
+    If applicable, add the following below the License Header, with the fields
+    enclosed by brackets [] replaced by your own identifying information:
+    "Portions Copyright [year] [name of copyright owner]"
+
+    Contributor(s):
+    If you wish your version of this file to be governed by only the CDDL or
+    only the GPL Version 2, indicate your decision by adding "[Contributor]
+    elects to include this software in this distribution under the [CDDL or GPL
+    Version 2] license."  If you don't indicate a single choice of license, a
+    recipient has the option to distribute your version of this file under
+    either the CDDL, the GPL Version 2 or to extend the choice of license to
+    its licensees as provided above.  However, if you add GPL Version 2 code
+    and therefore, elected the GPL Version 2 license, then the option applies
+    only if the new code is made subject to such option by the copyright
+    holder.
+
+-->
+
+  <title>The HTTP Trailer Servlet Sample Application</title>
+  <style type="text/css">
+body, th, td, p, div, span, a, ul, ul li, ol, ol li, ol li b, dl, h1, h2, h3, h4, h5, h6, li {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 10pt
+}
+h1 {
+	font-size: 18pt
+}
+h2 {
+	font-size: 14pt
+}
+h3 {
+	font-size: 12pt
+}
+code, kbd, tt, pre {
+	font-family: monaco, courier, "courier new";
+	font-size: 10pt;
+	color: #666
+}
+li {
+	padding-bottom: 8px
+}
+p.copy, p.copy a {
+	font-family: geneva, helvetica, arial, "lucida sans", sans-serif;
+	font-size: 8pt
+}
+p.copy {
+	text-align: center
+}
+</style>
+  </head>
+  <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#333366" link="#594fbf" marginwidth="10" vlink="#1005fb">
+<table border="0" cellpadding="2" cellspacing="4" width="100%">
+    <tbody>
+    <tr>
+        <td align="right" bgcolor="#587993" valign="top"><font
+ color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp; </td>
+      </tr>
+  </tbody>
+  </table>
+<!---- Don't modify anything above this line, except for the title tag -------->
+<p><a href="../../../docs/list.html">Samples Main Page<br>
+  </a></p>
+<h1>The HTTP Trailer Servlet Sample Application</h1>
+<p>This is a simple Servlet application that demonstrate the usage of HTTP trailer API.</p>
+
+<h2>Description</h2>
+
+<p><b>Servlet</b></p>
+<p>
+The servlet consumes HTTP trailer from request and produces HTTP trailer for the response.
+<pre>
+@WebServlet("/test")
+public class TestServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        ...
+        if (req.isTrailerFieldsReady()) {
+            Map<String, String> reqTrailerFields = req.getTrailerFields();
+            size = reqTrailerFields.size();
+            foo = reqTrailerFields.get("foo");
+        }
+        ...
+        res.setTrailerFields(new Supplier&lt;Map&lt;String, String&gt;&gt;() {
+            @Override
+            public Map&lt;String, String&gt; get() {
+                Map&lt;String, String&gt; map = new HashMap&lt;&gt;();
+                map.put("bar", finalFoo + finalSize);
+                return map;
+            }
+        });
+        ...
+    } 
+}</pre>
+
+<p><code>javax.servlet.http.HttpServletRequest.getTrailerFields</code> is used to consume the request trailer. <code>javax.servlet.http.HttpServletResponse.setTrailerFields</code> is used to produce the response trailer.</p>
+
+For convenience, a <code>ClientServlet</code> is included to produce a chunked transfer encoding request with HTTP trailer and extract the HTTP trailer for the response from the <code>TestServlet</code> above.
+
+<p><b>Deployment Descriptor</b></p>
+<p>
+By using annotations, the deployment descriptor is no longer required.
+</p>
+<p><b>GlassFish Server Specific Deployment Configuration</b></p>
+<p>There is no need to define any GlassFish Server deployment descriptor 
+(<code>glassfish-web.xml</code>) for this sample.</p>
+
+<h2>Key Features</h2>
+This sample demonstrates the following key features:</p>
+<ul>
+  <li>Consuming a HTTP trailer from a HTTP request.</li>
+  <li>Producing a HTTP trailer for a HTTP response.</li>
+</ul>
+
+<h2>Building, Deploying, and Running the Application</h2>
+<p> </p>
+<p>Follow these instructions for building, deploying, and running
+   this sample application:
+</p>
+<ol>
+    <li>Set up your build environment and configure the application
+    server with which the build system has to work by following the <a
+ href="../../../docs/UserREADME.html"> common build instructions.</a></li>
+    <li><code><i>app_dir</i></code> is the sample application base
+    directory: <code><i>samples_install_dir</i>/servlet/trailer-war</code>.</li>
+    <li><code></code><code></code>Change directory to <code><i>app_dir.<br>
+    </i></code></li>
+    <li>Build and deploy the sample application using the <code>mvn</code> target:
+	  <p>Use the command below to run this sample using the Cargo framework:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt;</span> 
+	  mvn clean verify cargo:run </code></p>
+	  <p>You can point Cargo to an already installed and running Glassfish server:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn clean verify cargo:run -Dglassfish.home=$&lt;glassfish_dir&gt;</code> (e.g. ../glassfish5)</p>
+      <p>You can also build, deploy the sample application without Cargo:</p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn install</code></p>
+	  <p><code><span style="font-style: italic;">app_dir&gt; </span>asadmin deploy ./target/&lt;app_name&gt;.war</code></p>
+	</li>
+    <li>Run the sample as follows:</p>
+      <ul>
+        <li>Use the browser to access<br>
+        <code>http://&lt;javaee.server.name&gt;:&lt;javaee.server.port&gt;/trailer-war</code> <br><br>
+        The expected message in the browser is the following: <br>
+        <code>bar: A1</code> </li>
+      </ul>
+    </li>
+    
+	
+	<li>Use the glassfish command line to undeploy the application.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>
+      asadmin undeploy &lt;app_name&gt;</code></p>
+  </li>
+    <li>Use the target <code>clean</code> to remove the temporary directories
+    like /target.
+      <p><code><span style="font-style: italic;">app_dir&gt; </span>mvn
+      clean</code> </p>
+  </li>
+  </ol>
+<h2>Building, Deploying, and Running the Application in NetBeans IDE</h2>
+<p>Perform the following steps to build, deploy, and run the application using NetBeans IDE:</p>
+<ol>
+    <li> Refer to the <a href="../../../docs/UserREADME.html"> common build instructions</a> for setting up NetBeans IDE and Java EE 8 SDK.</li>
+    <li> In the NetBeans IDE, choose File &#8594; Open Project (Ctrl-Shift-O), navigate to the <code><i>samples_install_dir</i>/servlet/</code> directory, select <code>trailer-war</code>, and click Open Project.</li>
+    <li> In the Projects tab, right click <code>trailer-war</code> and select Run to build, deploy, and run the project.</li>
+  </ol>
+<h2>Troubleshooting</h2>
+<p>If you have problems when running the application, refer the <a
+ href="../../../docs/UserTroubleShooting.html"> troubleshooting document</a>. </p>
+&nbsp; 
+<!--- Do not modify the rest of the document -->
+<hr noshade="noshade" size="1">
+<!-- start copyright -->
+<p class="copy"> Copyright &copy; 2017 Oracle and/or its affiliates. All rights reserved. </p>
+<!--  end copyright  -->
+</body>
+</html>
