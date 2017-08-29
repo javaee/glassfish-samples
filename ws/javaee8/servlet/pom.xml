@@ -65,7 +65,7 @@
     <module>non-blocking-io-write-war</module>
     <module>http-upgrade-war</module>
     <module>mapping-discovery-war</module>
-    <module>push-war</module>
+    <module>server-push-war</module>
     <module>trailer-war</module>
   </modules>
 </project>

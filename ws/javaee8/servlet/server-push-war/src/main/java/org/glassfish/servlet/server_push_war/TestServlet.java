@@ -42,7 +42,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.glassfish.servlet.push_war;
+package org.glassfish.servlet.server_push_war;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -56,7 +56,7 @@ import javax.servlet.http.PushBuilder;
 import static javax.servlet.annotation.ServletSecurity.TransportGuarantee.CONFIDENTIAL;
 
 /**
- * This class illustrates HTTP/2 push.
+ * This class illustrates HTTP/2 Server Push.
  *
  * @author Shing Wai Chan
  */

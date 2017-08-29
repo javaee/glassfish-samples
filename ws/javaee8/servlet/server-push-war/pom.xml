@@ -49,10 +49,10 @@
     </parent>
 
     <groupId>org.glassfish-samples</groupId>
-    <artifactId>push-war</artifactId>
+    <artifactId>server-push-war</artifactId>
     <packaging>war</packaging>
 
-    <name>push-war</name>
+    <name>server-push-war</name>
 
     <dependencies>
     <!--
@@ -69,7 +69,7 @@
     </dependencies>
 
     <build>
-        <finalName>push-war</finalName>
+        <finalName>server-push-war</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
