@@ -82,7 +82,8 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>cdi</module> 
-        <module>jsonp</module>  
+        <module>jsonp</module>
+        <module>jsonb</module>
     </modules>
 
     <build>

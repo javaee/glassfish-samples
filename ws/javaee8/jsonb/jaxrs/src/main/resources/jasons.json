@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Jason Bourne",
+    "profession": "Super agent",
+    "phoneNumbers": [
+      {
+        "type": "home",
+        "number": "123-456-789"
+      },
+      {
+        "type": "work",
+        "number": "123-555-555"
+      }
+    ]
+  },
+  {
+    "name": "Jason Voorhees",
+    "profession": "Maniac killer",
+    "phoneNumbers": [
+      {
+        "type": "office",
+        "number": "666-666-666"
+      }
+    ]
+  },
+  {
+    "name": "Jason",
+    "profession": "Lead of Argonauts"
+  }
+]
+
