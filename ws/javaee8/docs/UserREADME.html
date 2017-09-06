@@ -62,7 +62,7 @@
   <tbody>
     <tr>
       <td align="right" bgcolor="#587993" valign="top"> <font
- color="#ffffff" size="-1"><b>Java EE 7 SDK</b></font>&nbsp;
+ color="#ffffff" size="-1"><b>Java EE 8 SDK</b></font>&nbsp;
       </td>
     </tr>
   </tbody>
@@ -71,7 +71,7 @@
 <h1>Common Build Instructions for Sample Applications</h1>
 <p>The sample applications depend on the following software:</p>
 <ul>
-<li>Java SE Development Kit (JDK) version 1.7.0_21.</li>
+<li>Java SE Development Kit (JDK) version 1.8.0+.</li>
 <li>Apache Maven version 3.0.5.</li>
 <li>The Java DB database included in the Java EE SDK.</li>
 </ul>
@@ -82,11 +82,11 @@ before building and running the individual samples.</p>
 <h3>One-Time Setup Tasks</h3>
 <p><b>Note:</b> In the following instructions, <code>&lt;javee.home&gt;</code> 
 refers to the directory where the Java EE SDK is installed; for example, 
-<code>C:\glassfish4</code>.</p>
+<code>C:\glassfish5</code>.</p>
 <ol>
   <li>
-    <b>Download and install JDK version 1.7.0_21, if necessary.</b>
-    If JDK version 1.7.0_21 is not already on your system, you must 
+    <b>Download and install JDK version 1.8.0+, if necessary.</b>
+    If JDK version 1.8.0+ is not already on your system, you must 
     download and install it. The download is available at the 
     <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
     Java SE Downloads</a> page.
@@ -109,9 +109,9 @@ sample application as follows:</p>
 
 <ol>
   <li>
-    Add the JDK 1.7.0_21 <code>bin</code> directory to your 
+    Add the JDK 1.8.0+ <code>bin</code> directory to your 
 	<code>PATH</code> environment variable. For example:
-    <p><code>set PATH=C:\Program Files\Java\jdk1.7.0_21\bin;%PATH%</code></p>
+    <p><code>set PATH=C:\Program Files\Java\jdk1.8.0\bin;%PATH%</code></p>
   </li>
   <li>
     Add the Maven 3.0.5 <code>bin</code> directory to your <code>PATH</code> 
@@ -145,7 +145,7 @@ NetBeans from the
 page:</p>
 <ol>
  <li>
-   Set JDK 1.7.0 as the default Java platform by changing the 
+   Set JDK 1.8.0 as the default Java platform by changing the 
    <code>netbeans_jdkhome</code> property in the 
    <code><i>&lt;netbeans.home&gt;</i>\etc\netbeans.conf</code> file.
  </li>
@@ -154,8 +154,8 @@ page:</p>
    selecting <b>Tools</b>-&gt;<b>Options</b>-&gt;<b>General</b>-&gt;<b>WebBrowser</b>.
  </li>
  <li>
-   Configure the GlassFish 4 server to use JDK 1.7.0 by selecting 
-   <b>Tools</b>-&gt;<b>Servers</b> and then clicking on the <b>Java</b> tab for the GlassFish 4 Domain.
+   Configure the GlassFish 5 server to use JDK 1.8.0 by selecting 
+   <b>Tools</b>-&gt;<b>Servers</b> and then clicking on the <b>Java</b> tab for the GlassFish 5 Domain.
  </li>
  <li>
    Start the GlassFish server:<p> </p>
@@ -168,7 +168,7 @@ page:</p>
  <li>Open one of the sample applications:<p> </p>
    <ol>
      <li>Choose <b>File</b>-&gt;<b>Open Project</b>.</li>
-     <li>Navigate to the <code><i>&lt;javaee.home&gt;</i>\glassfish\samples\javaee7</code> directory and then to the appropriate sample project.</li>
+     <li>Navigate to the <code><i>&lt;javaee.home&gt;</i>\glassfish\samples\javaee8</code> directory and then to the appropriate sample project.</li>
      <li>Select the sample project.</li>
      <li>After NetBeans scans the project, select <b>Open Required Projects</b> if projects appear in the box below the option, 
 	 and then click on <b>Open Project</b>.</li> 
@@ -179,7 +179,7 @@ page:</p>
 </ol>
 <!--- Do not modify the rest of the document -->
 <hr noshade="noshade" size="1"><!-- start copyright -->
-<p class="copy"> Copyright &copy; 1997-2013 Oracle and/or its affiliates. All rights reserved. </p>
+<p class="copy"> Copyright &copy; 1997-2017 Oracle and/or its affiliates. All rights reserved. </p>
 <!--  end copyright  -->
 </body>
 </html>
