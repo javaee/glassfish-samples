@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en">
+<html>
 <head>
 <!--
 
@@ -71,8 +71,11 @@
 <h1>Common Build Instructions for Sample Applications</h1>
 <p>The sample applications depend on the following software:</p>
 <ul>
-<li>Java SE Development Kit (JDK) version 1.8.0+.</li>
-<li>Apache Maven version 3.0.5.</li>
+<li>Java SE Development Kit (JDK) version 
+
+
+1.8.0_144.</li>
+<li>Apache Maven version 3.3+.</li>
 <li>The Java DB database included in the Java EE SDK.</li>
 </ul>
 
@@ -85,14 +88,14 @@ refers to the directory where the Java EE SDK is installed; for example,
 <code>C:\glassfish5</code>.</p>
 <ol>
   <li>
-    <b>Download and install JDK version 1.8.0+, if necessary.</b>
+    <b>Download and install JDK version 1.8.0_144, if necessary.</b>
     If JDK version 1.8.0+ is not already on your system, you must 
     download and install it. The download is available at the 
     <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
     Java SE Downloads</a> page.
   </li>
   <li>
-    <b>Download and install Apache Maven version 3.0.5, if necessary.</b>
+    <b>Download and install Apache Maven version 3.3+, if necessary.</b>
 	If Apache Maven version 3.0.5 is not already installed on your system, 
 	the download is available at the <a href="http://maven.apache.org/download.cgi">
 	Maven download</a> page.
@@ -109,14 +112,14 @@ sample application as follows:</p>
 
 <ol>
   <li>
-    Add the JDK 1.8.0+ <code>bin</code> directory to your 
+    Add the JDK 1.8.0_144 <code>bin</code> directory to your 
 	<code>PATH</code> environment variable. For example:
-    <p><code>set PATH=C:\Program Files\Java\jdk1.8.0\bin;%PATH%</code></p>
+    <p><code>set PATH=C:\Program Files\Java\jdk1.8.0_144\bin;%PATH%</code></p>
   </li>
   <li>
-    Add the Maven 3.0.5 <code>bin</code> directory to your <code>PATH</code> 
+    Add the Maven 3.3+ <code>bin</code> directory to your <code>PATH</code> 
 	environment variable. For example:
-    <p><code>set PATH=C:\Program Files\apache-maven-3.0.5\bin;%PATH%</code></p>
+    <p><code>set PATH=C:\Program Files\apache-maven-3.3\bin;%PATH%</code></p>
   </li>
   <li>
     Follow the instructions for the specific sample to build and run it. 
@@ -145,7 +148,7 @@ NetBeans from the
 page:</p>
 <ol>
  <li>
-   Set JDK 1.8.0 as the default Java platform by changing the 
+   Set JDK 1.8.0_144 as the default Java platform by changing the 
    <code>netbeans_jdkhome</code> property in the 
    <code><i>&lt;netbeans.home&gt;</i>\etc\netbeans.conf</code> file.
  </li>
