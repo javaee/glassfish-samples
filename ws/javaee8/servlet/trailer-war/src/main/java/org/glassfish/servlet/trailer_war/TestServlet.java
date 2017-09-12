@@ -42,41 +42,62 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.glassfish.servlet.annotation_war;
+package org.glassfish.servlet.push_war;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class illustrates WebServlet annotation.
+ * This class illustrates HTTP trailer API in Servlet.
  *
  * @author Shing Wai Chan
  */
-@WebServlet(name = "TestServlet", urlPatterns = {"/"},
-            initParams = {@WebInitParam(name = "message", value = "my servlet")})
+@WebServlet("/test")
 public class TestServlet extends HttpServlet {
-
-    private String listenerMessage = null;
-
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        listenerMessage = (String) config.getServletContext().getAttribute("listenerMessage");
-    }
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse res)
-            throws IOException, ServletException {
-        PrintWriter writer = res.getWriter();
-        writer.write("Hello, " + getInitParameter("message") + ", ");
-        writer.write(req.getAttribute("filterMessage") + ", ");
-        writer.write(listenerMessage + ".\n");
+        res.setContentType("text/plain");
+        res.addHeader("Transfer-encoding", "chunked");
+        res.addHeader("TE", "trailers");
+        res.addHeader("Trailer", "bar");
+
+        StringBuilder sb = new StringBuilder();
+
+        final InputStream in = req.getInputStream();
+        int b;
+        while ((b = in.read()) != -1) {
+            sb.append((char) b);
+        }
+
+        String foo = null;
+        int size = -1;
+
+        if (req.isTrailerFieldsReady()) {
+            Map<String, String> reqTrailerFields = req.getTrailerFields();
+            size = reqTrailerFields.size();
+            foo = reqTrailerFields.get("foo");
+        }
+
+        final String finalFoo = foo;
+        final int finalSize = size;
+        res.setTrailerFields(new Supplier<Map<String, String>>() {
+            @Override
+            public Map<String, String> get() {
+                Map<String, String> map = new HashMap<>();
+                map.put("bar", finalFoo + finalSize);
+                return map;
+            }
+        });
+        res.getWriter().write(sb.toString());
     }
 }

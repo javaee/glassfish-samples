@@ -42,41 +42,34 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.glassfish.servlet.annotation_war;
+package org.glassfish.servlet.server_push_war;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.PushBuilder;
+import static javax.servlet.annotation.ServletSecurity.TransportGuarantee.CONFIDENTIAL;
 
 /**
- * This class illustrates WebServlet annotation.
+ * This class illustrates HTTP/2 Server Push.
  *
  * @author Shing Wai Chan
  */
-@WebServlet(name = "TestServlet", urlPatterns = {"/"},
-            initParams = {@WebInitParam(name = "message", value = "my servlet")})
+@WebServlet(urlPatterns="")
+@ServletSecurity(httpMethodConstraints={
+        @HttpMethodConstraint(value="GET", transportGuarantee=CONFIDENTIAL) })
 public class TestServlet extends HttpServlet {
-
-    private String listenerMessage = null;
-
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        listenerMessage = (String) config.getServletContext().getAttribute("listenerMessage");
-    }
-
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse res)
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException {
-        PrintWriter writer = res.getWriter();
-        writer.write("Hello, " + getInitParameter("message") + ", ");
-        writer.write(req.getAttribute("filterMessage") + ", ");
-        writer.write(listenerMessage + ".\n");
+        PushBuilder pushBuilder = req.newPushBuilder().
+            path("my.css");
+        pushBuilder.push();
+        res.getWriter().println("<html><head><title>HTTP2 Test</title><link rel=\"stylesheet\" href=\"my.css\"></head><body>Hello</body></html>");
     }
 }

@@ -42,41 +42,67 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.glassfish.servlet.annotation_war;
+package org.glassfish.servlet.push_war;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.nio.charset.Charset;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class illustrates WebServlet annotation.
+ * This class is a client for generating and receving HTTP trailer.
  *
  * @author Shing Wai Chan
  */
-@WebServlet(name = "TestServlet", urlPatterns = {"/"},
-            initParams = {@WebInitParam(name = "message", value = "my servlet")})
-public class TestServlet extends HttpServlet {
-
-    private String listenerMessage = null;
-
+@WebServlet("")
+public class ClientServlet extends HttpServlet {
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        listenerMessage = (String) config.getServletContext().getAttribute("listenerMessage");
-    }
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse res)
-            throws IOException, ServletException {
-        PrintWriter writer = res.getWriter();
-        writer.write("Hello, " + getInitParameter("message") + ", ");
-        writer.write(req.getAttribute("filterMessage") + ", ");
-        writer.write(listenerMessage + ".\n");
+        res.setContentType("text/plain");
+        StringBuilder sb = new StringBuilder();
+
+        String hostStr = req.getServerName();
+        int port = req.getServerPort();
+
+        try (
+            Socket socket = new Socket(hostStr, port);
+            OutputStream output = socket.getOutputStream();
+            InputStream input = socket.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input))
+        ) {
+            String reqStr = (new StringBuffer("POST /trailer-war/test HTTP/1.1\r\n")).
+                append("Host: " + hostStr + "\r\n").
+                append("Transfer-encoding: chunked\r\n").
+                append("Connection: close\r\n").
+                append("trailer: foo\r\n").
+                append("\r\n").
+                append("5\r\n").
+                append("hello\r\n").
+                append("0\r\n").
+                append("foo: A\r\n").
+                append("\r\n").
+                toString();
+
+            output.write(reqStr.getBytes(Charset.forName("US-ASCII")));
+
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("bar")) {
+                    sb.append(line).append("\r\n");
+                }
+            }
+        }
+
+        res.getWriter().write(sb.toString());
     }
 }
