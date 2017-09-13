@@ -68,6 +68,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.source.skip>true</maven.source.skip>
+        <maven.source.attach>true</maven.source.attach>
     </properties>
     <scm>
       <connection>scm:git:git@github.com:javaee/glassfish-samples.git</connection>
