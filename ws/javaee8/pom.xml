@@ -15,7 +15,7 @@
     language governing permissions and limitations under the License.
 
     When distributing the software, include this License Header Notice in each
-    file and include the License file at packager/legal/LICENSE.txt.
+    file and include the License file at LICENSE.txt.
 
     GPL Classpath Exception:
     Oracle designates this particular file as subject to the "Classpath"
@@ -98,7 +98,8 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>cdi</module> 
-        <module>jsonp</module>  
+        <module>jsonp</module>
+        <module>security</module>
     </modules>
 
     <build>
@@ -217,6 +218,12 @@
                 <artifactId>javaee-api</artifactId>
                 <version>8.0</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+              <groupId>javax.security.enterprise</groupId>
+              <artifactId>javax.security.enterprise-api</artifactId>
+              <version>1.0</version>
+              <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
