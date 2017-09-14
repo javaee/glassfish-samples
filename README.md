@@ -16,7 +16,6 @@ GitHub and file an [Issue](https://github.com/javaee/glassfish-samples/issues).
 If you are interested in contributing to this project, read the following pages:
 
 * [Contributing](CONTRIBUTING.md)
-* [Pull Request Acceptance Workflow]https://javaee.github.io/glassfish/pr_workflow
 * [License](https://javaee.github.io/glassfish/LICENSE) governing the GlassFish project
 
 # Building the Java EE 8 Samples
@@ -32,7 +31,7 @@ If you are interested in contributing to this project, read the following pages:
 To build the Java EE 8 GlassFish Samples:
 
 * Clone this repository.
-* From the ws/javaee8 directory, run
+* From the `ws/javaee8` directory, run
 
 ```
 mvn install
