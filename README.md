@@ -1,10 +1,20 @@
-# About
+# GlassFish Samples
 
-Welcome to the glassfish-samples project.
+The GlassFish Samples Project is the official site for the GlassFish sample applications that are 
+delivered with the Java EE SDK and GlassFish Reference Implmentation. The GlassFish Sample 
+applications have been updated to demonstrate many of the new features available in Java EE 8.
 
+If you encounter any issues, or wish to report bugs, please log into
+GitHub and file an [Issue](https://github.com/javaee/glassfish-samples/issues).
 
+This software is provided to you under the terms described in
+this [License](./LICENSE). By using this software, you agree to accept
+the terms, as described by this license.
 
-# IMPORTANT!
+# How-to Contribute to the GlassFish Samples
 
-* By contributing to this project, you are agreeing to the terms of use described in [CONTRIBUTING.md](./CONTRIBUTING.md)
+If you are interested in contributing to this project, read the following pages:
+
+* [Contributing](./CONTRIBUTING)
+* [License](./LICENSE) governing the GlassFish project
 

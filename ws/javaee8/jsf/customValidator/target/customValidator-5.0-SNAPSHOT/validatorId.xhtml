@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Custom Validator - f:validator tag</title>
+    </h:head>
+    <h:body>
+        <h2>Custom Validator - f:validator tag</h2>
+        <h:form>
+            <h:inputText value="#{customValidatorBean.custom.name}">
+                <f:validator validatorId="customValidatorId"/>
+            </h:inputText>
+            <h:commandButton value="Submit"/>
+        </h:form>
+    </h:body>
+</html>

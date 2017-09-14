@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Custom Converter - f:converter tag</title>
+    </h:head>
+    <h:body>
+        <h2>Custom Converter - f:converter tag</h2>
+        <p>
+            Below you will see a string that was generated using a custom converter
+            named 'customConverterId'. See the sources for the source for this
+            converter.
+        </p>
+        <h:outputText value="#{customConverterBean.custom}">
+            <f:converter converterId="customConverterId"/>
+        </h:outputText>
+    </h:body>
+</html>

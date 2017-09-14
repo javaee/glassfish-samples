@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>f:convertDateTime dateStyle and locale demo</title>
+    </h:head>
+    <h:body>
+        <h1>f:convertDateTime dateStyle and locale demo</h1>
+        <p>
+            The date below is rendered using dateStyle="long", locale="es" and
+            type="date".
+        </p>
+        <h:form>
+            <h:outputText value="#{dateTimeConverterBean.date}">
+                <f:convertDateTime dateStyle="long" locale="es" type="date"/>
+            </h:outputText>
+        </h:form>
+        <p>
+            <a href="index.xhtml">Up</a>
+        </p>
+    </h:body>
+</html>
