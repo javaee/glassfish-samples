@@ -16,7 +16,7 @@ GitHub and file an [Issue](https://github.com/javaee/glassfish-samples/issues).
 If you are interested in contributing to this project, read the following pages:
 
 * [Contributing](CONTRIBUTING.md)
-* [License](https://javaee.github.io/glassfish/LICENSE) governing the GlassFish project
+* [License](LICENSE)
 
 # Building the Java EE 8 Samples
 
@@ -37,4 +37,6 @@ To build the Java EE 8 GlassFish Samples:
 mvn install
 ```
 
-See the [README](ws/javaee8/README.md) file in the `/javaee8` directory for details on adding additional samples.
+Each application module builds and the resulting WAR is written to each respective `target` subdirectory.
+
+See the [README](ws/javaee8/README.md) file in the `/javaee8` directory for details on adding additional modules.
