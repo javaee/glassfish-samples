@@ -99,6 +99,7 @@
         <module>websocket</module>
         <module>cdi</module> 
         <module>jsonp</module>
+        <module>jsonb</module>
         <module>security</module>
     </modules>
 
