@@ -15,7 +15,7 @@
     language governing permissions and limitations under the License.
 
     When distributing the software, include this License Header Notice in each
-    file and include the License file at packager/legal/LICENSE.txt.
+    file and include the License file at LICENSE.txt.
 
     GPL Classpath Exception:
     Oracle designates this particular file as subject to the "Classpath"
@@ -47,7 +47,7 @@
     <parent>
         <groupId>net.java</groupId>
         <artifactId>jvnet-parent</artifactId>
-        <version>3</version>
+        <version>5</version>
     </parent>
 
     <groupId>org.glassfish-samples</groupId>
@@ -63,7 +63,24 @@
         <integration.container.id>glassfish4x</integration.container.id>
         <glassfish.home>${basedir}/target/cargo/installs/glassfish</glassfish.home>
         <cargo.maven.containerUrl>http://download.oracle.com/glassfish/5.0/promoted/latest-glassfish.zip</cargo.maven.containerUrl>
+        <site.output.dir>${project.build.directory}/staging</site.output.dir>
+        <maven.site.skip>true</maven.site.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <maven.source.skip>true</maven.source.skip>
+        <maven.source.attach>true</maven.source.attach>
     </properties>
+    <scm>
+      <connection>scm:git:git@github.com:javaee/glassfish-samples.git</connection>
+      <developerConnection>scm:git:git@github.com:javaee/glassfish-samples.git</developerConnection>
+      <url>https://github.com/javaee/glassfish-samples</url>
+    </scm>
+    <distributionManagement>
+        <site>
+            <url>scm:git:git@github.com:javaee/glassfish-samples.git</url>
+        </site>
+    </distributionManagement>
+
 
     <mailingLists>
         <mailingList>
@@ -74,8 +91,7 @@
         </mailingList>
     </mailingLists>
 
-    <!-- Please keep only web profile samples on the default modules list -->
-    <!-- TODO: create separate profile for full platform module list -->
+    <!-- Please keep only web profile samples on the default modules list -->    
     <modules>
         <module>jsf</module>
         <module>rest</module>
@@ -84,6 +100,7 @@
         <module>cdi</module> 
         <module>jsonp</module>
         <module>jsonb</module>
+        <module>security</module>
     </modules>
 
     <build>
@@ -174,6 +191,24 @@
                     </configuration>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <arguments>${release.arguments}</arguments>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.9.4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 
@@ -182,8 +217,14 @@
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
-                <version>8.0-b22</version>
+                <version>8.0</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+              <groupId>javax.security.enterprise</groupId>
+              <artifactId>javax.security.enterprise-api</artifactId>
+              <version>1.0</version>
+              <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -194,5 +235,25 @@
              <url>https://maven.java.net/content/groups/promoted/</url>
          </repository>
      </repositories>
+  <profiles>
+    <profile>
+       <id>full-profile</id>
+       <modules>
+         <module>batch</module>
+         <module>cdi</module>
+         <module>concurrency</module> 
+         <module>connectors</module>
+         <module>docs</module> 
+         <module>ejb</module> 
+         <module>el</module>
+         <module>jsf</module>
+         <module>jsonp</module>  
+         <module>platform</module>
+         <module>rest</module>
+         <module>servlet</module>
+         <module>websocket</module>
+       </modules>
+    </profile>
+  </profiles>
 
 </project>

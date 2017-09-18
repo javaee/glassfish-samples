@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>EL samples</title>
+    </h:head>
+    <h:body>
+        <h1>A non exhaustive list of EL resolutions available through CDI</h1>
+        <table border="1">
+            <tr>
+                <td>EL name</td>
+                <td>Underlying class</td>
+                <td width="400px">Value</td>
+            </tr>
+            <tr>
+                <td>\#{application}</td>
+                <td>java.lang.Object</td>
+                <td>#{application}</td>
+            </tr>
+            <tr>
+                <td>\#{applicationMap}</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{applicationScope.size()} <i>added .size() here to limit output</i></td>
+            </tr>
+            <tr>
+                <td>\#{application}</td>
+                <td>java.lang.Object</td>
+                <td>#{application}</td>
+            </tr>
+            <tr>
+                <td>\#{cookie}</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{cookie}</td>
+            </tr>
+            <tr>
+                <td>\#{facesContext}</td>
+                <td>javax.faces.context.FacesContext</td>
+                <td>#{facesContext}</td>
+            </tr>
+            <tr>
+                <td>\#{header}</td>
+                <td>java.util.Map&lt;String, String&gt;</td>
+                <td>#{header.size()} <i>added .size() here to limit output</i></td>
+            </tr>
+            <tr>
+                <td>\#{headerValues}</td>
+                <td>java.util.Map&lt;String, String[]&gt;</td>
+                <td>#{headerValues.size()} <i>added .size() here to limit output</i></td>
+            </tr>
+            <tr>
+                <td>\#{param}</td>
+                <td>java.util.Map&lt;String, String&gt;</td>
+                <td>#{param}</td>
+            </tr>
+            <tr>
+                <td>\#{paramValues}</td>
+                <td>java.util.Map&lt;String, String[]&gt;</td>
+                <td>#{paramValues}</td>
+            </tr>
+            <tr>
+                <td>\#{initParam}</td>
+                <td>java.util.Map&lt;String, String&gt;</td>
+                <td>#{initParam}</td>
+            </tr>
+            <tr>
+                <td>\#{request}</td>
+                <td>java.lang.Object</td>
+                <td>#{request}</td>
+            </tr>
+            <tr>
+                <td>\#{requestScope}</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{requestScope}</td>
+            </tr>
+            <tr>
+                <td>\#{session}</td>
+                <td>java.lang.Object</td>
+                <td>#{session}</td>
+            </tr>
+            <tr>
+                <td>\#{view}</td>
+                <td>javax.faces.component.UIViewRoot</td>
+                <td>#{view}</td>
+            </tr>
+            <tr>
+                <td>\#{viewScope}</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{viewScope}</td>
+            </tr>
+        </table>
+        <a href="index.xhtml">Up</a>
+    </h:body>
+</html>

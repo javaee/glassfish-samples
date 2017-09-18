@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Injection samples</title>
+    </h:head>
+    <h:body>
+        <h1>A non exhaustive list of injection targets</h1>
+        <table border="1">
+            <tr>
+                <td>Artifact</td>
+                <td>Underlying class</td>
+                <td width="400px">Value</td>
+            </tr>
+            <tr>
+                <td>ApplicationMap</td>
+                <td>java.lang.Object</td>
+                <td>#{injectBean.injectedArtifacts['applicationMap'].size()} (showing its size)</td>
+            </tr>
+            <tr>
+                <td>ExternalContext</td>
+                <td>javax.faces.context.ExternalContext</td>
+                <td>#{injectBean.injectedArtifacts['externalContext']}</td>
+            </tr>
+            <tr>
+                <td>FacesContext</td>
+                <td>javax.faces.context.FacesContext</td>
+                <td>#{injectBean.injectedArtifacts['facesContext']}</td>
+            </tr>
+            <tr>
+                <td>headerMap</td>
+                <td>java.util.Map&lt;String, String&gt;</td>
+                <td>#{injectBean.injectedArtifacts['headerMap']}</td>
+            </tr>
+            <tr>
+                <td>headerValuesMap</td>
+                <td>java.util.Map&lt;String, String[]&gt;</td>
+                <td>#{injectBean.injectedArtifacts['headerValuesMap']}</td>
+            </tr>
+            <tr>
+                <td>initParameterMap</td>
+                <td>java.util.Map&lt;String, String&gt;</td>
+                <td>#{injectBean.injectedArtifacts['initParameterMap']}</td>
+            </tr>
+            <tr>
+                <td>RequestCookieMap</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{injectBean.injectedArtifacts['requestCookieMap']}</td>
+            </tr>
+            <tr>
+                <td>RequestMap</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{injectBean.injectedArtifacts['requestMap'].size()} (showing it size)</td>
+            </tr>
+            <tr>
+                <td>RequestParameterMap</td>
+                <td>java.util.Map&lt;String, String&gt;</td>
+                <td>#{injectBean.injectedArtifacts['requestParameterMap']}</td>
+            </tr>
+            <tr>
+                <td>RequestParameterValuesMap</td>
+                <td>java.util.Map&lt;String, String[]&gt;</td>
+                <td>#{injectBean.injectedArtifacts['requestParameterValuesMap']}</td>
+            </tr>
+            <tr>
+                <td>SessionMap</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{injectBean.injectedArtifacts['sessionMap']}</td>
+            </tr>
+            <tr>
+                <td>View</td>
+                <td>javax.faces.component.UIViewRoot</td>
+                <td>#{injectBean.injectedArtifacts['view']}</td>
+            </tr>
+            <tr>
+                <td>ViewMap</td>
+                <td>java.util.Map&lt;String, Object&gt;</td>
+                <td>#{injectBean.injectedArtifacts['viewMap']}</td>
+            </tr>
+        </table>
+        <a href="index.xhtml">Up</a>
+    </h:body>
+</html>
