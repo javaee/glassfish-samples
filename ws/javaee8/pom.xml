@@ -62,7 +62,7 @@
         <glassfish.version>5.0</glassfish.version>
         <integration.container.id>glassfish4x</integration.container.id>
         <glassfish.home>${basedir}/target/cargo/installs/glassfish</glassfish.home>
-        <cargo.maven.containerUrl>http://download.oracle.com/glassfish/5.0/promoted/latest-glassfish.zip</cargo.maven.containerUrl>
+        <cargo.maven.containerUrl>http://download.oracle.com/glassfish/5.0/release/glassfish-5.0.zip</cargo.maven.containerUrl>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -135,7 +135,7 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.4.0</version>
+                    <version>1.6.4</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
