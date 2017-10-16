@@ -40,11 +40,10 @@
 
 -->
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=MacRoman">
+        <title>SSE Broadcast</title>
 
         <style>
             .created {color: green}
@@ -55,12 +54,39 @@
 
     <body>
 
-        <ul>
+        <script type="text/javascript">
+            var i = 1;
+            if(typeof(EventSource) !== "undefined") {
+                var source = new EventSource("app/subscribe");
+                source.onmessage = function(event) {
+                    document.getElementById("result").innerHTML += event.data + "<br>";
+                    document.getElementById("input").value = i++ + " " +
+                            navigator.userAgent;
+                };
+            } else {
+                document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+            }
 
-            <li><p><a href="sse-simple.html">Simple SSE</a></p></li>
-            <li><p><a href="sse-broadcast.html">Broadcast SSE</a></p></li>
+            function submit() {
+                var params = "data=" + document.getElementById("input").value;
+                var url = document.getElementById("form").action;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.send(params);
+            }
+        </script>
 
-        </ul>
+        <form id="form" method="POST" action="app/broadcast"  >
+            <input id="input" type="hidden" name="data">
+        </form>
 
+        <button type="button" onclick="submit()">POST</button>
+
+
+
+        <h1>SSE sample</h1>
+
+        <div id="result"></div>
 </body>
 </html>

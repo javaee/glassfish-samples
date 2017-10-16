@@ -40,40 +40,46 @@
 
 package org.glassfish.samples.rest.messageboard.resources;
 
-import javax.annotation.Resource;
-import javax.enterprise.concurrent.ManagedExecutorService;
+import javax.inject.Singleton;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.sse.Sse;
+import javax.ws.rs.sse.SseBroadcaster;
 import javax.ws.rs.sse.SseEventSink;
 
-
 @Path("/")
-public class SSERootResource {
+@Singleton
+public class SSEBroadcastResource {
 
-    @Resource
-    private ManagedExecutorService executor;
+    @Context Sse sse;
+    private static SseBroadcaster sseBroadcaster;
+
+    private synchronized static SseBroadcaster getBroadcaster(Sse sse) {
+        if (null == sseBroadcaster) {
+            sseBroadcaster = sse.newBroadcaster();
+        }
+        return sseBroadcaster;
+    }
 
     @GET
-    @Path("eventStream")
+    @Path("subscribe")
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void eventStream(
-            @Context SseEventSink eventSink,
-            @Context Sse sse) {
-        executor.execute(() -> {
-            try (SseEventSink sink = eventSink) {
-                eventSink.send(sse.newEventBuilder().data(String.class, "event1").build());
-                eventSink.send(sse.newEventBuilder().data(String.class, "event2").build());
-                eventSink.send(sse.newEventBuilder().data(String.class, "event3").build());
-            }
-            catch (Throwable e) {
-                e.printStackTrace(System.out);
-            }
-        });
+    public void subscribe(@Context SseEventSink eventSink) {
+        eventSink.send(sse.newEvent("welcome!"));
+        getBroadcaster(sse).register(eventSink);
+    }
 
+    @POST
+    @Path("broadcast")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public void broadcast(@FormParam("data") String event) {
+        getBroadcaster(sse).broadcast(sse.newEventBuilder().data(String.class, event).build());
     }
 }
 
