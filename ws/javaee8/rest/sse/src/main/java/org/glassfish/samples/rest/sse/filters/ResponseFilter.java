@@ -37,43 +37,32 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package org.glassfish.samples.rest.sse.filters;
 
-package org.glassfish.samples.rest.messageboard.resources;
+import java.io.IOException;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.Resource;
-import javax.enterprise.concurrent.ManagedExecutorService;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.sse.Sse;
-import javax.ws.rs.sse.SseEventSink;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 
+/**
+ * {@link ContainerResponseFilter Container response fitler} that adds headers to the response.
+ * @author Miroslav Fuksa (miroslav.fuksa at oracle.com)
+ */
+public class ResponseFilter implements ContainerResponseFilter {
+    private final AtomicReference<Date> date = new AtomicReference<Date>();
 
-@Path("/")
-public class SSESimpleResource {
+    @Override
+    public void filter(ContainerRequestContext containerRequestContext,
+                       ContainerResponseContext containerResponseContext) throws IOException {
 
-    @Resource
-    private ManagedExecutorService executor;
+        Date currentDate = new Date();
+        final Date lastDate = date.getAndSet(currentDate);
 
-    @GET
-    @Path("eventStream")
-    @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void eventStream(
-            @Context SseEventSink eventSink,
-            @Context Sse sse) {
-        executor.execute(() -> {
-            try (SseEventSink sink = eventSink) {
-                eventSink.send(sse.newEventBuilder().data(String.class, "event1").build());
-                eventSink.send(sse.newEventBuilder().data(String.class, "event2").build());
-                eventSink.send(sse.newEventBuilder().data(String.class, "event3").build());
-            }
-            catch (Throwable e) {
-                e.printStackTrace(System.out);
-            }
-        });
-
+        containerResponseContext.getHeaders().add("previous-response", lastDate == null ? "this is the first response"
+                : lastDate.toString());
+        containerResponseContext.getHeaders().add("this-response", currentDate.toString());
     }
 }
-

@@ -37,32 +37,28 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.samples.rest.messageboard.filters;
+package org.glassfish.samples.rest.sse.resources;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
-/**
- * {@link ContainerResponseFilter Container response fitler} that adds headers to the response.
- * @author Miroslav Fuksa (miroslav.fuksa at oracle.com)
- */
-public class ResponseFilter implements ContainerResponseFilter {
-    private final AtomicReference<Date> date = new AtomicReference<Date>();
+import org.glassfish.samples.rest.sse.exceptions.NotFoundExceptionMapper;
+import org.glassfish.samples.rest.sse.filters.ResponseFilter;
+
+@ApplicationPath("/app")
+public class JaxRsApplication extends Application {
 
     @Override
-    public void filter(ContainerRequestContext containerRequestContext,
-                       ContainerResponseContext containerResponseContext) throws IOException {
-
-        Date currentDate = new Date();
-        final Date lastDate = date.getAndSet(currentDate);
-
-        containerResponseContext.getHeaders().add("previous-response", lastDate == null ? "this is the first response"
-                : lastDate.toString());
-        containerResponseContext.getHeaders().add("this-response", currentDate.toString());
+    public Set<Class<?>> getClasses() {
+        final Set<Class<?>> classes = new HashSet<Class<?>>();
+        // register root resources/providers
+        classes.add(SSESimpleResource.class);
+        classes.add(SSEBroadcastResource.class);
+        classes.add(NotFoundExceptionMapper.class);
+        classes.add(ResponseFilter.class);
+        return classes;
     }
 }

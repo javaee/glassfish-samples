@@ -38,48 +38,17 @@
  * holder.
  */
 
-package org.glassfish.samples.rest.messageboard.resources;
+package org.glassfish.samples.rest.sse.exceptions;
 
-import javax.inject.Singleton;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.sse.Sse;
-import javax.ws.rs.sse.SseBroadcaster;
-import javax.ws.rs.sse.SseEventSink;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
-@Path("/")
-@Singleton
-public class SSEBroadcastResource {
+@Provider
+public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
 
-    @Context Sse sse;
-    private static SseBroadcaster sseBroadcaster;
-
-    private synchronized static SseBroadcaster getBroadcaster(Sse sse) {
-        if (null == sseBroadcaster) {
-            sseBroadcaster = sse.newBroadcaster();
-        }
-        return sseBroadcaster;
+    public Response toResponse(NotFoundException exception) {
+        return Response.status(404).build();
     }
 
-    @GET
-    @Path("subscribe")
-    @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void subscribe(@Context SseEventSink eventSink) {
-        eventSink.send(sse.newEvent("welcome!"));
-        getBroadcaster(sse).register(eventSink);
-    }
-
-    @POST
-    @Path("broadcast")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public void broadcast(@FormParam("data") String event) {
-        getBroadcaster(sse).broadcast(sse.newEventBuilder().data(String.class, event).build());
-    }
 }
-

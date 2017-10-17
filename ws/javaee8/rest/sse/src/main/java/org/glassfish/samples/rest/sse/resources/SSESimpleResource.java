@@ -37,28 +37,43 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package org.glassfish.samples.rest.messageboard.resources;
 
-import java.util.HashSet;
-import java.util.Set;
+package org.glassfish.samples.rest.sse.resources;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import javax.annotation.Resource;
+import javax.enterprise.concurrent.ManagedExecutorService;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.sse.Sse;
+import javax.ws.rs.sse.SseEventSink;
 
-import org.glassfish.samples.rest.messageboard.exceptions.NotFoundExceptionMapper;
-import org.glassfish.samples.rest.messageboard.filters.ResponseFilter;
 
-@ApplicationPath("/app")
-public class JaxRsApplication extends Application {
+@Path("/")
+public class SSESimpleResource {
 
-    @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> classes = new HashSet<Class<?>>();
-        // register root resources/providers
-        classes.add(SSESimpleResource.class);
-        classes.add(SSEBroadcastResource.class);
-        classes.add(NotFoundExceptionMapper.class);
-        classes.add(ResponseFilter.class);
-        return classes;
+    @Resource
+    private ManagedExecutorService executor;
+
+    @GET
+    @Path("eventStream")
+    @Produces(MediaType.SERVER_SENT_EVENTS)
+    public void eventStream(
+            @Context SseEventSink eventSink,
+            @Context Sse sse) {
+        executor.execute(() -> {
+            try (SseEventSink sink = eventSink) {
+                eventSink.send(sse.newEventBuilder().data(String.class, "event1").build());
+                eventSink.send(sse.newEventBuilder().data(String.class, "event2").build());
+                eventSink.send(sse.newEventBuilder().data(String.class, "event3").build());
+            }
+            catch (Throwable e) {
+                e.printStackTrace(System.out);
+            }
+        });
+
     }
 }
+
