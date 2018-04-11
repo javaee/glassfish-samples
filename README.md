@@ -20,7 +20,7 @@ If you are interested in contributing to this project, read the following pages:
 
 # Building the Java EE 8 Samples
 
-## Pre Requisites
+## Prerequisites
 
 - Maven
 - JDK8+
