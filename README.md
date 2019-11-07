@@ -1,3 +1,8 @@
+# This project is migrated to Eclipse Foundation
+
+Please use refer to [https://github.com/eclipse-ee4j/glassfish-samples](https://github.com/eclipse-ee4j/glassfish-samples)
+This repository contains merge history prior to that migration.
+
 # GlassFish Samples
 
 This repository contains the source files for the
